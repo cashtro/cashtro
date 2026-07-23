@@ -1,16 +1,23 @@
-## Hi there 👋
 
-<!--
-**cashtro/cashtro** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+# Alejandro Flores — Builder
 
-Here are some ideas to get you started:
+Scrum Master & Software Engineer · Founder · FR/EN · Remote worldwide
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+**I make teams ship: idea → concept → production.**
+
+The delivery operation lives at [**Evolu-Jeunes**](https://github.com/Evolu-Jeunes) —
+48 repos, 30+ platforms shipped for law firms, clinics, finance and
+e-commerce. Client code stays private. The results are live:
+
+- ⚖️ BTK Avocats — law firm platform (WordPress)
+- 🏥 MD Clinic — medical clinic (WordPress/ACF)
+- 🏦 Solution Hypothèque QC — mortgage services
+- 🎓 Éduconnexion — education platform
+- 🚀 Proximity — agency platform (Next.js/TypeScript + Azure APIs)
+- 🤖 ScanApp, CRM, AI bots — TypeScript & Python builds
+
+**Stack:** PHP/WordPress · React/Next.js/TypeScript · Python · Azure
+
+**Team:** 75+ developers trained on real client mandates
+
+📩 alejandro@proximityagency.ca
