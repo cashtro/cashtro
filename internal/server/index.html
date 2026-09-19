@@ -158,6 +158,7 @@
       return el;
     }
     let selected = "router";
+    let lastInvoke = "";
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
       box.replaceChildren();
@@ -166,7 +167,7 @@
       title.textContent = agent.spec.name + " · " + agent.spec.mode;
       const p = document.createElement("p");
       p.className = "lede";
-      p.textContent = agent.spec.summary;
+      p.textContent = lastInvoke || agent.spec.summary;
       box.appendChild(title);
       box.appendChild(p);
       (agent.spec.capabilities || []).forEach((cap) => {
@@ -183,7 +184,7 @@
               headers: { "Content-Type": "application/json", "Accept": "application/json" },
               body: JSON.stringify(payload)
             });
-            p.textContent = res.message + (res.data && res.data.content ? " — " + res.data.content : "");
+            lastInvoke = res.message + (res.data && res.data.content ? " — " + res.data.content : "");
             await render();
           } catch (err) {
             p.textContent = err.message;
