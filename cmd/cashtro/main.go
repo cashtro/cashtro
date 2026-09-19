@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/agents"
 	"github.com/cashtro/cashtro/internal/server"
 )
 
@@ -29,10 +29,16 @@ func run(addr string) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	handler := server.New(catalog.New())
+	k, err := agents.Boot()
+	if err != nil {
+		return err
+	}
+	about := k.About()
+	log.Printf("%s %s · %d agentics online", about.Name, about.Version, about.Running)
+
 	httpSrv := &http.Server{
 		Addr:              addr,
-		Handler:           handler,
+		Handler:           server.New(k),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 

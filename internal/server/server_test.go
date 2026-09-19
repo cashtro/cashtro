@@ -8,18 +8,29 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/cashtro/cashtro/internal/agents"
 	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/kernel"
 )
 
+func handler(t *testing.T) http.Handler {
+	t.Helper()
+	k, err := agents.Boot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	return New(k)
+}
+
 func TestHealthAndProfile(t *testing.T) {
-	h := New(catalog.New())
+	h := handler(t)
 
 	res := httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/health", nil))
 	if res.Code != http.StatusOK {
 		t.Fatalf("health status = %d", res.Code)
 	}
-	if !strings.Contains(res.Body.String(), `"service":"cashtro"`) {
+	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) {
 		t.Fatalf("health body = %s", res.Body.String())
 	}
 
@@ -37,8 +48,48 @@ func TestHealthAndProfile(t *testing.T) {
 	}
 }
 
+func TestOSAndAgents(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/os", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("os status = %d", res.Code)
+	}
+	var about kernel.About
+	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
+		t.Fatal(err)
+	}
+	if about.Agents != 13 || !strings.Contains(about.Manifesto, "control plane") {
+		t.Fatalf("about = %+v", about)
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/agents", nil))
+	var procs []kernel.Process
+	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
+		t.Fatal(err)
+	}
+	if len(procs) != 13 {
+		t.Fatalf("agents = %d", len(procs))
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/model", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"bound":false`) {
+		t.Fatalf("model = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/agents/explorer/invoke", strings.NewReader(`{"capability":"explorer.search"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("invoke status = %d body=%s", res.Code, res.Body.String())
+	}
+}
+
 func TestFavicon(t *testing.T) {
-	h := New(catalog.New())
+	h := handler(t)
 	res := httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/favicon.ico", nil))
 	if res.Code != http.StatusOK {
@@ -50,7 +101,7 @@ func TestFavicon(t *testing.T) {
 }
 
 func TestIndexHTML(t *testing.T) {
-	h := New(catalog.New())
+	h := handler(t)
 	res := httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/", nil))
 	if res.Code != http.StatusOK {
@@ -60,13 +111,14 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(ct, "text/html") {
 		t.Fatalf("content-type = %q", ct)
 	}
-	if !strings.Contains(res.Body.String(), "idea → concept") {
-		t.Fatalf("index missing board copy")
+	body := res.Body.String()
+	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
+		t.Fatalf("index missing OS shell copy")
 	}
 }
 
 func TestShipLifecycleHTTP(t *testing.T) {
-	h := New(catalog.New())
+	h := handler(t)
 
 	res := httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/ships/missing", nil))
@@ -120,7 +172,7 @@ func TestShipLifecycleHTTP(t *testing.T) {
 }
 
 func TestCreateRejectsUnknownField(t *testing.T) {
-	h := New(catalog.New())
+	h := handler(t)
 	res := httptest.NewRecorder()
 	req := httptest.NewRequest(http.MethodPost, "/api/ships", strings.NewReader(`{"name":"X","nope":true}`))
 	h.ServeHTTP(res, req)
@@ -130,7 +182,7 @@ func TestCreateRejectsUnknownField(t *testing.T) {
 }
 
 func TestStages(t *testing.T) {
-	h := New(catalog.New())
+	h := handler(t)
 	res := httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/stages", nil))
 	body, _ := io.ReadAll(res.Body)

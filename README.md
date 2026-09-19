@@ -23,26 +23,45 @@ e-commerce. Client code stays private. The results are live:
 
 ---
 
-## Delivery catalog (Go)
+## Cashtro OS
 
-This repo now includes a stdlib Go service that models the same line:
-**idea → concept → production**. Seed data is the live mandate list above.
-The board is a small HTML UI plus a JSON API. No frameworks.
+This repo is the control plane for every agentic we build here. Agents are
+processes. Capabilities are verbs. The bus is the journal. Delivery
+(idea → concept → production) is the first live subsystem. New agentics
+register into this kernel — they do not become a second product.
 
 ```bash
 go test ./...
 go run ./cmd/cashtro
 ```
 
-Then open `http://localhost:8080`.
+Open `http://localhost:8080`.
+
+### Do we need OpenRouter?
+
+**No, not to boot.** The kernel, process table, delivery board, and journal
+run with zero model keys.
+
+**Yes, if an agentic needs to think.** OpenRouter is the optional model bus:
+one key, many models. Bind it when you want `model.chat` to execute.
+
+```bash
+export OPENROUTER_API_KEY=sk-or-...
+export OPENROUTER_MODEL=openai/gpt-4o-mini   # optional
+go run ./cmd/cashtro
+```
+
+Without a key the `router` process stays **resident** and tells you it is
+unbound. The rest of the OS stays live.
 
 | Method | Path | What it does |
 | --- | --- | --- |
-| `GET` | `/` | Delivery board |
-| `GET` | `/health` | Liveness |
-| `GET` | `/api/profile` | Public builder card |
-| `GET` | `/api/ships` | Mandates on the line |
-| `POST` | `/api/ships` | Park a new mandate in idea |
+| `GET` | `/` | OS desk |
+| `GET` | `/health` | Liveness + kernel counts |
+| `GET` | `/api/os` | Manifesto and process counts |
+| `GET` | `/api/agents` | Process table |
+| `POST` | `/api/agents/{id}/invoke` | Run a capability |
+| `GET` | `/api/model` | OpenRouter bind card |
+| `GET` | `/api/ships` | Delivery line |
+| `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
-
-Production is the end of the board. A further advance returns HTTP 409.

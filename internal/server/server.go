@@ -7,18 +7,27 @@ import (
 	"net/http"
 
 	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/kernel"
 )
 
 const maxBody = 1 << 20
 
-// New returns the Cashtro HTTP handler.
-func New(cat *catalog.Catalog) http.Handler {
-	s := &api{cat: cat}
+// New returns the Cashtro OS HTTP shell.
+func New(k *kernel.Kernel) http.Handler {
+	s := &api{k: k, cat: k.Catalog()}
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", s.index)
 	mux.HandleFunc("GET /favicon.ico", s.favicon)
 	mux.HandleFunc("GET /favicon.svg", s.favicon)
 	mux.HandleFunc("GET /health", s.health)
+	mux.HandleFunc("GET /api/os", s.osAbout)
+	mux.HandleFunc("GET /api/agents", s.listAgents)
+	mux.HandleFunc("GET /api/agents/{id}", s.getAgent)
+	mux.HandleFunc("POST /api/agents/{id}/spawn", s.spawnAgent)
+	mux.HandleFunc("POST /api/agents/{id}/invoke", s.invokeAgent)
+	mux.HandleFunc("GET /api/capabilities", s.capabilities)
+	mux.HandleFunc("GET /api/events", s.events)
+	mux.HandleFunc("GET /api/model", s.modelStatus)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -29,6 +38,7 @@ func New(cat *catalog.Catalog) http.Handler {
 }
 
 type api struct {
+	k   *kernel.Kernel
 	cat *catalog.Catalog
 }
 
@@ -44,10 +54,77 @@ func (s *api) favicon(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *api) health(w http.ResponseWriter, r *http.Request) {
-	writeJSON(w, http.StatusOK, map[string]string{
+	about := s.k.About()
+	writeJSON(w, http.StatusOK, map[string]any{
 		"status":  "ok",
 		"service": "cashtro",
+		"os":      about.Name,
+		"version": about.Version,
+		"kernel":  about.Kernel,
+		"agents":  about.Agents,
+		"running": about.Running,
 	})
+}
+
+func (s *api) osAbout(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.About())
+}
+
+func (s *api) listAgents(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Processes())
+}
+
+func (s *api) getAgent(w http.ResponseWriter, r *http.Request) {
+	p, err := s.k.Process(r.PathValue("id"))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, p)
+}
+
+func (s *api) spawnAgent(w http.ResponseWriter, r *http.Request) {
+	if err := s.k.Spawn(r.Context(), r.PathValue("id")); err != nil {
+		writeError(w, err)
+		return
+	}
+	p, err := s.k.Process(r.PathValue("id"))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, p)
+}
+
+func (s *api) invokeAgent(w http.ResponseWriter, r *http.Request) {
+	var call kernel.Call
+	if err := decodeJSON(r, &call); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	res, err := s.k.Invoke(r.Context(), r.PathValue("id"), call)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) capabilities(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Capabilities())
+}
+
+func (s *api) events(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Events())
+}
+
+func (s *api) modelStatus(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "router", kernel.Call{Capability: "model.status"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
 }
 
 func (s *api) profile(w http.ResponseWriter, r *http.Request) {
@@ -77,21 +154,23 @@ func (s *api) createShip(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 		return
 	}
-	ship, err := s.cat.Create(in)
+	raw, _ := json.Marshal(in)
+	res, err := s.k.Invoke(r.Context(), "delivery", kernel.Call{Capability: "delivery.create", Payload: raw})
 	if err != nil {
 		writeError(w, err)
 		return
 	}
-	writeJSON(w, http.StatusCreated, ship)
+	writeJSON(w, http.StatusCreated, res.Data)
 }
 
 func (s *api) advanceShip(w http.ResponseWriter, r *http.Request) {
-	ship, err := s.cat.Advance(r.PathValue("id"))
+	raw, _ := json.Marshal(map[string]string{"id": r.PathValue("id")})
+	res, err := s.k.Invoke(r.Context(), "delivery", kernel.Call{Capability: "delivery.advance", Payload: raw})
 	if err != nil {
 		writeError(w, err)
 		return
 	}
-	writeJSON(w, http.StatusOK, ship)
+	writeJSON(w, http.StatusOK, res.Data)
 }
 
 func decodeJSON(r *http.Request, dst any) error {
@@ -105,11 +184,11 @@ func decodeJSON(r *http.Request, dst any) error {
 
 func writeError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, catalog.ErrNotFound):
+	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent):
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrInvalid):
+	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability):
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrDone):
+	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning):
 		writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})
 	default:
 		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})

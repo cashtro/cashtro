@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cashtro · idea → production</title>
+  <title>Cashtro OS</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,147 +26,117 @@
     body {
       font-family: "IBM Plex Sans", system-ui, sans-serif;
       min-height: 100vh;
-      background:
-        radial-gradient(1200px 500px at 10% -10%, #2a2214 0%, transparent 55%),
-        var(--bg);
+      background: radial-gradient(1200px 500px at 10% -10%, #2a2214 0%, transparent 55%), var(--bg);
     }
     a { color: var(--brass); }
-    header, main, footer { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
-    header { padding: 36px 0 12px; display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; }
-    .mark { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
-    h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(40px, 6vw, 68px); font-weight: 500; line-height: 0.95; margin: 10px 0 0; }
+    .bar, .desk, footer { width: min(1240px, calc(100% - 28px)); margin: 0 auto; }
+    .bar { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; padding: 22px 0 10px; }
+    .mark { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
+    h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(34px, 5vw, 58px); font-weight: 500; line-height: 0.95; margin: 8px 0 0; }
     h1 em { font-style: italic; color: var(--brass); }
-    .lede { max-width: 34rem; color: var(--muted); margin: 12px 0 0; line-height: 1.55; }
-    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-    .chip {
-      border: 1px solid var(--line);
-      background: var(--paper);
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 12px;
-    }
-    .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding: 28px 0 12px; }
-    .col { border: 1px solid var(--line); background: rgba(26, 23, 18, 0.86); min-height: 280px; padding: 14px; }
-    .col h2 {
-      margin: 0 0 12px;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      display: flex;
-      justify-content: space-between;
-    }
-    .col.idea h2 { color: var(--idea); }
-    .col.concept h2 { color: var(--concept); }
-    .col.production h2 { color: var(--production); }
-    .card {
-      border: 1px solid var(--line);
-      background: #14110d;
-      padding: 12px;
-      margin-bottom: 10px;
-    }
-    .card h3 { margin: 0 0 4px; font-size: 16px; font-family: "Cormorant Garamond", Georgia, serif; }
-    .card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
-    .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
-    .stack span { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 1px; }
-    button, input, textarea {
-      font: inherit;
-      color: inherit;
-      background: #100e0b;
-      border: 1px solid var(--line);
-    }
-    button {
-      cursor: pointer;
-      padding: 7px 10px;
-      width: 100%;
-      color: var(--ink);
-    }
+    .lede { color: var(--muted); max-width: 40rem; line-height: 1.5; margin: 10px 0 0; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 5px 10px; font-size: 12px; }
+    .chip.live { color: var(--production); }
+    .chip.unbound { color: var(--danger); }
+    .desk { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 14px; padding: 16px 0; }
+    .panel { border: 1px solid var(--line); background: rgba(26, 23, 18, 0.9); padding: 14px; }
+    .panel h2 { margin: 0 0 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
+    .agents { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .agent { border: 1px solid var(--line); background: #14110d; padding: 10px; cursor: pointer; text-align: left; color: inherit; width: 100%; }
+    .agent:hover, .agent.active { border-color: var(--brass); }
+    .agent b { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 18px; font-weight: 500; }
+    .agent span { color: var(--muted); font-size: 12px; }
+    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .dot.live { color: var(--production); }
+    .dot.resident { color: var(--concept); }
+    .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .col { border: 1px solid var(--line); min-height: 180px; padding: 10px; }
+    .col h3 { margin: 0 0 8px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: flex; justify-content: space-between; }
+    .col.idea h3 { color: var(--idea); }
+    .col.concept h3 { color: var(--concept); }
+    .col.production h3 { color: var(--production); }
+    .card { border: 1px solid var(--line); background: #14110d; padding: 10px; margin-bottom: 8px; }
+    .card h4 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 16px; }
+    .card p { margin: 0; color: var(--muted); font-size: 12px; }
+    button, input, textarea { font: inherit; color: inherit; background: #100e0b; border: 1px solid var(--line); }
+    button { cursor: pointer; padding: 7px 10px; width: 100%; }
     button:hover { border-color: var(--brass); color: var(--brass); }
-    button:disabled { opacity: 0.4; cursor: default; border-color: var(--line); color: var(--muted); }
-    .compose { padding: 8px 0 48px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; }
-    form { border: 1px solid var(--line); padding: 16px; background: var(--paper); display: grid; gap: 10px; }
-    label { font-size: 12px; color: var(--muted); display: grid; gap: 5px; }
+    button:disabled { opacity: 0.4; cursor: default; color: var(--muted); border-color: var(--line); }
+    form, .inspect { display: grid; gap: 8px; margin-top: 10px; }
+    label { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
     input, textarea { padding: 8px; }
-    .note { color: var(--muted); font-size: 14px; line-height: 1.5; }
-    footer { border-top: 1px solid var(--line); padding: 18px 0 32px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .err { color: var(--danger); font-size: 13px; min-height: 1.2em; }
-    @media (max-width: 860px) {
-      header, .board, .compose { display: block; }
-      .col, form { margin-bottom: 12px; }
+    .journal { max-height: 220px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--muted); }
+    .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
+    footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    @media (max-width: 900px) {
+      .desk, .board, .agents { display: block; }
+      .agent, .col, .panel { margin-bottom: 10px; }
     }
   </style>
 </head>
 <body>
-  <header>
+  <header class="bar">
     <div>
-      <div class="mark">Cashtro Builder · FR/EN</div>
-      <h1>idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">A stdlib Go board for the delivery line. Client code stays private. The results move right.</p>
-      <div class="meta" id="meta"></div>
+      <div class="mark">Cashtro OS · FR/EN</div>
+      <h1>AI OS · idea → concept → <em>production</em></h1>
+      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
     </div>
+    <div class="stats" id="stats"></div>
   </header>
-  <main>
-    <section class="board" id="board" aria-label="Delivery board"></section>
-    <section class="compose">
-      <form id="form">
-        <div class="mark">New mandate</div>
-        <label>Name <input name="name" required placeholder="Ledger desk"></label>
-        <label>Client <input name="client" placeholder="Proximity Agency"></label>
-        <label>Sector <input name="sector" placeholder="finance"></label>
-        <label>Stack <input name="stack" placeholder="Go, Azure"></label>
-        <label>Notes <textarea name="notes" rows="3" placeholder="What has to ship"></textarea></label>
-        <button type="submit">Park it in idea</button>
-        <div class="err" id="form-error"></div>
-      </form>
-      <div class="note">
-        <p>Seeded from live Evolu-Jeunes / Proximity work. Advance a card to walk the line. Production is the end of the board — the API returns 409 if you try to push further.</p>
-        <p><code>GET /api/profile</code> · <code>GET /api/ships</code> · <code>POST /api/ships/{id}/advance</code></p>
+  <main class="desk">
+    <section class="panel">
+      <h2>Process table</h2>
+      <div class="agents" id="agents"></div>
+      <div class="inspect" id="inspect"></div>
+    </section>
+    <section>
+      <div class="panel">
+        <h2>Delivery line</h2>
+        <div class="board" id="board" aria-label="Delivery board"></div>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <h2>New mandate</h2>
+        <form id="form">
+          <label>Name <input name="name" required placeholder="Ledger desk"></label>
+          <label>Client <input name="client" placeholder="Proximity Agency"></label>
+          <label>Sector <input name="sector" placeholder="finance"></label>
+          <label>Stack <input name="stack" placeholder="Go, Azure"></label>
+          <label>Notes <textarea name="notes" rows="2" placeholder="What has to ship"></textarea></label>
+          <button type="submit">Park it in idea</button>
+          <div class="err" id="form-error"></div>
+        </form>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <h2>Journal</h2>
+        <div class="journal" id="journal"></div>
       </div>
     </section>
   </main>
   <footer>
     <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · no framework</span>
+    <span>stdlib Go · OpenRouter optional</span>
   </footer>
   <script>
     const stages = ["idea", "concept", "production"];
-    const board = document.getElementById("board");
-    const meta = document.getElementById("meta");
-    const lede = document.getElementById("lede");
-    const form = document.getElementById("form");
-    const formError = document.getElementById("form-error");
-
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || res.statusText);
       return body;
     }
-
-    function chip(text) {
+    function chip(text, cls) {
       const el = document.createElement("span");
-      el.className = "chip";
+      el.className = "chip" + (cls ? " " + cls : "");
       el.textContent = text;
       return el;
     }
-
     function card(ship) {
       const el = document.createElement("article");
       el.className = "card";
-      el.innerHTML = `
-        <h3></h3>
-        <p></p>
-        <div class="stack"></div>
-      `;
-      el.querySelector("h3").textContent = ship.name;
+      el.innerHTML = "<h4></h4><p></p>";
+      el.querySelector("h4").textContent = ship.name;
       el.querySelector("p").textContent = [ship.client, ship.notes].filter(Boolean).join(" — ");
-      const stack = el.querySelector(".stack");
-      (ship.stack || []).forEach((item) => {
-        const s = document.createElement("span");
-        s.textContent = item;
-        stack.appendChild(s);
-      });
       const btn = document.createElement("button");
       if (ship.stage === "production") {
         btn.textContent = "Shipped";
@@ -187,23 +157,86 @@
       el.appendChild(btn);
       return el;
     }
-
+    let selected = "router";
+    function inspect(agent, model) {
+      const box = document.getElementById("inspect");
+      box.replaceChildren();
+      const title = document.createElement("div");
+      title.className = "mark";
+      title.textContent = agent.spec.name + " · " + agent.spec.mode;
+      const p = document.createElement("p");
+      p.className = "lede";
+      p.textContent = agent.spec.summary;
+      box.appendChild(title);
+      box.appendChild(p);
+      (agent.spec.capabilities || []).forEach((cap) => {
+        const b = document.createElement("button");
+        b.textContent = "Invoke " + cap;
+        b.addEventListener("click", async () => {
+          b.disabled = true;
+          try {
+            const payload = cap === "model.chat"
+              ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
+              : { capability: cap };
+            const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+              body: JSON.stringify(payload)
+            });
+            p.textContent = res.message + (res.data && res.data.content ? " — " + res.data.content : "");
+            await render();
+          } catch (err) {
+            p.textContent = err.message;
+          } finally {
+            b.disabled = false;
+          }
+        });
+        box.appendChild(b);
+      });
+      if (agent.spec.id === "router" && model && !model.bound) {
+        const hint = document.createElement("p");
+        hint.className = "err";
+        hint.textContent = "No OPENROUTER_API_KEY in this environment. OS is up. Bind a key when an agentic needs to think.";
+        box.appendChild(hint);
+      }
+    }
     async function render() {
-      const [profile, ships] = await Promise.all([j("/api/profile"), j("/api/ships")]);
-      lede.textContent = profile.motto;
+      const [os, agents, ships, events, model, profile] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile")
+      ]);
+      document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
-      meta.replaceChildren(
-        chip(profile.role),
-        chip(profile.languages.join(" / ")),
-        chip(profile.org),
-        ...profile.stack.map(chip)
+      const stats = document.getElementById("stats");
+      stats.replaceChildren(
+        chip(os.name + " " + os.version),
+        chip(os.running + " running"),
+        chip(os.live + " live"),
+        chip(os.resident + " resident"),
+        chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
       );
+      const grid = document.getElementById("agents");
+      grid.replaceChildren();
+      agents.forEach((agent) => {
+        const btn = document.createElement("button");
+        btn.className = "agent" + (agent.spec.id === selected ? " active" : "");
+        btn.innerHTML = "<b></b><div class='dot'></div><span></span>";
+        btn.querySelector("b").textContent = agent.spec.name;
+        const dot = btn.querySelector(".dot");
+        dot.className = "dot " + agent.spec.mode;
+        dot.textContent = agent.spec.mode + " · " + agent.status;
+        btn.querySelector("span").textContent = agent.spec.role + " — " + agent.spec.summary;
+        btn.addEventListener("click", () => { selected = agent.spec.id; render(); });
+        grid.appendChild(btn);
+      });
+      const current = agents.find((a) => a.spec.id === selected) || agents[0];
+      inspect(current, model);
+      const board = document.getElementById("board");
       board.replaceChildren();
       stages.forEach((stage) => {
         const col = document.createElement("section");
         col.className = "col " + stage;
         const items = ships.filter((s) => s.stage === stage);
-        const title = document.createElement("h2");
+        const title = document.createElement("h3");
         title.innerHTML = "<span></span><span></span>";
         title.children[0].textContent = stage;
         title.children[1].textContent = String(items.length);
@@ -211,13 +244,19 @@
         items.forEach((ship) => col.appendChild(card(ship)));
         board.appendChild(col);
       });
+      const journal = document.getElementById("journal");
+      journal.replaceChildren();
+      events.slice(-16).reverse().forEach((ev) => {
+        const line = document.createElement("div");
+        line.textContent = ev.seq + "  " + ev.source + "/" + ev.kind + "  " + ev.message;
+        journal.appendChild(line);
+      });
     }
-
-    form.addEventListener("submit", async (event) => {
+    document.getElementById("form").addEventListener("submit", async (event) => {
       event.preventDefault();
-      formError.textContent = "";
-      const data = new FormData(form);
-      const stack = String(data.get("stack") || "").split(",").map((s) => s.trim()).filter(Boolean);
+      const err = document.getElementById("form-error");
+      err.textContent = "";
+      const data = new FormData(event.target);
       try {
         await j("/api/ships", {
           method: "POST",
@@ -227,19 +266,16 @@
             client: data.get("client"),
             sector: data.get("sector"),
             notes: data.get("notes"),
-            stack
+            stack: String(data.get("stack") || "").split(",").map((s) => s.trim()).filter(Boolean)
           })
         });
-        form.reset();
+        event.target.reset();
         await render();
-      } catch (err) {
-        formError.textContent = err.message;
+      } catch (e) {
+        err.textContent = e.message;
       }
     });
-
-    render().catch((err) => {
-      formError.textContent = err.message;
-    });
+    render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
   </script>
 </body>
 </html>
