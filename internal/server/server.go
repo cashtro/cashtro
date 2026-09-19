@@ -16,6 +16,8 @@ func New(cat *catalog.Catalog) http.Handler {
 	s := &api{cat: cat}
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", s.index)
+	mux.HandleFunc("GET /favicon.ico", s.favicon)
+	mux.HandleFunc("GET /favicon.svg", s.favicon)
 	mux.HandleFunc("GET /health", s.health)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
@@ -33,6 +35,12 @@ type api struct {
 func (s *api) index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	_, _ = w.Write(indexHTML)
+}
+
+func (s *api) favicon(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "image/svg+xml")
+	w.Header().Set("Cache-Control", "public, max-age=86400")
+	_, _ = w.Write(faviconSVG)
 }
 
 func (s *api) health(w http.ResponseWriter, r *http.Request) {

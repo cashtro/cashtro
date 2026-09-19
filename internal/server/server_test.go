@@ -37,6 +37,18 @@ func TestHealthAndProfile(t *testing.T) {
 	}
 }
 
+func TestFavicon(t *testing.T) {
+	h := New(catalog.New())
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/favicon.ico", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("favicon status = %d", res.Code)
+	}
+	if !strings.Contains(res.Header().Get("Content-Type"), "image/svg+xml") {
+		t.Fatalf("favicon type = %q", res.Header().Get("Content-Type"))
+	}
+}
+
 func TestIndexHTML(t *testing.T) {
 	h := New(catalog.New())
 	res := httptest.NewRecorder()
