@@ -1,0 +1,10 @@
+/bin/
+/cashtro
+*.exe
+*.test
+*.out
+coverage.out
+.idea/
+.vscode/
+.env
+.playwright-mcp/
