@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 13 || !strings.Contains(about.Manifesto, "control plane") {
+	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,8 +70,14 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 13 {
+	if len(procs) != 14 {
 		t.Fatalf("agents = %d", len(procs))
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/notes", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "2606.01508") {
+		t.Fatalf("notes = %s", res.Body.String())
 	}
 
 	res = httptest.NewRecorder()

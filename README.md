@@ -25,10 +25,11 @@ e-commerce. Client code stays private. The results are live:
 
 ## Cashtro OS
 
-This repo is the control plane for every agentic we build here. Agents are
-processes. Capabilities are verbs. The bus is the journal. Delivery
-(idea → concept → production) is the first live subsystem. New agentics
-register into this kernel — they do not become a second product.
+This repo is **under construction**. It is the control plane for every
+agentic we build here. Agents are processes. Capabilities are verbs.
+Mail, notes, memory, and human confirms are first-class. Delivery and
+research are live. New agentics register into this kernel — they do not
+become a second product.
 
 ```bash
 go test ./...
@@ -62,6 +63,11 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/agents` | Process table |
 | `POST` | `/api/agents/{id}/invoke` | Run a capability |
 | `GET` | `/api/model` | OpenRouter bind card |
+| `GET` | `/api/notes` | Research library |
+| `POST` | `/api/notes` | Ingest a sourced finding |
+| `GET` | `/api/mail` | Agent mailbox |
+| `GET` | `/api/memory` | Episodic recall |
+| `GET` | `/api/confirms` | Human gate |
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |

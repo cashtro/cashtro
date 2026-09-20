@@ -78,7 +78,7 @@
 <body>
   <header class="bar">
     <div>
-      <div class="mark">Cashtro OS · FR/EN</div>
+      <div class="mark">Cashtro OS · under construction · FR/EN</div>
       <h1>AI OS · idea → concept → <em>production</em></h1>
       <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
     </div>
@@ -106,6 +106,20 @@
           <button type="submit">Park it in idea</button>
           <div class="err" id="form-error"></div>
         </form>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <h2>Research library</h2>
+        <div class="journal" id="notes"></div>
+        <form id="note-form" style="margin-top:10px">
+          <label>Claim <input name="claim" required placeholder="AOS is a control plane"></label>
+          <label>Source <input name="source" placeholder="arxiv:2606.01508"></label>
+          <label>URL <input name="url" placeholder="https://arxiv.org/abs/2606.01508"></label>
+          <button type="submit">Ingest note</button>
+        </form>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <h2>Human gate</h2>
+        <div class="journal" id="confirms"></div>
       </div>
       <div class="panel" style="margin-top:14px">
         <h2>Journal</h2>
@@ -157,7 +171,7 @@
       el.appendChild(btn);
       return el;
     }
-    let selected = "router";
+    let selected = "research";
     let lastInvoke = "";
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
@@ -202,17 +216,19 @@
       }
     }
     async function render() {
-      const [os, agents, ships, events, model, profile] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile")
+      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip(os.name + " " + os.version),
+        chip("under construction"),
         chip(os.running + " running"),
         chip(os.live + " live"),
         chip(os.resident + " resident"),
+        chip(notes.length + " notes"),
         chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
       );
       const grid = document.getElementById("agents");
@@ -226,7 +242,7 @@
         dot.className = "dot " + agent.spec.mode;
         dot.textContent = agent.spec.mode + " · " + agent.status;
         btn.querySelector("span").textContent = agent.spec.role + " — " + agent.spec.summary;
-        btn.addEventListener("click", () => { selected = agent.spec.id; render(); });
+        btn.addEventListener("click", () => { selected = agent.spec.id; lastInvoke = ""; render(); });
         grid.appendChild(btn);
       });
       const current = agents.find((a) => a.spec.id === selected) || agents[0];
@@ -252,6 +268,34 @@
         line.textContent = ev.seq + "  " + ev.source + "/" + ev.kind + "  " + ev.message;
         journal.appendChild(line);
       });
+      const lib = document.getElementById("notes");
+      lib.replaceChildren();
+      notes.slice(0, 8).forEach((n) => {
+        const line = document.createElement("div");
+        line.textContent = n.source + " — " + n.claim;
+        lib.appendChild(line);
+      });
+      const gate = document.getElementById("confirms");
+      gate.replaceChildren();
+      if (!confirms.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "No outbound drafts. comms.send parks a confirm here.";
+        gate.appendChild(empty);
+      }
+      confirms.forEach((c) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + c.id + " " + c.status + " — " + c.body;
+        gate.appendChild(line);
+        if (c.status === "pending") {
+          const allow = document.createElement("button");
+          allow.textContent = "Allow #" + c.id;
+          allow.addEventListener("click", async () => {
+            await j("/api/confirms/" + c.id + "/allow", { method: "POST" });
+            await render();
+          });
+          gate.appendChild(allow);
+        }
+      });
     }
     document.getElementById("form").addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -274,6 +318,25 @@
         await render();
       } catch (e) {
         err.textContent = e.message;
+      }
+    });
+    document.getElementById("note-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        await j("/api/notes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            claim: data.get("claim"),
+            source: data.get("source"),
+            url: data.get("url")
+          })
+        });
+        event.target.reset();
+        await render();
+      } catch (e) {
+        document.getElementById("form-error").textContent = e.message;
       }
     });
     render().catch((e) => { document.getElementById("form-error").textContent = e.message; });

@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.1.0"
+	Version = "0.2.0"
 )
 
 // Status is a process lifecycle state.
@@ -138,15 +138,23 @@ const maxEvents = 200
 
 // Kernel is the in-process OS.
 type Kernel struct {
-	mu     sync.RWMutex
-	now    func() time.Time
-	nextID int
-	seq    int
-	procs  map[string]*Process
-	agents map[string]Agent
-	caps   map[string]Capability
-	events []Event
-	cat    *catalog.Catalog
+	mu       sync.RWMutex
+	now      func() time.Time
+	nextID   int
+	seq      int
+	procs    map[string]*Process
+	agents   map[string]Agent
+	caps     map[string]Capability
+	events   []Event
+	cat      *catalog.Catalog
+	mail     []Mail
+	mailSeq  int
+	notes    []Note
+	noteSeq  int
+	facts    []Fact
+	factSeq  int
+	confirms []Confirm
+	confSeq  int
 }
 
 // Option configures the kernel.
@@ -377,10 +385,10 @@ func (k *Kernel) About() About {
 		Live:     live,
 		Resident: resident,
 		Events:   len(k.events),
-		Manifesto: "Cashtro OS is the control plane for every agentic we build here. " +
-			"Agents are processes. Capabilities are verbs. The bus is the journal. " +
-			"Delivery is the first live subsystem. New agentics register into this kernel — they do not fork a second product. " +
-			"Client code stays private. The OS is how the team ships.",
+		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
+			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
+			"Delivery is live. Research is live. OpenRouter stays optional. " +
+			"New agentics register into this kernel — they do not fork a second product.",
 	}
 }
 

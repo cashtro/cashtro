@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io"
 	"net/http"
+	"strconv"
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -28,6 +29,13 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/capabilities", s.capabilities)
 	mux.HandleFunc("GET /api/events", s.events)
 	mux.HandleFunc("GET /api/model", s.modelStatus)
+	mux.HandleFunc("GET /api/notes", s.notes)
+	mux.HandleFunc("POST /api/notes", s.writeNote)
+	mux.HandleFunc("GET /api/mail", s.mail)
+	mux.HandleFunc("GET /api/memory", s.memory)
+	mux.HandleFunc("GET /api/confirms", s.confirms)
+	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
+	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -125,6 +133,62 @@ func (s *api) modelStatus(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) notes(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Notes())
+}
+
+func (s *api) writeNote(w http.ResponseWriter, r *http.Request) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	res, err := s.k.Invoke(r.Context(), "research", kernel.Call{Capability: "research.ingest", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusCreated, res.Data)
+}
+
+func (s *api) mail(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Inbox(r.URL.Query().Get("to")))
+}
+
+func (s *api) memory(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Recall(r.URL.Query().Get("q")))
+}
+
+func (s *api) confirms(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Confirms())
+}
+
+func (s *api) allowConfirm(w http.ResponseWriter, r *http.Request) {
+	s.decideConfirm(w, r, true)
+}
+
+func (s *api) denyConfirm(w http.ResponseWriter, r *http.Request) {
+	s.decideConfirm(w, r, false)
+}
+
+func (s *api) decideConfirm(w http.ResponseWriter, r *http.Request, allow bool) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "bad confirm id"})
+		return
+	}
+	c, err := s.k.DecideConfirm(id, allow)
+	if err != nil {
+		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, c)
 }
 
 func (s *api) profile(w http.ResponseWriter, r *http.Request) {

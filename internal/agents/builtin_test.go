@@ -14,12 +14,15 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 13 {
-		t.Fatalf("processes = %d, want 13", len(procs))
+	if len(procs) != 14 {
+		t.Fatalf("processes = %d, want 14", len(procs))
 	}
 	about := k.About()
-	if about.Running != 13 || about.Live != 2 {
+	if about.Running != 14 || about.Live != 7 {
 		t.Fatalf("about = %+v", about)
+	}
+	if len(k.Notes()) < 5 {
+		t.Fatalf("research seeds = %d", len(k.Notes()))
 	}
 	if k.Catalog() == nil {
 		t.Fatal("delivery did not attach catalog")
@@ -64,11 +67,16 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("unbound chat should be ok=false: %+v %v", res, err)
 	}
 
-	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{Capability: "explorer.search"})
+	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{
+		Capability: "explorer.search",
+		Payload:    []byte(`{"query":"delivery"}`),
+	})
 	if err != nil || !res.OK {
-		t.Fatalf("resident: %+v %v", res, err)
+		t.Fatalf("explorer: %+v %v", res, err)
 	}
-	if res.Message == "" {
-		t.Fatal("resident should explain bind")
+
+	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})
+	if err != nil || !res.OK {
+		t.Fatalf("research: %+v %v", res, err)
 	}
 }
