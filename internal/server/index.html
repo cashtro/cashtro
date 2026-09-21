@@ -51,6 +51,17 @@
     .dot.live { color: var(--production); }
     .dot.resident { color: var(--concept); }
     .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .plan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .plan-col ul { list-style: none; margin: 0; padding: 0; }
+    .plan-col li { border: 1px solid var(--line); background: #14110d; padding: 8px; margin-bottom: 6px; font-size: 12px; color: var(--muted); }
+    .plan-col li b { display: block; color: var(--ink); margin-bottom: 3px; font-size: 13px; }
+    .loop { color: var(--muted); font-size: 13px; line-height: 1.5; margin: 0 0 10px; }
+    .request { border: 1px solid var(--line); background: #14110d; padding: 10px; margin-bottom: 8px; }
+    .request h4 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 16px; }
+    .request .raw, .request .meta { color: var(--muted); font-size: 12px; margin: 0 0 6px; }
+    .request pre { white-space: pre-wrap; font: 12px/1.45 "IBM Plex Sans", system-ui, sans-serif; margin: 0 0 8px; }
+    .row { display: flex; gap: 8px; }
+    .row button { width: auto; flex: 1; }
     .col { border: 1px solid var(--line); min-height: 180px; padding: 10px; }
     .col h3 { margin: 0 0 8px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: flex; justify-content: space-between; }
     .col.idea h3 { color: var(--idea); }
@@ -70,7 +81,7 @@
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
     footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     @media (max-width: 900px) {
-      .desk, .board, .agents { display: block; }
+      .desk, .board, .agents, .plan-grid { display: block; }
       .agent, .col, .panel { margin-bottom: 10px; }
     }
   </style>
@@ -80,7 +91,7 @@
     <div>
       <div class="mark">Cashtro OS · under construction · FR/EN</div>
       <h1>AI OS · idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
+      <p class="lede" id="lede">Ask in your own words. The desk saves the original, betters it each pass, and I do every allowed task in this kernel.</p>
     </div>
     <div class="stats" id="stats"></div>
   </header>
@@ -94,6 +105,20 @@
       <div class="panel">
         <h2>Delivery line</h2>
         <div class="board" id="board" aria-label="Delivery board"></div>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <h2>Assistant plan</h2>
+        <p class="loop" id="plan-promise"></p>
+        <ol class="loop" id="plan-loop"></ol>
+        <div class="plan-grid" id="plan"></div>
+      </div>
+      <div class="panel" style="margin-top:14px">
+        <h2>Request log</h2>
+        <form id="req-form">
+          <label>Ask in your words <textarea name="raw" rows="3" required placeholder="What should I do next?"></textarea></label>
+          <button type="submit">Capture &amp; better</button>
+        </form>
+        <div id="requests" style="margin-top:10px"></div>
       </div>
       <div class="panel" style="margin-top:14px">
         <h2>New mandate</h2>
@@ -129,7 +154,7 @@
   </main>
   <footer>
     <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · OpenRouter optional</span>
+    <span>stdlib Go · OpenRouter optional · every ask saved</span>
   </footer>
   <script>
     const stages = ["idea", "concept", "production"];
@@ -171,7 +196,66 @@
       el.appendChild(btn);
       return el;
     }
-    let selected = "research";
+    function planCol(title, items) {
+      const col = document.createElement("section");
+      col.className = "col plan-col";
+      const h = document.createElement("h3");
+      h.innerHTML = "<span></span><span></span>";
+      h.children[0].textContent = title;
+      h.children[1].textContent = String((items || []).length);
+      col.appendChild(h);
+      const ul = document.createElement("ul");
+      (items || []).forEach((item) => {
+        const li = document.createElement("li");
+        li.innerHTML = "<b></b><span></span>";
+        li.querySelector("b").textContent = item.title;
+        li.querySelector("span").textContent = item.detail;
+        ul.appendChild(li);
+      });
+      col.appendChild(ul);
+      return col;
+    }
+    function requestCard(req) {
+      const el = document.createElement("article");
+      el.className = "request";
+      const title = document.createElement("h4");
+      title.textContent = req.title || ("Request #" + req.id);
+      const meta = document.createElement("p");
+      meta.className = "meta";
+      meta.textContent = "#" + req.id + " · pass " + req.pass + " · " + req.status + (req.allowed ? "" : " · cannot") + (req.owner ? " · " + req.owner : "");
+      const raw = document.createElement("p");
+      raw.className = "raw";
+      raw.textContent = "Original: " + req.raw;
+      const pre = document.createElement("pre");
+      pre.textContent = req.improved || "";
+      el.appendChild(title);
+      el.appendChild(meta);
+      el.appendChild(raw);
+      el.appendChild(pre);
+      if (req.status !== "done" && req.status !== "blocked") {
+        const row = document.createElement("div");
+        row.className = "row";
+        const better = document.createElement("button");
+        better.textContent = "Better again";
+        better.addEventListener("click", async () => {
+          better.disabled = true;
+          await j("/api/requests/" + req.id + "/better", { method: "POST" });
+          await render();
+        });
+        const done = document.createElement("button");
+        done.textContent = "Mark done";
+        done.addEventListener("click", async () => {
+          done.disabled = true;
+          await j("/api/requests/" + req.id + "/done", { method: "POST" });
+          await render();
+        });
+        row.appendChild(better);
+        row.appendChild(done);
+        el.appendChild(row);
+      }
+      return el;
+    }
+    let selected = "desk";
     let lastInvoke = "";
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
@@ -192,6 +276,8 @@
           try {
             const payload = cap === "model.chat"
               ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
+              : cap === "desk.capture"
+              ? { capability: cap, payload: { raw: "Keep capturing every Castro request and better it each pass." } }
               : { capability: cap };
             const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
               method: "POST",
@@ -216,8 +302,8 @@
       }
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, agents, ships, events, model, profile, notes, confirms, plan, requests] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/plan"), j("/api/requests")
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
@@ -228,6 +314,7 @@
         chip(os.running + " running"),
         chip(os.live + " live"),
         chip(os.resident + " resident"),
+        chip(requests.length + " requests"),
         chip(notes.length + " notes"),
         chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
       );
@@ -296,6 +383,30 @@
           gate.appendChild(allow);
         }
       });
+      document.getElementById("plan-promise").textContent = plan.promise || "";
+      const loop = document.getElementById("plan-loop");
+      loop.replaceChildren();
+      (plan.loop || []).forEach((step) => {
+        const li = document.createElement("li");
+        li.textContent = step;
+        loop.appendChild(li);
+      });
+      const planGrid = document.getElementById("plan");
+      planGrid.replaceChildren(
+        planCol("Can do", plan.can),
+        planCol("Cannot do", plan.cannot),
+        planCol("We create", plan.create),
+        planCol("We do not create", plan.avoid)
+      );
+      const reqs = document.getElementById("requests");
+      reqs.replaceChildren();
+      if (!requests.length) {
+        const empty = document.createElement("div");
+        empty.className = "raw";
+        empty.textContent = "No asks yet. Type above — I save the original and better it.";
+        reqs.appendChild(empty);
+      }
+      requests.forEach((req) => reqs.appendChild(requestCard(req)));
     }
     document.getElementById("form").addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -334,6 +445,22 @@
           })
         });
         event.target.reset();
+        await render();
+      } catch (e) {
+        document.getElementById("form-error").textContent = e.message;
+      }
+    });
+    document.getElementById("req-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        await j("/api/requests", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ raw: data.get("raw") })
+        });
+        event.target.reset();
+        selected = "desk";
         await render();
       } catch (e) {
         document.getElementById("form-error").textContent = e.message;
