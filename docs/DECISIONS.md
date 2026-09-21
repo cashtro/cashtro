@@ -74,3 +74,11 @@
 - **Alternatives:** Next only; wait for Phase 7.
 - **Why:** Castro said keep working. The Fastify pane loads without a
   second process. Next talks to the same API.
+
+## 2026-09-21 — Bind residents as local live verbs
+
+- **Choice:** Six seats execute in-process. No browser farm, no prod
+  deploy, no OpenRouter spend. Operator only hits 127.0.0.1.
+- **Alternatives:** Leave “ready to bind”; wire real Playwright.
+- **Why:** Castro said go attack. Binding a computer-use farm is a
+  paid/scope jump. Local verbs unblock the desk tonight.

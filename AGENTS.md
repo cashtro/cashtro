@@ -24,5 +24,6 @@ The TypeScript control plane is the front door.
 
 ## Kernel seats
 
-14 agentics on `:8080`. Live: init, delivery, research, explorer, memory, comms, planner.
-Resident: operator, architect, deploy, reviewer, security, investigator, router.
+14 agentics on `:8080`. Live: init, delivery, research, explorer, memory, comms, planner,
+operator, reviewer, architect, deploy, security, investigator.
+Resident until a model key: router.

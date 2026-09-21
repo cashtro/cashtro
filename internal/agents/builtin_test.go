@@ -18,7 +18,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 14", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 14 || about.Live < 13 || about.Resident != 1 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {

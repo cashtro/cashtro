@@ -109,3 +109,10 @@ Budget cap still blocks before dispatch.
 
 Four screens: Fastify `/ui` (phone) and Next.js `apps/web`.
 Evolu-Jeunes still dark — recon cannot grow until Cursor App is on the org.
+
+## Bind seats — 2026-09-21
+
+operator / reviewer / architect / deploy / security / investigator
+execute locally. Refuse live clients and non-local URLs. Router stays
+resident until a key. Voltron desk + `scripts/voltron.sh` restored onto
+this branch so a rebuild does not drop the overnight supervisor.

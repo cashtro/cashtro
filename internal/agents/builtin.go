@@ -48,30 +48,30 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"explorer.search"}, Autostart: true,
 		}, explorerInvoke),
 		resident(kernel.Spec{
-			ID: "operator", Name: "Operator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "computer-use", Summary: "Drives the browser and desktop the way a shipper would.",
+			ID: "operator", Name: "Operator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "computer-use", Summary: "Probes the local desk only. No client sites.",
 			Capabilities: []string{"operator.browse"}, Autostart: true,
-		}, nil),
+		}, operatorInvoke),
 		resident(kernel.Spec{
-			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "qa", Summary: "Reads walkthrough video and screenshot artifacts before we call a ship done.",
+			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "qa", Summary: "Lists walkthrough artifacts and inventory reports.",
 			Capabilities: []string{"reviewer.watch"}, Autostart: true,
-		}, nil),
+		}, reviewerInvoke),
 		resident(kernel.Spec{
-			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "design", Summary: "Shapes AI-powered apps, agents, and workflows before they hit the line.",
+			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "design", Summary: "Plans control-plane and ScanApp work. Refuses live clients.",
 			Capabilities: []string{"architect.plan"}, Autostart: true,
-		}, nil),
+		}, architectInvoke),
 		resident(kernel.Spec{
-			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "release", Summary: "Owns CI, preview, and production promotion.",
+			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "release", Summary: "Local rebuild check only. Refuses production promote.",
 			Capabilities: []string{"deploy.release"}, Autostart: true,
-		}, nil),
+		}, deployInvoke),
 		resident(kernel.Spec{
-			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "guard", Summary: "Triage CVE and SAST findings on the board before they ship.",
+			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "guard", Summary: "Flags access gaps and local secret-file presence.",
 			Capabilities: []string{"security.triage"}, Autostart: true,
-		}, nil),
+		}, securityInvoke),
 		resident(kernel.Spec{
 			ID: "memory", Name: "Memory", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "recall", Summary: "Episodic facts. Store and recall without a model.",
@@ -88,10 +88,10 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
 		resident(kernel.Spec{
-			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
+			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "incident", Summary: "Reads the kernel journal and local health.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
-		}, nil),
+		}, investigatorInvoke),
 	}
 }
 

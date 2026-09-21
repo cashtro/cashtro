@@ -56,10 +56,10 @@
     {
       "id": "bind-resident",
       "title": "Bind resident agentics so every seat can execute",
-      "body": "operator, reviewer, architect, deploy, security, investigator still return ready-to-bind",
+      "body": "operator, reviewer, architect, deploy, security, investigator now execute local verbs. Router stays resident until OpenRouter is bound.",
       "source": "kernel",
       "priority": "p1",
-      "status": "todo",
+      "status": "done",
       "projectSlug": "cashtro",
       "dependsOn": ["voltron-absorb"]
     },

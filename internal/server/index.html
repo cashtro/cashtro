@@ -3,136 +3,280 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cashtro OS</title>
+  <title>Voltron · Cashtro OS</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #f4ead7;
-      --muted: #9a8f7c;
-      --line: #3a342b;
-      --paper: #1a1712;
-      --bg: #100e0b;
-      --brass: #c4a15a;
-      --idea: #7f93a1;
-      --concept: #c4a15a;
-      --production: #7ea37f;
-      --danger: #c47a5a;
+      --void: #07080c;
+      --panel: #0e1118;
+      --lift: #151925;
+      --line: #262b3a;
+      --ink: #eef1f7;
+      --muted: #8b93a7;
+      --hot: #ff4d3d;
+      --gold: #f0c14b;
+      --live: #3dffa6;
+      --idea: #6ea8ff;
+      --concept: #f0c14b;
+      --production: #3dffa6;
+      --danger: #ff6b5a;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; background: var(--bg); color: var(--ink); }
+    html, body { margin: 0; background: var(--void); color: var(--ink); }
     body {
-      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-family: Sora, system-ui, sans-serif;
       min-height: 100vh;
-      background: radial-gradient(1200px 500px at 10% -10%, #2a2214 0%, transparent 55%), var(--bg);
+      background:
+        linear-gradient(180deg, rgba(255,77,61,0.06), transparent 28%),
+        var(--void);
     }
-    a { color: var(--brass); }
-    .bar, .desk, footer { width: min(1240px, calc(100% - 28px)); margin: 0 auto; }
-    .bar { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; padding: 22px 0 10px; }
-    .mark { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
-    h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(34px, 5vw, 58px); font-weight: 500; line-height: 0.95; margin: 8px 0 0; }
-    h1 em { font-style: italic; color: var(--brass); }
-    .lede { color: var(--muted); max-width: 40rem; line-height: 1.5; margin: 10px 0 0; }
-    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 5px 10px; font-size: 12px; }
-    .chip.live { color: var(--production); }
-    .chip.unbound { color: var(--danger); }
-    .desk { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 14px; padding: 16px 0; }
-    .panel { border: 1px solid var(--line); background: rgba(26, 23, 18, 0.9); padding: 14px; }
-    .panel h2 { margin: 0 0 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
-    .agents { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .agent { border: 1px solid var(--line); background: #14110d; padding: 10px; cursor: pointer; text-align: left; color: inherit; width: 100%; }
-    .agent:hover, .agent.active { border-color: var(--brass); }
-    .agent b { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 18px; font-weight: 500; }
-    .agent span { color: var(--muted); font-size: 12px; }
-    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
-    .dot.live { color: var(--production); }
-    .dot.resident { color: var(--concept); }
+    body::before {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+    }
+    a { color: var(--hot); }
+    .wrap { width: min(1440px, calc(100% - 32px)); margin: 0 auto; position: relative; }
+    header.top {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-end;
+      padding: 28px 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; gap: 16px; align-items: flex-end; }
+    .mark-v {
+      width: 44px; height: 44px;
+      border: 1px solid var(--hot);
+      display: grid; place-items: center;
+      flex: 0 0 44px;
+    }
+    .word { font-family: Syne, sans-serif; font-weight: 800; font-size: clamp(40px, 6vw, 72px); line-height: 0.82; letter-spacing: -0.04em; margin: 0; }
+    .word em { font-style: normal; color: var(--hot); }
+    .sub { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 8px 0 0; }
+    .lede { max-width: 36rem; color: var(--muted); line-height: 1.5; margin: 10px 0 0; font-size: 14px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; max-width: 420px; }
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 6px 10px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .chip.live { color: var(--live); border-color: rgba(61,255,166,0.35); }
+    .chip.unbound { color: var(--danger); border-color: rgba(255,77,61,0.4); }
+    .desk {
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1.2fr) 320px;
+      gap: 16px;
+      padding: 20px 0 28px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 16px;
+      min-width: 0;
+    }
+    .panel h2 {
+      margin: 0 0 14px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .agents { display: grid; gap: 6px; max-height: 620px; overflow: auto; padding-right: 2px; }
+    .agent {
+      display: grid;
+      grid-template-columns: 6px 1fr;
+      gap: 10px;
+      border: 1px solid var(--line);
+      background: var(--void);
+      color: inherit;
+      text-align: left;
+      width: 100%;
+      padding: 0;
+      cursor: pointer;
+    }
+    .agent .stripe { background: var(--muted); }
+    .agent .body { padding: 10px 10px 10px 0; }
+    .agent:hover, .agent.active { border-color: #3a4158; background: var(--lift); }
+    .agent.active { border-color: var(--hot); }
+    .agent b { display: block; font-family: Syne, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
+    .agent .meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+    .dot.live { color: var(--live); }
+    .dot.resident { color: var(--gold); }
     .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .col { border: 1px solid var(--line); min-height: 180px; padding: 10px; }
-    .col h3 { margin: 0 0 8px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: flex; justify-content: space-between; }
+    .col { background: var(--void); border: 1px solid var(--line); min-height: 280px; padding: 10px; }
+    .col h3 {
+      margin: 0 0 10px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+    }
     .col.idea h3 { color: var(--idea); }
     .col.concept h3 { color: var(--concept); }
     .col.production h3 { color: var(--production); }
-    .card { border: 1px solid var(--line); background: #14110d; padding: 10px; margin-bottom: 8px; }
-    .card h4 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 16px; }
-    .card p { margin: 0; color: var(--muted); font-size: 12px; }
-    button, input, textarea { font: inherit; color: inherit; background: #100e0b; border: 1px solid var(--line); }
-    button { cursor: pointer; padding: 7px 10px; width: 100%; }
-    button:hover { border-color: var(--brass); color: var(--brass); }
-    button:disabled { opacity: 0.4; cursor: default; color: var(--muted); border-color: var(--line); }
-    form, .inspect { display: grid; gap: 8px; margin-top: 10px; }
-    label { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
-    input, textarea { padding: 8px; }
-    .journal { max-height: 220px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--muted); }
+    .card { border: 1px solid var(--line); background: var(--lift); padding: 12px; margin-bottom: 8px; }
+    .card h4 { margin: 0 0 4px; font-family: Syne, sans-serif; font-size: 16px; font-weight: 700; }
+    .card p { margin: 0 0 10px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+    button, input, textarea { font: inherit; color: inherit; background: var(--void); border: 1px solid var(--line); }
+    button { cursor: pointer; padding: 8px 10px; }
+    button:hover { border-color: var(--hot); color: #fff; }
+    button:disabled { opacity: 0.35; cursor: default; color: var(--muted); border-color: var(--line); }
+    .card button { width: 100%; font-size: 12px; }
+    form, .inspect { display: grid; gap: 8px; }
+    .inspect { margin-top: 0; }
+    .inspect .mark {
+      font-family: Syne, sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    label { font-size: 11px; color: var(--muted); display: grid; gap: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+    input, textarea { padding: 9px 10px; font-size: 14px; }
+    input:focus, textarea:focus, button:focus-visible {
+      outline: 1px solid var(--hot);
+      outline-offset: 1px;
+    }
+    .primary { background: var(--hot); border-color: var(--hot); color: #140404; font-weight: 600; width: 100%; }
+    .primary:hover { color: #140404; filter: brightness(1.05); }
+    .cap { width: 100%; text-align: left; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; }
+    .journal { max-height: 180px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.55; color: var(--muted); }
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
-    footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-    @media (max-width: 900px) {
-      .desk, .board, .agents { display: block; }
-      .agent, .col, .panel { margin-bottom: 10px; }
+    .stack { display: grid; gap: 16px; }
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 16px 0 32px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 1100px) {
+      .desk { grid-template-columns: 1fr; }
+      .agents { max-height: none; }
+      header.top { flex-direction: column; align-items: flex-start; }
+      .stats { justify-content: flex-start; }
+    }
+    @media (max-width: 700px) {
+      .board { display: block; }
+      .col { margin-bottom: 8px; min-height: 0; }
     }
   </style>
 </head>
 <body>
-  <header class="bar">
-    <div>
-      <div class="mark">Cashtro OS · under construction · FR/EN</div>
-      <h1>AI OS · idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
-    </div>
-    <div class="stats" id="stats"></div>
-  </header>
-  <main class="desk">
-    <section class="panel">
-      <h2>Process table</h2>
-      <div class="agents" id="agents"></div>
-      <div class="inspect" id="inspect"></div>
-    </section>
-    <section>
-      <div class="panel">
-        <h2>Delivery line</h2>
-        <div class="board" id="board" aria-label="Delivery board"></div>
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <div class="brand">
+          <div class="mark-v" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4 L28 28 H4 Z" stroke="#ff4d3d" stroke-width="2"/>
+              <path d="M16 10 L23 24 H9 Z" fill="#ff4d3d"/>
+            </svg>
+          </div>
+          <div>
+            <p class="word">VOLTR<em>O</em>N</p>
+            <p class="sub">Cashtro OS · assembled · FR/EN</p>
+          </div>
+        </div>
+        <p class="lede" id="lede">Fourteen seats. One body. idea → concept → production.</p>
       </div>
-      <div class="panel" style="margin-top:14px">
-        <h2>New mandate</h2>
-        <form id="form">
-          <label>Name <input name="name" required placeholder="Ledger desk"></label>
-          <label>Client <input name="client" placeholder="Proximity Agency"></label>
-          <label>Sector <input name="sector" placeholder="finance"></label>
-          <label>Stack <input name="stack" placeholder="Go, Azure"></label>
-          <label>Notes <textarea name="notes" rows="2" placeholder="What has to ship"></textarea></label>
-          <button type="submit">Park it in idea</button>
-          <div class="err" id="form-error"></div>
-        </form>
-      </div>
-      <div class="panel" style="margin-top:14px">
-        <h2>Research library</h2>
-        <div class="journal" id="notes"></div>
-        <form id="note-form" style="margin-top:10px">
-          <label>Claim <input name="claim" required placeholder="AOS is a control plane"></label>
-          <label>Source <input name="source" placeholder="arxiv:2606.01508"></label>
-          <label>URL <input name="url" placeholder="https://arxiv.org/abs/2606.01508"></label>
-          <button type="submit">Ingest note</button>
-        </form>
-      </div>
-      <div class="panel" style="margin-top:14px">
-        <h2>Human gate</h2>
-        <div class="journal" id="confirms"></div>
-      </div>
-      <div class="panel" style="margin-top:14px">
-        <h2>Journal</h2>
-        <div class="journal" id="journal"></div>
-      </div>
-    </section>
-  </main>
-  <footer>
-    <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · OpenRouter optional</span>
-  </footer>
+      <div class="stats" id="stats"></div>
+    </header>
+    <main class="desk">
+      <section class="panel">
+        <h2>Crew</h2>
+        <div class="agents" id="agents"></div>
+      </section>
+      <section class="stack">
+        <div class="panel">
+          <h2>Delivery line</h2>
+          <div class="board" id="board" aria-label="Delivery board"></div>
+        </div>
+        <div class="panel">
+          <h2>Journal</h2>
+          <div class="journal" id="journal"></div>
+        </div>
+      </section>
+      <aside class="stack">
+        <div class="panel">
+          <h2>Bay</h2>
+          <div class="inspect" id="inspect"></div>
+        </div>
+        <div class="panel">
+          <h2>New mandate</h2>
+          <form id="form">
+            <label>Name <input name="name" required placeholder="Ledger desk"></label>
+            <label>Client <input name="client" placeholder="Proximity Agency"></label>
+            <label>Sector <input name="sector" placeholder="finance"></label>
+            <label>Stack <input name="stack" placeholder="Go, Azure"></label>
+            <label>Notes <textarea name="notes" rows="2" placeholder="What has to ship"></textarea></label>
+            <button class="primary" type="submit">Park it in idea</button>
+            <div class="err" id="form-error"></div>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Research library</h2>
+          <div class="journal" id="notes"></div>
+          <form id="note-form">
+            <label>Claim <input name="claim" required placeholder="AOS is a control plane"></label>
+            <label>Source <input name="source" placeholder="arxiv:2606.01508"></label>
+            <label>URL <input name="url" placeholder="https://arxiv.org/abs/2606.01508"></label>
+            <button type="submit">Ingest note</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Human gate</h2>
+          <div class="journal" id="confirms"></div>
+        </div>
+      </aside>
+    </main>
+    <footer>
+      <span id="contact">alejandro@proximityagency.ca</span>
+      <span>Voltron · Cashtro kernel · OpenRouter optional</span>
+    </footer>
+  </div>
   <script>
     const stages = ["idea", "concept", "production"];
+    const crew = {
+      init: { name: "Lautaro", color: "#d7dde8" },
+      delivery: { name: "Maker", color: "#ff4d3d" },
+      router: { name: "Spark", color: "#c084fc" },
+      research: { name: "Scribe", color: "#3dffa6" },
+      explorer: { name: "Pathfinder", color: "#6ea8ff" },
+      operator: { name: "Builder", color: "#ff4d3d" },
+      reviewer: { name: "Witness", color: "#f0c14b" },
+      architect: { name: "Creator", color: "#f0c14b" },
+      deploy: { name: "Forger", color: "#6ea8ff" },
+      security: { name: "Sentinel", color: "#ff6b5a" },
+      memory: { name: "Keeper", color: "#8b93a7" },
+      comms: { name: "Herald", color: "#f0c14b" },
+      planner: { name: "Steward", color: "#3dffa6" },
+      investigator: { name: "Seeker", color: "#ffb020" }
+    };
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
       const body = await res.json();
@@ -176,9 +320,10 @@
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
       box.replaceChildren();
+      const seat = crew[agent.spec.id] || { name: agent.spec.name };
       const title = document.createElement("div");
       title.className = "mark";
-      title.textContent = agent.spec.name + " · " + agent.spec.mode;
+      title.textContent = seat.name;
       const p = document.createElement("p");
       p.className = "lede";
       p.textContent = lastInvoke || agent.spec.summary;
@@ -186,6 +331,7 @@
       box.appendChild(p);
       (agent.spec.capabilities || []).forEach((cap) => {
         const b = document.createElement("button");
+        b.className = "cap";
         b.textContent = "Invoke " + cap;
         b.addEventListener("click", async () => {
           b.disabled = true;
@@ -219,13 +365,12 @@
       const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
         j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
       ]);
-      document.getElementById("lede").textContent = os.manifesto;
+      document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";
       document.getElementById("contact").textContent = profile.email;
       const stats = document.getElementById("stats");
       stats.replaceChildren(
-        chip(os.name + " " + os.version),
-        chip("under construction"),
-        chip(os.running + " running"),
+        chip("Cashtro OS " + os.version),
+        chip(os.running + " online", "live"),
         chip(os.live + " live"),
         chip(os.resident + " resident"),
         chip(notes.length + " notes"),
@@ -234,14 +379,16 @@
       const grid = document.getElementById("agents");
       grid.replaceChildren();
       agents.forEach((agent) => {
+        const seat = crew[agent.spec.id] || { name: agent.spec.name, color: "#8b93a7" };
         const btn = document.createElement("button");
         btn.className = "agent" + (agent.spec.id === selected ? " active" : "");
-        btn.innerHTML = "<b></b><div class='dot'></div><span></span>";
-        btn.querySelector("b").textContent = agent.spec.name;
+        btn.innerHTML = "<span class='stripe'></span><span class='body'><b></b><div class='meta'></div><div class='dot'></div></span>";
+        btn.querySelector(".stripe").style.background = seat.color;
+        btn.querySelector("b").textContent = seat.name;
+        btn.querySelector(".meta").textContent = agent.spec.role + " · " + agent.spec.id;
         const dot = btn.querySelector(".dot");
         dot.className = "dot " + agent.spec.mode;
         dot.textContent = agent.spec.mode + " · " + agent.status;
-        btn.querySelector("span").textContent = agent.spec.role + " — " + agent.spec.summary;
         btn.addEventListener("click", () => { selected = agent.spec.id; lastInvoke = ""; render(); });
         grid.appendChild(btn);
       });
