@@ -230,6 +230,11 @@ test("depth 4 is refused and /ui + /costs render", async (t) => {
     url: "/tasks",
     ...auth({ title: "pane dispatch", idempotencyKey: "idem-pane-0001" }),
   });
-  const pane = await ctx.app.inject({ method: "POST", url: `/ui/act/dispatch/${ready.json().id}` });
+  const pane = await ctx.app.inject({
+    method: "POST",
+    url: `/ui/act/dispatch/${ready.json().id}`,
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    payload: "",
+  });
   assert.ok(pane.statusCode === 302 || pane.statusCode === 200, `pane ${pane.statusCode} ${pane.body}`);
 });

@@ -43,6 +43,9 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
   const budgetCap = opts.budgetCap ?? Number(process.env.HARD_BUDGET_PER_RUN_USD || 2);
 
   const app = Fastify({ logger: false });
+  app.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_req, _body, done) => {
+    done(null, {});
+  });
   await app.register(swagger, {
     openapi: {
       openapi: "3.1.0",
