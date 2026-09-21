@@ -40,8 +40,9 @@ Open `http://localhost:8080`.
 
 ### Dual loop · Kimi K3 + GLM
 
-Pulse never stops. **Forge** rotates Castro's wealth playbook
-(create → build → grow → evolve). Each tick must raise the score.
+Pulse never stops. **Keep-alive** respawns autostart processes every 8s.
+**Forge** evolves the wealth playbook on Pulse now, Think, or every ~30s
+in the background. Each tick must raise the score.
 OpenRouter stays optional:
 
 - Unbound: the loop is deterministic. Processes stay up. Offers compound.
