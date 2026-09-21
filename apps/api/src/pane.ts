@@ -44,6 +44,7 @@ export async function renderPane(prisma: PrismaClient, screen: string): Promise<
     nav { display:flex; gap:8px; flex-wrap:wrap; }
     nav a { color:var(--ink); text-decoration:none; padding:6px 10px; border:1px solid var(--line); border-radius:999px; font-size:.85rem; }
     nav a[aria-current="page"] { background:var(--red); border-color:var(--red); }
+    button { background:var(--red); color:#fff; border:0; border-radius:8px; padding:6px 10px; font:inherit; }
     main { padding:16px; max-width:720px; }
     .card { border:1px solid var(--line); border-radius:12px; padding:12px; margin:0 0 10px; }
     .dot { display:inline-block; width:.6rem; height:.6rem; border-radius:50%; background:var(--mut); margin-right:6px; }
@@ -78,13 +79,21 @@ function fleet(projects: Array<{ slug: string; status: string; org: string; kind
         <div class="mut">${esc(p.org)} · ${esc(p.kind)} · ${esc(p.status)}</div></div>`;
     })
     .join("");
-  return `<p class="mut">Cost recorded: $${cost.toFixed(4)} · kill switch ${paused ? "ON" : "off"}</p>${rows || "<p>No projects.</p>"}`;
+  return `<p class="mut">Cost recorded: $${cost.toFixed(4)} · kill switch ${paused ? "ON" : "off"}</p>
+    <form method="post" action="/ui/act/pause"><button type="submit">Pause everything</button></form>
+    ${rows || "<p>No projects.</p>"}`;
 }
 
-function queue(tasks: Array<{ title: string; status: string; priority: string; source: string }>) {
+function queue(tasks: Array<{ id: string; title: string; status: string; priority: string; source: string }>) {
   if (!tasks.length) return "<p>Queue empty.</p>";
-  return `<table><thead><tr><th>Task</th><th>Status</th><th>Pri</th></tr></thead><tbody>${tasks
-    .map((t) => `<tr><td>${esc(t.title)}</td><td>${esc(t.status)}</td><td>${esc(t.priority)}</td></tr>`)
+  return `<table><thead><tr><th>Task</th><th>Status</th><th></th></tr></thead><tbody>${tasks
+    .map((t) => {
+      const can = t.status === "todo" || t.status === "doing" || t.status === "blocked";
+      const btn = can
+        ? `<form method="post" action="/ui/act/dispatch/${esc(t.id)}"><button type="submit">Dispatch</button></form>`
+        : "";
+      return `<tr><td>${esc(t.title)}</td><td>${esc(t.status)}</td><td>${btn}</td></tr>`;
+    })
     .join("")}</tbody></table>`;
 }
 

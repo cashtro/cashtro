@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "cashtro-registry": {
+      "command": "pnpm",
+      "args": ["--filter", "@cashtro/mcp", "start"],
+      "env": {}
+    }
+  }
+}

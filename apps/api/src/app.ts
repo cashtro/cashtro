@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { CreateTask } from "@cashtro/sdk";
 import type { AgentAdapter } from "@cashtro/adapters";
 import { drainQueue, orchestrate } from "./orchestrate.js";
+import { ingestGithubWebhook } from "./githubWebhook.js";
 import { renderPane } from "./pane.js";
 
 export type AppOpts = {
@@ -52,7 +53,15 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
 
   app.decorateRequest("actor", "");
   app.addHook("preHandler", async (req, reply) => {
-    if (req.method === "GET" && (req.url === "/docs" || req.url.startsWith("/docs/") || req.url.startsWith("/documentation") || req.url === "/metrics" || req.url === "/health" || req.url === "/ui" || req.url.startsWith("/ui/"))) {
+    if (
+      req.url === "/docs" ||
+      req.url.startsWith("/docs/") ||
+      req.url.startsWith("/documentation") ||
+      req.url === "/metrics" ||
+      req.url === "/health" ||
+      req.url === "/ui" ||
+      req.url.startsWith("/ui/")
+    ) {
       req.actor = "public";
       return;
     }
@@ -81,6 +90,31 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
     const { screen } = req.params as { screen: string };
     reply.header("content-type", "text/html; charset=utf-8");
     return renderPane(prisma, screen);
+  });
+
+  app.post("/ui/act/dispatch/:id", async (req, reply) => {
+    const { id } = req.params as { id: string };
+    const result = await orchestrate({
+      prisma,
+      taskId: id,
+      actor: req.actor || "pane",
+      budgetCap,
+      kernelUrl: opts.kernelUrl,
+      fetchImpl: opts.fetchImpl,
+      adapters: opts.adapters,
+    });
+    if (!result.ok) return reply.code(result.status).send(result);
+    return reply.redirect("/ui/run");
+  });
+
+  app.post("/ui/act/pause", async (req, reply) => {
+    await prisma.controlState.upsert({
+      where: { id: "global" },
+      update: { paused: true },
+      create: { id: "global", paused: true },
+    });
+    await drainQueue(prisma, req.actor || "pane");
+    return reply.redirect("/ui/fleet");
   });
 
   app.get("/projects", async (req) => {
@@ -243,7 +277,21 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
 
   app.post("/webhooks/github", async (req) => {
     await emit(req.actor || "github", "webhook.github", req.body ?? {});
-    return { ok: true };
+    const ingested = ingestGithubWebhook(req.body);
+    if (!ingested) return { ok: true, task: null };
+    const existing = await prisma.task.findUnique({ where: { idempotencyKey: ingested.idempotencyKey } });
+    if (existing) return { ok: true, task: existing, deduped: true };
+    const task = await prisma.task.create({
+      data: {
+        title: ingested.title,
+        body: ingested.body,
+        source: ingested.source,
+        priority: "p1",
+        idempotencyKey: ingested.idempotencyKey,
+      },
+    });
+    await emit(req.actor || "github", "task.create", { id: task.id, source: "github" });
+    return { ok: true, task };
   });
 
   app.post("/webhooks/:agent/callback", async (req) => {

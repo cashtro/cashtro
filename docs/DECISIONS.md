@@ -82,3 +82,9 @@
 - **Alternatives:** Leave “ready to bind”; wire real Playwright.
 - **Why:** Castro said go attack. Binding a computer-use farm is a
   paid/scope jump. Local verbs unblock the desk tonight.
+
+## 2026-09-21 — MCP reads files, not a second API
+
+- **Choice:** `tools/mcp` reads inventory/backlog/catalog off disk.
+- **Alternatives:** MCP that proxies Fastify; skip MCP until Evolu access.
+- **Why:** Mission interop. Disk works when the API is down. No guessed repos.

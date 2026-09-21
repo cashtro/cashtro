@@ -116,3 +116,10 @@ operator / reviewer / architect / deploy / security / investigator
 execute locally. Refuse live clients and non-local URLs. Router stays
 resident until a key. Voltron desk + `scripts/voltron.sh` restored onto
 this branch so a rebuild does not drop the overnight supervisor.
+
+## Overnight build — 2026-09-21 23:20Z
+
+- MCP registry: `pnpm mcp` / `.mcp.json` tools list_inventory, list_catalog,
+  list_backlog, get_access
+- GitHub webhook opens idempotent tasks
+- `/ui` queue can dispatch; fleet can pause

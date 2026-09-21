@@ -115,8 +115,28 @@ test("registry seed + every mutating route writes an event", async (t) => {
   const metrics = await ctx.app.inject({ method: "GET", url: "/metrics" });
   assert.match(metrics.body, /cashtro_cost_usd_total/);
 
-  const gh = await ctx.app.inject({ method: "POST", url: "/webhooks/github", ...auth({ action: "opened" }) });
+  const gh = await ctx.app.inject({
+    method: "POST",
+    url: "/webhooks/github",
+    ...auth({
+      action: "opened",
+      repository: { full_name: "cashtro/cashtro" },
+      pull_request: { number: 14, title: "control plane", html_url: "https://example.test/14" },
+    }),
+  });
   assert.equal(gh.json().ok, true);
+  assert.ok(gh.json().task?.id);
+  const againGh = await ctx.app.inject({
+    method: "POST",
+    url: "/webhooks/github",
+    ...auth({
+      action: "opened",
+      repository: { full_name: "cashtro/cashtro" },
+      pull_request: { number: 14, title: "control plane", html_url: "https://example.test/14" },
+    }),
+  });
+  assert.equal(againGh.json().deduped, true);
+  assert.equal(againGh.json().task.id, gh.json().task.id);
   const cb = await ctx.app.inject({ method: "POST", url: "/webhooks/init/callback", ...auth({ done: true }) });
   assert.equal(cb.json().ok, true);
 
@@ -194,4 +214,12 @@ test("depth 4 is refused and /ui + /costs render", async (t) => {
   const costs = await ctx.app.inject({ method: "GET", url: "/costs", ...auth() });
   assert.equal(costs.statusCode, 200);
   assert.equal(typeof costs.json().totalUsd, "number");
+
+  const ready = await ctx.app.inject({
+    method: "POST",
+    url: "/tasks",
+    ...auth({ title: "pane dispatch", idempotencyKey: "idem-pane-0001" }),
+  });
+  const pane = await ctx.app.inject({ method: "POST", url: `/ui/act/dispatch/${ready.json().id}` });
+  assert.ok(pane.statusCode === 302 || pane.statusCode === 200, `pane ${pane.statusCode} ${pane.body}`);
 });

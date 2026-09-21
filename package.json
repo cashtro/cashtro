@@ -5,6 +5,7 @@
   "scripts": {
     "recon": "pnpm --filter @cashtro/recon start",
     "onboard": "pnpm --filter @cashtro/onboard start",
+    "mcp": "pnpm --filter @cashtro/mcp start",
     "secret-scan": "pnpm --filter @cashtro/secret-scan start",
     "web": "pnpm --filter @cashtro/web dev",
     "api": "pnpm --filter @cashtro/api start",
