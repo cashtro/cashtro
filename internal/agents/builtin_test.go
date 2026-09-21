@@ -33,6 +33,14 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("os.about: %+v %v", res, err)
 	}
 
+	res, err = k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.heartbeat"})
+	if err != nil || !res.OK {
+		t.Fatalf("os.heartbeat: %+v %v", res, err)
+	}
+	if about := k.About(); about.BootedAt.IsZero() {
+		t.Fatalf("expected bootedAt on about: %+v", about)
+	}
+
 	res, err = k.Invoke(context.Background(), "delivery", kernel.Call{Capability: "delivery.list"})
 	if err != nil {
 		t.Fatal(err)

@@ -33,6 +33,21 @@ func TestHealthAndProfile(t *testing.T) {
 	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) || !strings.Contains(res.Body.String(), `"always":true`) {
 		t.Fatalf("health body = %s", res.Body.String())
 	}
+	if !strings.Contains(res.Body.String(), `"uptimeSec"`) {
+		t.Fatalf("health missing uptime: %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/health", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"always":true`) {
+		t.Fatalf("api health = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/heartbeat", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"always":true`) {
+		t.Fatalf("heartbeat = %d %s", res.Code, res.Body.String())
+	}
 
 	res = httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/profile", nil))

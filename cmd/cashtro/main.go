@@ -64,11 +64,12 @@ func run(addr, data string) error {
 
 	select {
 	case <-ctx.Done():
-		_ = kernel.SaveFile(data, k)
+		k.Close()
 		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 		return httpSrv.Shutdown(shutdownCtx)
 	case err := <-errCh:
+		k.Close()
 		if errors.Is(err, http.ErrServerClosed) {
 			return nil
 		}

@@ -66,7 +66,9 @@ unbound. The rest of the OS stays live.
 | Method | Path | What it does |
 | --- | --- | --- |
 | `GET` | `/` | OS desk |
-| `GET` | `/health` | Liveness + kernel counts |
+| `GET` | `/health` | Liveness + kernel counts + uptime |
+| `GET` | `/api/health` | Same as `/health` |
+| `POST` | `/api/heartbeat` | Always-on keep-alive stamp |
 | `GET` | `/api/os` | Manifesto and process counts |
 | `GET` | `/api/agents` | Process table |
 | `POST` | `/api/agents/{id}/invoke` | Run a capability |
@@ -96,6 +98,7 @@ make always-on
 ```
 
 That loop rebuilds, starts `:8080`, and restarts on crash. State lands in
-`data/cashtro.json`. Overnight wake-ups can also be scheduled as Cursor
-timers on this agent conversation.
+`data/cashtro.json`. The kernel also autosaves that image every 60s so a
+hard kill still leaves a durable disk. Overnight wake-ups can also be
+scheduled as Cursor timers on this agent conversation.
 

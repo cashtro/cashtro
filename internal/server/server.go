@@ -21,6 +21,8 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /favicon.ico", s.favicon)
 	mux.HandleFunc("GET /favicon.svg", s.favicon)
 	mux.HandleFunc("GET /health", s.health)
+	mux.HandleFunc("GET /api/health", s.health)
+	mux.HandleFunc("POST /api/heartbeat", s.heartbeat)
 	mux.HandleFunc("GET /api/os", s.osAbout)
 	mux.HandleFunc("GET /api/agents", s.listAgents)
 	mux.HandleFunc("GET /api/agents/{id}", s.getAgent)
@@ -69,19 +71,30 @@ func (s *api) favicon(w http.ResponseWriter, r *http.Request) {
 func (s *api) health(w http.ResponseWriter, r *http.Request) {
 	about := s.k.About()
 	writeJSON(w, http.StatusOK, map[string]any{
-		"status":  "ok",
-		"service": "cashtro",
-		"os":      about.Name,
-		"version": about.Version,
-		"kernel":  about.Kernel,
-		"agents":  about.Agents,
-		"running": about.Running,
-		"live":    about.Live,
-		"notes":   len(s.k.Notes()),
-		"events":  about.Events,
-		"data":    s.k.PersistPath(),
-		"always":  true,
+		"status":    "ok",
+		"service":   "cashtro",
+		"os":        about.Name,
+		"version":   about.Version,
+		"kernel":    about.Kernel,
+		"agents":    about.Agents,
+		"running":   about.Running,
+		"live":      about.Live,
+		"notes":     len(s.k.Notes()),
+		"events":    about.Events,
+		"bootedAt":  about.BootedAt,
+		"uptimeSec": about.UptimeSec,
+		"data":      s.k.PersistPath(),
+		"always":    true,
 	})
+}
+
+func (s *api) heartbeat(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "init", kernel.Call{Capability: "os.heartbeat"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
 }
 
 func (s *api) osAbout(w http.ResponseWriter, r *http.Request) {

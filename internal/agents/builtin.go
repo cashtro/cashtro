@@ -34,6 +34,7 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 		if err := kernel.SaveFile(path, k); err != nil {
 			return nil, err
 		}
+		k.StartPersistLoop()
 	}
 	return k, nil
 }
@@ -43,10 +44,17 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 	return []kernel.Agent{
 		resident(kernel.Spec{
 			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
-			Role: "kernel", Summary: "Boots the OS and publishes the manifesto.",
-			Capabilities: []string{"os.about"}, Autostart: true,
+			Role: "kernel", Summary: "Boots the OS, publishes the manifesto, and stamps always-on heartbeats.",
+			Capabilities: []string{"os.about", "os.heartbeat"}, Autostart: true,
 		}, func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
-			return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
+			switch call.Capability {
+			case "os.about":
+				return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
+			case "os.heartbeat":
+				return kernel.Result{OK: true, Message: "heartbeat", Data: k.Heartbeat("init")}, nil
+			default:
+				return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)
+			}
 		}),
 		&deliveryAgent{cat: cat},
 		&routerAgent{client: router},
