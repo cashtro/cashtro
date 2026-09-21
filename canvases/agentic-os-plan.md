@@ -1,7 +1,7 @@
 # Agentic OS plan — builders vs products
 
-Castro rule: **products stay products**. Processes wear builder / creator
-names like **Lautaro**.
+Castro rule: **products stay products**. Processes wear names like
+**Builder**, **Creator**, **Lautaro** — then the rest of the crew.
 
 See `~/.cursor/admiral-fleet/ROSTER.md` for the live roster.
 
@@ -9,7 +9,9 @@ See `~/.cursor/admiral-fleet/ROSTER.md` for the live roster.
 flowchart TB
   Castro[Castro]
   Lautaro[Lautaro · init]
-  Antoni[Antoni · delivery]
+  Builder[Builder · operator]
+  Creator[Creator · architect]
+  Maker[Maker · delivery]
   subgraph products [Products keep their names]
     CasaCrypto[Casa Crypto]
     Prolifik[Prolifik]
@@ -17,9 +19,11 @@ flowchart TB
     Proximity[Proximity]
   end
   Castro --> Lautaro
-  Lautaro --> Antoni
-  Antoni --> CasaCrypto
-  Antoni --> Prolifik
-  Antoni --> ScanApp
-  Antoni --> Proximity
+  Lautaro --> Builder
+  Lautaro --> Creator
+  Lautaro --> Maker
+  Maker --> CasaCrypto
+  Maker --> Prolifik
+  Maker --> ScanApp
+  Maker --> Proximity
 ```

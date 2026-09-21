@@ -27,10 +27,10 @@ e-commerce. Client code stays private. The results are live:
 
 This repo is **under construction**. It is the control plane for every
 agentic we build here. Agents are processes. Processes wear builders —
-Lautaro, Frida, Diego. Products keep their names. Capabilities are verbs.
-Mail, notes, memory, and human confirms are first-class. Delivery and
-research are live. New agentics register into this kernel — they do not
-become a second product.
+Lautaro, Builder, Creator, then the rest of the crew. Products keep their
+names. Capabilities are verbs. Mail, notes, memory, and human confirms
+are first-class. Delivery and research are live. New agentics register
+into this kernel — they do not become a second product.
 
 ```bash
 go test ./...
@@ -41,7 +41,8 @@ Open `http://localhost:8080`.
 
 Casa Crypto, Prolifik, ScanApp, and Proximity stay **products** on the
 delivery line. The process table wears builders and creators — Lautaro
-boots the house. IDs and capability verbs do not change.
+boots the house, then Builder, Creator, Maker, Forger, and the rest of
+the crew. IDs and capability verbs do not change.
 
 ```mermaid
 flowchart TB
@@ -53,27 +54,27 @@ flowchart TB
   end
   subgraph builders [Process table — builders]
     Lautaro[Lautaro · init]
-    Hedy[Hedy · router]
-    Antoni[Antoni · delivery]
-    Gabriela[Gabriela · research]
-    Marco[Marco · explorer]
-    Diego[Diego · operator]
-    Juana[Juana · reviewer]
-    Frida[Frida · architect]
-    Oscar[Oscar · deploy]
-    Tupac[Túpac · security]
-    Luis[Luis · memory]
-    Violeta[Violeta · comms]
-    Pablo[Pablo · planner]
-    Caupolican[Caupolicán · investigator]
+    Spark[Spark · router]
+    Maker[Maker · delivery]
+    Scribe[Scribe · research]
+    Pathfinder[Pathfinder · explorer]
+    Builder[Builder · operator]
+    Witness[Witness · reviewer]
+    Creator[Creator · architect]
+    Forger[Forger · deploy]
+    Sentinel[Sentinel · security]
+    Keeper[Keeper · memory]
+    Herald[Herald · comms]
+    Steward[Steward · planner]
+    Seeker[Seeker · investigator]
   end
-  Lautaro --> Antoni
-  Marco --> Gabriela
-  Pablo --> Antoni
-  Antoni --> CasaCrypto
-  Antoni --> Prolifik
-  Antoni --> ScanApp
-  Antoni --> Proximity
+  Lautaro --> Maker
+  Pathfinder --> Scribe
+  Steward --> Maker
+  Maker --> CasaCrypto
+  Maker --> Prolifik
+  Maker --> ScanApp
+  Maker --> Proximity
 ```
 
 ### Do we need OpenRouter?

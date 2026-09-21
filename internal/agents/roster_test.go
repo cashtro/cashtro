@@ -31,6 +31,12 @@ func TestBuildersWearOnDesk(t *testing.T) {
 	if Builder("init") != "Lautaro" {
 		t.Fatalf("init must be Lautaro, got %q", Builder("init"))
 	}
+	if Builder("operator") != "Builder" {
+		t.Fatalf("operator must be Builder, got %q", Builder("operator"))
+	}
+	if Builder("architect") != "Creator" {
+		t.Fatalf("architect must be Creator, got %q", Builder("architect"))
+	}
 }
 
 func TestProductsStayProducts(t *testing.T) {
@@ -79,6 +85,28 @@ func TestExplorerFindsBuilderAndProduct(t *testing.T) {
 	}
 	if !hitKind(res.Data, "agent", "init") {
 		t.Fatalf("Lautaro should find process init: %#v", res.Data)
+	}
+
+	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{
+		Capability: "explorer.search",
+		Payload:    []byte(`{"query":"Builder"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("builder search: %+v %v", res, err)
+	}
+	if !hitKind(res.Data, "agent", "operator") {
+		t.Fatalf("Builder should find process operator: %#v", res.Data)
+	}
+
+	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{
+		Capability: "explorer.search",
+		Payload:    []byte(`{"query":"Creator"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("creator search: %+v %v", res, err)
+	}
+	if !hitKind(res.Data, "agent", "architect") {
+		t.Fatalf("Creator should find process architect: %#v", res.Data)
 	}
 
 	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{

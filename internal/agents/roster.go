@@ -4,25 +4,25 @@ import "github.com/cashtro/cashtro/internal/kernel"
 
 // Builders are the public names processes wear on the desk.
 //
-// These are builder / creator names — Lautaro, Frida, Diego — not product
-// brands and not philosopher surnames. Process IDs and capability verbs stay
-// stable so the kernel can route. Casa Crypto, Prolifik, ScanApp, Proximity
-// stay on the delivery line. A process never takes a product's name.
+// Castro's call: names like Builder, Creator, Lautaro — then keep going
+// in that voice. Not product brands. Not philosopher surnames.
+// Process IDs and capability verbs stay stable so the kernel can route.
+// Casa Crypto, Prolifik, ScanApp, Proximity stay on the delivery line.
 var Builders = map[string]string{
 	"init":         "Lautaro",
-	"architect":    "Frida",
-	"operator":     "Diego",
-	"delivery":     "Antoni",
-	"research":     "Gabriela",
-	"explorer":     "Marco",
-	"reviewer":     "Juana",
-	"deploy":       "Oscar",
-	"security":     "Túpac",
-	"memory":       "Luis",
-	"comms":        "Violeta",
-	"planner":      "Pablo",
-	"investigator": "Caupolicán",
-	"router":       "Hedy",
+	"operator":     "Builder",
+	"architect":    "Creator",
+	"delivery":     "Maker",
+	"deploy":       "Forger",
+	"research":     "Scribe",
+	"explorer":     "Pathfinder",
+	"reviewer":     "Witness",
+	"security":     "Sentinel",
+	"memory":       "Keeper",
+	"comms":        "Herald",
+	"planner":      "Steward",
+	"investigator": "Seeker",
+	"router":       "Spark",
 }
 
 // ProductNames must never appear as process display names.

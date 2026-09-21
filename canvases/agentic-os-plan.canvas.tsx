@@ -3,19 +3,19 @@ import { Callout, Grid, H1, H2, Pill, Stack, Stat, Table, Text } from "cursor/ca
 
 const builders = [
   ["Lautaro", "init", "kernel", "live"],
-  ["Hedy", "router", "model", "resident"],
-  ["Antoni", "delivery", "ship", "live"],
-  ["Gabriela", "research", "library", "live"],
-  ["Marco", "explorer", "search", "live"],
-  ["Diego", "operator", "computer-use", "resident"],
-  ["Juana", "reviewer", "qa", "resident"],
-  ["Frida", "architect", "design", "resident"],
-  ["Oscar", "deploy", "release", "resident"],
-  ["Túpac", "security", "guard", "resident"],
-  ["Luis", "memory", "recall", "live"],
-  ["Violeta", "comms", "signal", "live"],
-  ["Pablo", "planner", "backlog", "live"],
-  ["Caupolicán", "investigator", "incident", "resident"],
+  ["Builder", "operator", "computer-use", "resident"],
+  ["Creator", "architect", "design", "resident"],
+  ["Maker", "delivery", "ship", "live"],
+  ["Forger", "deploy", "release", "resident"],
+  ["Scribe", "research", "library", "live"],
+  ["Pathfinder", "explorer", "search", "live"],
+  ["Witness", "reviewer", "qa", "resident"],
+  ["Sentinel", "security", "guard", "resident"],
+  ["Keeper", "memory", "recall", "live"],
+  ["Herald", "comms", "signal", "live"],
+  ["Steward", "planner", "backlog", "live"],
+  ["Seeker", "investigator", "incident", "resident"],
+  ["Spark", "router", "model", "resident"],
 ] as const;
 
 const products = [
@@ -35,21 +35,21 @@ export default function AgenticOsPlan() {
     <Stack gap={20}>
       <H1>Cashtro OS naming</H1>
       <Callout tone="info">
-        Products stay products. Processes wear builders and creators — Lautaro
-        boots the house. IDs and capability verbs do not change. Casa Crypto
-        stays a ship.
+        Products stay products. Processes wear names like Builder, Creator,
+        Lautaro — then the rest of the crew. IDs and capability verbs do not
+        change. Casa Crypto stays a ship.
       </Callout>
       <Grid columns={3} gap={12}>
-        <Stat value="14" label="Builders on the process table" />
-        <Stat value="9" label="Products on the delivery line" />
         <Stat value="Lautaro" label="Kernel seat · init" />
+        <Stat value="Builder" label="Hands · operator" />
+        <Stat value="Creator" label="Form · architect" />
       </Grid>
       <H2>Process table — builders</H2>
       <Text tone="secondary" size="small">
-        Source: Cashtro kernel 0.3.1 · roster 2026-09-21
+        Source: Cashtro kernel 0.3.2 · roster 2026-09-21
       </Text>
       <Table
-        headers={["Builder", "Process ID", "Role", "Mode"]}
+        headers={["Name", "Process ID", "Role", "Mode"]}
         striped
         stickyHeader
         rowTone={builders.map((row) => (row[3] === "live" ? "success" : "warning"))}
