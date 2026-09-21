@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { writeGraph, writeReport } from "./report.js";
 import { Inventory, mergeInventory, repoKey, type RepoRecord } from "./schema.js";
 
 function stub(name: string, scannedAt: string): RepoRecord {
@@ -39,6 +40,21 @@ test("merge is idempotent by org/name", () => {
   assert.equal(repoKey(twice[0]), "cashtro/cashtro");
   assert.equal(twice[0].ciStatus, "failure");
   assert.deepEqual(twice, thrice);
+});
+
+test("report lists catalog ships as unscanned", () => {
+  const inv = Inventory.parse({
+    schemaVersion: "1",
+    generatedAt: "2026-09-21T22:00:00Z",
+    controlPlaneRepo: "cashtro/cashtro",
+    owners: ["cashtro", "Evolu-Jeunes"],
+    repos: [stub("cashtro", "2026-09-21T22:00:00Z")],
+  });
+  const md = writeReport(inv);
+  assert.match(md, /ScanApp/);
+  assert.match(md, /BTK Avocats/);
+  assert.match(md, /not GitHub-scanned/);
+  assert.match(writeGraph(inv), /Kernel catalog/);
 });
 
 test("inventory schema rejects a bad row", () => {

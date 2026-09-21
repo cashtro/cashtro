@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-09-21T21:32:37.262Z",
+  "generatedAt": "2026-09-21T22:03:51.005Z",
   "controlPlaneRepo": "cashtro/cashtro",
   "owners": [
     "cashtro",
@@ -13,7 +13,7 @@
       "fullName": "cashtro/cashtro",
       "visibility": "public",
       "defaultBranch": "main",
-      "lastCommitAt": "2026-09-21T21:22:04Z",
+      "lastCommitAt": "2026-09-21T22:01:17Z",
       "archived": false,
       "access": "ok",
       "primaryLanguage": "Go",
@@ -32,10 +32,10 @@
         "make:run",
         "make:build"
       ],
-      "openPrs": 12,
+      "openPrs": 13,
       "openIssues": 0,
       "riskFlags": [],
-      "scannedAt": "2026-09-21T21:32:37.262Z"
+      "scannedAt": "2026-09-21T22:03:51.005Z"
     },
     {
       "name": "*",
@@ -60,7 +60,7 @@
       "riskFlags": [
         "access-denied"
       ],
-      "scannedAt": "2026-09-21T21:32:37.262Z"
+      "scannedAt": "2026-09-21T22:03:51.005Z"
     }
   ]
 }

@@ -34,3 +34,14 @@
 - **Alternatives:** `feat/control-plane/0` per phase.
 - **Why:** This Cloud Agent requires `cursor/<name>-b1d0`. Phases 0–3
   are one vertical slice; 4–7 wait for Castro to read REPORT.md.
+
+## 2026-09-21 — Catalog ships in REPORT, not as scanned repos
+
+- **Choice:** Recon REPORT lists kernel catalog ships (BTK, MD Clinic,
+  Hypothèque, Éduconnexion, Proximity, ScanApp, delivery catalog) as
+  "named, not GitHub-scanned."
+- **Alternatives:** Invent Evolu-Jeunes repo slugs; omit catalog names
+  until PAT lands.
+- **Why:** Mission says do not guess missing repos. Castro still needs
+  a phone-readable list of what he owns. The catalog is first-party
+  seed data, not a GitHub listing.

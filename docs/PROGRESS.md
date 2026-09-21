@@ -27,17 +27,17 @@ Done.
 
 ```
 pnpm --filter @cashtro/recon test
-→ 2 pass (idempotent merge + schema reject)
+→ 3 pass (idempotent merge + catalog-in-report + schema reject)
 
 pnpm recon
-→ recon ok · 1 repos · 2 rows
+→ recon ok · 1 repos · 2 rows   # 2026-09-21T22:03:51Z
 
 pnpm recon
-→ recon ok · 1 repos · 2 rows
+→ recon ok · 1 repos · 2 rows   # second run identical row count
 ```
 
 Second run stayed at 2 rows (`cashtro/cashtro` + `Evolu-Jeunes/*` limited).
-`inventory/REPORT.md` and `inventory/GRAPH.md` written.
+`inventory/REPORT.md` now also lists 7 kernel-catalog ships as **not scanned**.
 
 ## Phase 2 — 2026-09-21
 
