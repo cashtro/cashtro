@@ -130,6 +130,15 @@ func TestProfile(t *testing.T) {
 	}
 }
 
+func TestReplace(t *testing.T) {
+	c := New()
+	c.Replace([]Ship{{ID: "solo", Name: "Solo", Stage: StageIdea}})
+	got := c.List()
+	if len(got) != 1 || got[0].ID != "solo" {
+		t.Fatalf("replace = %+v", got)
+	}
+}
+
 func TestSlugify(t *testing.T) {
 	cases := map[string]string{
 		"BTK Avocats": "btk-avocats",

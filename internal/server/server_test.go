@@ -73,7 +73,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 15 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -83,7 +83,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 15 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -139,6 +139,12 @@ func TestIndexHTML(t *testing.T) {
 	}
 	if !strings.Contains(body, "Add a company") || !strings.Contains(body, "Castro") {
 		t.Fatalf("index missing evolvable fleet forms")
+	}
+	if !strings.Contains(body, "Close desk") || !strings.Contains(body, "Night shift now") {
+		t.Fatalf("index missing closed-hours controls")
+	}
+	if !strings.Contains(body, `data-view="night"`) || !strings.Contains(body, "Overnight builds") {
+		t.Fatalf("index missing night-shift view")
 	}
 }
 
@@ -265,6 +271,42 @@ func TestCompanyFleetHTTP(t *testing.T) {
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "resident") {
 		t.Fatalf("unbound own agentic = %d %s", res.Code, res.Body.String())
+	}
+}
+
+func TestClosedHoursHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/watch", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"closed":false`) {
+		t.Fatalf("watch open = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/watch/close", strings.NewReader(`{"note":"things are closed"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"closed":true`) {
+		t.Fatalf("close = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/health", nil))
+	if !strings.Contains(res.Body.String(), `"closed":true`) {
+		t.Fatalf("health closed = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/watch/build", strings.NewReader(`{"note":"keep building"}`)))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"steps"`) {
+		t.Fatalf("build = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/watch/open", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"closed":false`) {
+		t.Fatalf("open = %s", res.Body.String())
 	}
 }
 

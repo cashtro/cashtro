@@ -255,3 +255,72 @@ func (a *researchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 func (a *researchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
 	return researchInvoke(a.k, call)
 }
+
+type watchAgent struct {
+	k *kernel.Kernel
+}
+
+func (a *watchAgent) Spec() kernel.Spec {
+	return kernel.Spec{
+		ID: "watch", Name: "Watch", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
+		Role: "night", Summary: "Closed hours. Agentics keep building. Comms stay gated.",
+		Capabilities: []string{"watch.status", "watch.close", "watch.open", "watch.pulse", "watch.build"},
+		Autostart:    true,
+	}
+}
+
+func (a *watchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
+	a.k = k
+	k.Publish("watch", "ready", "closed-hours watch online", nil)
+	return nil
+}
+
+func (a *watchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
+	note := payloadQuery(call, "note")
+	if note == "" {
+		note = payloadQuery(call, "prompt")
+	}
+	switch call.Capability {
+	case "watch.status":
+		w := a.k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.close":
+		if note == "" {
+			note = "things are closed"
+		}
+		a.k.SetClosed(true)
+		a.k.RecordPulse(note)
+		_, _ = a.k.NightShift(ctx, note)
+		w := a.k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.open":
+		if note == "" {
+			note = "desk open"
+		}
+		a.k.SetClosed(false)
+		a.k.RecordPulse(note)
+		w := a.k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.pulse":
+		if note == "" {
+			note = "pulse"
+		}
+		a.k.RecordPulse(note)
+		if a.k.Closed() {
+			_, _ = a.k.NightShift(ctx, note)
+		}
+		w := a.k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.build":
+		if note == "" {
+			note = "manual night shift"
+		}
+		b, err := a.k.NightShift(ctx, note)
+		if err != nil {
+			return kernel.Result{}, err
+		}
+		return kernel.Result{OK: true, Message: "night shift · " + strconv.Itoa(len(b.Steps)) + " steps", Data: b}, nil
+	default:
+		return kernel.Result{}, kernel.ErrUnknownCapability
+	}
+}

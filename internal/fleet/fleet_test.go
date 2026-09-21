@@ -1,6 +1,7 @@
 package fleet
 
 import (
+	"encoding/json"
 	"errors"
 	"testing"
 	"time"
@@ -102,6 +103,38 @@ func TestAddAgenticAndKeepMine(t *testing.T) {
 	if ownOnly.UseMine || f.UsingMine(ownOnly.ID) {
 		t.Fatalf("solo should not inherit: %+v", ownOnly)
 	}
+}
+
+func TestImageRestoreKeepsAddedCompany(t *testing.T) {
+	f := New()
+	if _, err := f.Create(CreateCompany{Name: "West Desk", Sector: "ops"}); err != nil {
+		t.Fatal(err)
+	}
+	img := f.Image()
+	n, mine := f.Count()
+	if n < 7 || mine < 1 {
+		t.Fatalf("count = %d mine=%d", n, mine)
+	}
+
+	f2 := New()
+	if err := f2.RestoreTenants(mustJSON(t, img)); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := f2.Get("west-desk"); err != nil {
+		t.Fatal("west desk should restore")
+	}
+	if f2.UsingMine("west-desk") != true {
+		t.Fatal("empty west desk should use Castro's")
+	}
+}
+
+func mustJSON(t *testing.T, img Image) []byte {
+	t.Helper()
+	raw, err := json.Marshal(img)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return raw
 }
 
 func TestMarkAndSlug(t *testing.T) {

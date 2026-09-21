@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.0"
 )
 
 // Status is a process lifecycle state.
@@ -113,16 +113,18 @@ type Agent interface {
 
 // About is the public OS card.
 type About struct {
-	Name      string `json:"name"`
-	Version   string `json:"version"`
-	Motto     string `json:"motto"`
-	Kernel    Status `json:"kernel"`
-	Agents    int    `json:"agents"`
-	Running   int    `json:"running"`
-	Live      int    `json:"live"`
-	Resident  int    `json:"resident"`
-	Events    int    `json:"events"`
-	Manifesto string `json:"manifesto"`
+	Name      string     `json:"name"`
+	Version   string     `json:"version"`
+	Motto     string     `json:"motto"`
+	Kernel    Status     `json:"kernel"`
+	Agents    int        `json:"agents"`
+	Running   int        `json:"running"`
+	Live      int        `json:"live"`
+	Resident  int        `json:"resident"`
+	Events    int        `json:"events"`
+	Closed    bool       `json:"closed"`
+	LastPulse *time.Time `json:"lastPulse,omitempty"`
+	Manifesto string     `json:"manifesto"`
 }
 
 var (
@@ -138,24 +140,30 @@ const maxEvents = 200
 
 // Kernel is the in-process OS.
 type Kernel struct {
-	mu       sync.RWMutex
-	now      func() time.Time
-	nextID   int
-	seq      int
-	procs    map[string]*Process
-	agents   map[string]Agent
-	caps     map[string]Capability
-	events   []Event
-	cat      *catalog.Catalog
-	mail     []Mail
-	mailSeq  int
-	notes    []Note
-	noteSeq  int
-	facts    []Fact
-	factSeq  int
-	confirms []Confirm
-	confSeq  int
-	tenants  any
+	mu          sync.RWMutex
+	now         func() time.Time
+	nextID      int
+	seq         int
+	procs       map[string]*Process
+	agents      map[string]Agent
+	caps        map[string]Capability
+	events      []Event
+	cat         *catalog.Catalog
+	mail        []Mail
+	mailSeq     int
+	notes       []Note
+	noteSeq     int
+	facts       []Fact
+	factSeq     int
+	confirms    []Confirm
+	confSeq     int
+	tenants     any
+	persistPath string
+	closed      bool
+	pulses      []Pulse
+	pulseSeq    int
+	builds      []Build
+	buildSeq    int
 }
 
 // Option configures the kernel.
@@ -165,6 +173,13 @@ type Option func(*Kernel)
 func WithClock(now func() time.Time) Option {
 	return func(k *Kernel) {
 		k.now = now
+	}
+}
+
+// WithPersistPath writes the OS image to disk after mutates.
+func WithPersistPath(path string) Option {
+	return func(k *Kernel) {
+		k.persistPath = path
 	}
 }
 
@@ -390,7 +405,7 @@ func (k *Kernel) About() About {
 			resident++
 		}
 	}
-	return About{
+	about := About{
 		Name:     Name,
 		Version:  Version,
 		Motto:    "I make teams ship: idea → concept → production.",
@@ -400,11 +415,18 @@ func (k *Kernel) About() About {
 		Live:     live,
 		Resident: resident,
 		Events:   len(k.events),
+		Closed:   k.closed,
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
 			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
+			"Delivery is live. Research is live. Watch keeps agentics building while the desk is closed. " +
+			"Outbound comms still wait at the human gate. OpenRouter stays optional. " +
 			"New agentics register into this kernel — they do not fork a second product.",
 	}
+	if n := len(k.pulses); n > 0 {
+		t := k.pulses[n-1].At
+		about.LastPulse = &t
+	}
+	return about
 }
 
 func (k *Kernel) autostartIDs() []string {

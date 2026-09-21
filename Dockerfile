@@ -12,5 +12,8 @@ USER cashtro
 WORKDIR /home/cashtro
 COPY --from=build /out/cashtro /usr/local/bin/cashtro
 ENV PORT=8080
+ENV CASHTRO_DATA=/home/cashtro/data/cashtro.json
+ENV CASHTRO_CLOSED=1
+ENV CASHTRO_PULSE_EVERY=2m
 EXPOSE 8080
 ENTRYPOINT ["cashtro"]

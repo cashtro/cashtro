@@ -191,6 +191,18 @@ func (c *Catalog) Advance(id string) (Ship, error) {
 	return cloneShip(s), nil
 }
 
+// Replace swaps the board for a persisted snapshot.
+func (c *Catalog) Replace(ships []Ship) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.ships = make(map[string]*Ship, len(ships))
+	for i := range ships {
+		s := ships[i]
+		copy := cloneShip(&s)
+		c.ships[copy.ID] = &copy
+	}
+}
+
 // NextStage returns the following stage on the line.
 func NextStage(current Stage) (Stage, error) {
 	i := stageIndex(current)

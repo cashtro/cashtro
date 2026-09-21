@@ -215,6 +215,21 @@
     .journal { max-height: 240px; overflow: auto; font-size: .75rem; line-height: 1.55; color: var(--mint); background: #0a100e; border: 1px solid var(--line); padding: .75rem; }
     .err { color: var(--danger); font-size: .85rem; min-height: 1.1em; }
     .empty { color: var(--fog); font-size: .85rem; padding: .6rem 0; }
+    .banner {
+      margin: 0 0 1rem; padding: .65rem .85rem; border: 1px solid rgba(255,184,77,.4);
+      color: var(--amber); font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .banner.live { border-color: rgba(125,255,179,.45); color: var(--mint); }
+    .banner[hidden] { display: none; }
+    .steps { display: flex; flex-wrap: wrap; gap: .35rem; margin: .45rem 0; }
+    .step {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: .68rem; padding: .2rem .45rem; border: 1px solid var(--line);
+    }
+    .step.ok { color: var(--mint); border-color: rgba(125,255,179,.35); }
+    .step.bad { color: var(--danger); border-color: rgba(255,107,107,.4); }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; }
     footer {
       margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid var(--line);
       color: var(--fog); font-size: .85rem; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
@@ -246,6 +261,7 @@
         <button type="button" class="view-btn active" data-view="desk">Desk<small>Processes + inspect</small></button>
         <button type="button" class="view-btn" data-view="line">Line<small>Idea → concept → production</small></button>
         <button type="button" class="view-btn" data-view="library">Library<small>Notes, gate, journal</small></button>
+        <button type="button" class="view-btn" data-view="night">Night<small>Closed-hours builder</small></button>
         <button type="button" class="view-btn" data-view="fleet">Fleet<small>Add companies + agentics</small></button>
       </div>
       <div>
@@ -263,6 +279,7 @@
         <div class="pills" id="stats"></div>
       </div>
 
+      <div class="banner" id="closed-banner" hidden>CLOSED HOURS · AGENTICS STILL BUILDING</div>
       <div class="fleet" id="fleet" aria-label="Giant ecosystem"></div>
 
       <section class="view on" id="view-desk">
@@ -271,6 +288,17 @@
             <h2>Process table · <span id="agent-source">Castro's kernel</span></h2>
             <div class="agents" id="agents"></div>
             <div class="inspect" id="inspect"></div>
+            <div class="inspect">
+              <div class="nav-label">Closed hours</div>
+              <p class="lede" id="watch-lede">Desk is open. Close it and the agentics keep building overnight. Comms stay gated.</p>
+              <div class="actions">
+                <button type="button" class="primary" id="watch-close">Close desk</button>
+                <button type="button" class="ghost-btn" id="watch-build">Night shift now</button>
+                <button type="button" class="ghost-btn" id="watch-pulse">Pulse</button>
+                <button type="button" class="ghost-btn" id="watch-open">Open desk</button>
+              </div>
+              <div class="journal" id="pulses" style="margin-top:.7rem"></div>
+            </div>
           </section>
           <section class="panel">
             <h2>Delivery line · <span id="eco-label">All companies</span></h2>
@@ -320,6 +348,33 @@
         <section class="panel" style="margin-top:1.1rem">
           <h2>Journal</h2>
           <div class="journal" id="journal"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-night">
+        <div class="forms">
+          <section class="panel">
+            <h2>Night shift</h2>
+            <p class="lede" id="night-lede">Close the desk and Castro's agentics keep building. Comms, deploy, and operator stay gated.</p>
+            <div class="actions">
+              <button type="button" class="primary" id="night-close">Close desk</button>
+              <button type="button" class="ghost-btn" id="night-build">Night shift now</button>
+              <button type="button" class="ghost-btn" id="night-pulse">Pulse</button>
+              <button type="button" class="ghost-btn" id="night-open">Open desk</button>
+            </div>
+            <div class="nav-label" style="margin-top:1rem">Flowing while closed</div>
+            <div class="steps" id="night-flow"></div>
+            <div class="nav-label">Still gated</div>
+            <div class="steps" id="night-gate"></div>
+          </section>
+          <section class="panel">
+            <h2>Overnight builds</h2>
+            <div class="journal" id="night-builds"></div>
+          </section>
+        </div>
+        <section class="panel" style="margin-top:1.1rem">
+          <h2>Pulses</h2>
+          <div class="journal" id="night-pulses"></div>
         </section>
       </section>
 
@@ -377,6 +432,7 @@
     let company = "all";
     let view = "desk";
     let roster = [];
+    let nightTimer = null;
 
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
@@ -601,10 +657,24 @@
       document.querySelectorAll(".view-btn").forEach((el) => el.classList.toggle("active", el.getAttribute("data-view") === next));
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms, tenants] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/companies")
+      const [os, agents, ships, events, model, profile, notes, confirms, tenants, watch] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/companies"), j("/api/watch")
       ]);
       companies = tenants;
+      const banner = document.getElementById("closed-banner");
+      banner.hidden = !watch.closed;
+      banner.classList.toggle("live", !!watch.closed);
+      banner.textContent = watch.closed
+        ? "CLOSED HOURS · AGENTICS STILL BUILDING"
+        : "OPEN HOURS · DESK OPEN";
+      document.getElementById("watch-lede").textContent = watch.closed
+        ? "Desk closed. Research, delivery, memory, and planner keep moving. Comms stay gated."
+        : "Desk is open. Close it and the agentics keep building overnight. Comms stay gated.";
+      document.getElementById("night-lede").textContent = watch.closed
+        ? "Desk closed. The night shift is live. This view refreshes while agentics build."
+        : "Close the desk and Castro's agentics keep building. Comms, deploy, and operator stay gated.";
+      paintWatchLogs(watch);
+      armNight(!!watch.closed);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
       document.getElementById("who").textContent = profile.name;
@@ -615,6 +685,8 @@
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip(os.name + " " + os.version, "ok"),
+        chip(watch.closed ? "closed hours" : "desk open", watch.closed ? "warn" : "ok"),
+        chip((watch.builds || []).length + " night builds"),
         chip(os.running + " running", "ok"),
         chip(os.live + " live", "ok"),
         chip(os.resident + " resident"),
@@ -736,6 +808,86 @@
         err.textContent = e.message;
       }
     });
+    function paintWatchLogs(watch) {
+      const pulses = document.getElementById("pulses");
+      pulses.replaceChildren();
+      (watch.builds || []).slice(0, 4).forEach((b) => {
+        const line = document.createElement("div");
+        const verbs = (b.steps || []).map((s) => s.agent + "/" + s.capability).join(" · ");
+        line.textContent = "build #" + b.id + " · " + (b.note || "shift") + " — " + verbs;
+        pulses.appendChild(line);
+      });
+      (watch.pulses || []).slice(0, 6).forEach((p) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + p.id + " " + (p.closed ? "closed" : "open") + " — " + (p.note || "pulse");
+        pulses.appendChild(line);
+      });
+      const builds = document.getElementById("night-builds");
+      builds.replaceChildren();
+      if (!(watch.builds || []).length) {
+        const empty = document.createElement("div");
+        empty.textContent = "No night shifts yet. Close the desk or run Night shift now.";
+        builds.appendChild(empty);
+      }
+      (watch.builds || []).slice(0, 8).forEach((b) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + b.id + " · " + (b.note || "shift") + " · " + (b.steps || []).length + " steps";
+        builds.appendChild(line);
+        (b.steps || []).forEach((s) => {
+          const step = document.createElement("div");
+          step.textContent = "  " + (s.ok ? "ok" : "fail") + "  " + s.agent + "/" + s.capability + " — " + (s.message || "");
+          builds.appendChild(step);
+        });
+      });
+      const nightPulses = document.getElementById("night-pulses");
+      nightPulses.replaceChildren();
+      (watch.pulses || []).slice(0, 16).forEach((p) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + p.id + " " + (p.closed ? "closed" : "open") + " — " + (p.note || "pulse");
+        nightPulses.appendChild(line);
+      });
+      const flow = document.getElementById("night-flow");
+      flow.replaceChildren();
+      (watch.flowing || []).forEach((id) => {
+        const el = document.createElement("span");
+        el.className = "step ok";
+        el.textContent = id;
+        flow.appendChild(el);
+      });
+      const gate = document.getElementById("night-gate");
+      gate.replaceChildren();
+      (watch.gated || []).forEach((id) => {
+        const el = document.createElement("span");
+        el.className = "step bad";
+        el.textContent = id;
+        gate.appendChild(el);
+      });
+    }
+    function armNight(closed) {
+      if (nightTimer) {
+        clearInterval(nightTimer);
+        nightTimer = null;
+      }
+      if (closed) {
+        nightTimer = setInterval(() => { render().catch(() => {}); }, 15000);
+      }
+    }
+    async function watchPost(path, note) {
+      await j(path, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ note: note })
+      });
+      await render();
+    }
+    document.getElementById("watch-close").addEventListener("click", () => watchPost("/api/watch/close", "things are closed"));
+    document.getElementById("watch-open").addEventListener("click", () => watchPost("/api/watch/open", "desk open"));
+    document.getElementById("watch-pulse").addEventListener("click", () => watchPost("/api/watch/pulse", "still here"));
+    document.getElementById("watch-build").addEventListener("click", () => watchPost("/api/watch/build", "keep building asap"));
+    document.getElementById("night-close").addEventListener("click", () => watchPost("/api/watch/close", "things are closed"));
+    document.getElementById("night-open").addEventListener("click", () => watchPost("/api/watch/open", "desk open"));
+    document.getElementById("night-pulse").addEventListener("click", () => watchPost("/api/watch/pulse", "still here"));
+    document.getElementById("night-build").addEventListener("click", () => watchPost("/api/watch/build", "keep building asap"));
     document.getElementById("company-form").addEventListener("submit", async (event) => {
       event.preventDefault();
       const err = document.getElementById("company-error");

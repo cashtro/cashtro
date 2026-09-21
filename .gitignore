@@ -7,6 +7,8 @@ coverage.out
 .idea/
 .vscode/
 .env
+/data/
+/logs/
 .playwright-mcp/
 .azure/*
 !.azure/deployment-plan.md

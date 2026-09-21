@@ -6,6 +6,7 @@
 package fleet
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"sort"
@@ -113,6 +114,74 @@ func New(opts ...Option) *Fleet {
 	}
 	f.seed()
 	return f
+}
+
+// Image is the durable company + agentic snapshot.
+type Image struct {
+	Companies []Company `json:"companies"`
+	Agents    []Agentic `json:"agents"`
+}
+
+// Image copies the current fleet.
+func (f *Fleet) Image() Image {
+	return Image{Companies: f.List(), Agents: f.AllAgents()}
+}
+
+// AllAgents returns every company-owned agentic, name-sorted.
+func (f *Fleet) AllAgents() []Agentic {
+	f.mu.RLock()
+	defer f.mu.RUnlock()
+	out := make([]Agentic, 0, len(f.agents))
+	for _, a := range f.agents {
+		out = append(out, cloneAgentic(a))
+	}
+	sort.Slice(out, func(i, j int) bool { return out[i].Name < out[j].Name })
+	return out
+}
+
+// Restore replaces the fleet from a snapshot. Empty images are ignored.
+func (f *Fleet) Restore(img Image) {
+	if len(img.Companies) == 0 {
+		return
+	}
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	f.companies = make(map[string]*Company, len(img.Companies))
+	f.agents = make(map[string]*Agentic, len(img.Agents))
+	for i := range img.Companies {
+		c := cloneCompany(&img.Companies[i])
+		f.companies[c.ID] = &c
+	}
+	for i := range img.Agents {
+		a := cloneAgentic(&img.Agents[i])
+		f.agents[a.ID] = &a
+	}
+}
+
+// TenantBytes is the persist hook the kernel calls.
+func (f *Fleet) TenantBytes() ([]byte, error) {
+	return json.Marshal(f.Image())
+}
+
+// RestoreTenants reloads companies from a persist blob.
+func (f *Fleet) RestoreTenants(raw []byte) error {
+	var img Image
+	if err := json.Unmarshal(raw, &img); err != nil {
+		return err
+	}
+	f.Restore(img)
+	return nil
+}
+
+// Count returns company totals and how many inherit Castro's mine.
+func (f *Fleet) Count() (companies, usingMine int) {
+	for _, c := range f.List() {
+		companies++
+		if f.UsingMine(c.ID) {
+			usingMine++
+		}
+	}
+	return companies, usingMine
 }
 
 // List returns companies ordered by name.
