@@ -159,6 +159,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "arxiv:2608.03214", URL: "https://arxiv.org/abs/2608.03214", Claim: "Split governance from runtime: intent/policy/audit vs lifecycle/routing/memory.", Quote: "Control & Governance plane owns authority and human oversight. Runtime & Coordination owns agent lifecycle and tool routing."},
 		{Agent: "research", Source: "XKernel", URL: "https://github.com/JosephBerm/XKernel", Claim: "Treat agents as first-class processes with capability tokens and typed IPC.", Quote: "Unix treats processes; Kubernetes treats containers; an agent OS treats agents."},
 		{Agent: "research", Source: "12-factor agents", URL: "https://github.com/humanlayer/12-factor-agents", Claim: "Own the loop in deterministic code. The model only fills structured next steps.", Quote: "Human confirm sits between selection and invocation. OpenRouter stays optional."},
+		{Agent: "research", Source: "closed-hours", URL: "https://github.com/cashtro/cashtro", Claim: "An AOS stays up while the operator is away: persist, pulse, keep internal work flowing, and park outbound behind a human gate.", Quote: "Keep the work flowing through here while things are closed. Delivery, research, and memory stay live. Comms do not send until allow."},
 		{Agent: "research", Source: "treg", URL: "https://treg.to", Claim: "Exa publication search is available as research.ingest input at $0.007/call when Treg is signed in.", Quote: "catalog_search → catalog_get → call. Token was expired this pass; notes still landed from open sources."},
 	}
 	for _, n := range seeds {
@@ -254,4 +255,85 @@ func (a *researchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 
 func (a *researchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
 	return researchInvoke(a.k, call)
+}
+
+type watchAgent struct {
+	k *kernel.Kernel
+}
+
+func (a *watchAgent) Spec() kernel.Spec {
+	return kernel.Spec{
+		ID: "watch", Name: "Watch", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
+		Role: "night", Summary: "Keeps the desk flowing while things are closed. Pulse and persist. Outbound still needs a human.",
+		Capabilities: []string{"watch.status", "watch.close", "watch.open", "watch.pulse"},
+		Autostart:    true,
+	}
+}
+
+func (a *watchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
+	a.k = k
+	k.Publish("watch", "ready", "closed-hours watch online", nil)
+	return nil
+}
+
+func (a *watchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
+	return watchInvoke(a.k, call)
+}
+
+func watchInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	note := payloadQuery(call, "note")
+	if note == "" {
+		note = payloadQuery(call, "prompt")
+	}
+	switch call.Capability {
+	case "watch.status":
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.close":
+		if note == "" {
+			note = "things are closed"
+		}
+		k.SetClosed(true)
+		k.RecordPulse(note)
+		keepFlowing(k, note)
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.open":
+		if note == "" {
+			note = "desk open"
+		}
+		k.SetClosed(false)
+		k.RecordPulse(note)
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.pulse":
+		if note == "" {
+			note = "pulse"
+		}
+		k.RecordPulse(note)
+		if k.Closed() {
+			keepFlowing(k, note)
+		}
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	default:
+		return kernel.Result{}, kernel.ErrUnknownCapability
+	}
+}
+
+func keepFlowing(k *kernel.Kernel, note string) {
+	if cat := k.Catalog(); cat != nil {
+		if _, err := cat.Get("closed-hours-flow"); err != nil {
+			_, _ = cat.Create(catalog.CreateShip{
+				Name:   "Closed-hours flow",
+				Client: "Cashtro OS",
+				Sector: "ops",
+				Stack:  []string{"Go"},
+				Notes:  "Keep the work flowing through here while things are closed.",
+			})
+		}
+	}
+	k.Remember("watch", "closed hours · "+note)
+	_, _ = k.Post("watch", "research", "pulse", "keep gathering while the desk is closed")
+	_, _ = k.Post("watch", "planner", "pulse", "keep the line moving")
 }

@@ -17,6 +17,8 @@ func TestPersistRoundTrip(t *testing.T) {
 	}
 	k.WriteNote(Note{Agent: "research", Source: "test", Claim: "persist me"})
 	k.Remember("os", "disk image")
+	k.SetClosed(true)
+	k.RecordPulse("overnight")
 	if err := SaveFile(path, k); err != nil {
 		t.Fatal(err)
 	}
@@ -34,6 +36,12 @@ func TestPersistRoundTrip(t *testing.T) {
 	}
 	if len(k2.Recall("disk")) != 1 {
 		t.Fatalf("facts = %#v", k2.Recall("disk"))
+	}
+	if !k2.Closed() {
+		t.Fatal("closed hours did not restore")
+	}
+	if got := k2.Pulses(); len(got) != 1 || got[0].Note != "overnight" {
+		t.Fatalf("pulses = %#v", k2.Pulses())
 	}
 }
 

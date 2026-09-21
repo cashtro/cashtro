@@ -39,6 +39,10 @@
     .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 5px 10px; font-size: 12px; }
     .chip.live { color: var(--production); }
     .chip.unbound { color: var(--danger); }
+    .chip.closed { color: var(--concept); }
+    .banner { width: min(1240px, calc(100% - 28px)); margin: 8px auto 0; border: 1px solid var(--concept); background: #1c1810; padding: 10px 14px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concept); }
+    .banner[hidden] { display: none; }
+    .actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
     .desk { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 14px; padding: 16px 0; }
     .panel { border: 1px solid var(--line); background: rgba(26, 23, 18, 0.9); padding: 14px; }
     .panel h2 { margin: 0 0 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
@@ -80,15 +84,26 @@
     <div>
       <div class="mark">Cashtro OS · under construction · FR/EN</div>
       <h1>AI OS · idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. Research is live. Closing your laptop does not stop the cloud VM — use <code>make always-on</code>.</p>
+      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. Research is live. Watch keeps the desk flowing while things are closed.</p>
     </div>
     <div class="stats" id="stats"></div>
   </header>
+  <div class="banner" id="closed-banner" hidden>desk closed · work still flowing through here</div>
   <main class="desk">
     <section class="panel">
       <h2>Process table</h2>
       <div class="agents" id="agents"></div>
       <div class="inspect" id="inspect"></div>
+      <div class="panel" style="margin-top:14px">
+        <h2>Closed hours</h2>
+        <p class="lede" id="watch-lede">Desk is open. Close it to keep work flowing unattended. Outbound comms still wait at the human gate.</p>
+        <div class="actions">
+          <button type="button" id="watch-close">Close desk</button>
+          <button type="button" id="watch-pulse">Pulse</button>
+          <button type="button" id="watch-open">Open desk</button>
+        </div>
+        <div class="journal" id="pulses" style="margin-top:10px"></div>
+      </div>
     </section>
     <section>
       <div class="panel">
@@ -216,19 +231,25 @@
       }
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, agents, ships, events, model, profile, notes, confirms, watch] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/watch")
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
+      document.getElementById("closed-banner").hidden = !watch.closed;
+      document.getElementById("watch-lede").textContent = watch.closed
+        ? "Desk closed. Research, delivery, memory, and planner keep moving. Comms stay gated."
+        : "Desk is open. Close it to keep work flowing unattended. Outbound comms still wait at the human gate.";
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip(os.name + " " + os.version),
         chip("under construction"),
+        chip(watch.closed ? "closed hours" : "desk open", watch.closed ? "closed" : "live"),
         chip(os.running + " running"),
         chip(os.live + " live"),
         chip(os.resident + " resident"),
         chip(notes.length + " notes"),
+        chip((watch.pulses || []).length + " pulses"),
         chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
       );
       const grid = document.getElementById("agents");
@@ -296,6 +317,13 @@
           gate.appendChild(allow);
         }
       });
+      const pulses = document.getElementById("pulses");
+      pulses.replaceChildren();
+      (watch.pulses || []).slice(0, 8).forEach((p) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + p.id + " " + (p.closed ? "closed" : "open") + " — " + (p.note || "pulse");
+        pulses.appendChild(line);
+      });
     }
     document.getElementById("form").addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -338,6 +366,18 @@
       } catch (e) {
         document.getElementById("form-error").textContent = e.message;
       }
+    });
+    document.getElementById("watch-close").addEventListener("click", async () => {
+      await j("/api/watch/close", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ note: "things are closed" }) });
+      await render();
+    });
+    document.getElementById("watch-open").addEventListener("click", async () => {
+      await j("/api/watch/open", { method: "POST" });
+      await render();
+    });
+    document.getElementById("watch-pulse").addEventListener("click", async () => {
+      await j("/api/watch/pulse", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ note: "still here" }) });
+      await render();
     });
     render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
   </script>

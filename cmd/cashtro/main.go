@@ -43,7 +43,7 @@ func run(addr, data string) error {
 		return err
 	}
 	about := k.About()
-	log.Printf("%s %s · %d agentics online · image %s", about.Name, about.Version, about.Running, data)
+	log.Printf("%s %s · %d agentics online · image %s · %s", about.Name, about.Version, about.Running, data, map[bool]string{true: "desk closed · work still flowing", false: "desk open"}[about.Closed])
 
 	httpSrv := &http.Server{
 		Addr:              addr,

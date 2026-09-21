@@ -79,6 +79,10 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
+| `GET` | `/api/watch` | Closed-hours status and pulses |
+| `POST` | `/api/watch/close` | Close the desk; work keeps flowing |
+| `POST` | `/api/watch/pulse` | Heartbeat (parks work while closed) |
+| `POST` | `/api/watch/open` | Open the desk |
 
 ### Always on (laptop closed)
 
@@ -88,9 +92,14 @@ stop Cashtro OS while the VM is up.
 ```bash
 make always-on
 # or: ./scripts/always-on.sh
+# overnight:
+# CASHTRO_CLOSED=1 make always-on
 ```
 
 That loop rebuilds, starts `:8080`, and restarts on crash. State lands in
-`data/cashtro.json`. Overnight wake-ups can also be scheduled as Cursor
-timers on this agent conversation.
+`data/cashtro.json`. `Watch` is a live system process: close the desk and
+it pulses, persists, parks a closed-hours mandate, and keeps research /
+delivery / memory moving. Outbound `comms.send` still waits at the human
+gate. Overnight wake-ups can also be scheduled as Cursor timers on this
+agent conversation.
 

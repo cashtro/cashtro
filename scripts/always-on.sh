@@ -7,6 +7,7 @@ mkdir -p data bin logs
 ADDR="${CASHTRO_ADDR:-:8080}"
 DATA="${CASHTRO_DATA:-$ROOT/data/cashtro.json}"
 LOG="${CASHTRO_LOG:-$ROOT/logs/cashtro.log}"
+export CASHTRO_CLOSED="${CASHTRO_CLOSED:-1}"
 
 echo "[always-on] building cashtro"
 go build -o "$ROOT/bin/cashtro" ./cmd/cashtro
@@ -16,8 +17,8 @@ if command -v fuser >/dev/null 2>&1; then
   fuser -k "${ADDR#:}/tcp" 2>/dev/null || true
 fi
 
-echo "[always-on] starting · addr=$ADDR · data=$DATA · log=$LOG"
-echo "[always-on] laptop closed? fine. this is the cloud VM."
+echo "[always-on] starting · addr=$ADDR · data=$DATA · log=$LOG · closed=$CASHTRO_CLOSED"
+echo "[always-on] laptop closed? fine. this is the cloud VM. work keeps flowing."
 while true; do
   echo "[always-on] $(date -u +%Y-%m-%dT%H:%M:%SZ) boot" | tee -a "$LOG"
   set +e

@@ -11,10 +11,12 @@ import (
 // Snapshot is the durable OS image for this repo.
 type Snapshot struct {
 	Version  string         `json:"version"`
+	Closed   bool           `json:"closed"`
 	Notes    []Note         `json:"notes"`
 	Facts    []Fact         `json:"facts"`
 	Confirms []Confirm      `json:"confirms"`
 	Mail     []Mail         `json:"mail"`
+	Pulses   []Pulse        `json:"pulses,omitempty"`
 	Ships    []catalog.Ship `json:"ships,omitempty"`
 }
 
@@ -38,10 +40,12 @@ func (k *Kernel) Snapshot() Snapshot {
 	k.mu.RLock()
 	s := Snapshot{
 		Version:  Version,
+		Closed:   k.closed,
 		Notes:    append([]Note(nil), k.notes...),
 		Facts:    append([]Fact(nil), k.facts...),
 		Confirms: append([]Confirm(nil), k.confirms...),
 		Mail:     append([]Mail(nil), k.mail...),
+		Pulses:   append([]Pulse(nil), k.pulses...),
 	}
 	cat := k.cat
 	k.mu.RUnlock()
@@ -54,14 +58,17 @@ func (k *Kernel) Snapshot() Snapshot {
 // Restore reloads durable state. Callers must not hold k.mu.
 func (k *Kernel) Restore(s Snapshot) {
 	k.mu.Lock()
+	k.closed = s.Closed
 	k.notes = append([]Note(nil), s.Notes...)
 	k.facts = append([]Fact(nil), s.Facts...)
 	k.confirms = append([]Confirm(nil), s.Confirms...)
 	k.mail = append([]Mail(nil), s.Mail...)
+	k.pulses = append([]Pulse(nil), s.Pulses...)
 	k.noteSeq = maxID(s.Notes, func(n Note) int { return n.ID })
 	k.factSeq = maxID(s.Facts, func(f Fact) int { return f.ID })
 	k.confSeq = maxID(s.Confirms, func(c Confirm) int { return c.ID })
 	k.mailSeq = maxID(s.Mail, func(m Mail) int { return m.ID })
+	k.pulseSeq = maxID(s.Pulses, func(p Pulse) int { return p.ID })
 	cat := k.cat
 	k.mu.Unlock()
 	if cat != nil && len(s.Ships) > 0 {

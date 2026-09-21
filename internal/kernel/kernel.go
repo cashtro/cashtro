@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.3.0"
+	Version = "0.4.0"
 )
 
 // Status is a process lifecycle state.
@@ -113,16 +113,18 @@ type Agent interface {
 
 // About is the public OS card.
 type About struct {
-	Name      string `json:"name"`
-	Version   string `json:"version"`
-	Motto     string `json:"motto"`
-	Kernel    Status `json:"kernel"`
-	Agents    int    `json:"agents"`
-	Running   int    `json:"running"`
-	Live      int    `json:"live"`
-	Resident  int    `json:"resident"`
-	Events    int    `json:"events"`
-	Manifesto string `json:"manifesto"`
+	Name      string     `json:"name"`
+	Version   string     `json:"version"`
+	Motto     string     `json:"motto"`
+	Kernel    Status     `json:"kernel"`
+	Agents    int        `json:"agents"`
+	Running   int        `json:"running"`
+	Live      int        `json:"live"`
+	Resident  int        `json:"resident"`
+	Events    int        `json:"events"`
+	Closed    bool       `json:"closed"`
+	LastPulse *time.Time `json:"lastPulse,omitempty"`
+	Manifesto string     `json:"manifesto"`
 }
 
 var (
@@ -156,6 +158,9 @@ type Kernel struct {
 	confirms    []Confirm
 	confSeq     int
 	persistPath string
+	closed      bool
+	pulses      []Pulse
+	pulseSeq    int
 }
 
 // Option configures the kernel.
@@ -227,7 +232,11 @@ func (k *Kernel) Boot(ctx context.Context) error {
 		}
 	}
 	about := k.About()
-	k.Publish("init", "ready", fmt.Sprintf("kernel online · %d agentics · %d live", about.Agents, about.Live), nil)
+	msg := fmt.Sprintf("kernel online · %d agentics · %d live", about.Agents, about.Live)
+	if about.Closed {
+		msg += " · desk closed · work still flowing"
+	}
+	k.Publish("init", "ready", msg, nil)
 	return nil
 }
 
@@ -384,19 +393,27 @@ func (k *Kernel) About() About {
 			resident++
 		}
 	}
+	var lastPulse *time.Time
+	if n := len(k.pulses); n > 0 {
+		t := k.pulses[n-1].At
+		lastPulse = &t
+	}
 	return About{
-		Name:     Name,
-		Version:  Version,
-		Motto:    "I make teams ship: idea → concept → production.",
-		Kernel:   StatusRunning,
-		Agents:   len(k.procs),
-		Running:  running,
-		Live:     live,
-		Resident: resident,
-		Events:   len(k.events),
+		Name:      Name,
+		Version:   Version,
+		Motto:     "I make teams ship: idea → concept → production.",
+		Kernel:    StatusRunning,
+		Agents:    len(k.procs),
+		Running:   running,
+		Live:      live,
+		Resident:  resident,
+		Events:    len(k.events),
+		Closed:    k.closed,
+		LastPulse: lastPulse,
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
 			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
+			"Delivery is live. Research is live. Watch keeps the desk flowing while things are closed. " +
+			"Outbound comms still wait at the human gate. OpenRouter stays optional. " +
 			"New agentics register into this kernel — they do not fork a second product.",
 	}
 }

@@ -9,16 +9,17 @@ import (
 )
 
 func TestBootLoadsAllAgentics(t *testing.T) {
+	t.Setenv("CASHTRO_CLOSED", "")
 	k, err := Boot()
 	if err != nil {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 14 {
-		t.Fatalf("processes = %d, want 14", len(procs))
+	if len(procs) != 15 {
+		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 15 || about.Live != 8 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -78,5 +79,27 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})
 	if err != nil || !res.OK {
 		t.Fatalf("research: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{
+		Capability: "watch.close",
+		Payload:    []byte(`{"note":"things are closed"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("watch.close: %+v %v", res, err)
+	}
+	if !k.Closed() {
+		t.Fatal("desk should be closed")
+	}
+	if _, err := k.Catalog().Get("closed-hours-flow"); err != nil {
+		t.Fatalf("closed-hours ship: %v", err)
+	}
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{Capability: "watch.pulse"})
+	if err != nil || !res.OK {
+		t.Fatalf("watch.pulse: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{Capability: "watch.open"})
+	if err != nil || !res.OK || k.Closed() {
+		t.Fatalf("watch.open: %+v closed=%v err=%v", res, k.Closed(), err)
 	}
 }
