@@ -86,13 +86,13 @@
   </header>
   <main class="desk">
     <section class="panel">
-      <h2>Process table</h2>
+      <h2>Process table · builders</h2>
       <div class="agents" id="agents"></div>
       <div class="inspect" id="inspect"></div>
     </section>
     <section>
       <div class="panel">
-        <h2>Delivery line</h2>
+        <h2>Delivery line · products</h2>
         <div class="board" id="board" aria-label="Delivery board"></div>
       </div>
       <div class="panel" style="margin-top:14px">
@@ -178,7 +178,7 @@
       box.replaceChildren();
       const title = document.createElement("div");
       title.className = "mark";
-      title.textContent = agent.spec.name + " · " + agent.spec.mode;
+      title.textContent = agent.spec.name + " · " + agent.spec.id + " · " + agent.spec.mode;
       const p = document.createElement("p");
       p.className = "lede";
       p.textContent = lastInvoke || agent.spec.summary;
@@ -240,7 +240,7 @@
         btn.querySelector("b").textContent = agent.spec.name;
         const dot = btn.querySelector(".dot");
         dot.className = "dot " + agent.spec.mode;
-        dot.textContent = agent.spec.mode + " · " + agent.status;
+        dot.textContent = agent.spec.id + " · " + agent.spec.mode;
         btn.querySelector("span").textContent = agent.spec.role + " — " + agent.spec.summary;
         btn.addEventListener("click", () => { selected = agent.spec.id; lastInvoke = ""; render(); });
         grid.appendChild(btn);

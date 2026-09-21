@@ -2,8 +2,11 @@
 //
 // Live agentics execute work now. Resident agentics are first-class
 // processes with a published contract — they boot, appear on the desk,
-// and accept invokes — waiting for a worker bind. New agentics we create
-// in this workspace register here. They do not become a second product.
+// and accept invokes — waiting for a worker bind. Processes wear
+// builders on the desk (Lautaro, Builder, Creator). Products keep their names
+// on the delivery line.
+// New agentics we create in this workspace register here. They do not
+// become a second product.
 package agents
 
 import (
@@ -33,7 +36,7 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 	return []kernel.Agent{
 		resident(kernel.Spec{
-			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
+			ID: "init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 			Role: "kernel", Summary: "Boots the OS and publishes the manifesto.",
 			Capabilities: []string{"os.about"}, Autostart: true,
 		}, func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
@@ -43,52 +46,52 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 		&routerAgent{client: router},
 		&researchAgent{},
 		resident(kernel.Spec{
-			ID: "explorer", Name: "Explorer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			ID: "explorer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "search", Summary: "Searches processes, ships, and research notes on the desk.",
 			Capabilities: []string{"explorer.search"}, Autostart: true,
 		}, explorerInvoke),
 		resident(kernel.Spec{
-			ID: "operator", Name: "Operator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
+			ID: "operator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "computer-use", Summary: "Drives the browser and desktop the way a shipper would.",
 			Capabilities: []string{"operator.browse"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeResident,
+			ID: "reviewer", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "qa", Summary: "Reads walkthrough video and screenshot artifacts before we call a ship done.",
 			Capabilities: []string{"reviewer.watch"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeResident,
+			ID: "architect", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "design", Summary: "Shapes AI-powered apps, agents, and workflows before they hit the line.",
 			Capabilities: []string{"architect.plan"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeResident,
+			ID: "deploy", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "release", Summary: "Owns CI, preview, and production promotion.",
 			Capabilities: []string{"deploy.release"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeResident,
+			ID: "security", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "guard", Summary: "Triage CVE and SAST findings on the board before they ship.",
 			Capabilities: []string{"security.triage"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "memory", Name: "Memory", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			ID: "memory", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "recall", Summary: "Episodic facts. Store and recall without a model.",
 			Capabilities: []string{"memory.store", "memory.recall"}, Autostart: true,
 		}, memoryInvoke),
 		resident(kernel.Spec{
-			ID: "comms", Name: "Comms", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			ID: "comms", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "signal", Summary: "Outbound only after a human confirm. No send until allow.",
 			Capabilities: []string{"comms.send", "comms.pending", "comms.allow", "comms.deny"}, Autostart: true,
 		}, commsInvoke),
 		resident(kernel.Spec{
-			ID: "planner", Name: "Planner", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			ID: "planner", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "backlog", Summary: "Turns a goal into idea-stage ships on the delivery line.",
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
 		resident(kernel.Spec{
-			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
+			ID: "investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
 		}, nil),
@@ -100,12 +103,12 @@ type deliveryAgent struct {
 }
 
 func (a *deliveryAgent) Spec() kernel.Spec {
-	return kernel.Spec{
-		ID: "delivery", Name: "Delivery", Kind: kernel.KindUser, Mode: kernel.ModeLive,
-		Role: "ship", Summary: "The live line: idea → concept → production.",
+	return wear(kernel.Spec{
+		ID: "delivery", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+		Role: "ship", Summary: "The live line: idea → concept → production. Products keep their names here.",
 		Capabilities: []string{"delivery.list", "delivery.create", "delivery.advance", "delivery.profile"},
 		Autostart:    true,
-	}
+	})
 }
 
 func (a *deliveryAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
@@ -174,12 +177,12 @@ func (a *routerAgent) Spec() kernel.Spec {
 		mode = kernel.ModeLive
 		summary = "OpenRouter bound. Agentics can think through this router."
 	}
-	return kernel.Spec{
-		ID: "router", Name: "Router", Kind: kernel.KindSystem, Mode: mode,
+	return wear(kernel.Spec{
+		ID: "router", Kind: kernel.KindSystem, Mode: mode,
 		Role: "model", Summary: summary,
 		Capabilities: []string{"model.status", "model.chat"},
 		Autostart:    true,
-	}
+	})
 }
 
 func (a *routerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
@@ -229,7 +232,7 @@ type residentAgent struct {
 }
 
 func resident(spec kernel.Spec, fn func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error)) *residentAgent {
-	return &residentAgent{spec: spec, fn: fn}
+	return &residentAgent{spec: wear(spec), fn: fn}
 }
 
 func (a *residentAgent) Spec() kernel.Spec { return a.spec }

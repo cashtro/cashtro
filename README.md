@@ -26,10 +26,11 @@ e-commerce. Client code stays private. The results are live:
 ## Cashtro OS
 
 This repo is **under construction**. It is the control plane for every
-agentic we build here. Agents are processes. Capabilities are verbs.
-Mail, notes, memory, and human confirms are first-class. Delivery and
-research are live. New agentics register into this kernel — they do not
-become a second product.
+agentic we build here. Agents are processes. Processes wear builders —
+Lautaro, Builder, Creator, then the rest of the crew. Products keep their
+names. Capabilities are verbs. Mail, notes, memory, and human confirms
+are first-class. Delivery and research are live. New agentics register
+into this kernel — they do not become a second product.
 
 ```bash
 go test ./...
@@ -37,6 +38,44 @@ go run ./cmd/cashtro
 ```
 
 Open `http://localhost:8080`.
+
+Casa Crypto, Prolifik, ScanApp, and Proximity stay **products** on the
+delivery line. The process table wears builders and creators — Lautaro
+boots the house, then Builder, Creator, Maker, Forger, and the rest of
+the crew. IDs and capability verbs do not change.
+
+```mermaid
+flowchart TB
+  subgraph products [Delivery line — products keep their names]
+    CasaCrypto[Casa Crypto]
+    Prolifik[Prolifik]
+    ScanApp[ScanApp]
+    Proximity[Proximity]
+  end
+  subgraph builders [Process table — builders]
+    Lautaro[Lautaro · init]
+    Spark[Spark · router]
+    Maker[Maker · delivery]
+    Scribe[Scribe · research]
+    Pathfinder[Pathfinder · explorer]
+    Builder[Builder · operator]
+    Witness[Witness · reviewer]
+    Creator[Creator · architect]
+    Forger[Forger · deploy]
+    Sentinel[Sentinel · security]
+    Keeper[Keeper · memory]
+    Herald[Herald · comms]
+    Steward[Steward · planner]
+    Seeker[Seeker · investigator]
+  end
+  Lautaro --> Maker
+  Pathfinder --> Scribe
+  Steward --> Maker
+  Maker --> CasaCrypto
+  Maker --> Prolifik
+  Maker --> ScanApp
+  Maker --> Proximity
+```
 
 ### Do we need OpenRouter?
 
