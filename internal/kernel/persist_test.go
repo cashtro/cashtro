@@ -17,6 +17,7 @@ func TestPersistRoundTrip(t *testing.T) {
 	}
 	k.WriteNote(Note{Agent: "research", Source: "test", Claim: "persist me"})
 	k.Remember("os", "disk image")
+	k.Publish("init", "night", "journal survives restart", nil)
 	if err := SaveFile(path, k); err != nil {
 		t.Fatal(err)
 	}
@@ -34,6 +35,16 @@ func TestPersistRoundTrip(t *testing.T) {
 	}
 	if len(k2.Recall("disk")) != 1 {
 		t.Fatalf("facts = %#v", k2.Recall("disk"))
+	}
+	found := false
+	for _, ev := range k2.Events() {
+		if ev.Kind == "night" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("events missing night: %#v", k2.Events())
 	}
 }
 

@@ -15,6 +15,7 @@ type Snapshot struct {
 	Facts    []Fact         `json:"facts"`
 	Confirms []Confirm      `json:"confirms"`
 	Mail     []Mail         `json:"mail"`
+	Events   []Event        `json:"events,omitempty"`
 	Ships    []catalog.Ship `json:"ships,omitempty"`
 }
 
@@ -42,6 +43,7 @@ func (k *Kernel) Snapshot() Snapshot {
 		Facts:    append([]Fact(nil), k.facts...),
 		Confirms: append([]Confirm(nil), k.confirms...),
 		Mail:     append([]Mail(nil), k.mail...),
+		Events:   append([]Event(nil), k.events...),
 	}
 	cat := k.cat
 	k.mu.RUnlock()
@@ -58,6 +60,10 @@ func (k *Kernel) Restore(s Snapshot) {
 	k.facts = append([]Fact(nil), s.Facts...)
 	k.confirms = append([]Confirm(nil), s.Confirms...)
 	k.mail = append([]Mail(nil), s.Mail...)
+	if len(s.Events) > 0 {
+		k.events = append([]Event(nil), s.Events...)
+		k.seq = maxID(s.Events, func(e Event) int { return e.Seq })
+	}
 	k.noteSeq = maxID(s.Notes, func(n Note) int { return n.ID })
 	k.factSeq = maxID(s.Facts, func(f Fact) int { return f.ID })
 	k.confSeq = maxID(s.Confirms, func(c Confirm) int { return c.ID })

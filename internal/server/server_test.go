@@ -30,7 +30,7 @@ func TestHealthAndProfile(t *testing.T) {
 	if res.Code != http.StatusOK {
 		t.Fatalf("health status = %d", res.Code)
 	}
-	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) {
+	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) || !strings.Contains(res.Body.String(), `"always":true`) {
 		t.Fatalf("health body = %s", res.Body.String())
 	}
 

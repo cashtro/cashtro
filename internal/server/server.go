@@ -71,6 +71,11 @@ func (s *api) health(w http.ResponseWriter, r *http.Request) {
 		"kernel":  about.Kernel,
 		"agents":  about.Agents,
 		"running": about.Running,
+		"live":    about.Live,
+		"notes":   len(s.k.Notes()),
+		"events":  about.Events,
+		"data":    s.k.PersistPath(),
+		"always":  true,
 	})
 }
 
