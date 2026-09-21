@@ -19,7 +19,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 9 {
+	if about.Running != 15 || about.Live != 10 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -120,6 +120,30 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if len(k.Recall("design")) == 0 {
 		t.Fatal("architect did not remember the brief")
 	}
+
+	res, err = k.Invoke(context.Background(), "investigator", kernel.Call{
+		Capability: "investigator.trace",
+		Payload:    []byte(`{"query":"watch"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("investigator.trace: %+v %v", res, err)
+	}
+	trace, ok := res.Data.(Trace)
+	if !ok || trace.Query != "watch" || len(trace.Hits) == 0 {
+		t.Fatalf("trace = %#v ok=%v", res.Data, ok)
+	}
+	if !traceHasKind(trace.Hits, "agent") {
+		t.Fatalf("trace missed watch agent: %#v", trace.Hits)
+	}
+}
+
+func traceHasKind(hits []TraceHit, kind string) bool {
+	for _, h := range hits {
+		if h.Kind == kind {
+			return true
+		}
+	}
+	return false
 }
 
 func containsStr(xs []string, want string) bool {

@@ -407,3 +407,72 @@ func keepFlowing(k *kernel.Kernel, note string) {
 	_, _ = k.Post("watch", "research", "pulse", "keep gathering while the desk is closed")
 	_, _ = k.Post("watch", "planner", "pulse", "keep the line moving")
 }
+
+const maxTraceHits = 32
+
+// TraceHit is one node in an investigator blast radius.
+type TraceHit struct {
+	Kind string `json:"kind"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+// Trace is a deterministic incident map. The model does not fill this.
+type Trace struct {
+	Query string     `json:"query"`
+	Hits  []TraceHit `json:"hits"`
+}
+
+func investigatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	q := payloadQuery(call, "query")
+	if q == "" {
+		q = payloadQuery(call, "prompt")
+	}
+	if q == "" {
+		if k.Closed() {
+			q = "closed"
+		} else {
+			q = "error"
+		}
+	}
+	needle := strings.ToLower(q)
+	hits := make([]TraceHit, 0)
+	add := func(kind, id, name string) {
+		if len(hits) >= maxTraceHits {
+			return
+		}
+		blob := strings.ToLower(kind + " " + id + " " + name)
+		if strings.Contains(blob, needle) {
+			hits = append(hits, TraceHit{Kind: kind, ID: id, Name: name})
+		}
+	}
+	for _, p := range k.Processes() {
+		add("agent", p.Spec.ID, p.Spec.Name+" "+p.Spec.Role+" "+p.Spec.Summary)
+	}
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			add("ship", s.ID, s.Name+" "+s.Notes+" "+string(s.Stage))
+		}
+	}
+	for _, n := range k.Notes() {
+		add("note", n.Source, n.Claim)
+	}
+	for _, ev := range k.Events() {
+		add("event", ev.Source+"/"+ev.Kind, ev.Message)
+	}
+	for _, m := range k.Inbox("") {
+		add("mail", m.To, m.Body)
+	}
+	for _, c := range k.Confirms() {
+		add("confirm", strconv.Itoa(c.ID), c.Body+" "+c.Status)
+	}
+	for _, p := range k.Pulses() {
+		add("pulse", strconv.Itoa(p.ID), p.Note)
+	}
+	for _, f := range k.Recall("") {
+		add("fact", f.Topic, f.Text)
+	}
+	k.Remember("incident", q)
+	_, _ = k.Post("investigator", "security", "trace", q)
+	return kernel.Result{OK: true, Message: "traced " + strconv.Itoa(len(hits)), Data: Trace{Query: q, Hits: hits}}, nil
+}
