@@ -57,10 +57,10 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"explorer.search"}, Autostart: true,
 		}, explorerInvoke),
 		resident(kernel.Spec{
-			ID: "operator", Name: "Operator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "computer-use", Summary: "Drives the browser and desktop the way a shipper would.",
+			ID: "operator", Name: "Operator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "computer-use", Summary: "Dry-run browse: plans a desk URL walkthrough until a real browser worker binds.",
 			Capabilities: []string{"operator.browse"}, Autostart: true,
-		}, nil),
+		}, operatorInvoke),
 		resident(kernel.Spec{
 			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "qa", Summary: "Reviews desk evidence before we call a ship done — notes, board, journal.",

@@ -18,7 +18,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 14", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 12 {
+	if about.Running != 14 || about.Live != 13 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -118,5 +118,13 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("reviewer: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "operator", kernel.Call{
+		Capability: "operator.browse",
+		Payload:    []byte(`{"url":"http://127.0.0.1:8080/"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("operator: %+v %v", res, err)
 	}
 }

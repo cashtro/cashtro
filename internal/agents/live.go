@@ -164,6 +164,41 @@ func commsInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	}
 }
 
+func operatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	url := payloadQuery(call, "url")
+	if url == "" {
+		url = payloadQuery(call, "prompt")
+	}
+	if url == "" {
+		url = "http://127.0.0.1:8080/"
+	}
+	steps := []string{
+		"Open " + url,
+		"Read /health and /api/os",
+		"Walk process table and delivery board",
+		"Capture evidence for reviewer.watch",
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "operator",
+		Source: "operator.browse",
+		Claim:  "Browse plan · " + url,
+		Quote:  strings.Join(steps, " → "),
+	})
+	k.Remember("operator", "browse plan · "+url)
+	_, _ = k.Post("operator", "reviewer", "browse", url)
+	return kernel.Result{
+		OK:      true,
+		Message: "browse planned · " + url,
+		Data: map[string]any{
+			"url":   url,
+			"steps": steps,
+			"note":  note,
+			"mode":  "dry-run",
+			"bind":  "computer-use worker not attached · plan only",
+		},
+	}, nil
+}
+
 func reviewerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	target := payloadQuery(call, "target")
 	if target == "" {

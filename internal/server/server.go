@@ -40,6 +40,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/security", s.security)
 	mux.HandleFunc("POST /api/deploy", s.deploy)
 	mux.HandleFunc("POST /api/review", s.review)
+	mux.HandleFunc("POST /api/browse", s.browse)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -243,6 +244,20 @@ func (s *api) review(w http.ResponseWriter, r *http.Request) {
 	_ = decodeJSON(r, &in)
 	raw, _ := json.Marshal(map[string]string{"target": in.Target})
 	res, err := s.k.Invoke(r.Context(), "reviewer", kernel.Call{Capability: "reviewer.watch", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) browse(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		URL string `json:"url"`
+	}
+	_ = decodeJSON(r, &in)
+	raw, _ := json.Marshal(map[string]string{"url": in.URL})
+	res, err := s.k.Invoke(r.Context(), "operator", kernel.Call{Capability: "operator.browse", Payload: raw})
 	if err != nil {
 		writeError(w, err)
 		return

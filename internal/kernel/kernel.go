@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.3.6"
+	Version = "0.3.7"
 )
 
 // Status is a process lifecycle state.

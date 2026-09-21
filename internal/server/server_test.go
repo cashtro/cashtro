@@ -103,6 +103,14 @@ func TestOSAndAgents(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/browse", strings.NewReader(`{"url":"http://127.0.0.1:8080/"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "browse planned") {
+		t.Fatalf("browse = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/notes", nil))
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "2606.01508") {
 		t.Fatalf("notes = %s", res.Body.String())
