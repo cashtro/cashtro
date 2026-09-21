@@ -123,3 +123,12 @@ this branch so a rebuild does not drop the overnight supervisor.
   list_backlog, get_access
 - GitHub webhook opens idempotent tasks
 - `/ui` queue can dispatch; fleet can pause
+
+## n8n fabric — 2026-09-21 23:40Z
+
+Castro: n8n.io inside the same agents, 40× stronger, bigger architecture.
+
+- `state/n8n-fleet.json` — 40 specialists, 14 seats
+- Adapter: unbound or webhook error → Voltron `:8080`
+- `GET /fleet` · `/ui/fleet` grid · MCP `list_n8n_fleet`
+- Optional `docker-compose.n8n.yml` on `:5678`. No paid cloud.

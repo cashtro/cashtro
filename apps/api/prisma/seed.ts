@@ -174,6 +174,27 @@ export async function seed(client: PrismaClient = prisma) {
         });
       }
     }
+    const fleet = await readJSON<{ specialists: Array<{ id: string; seat: string; name: string; capability: string; webhook: string }> }>(
+      "state/n8n-fleet.json",
+      { specialists: [] },
+    );
+    for (const spec of fleet.specialists) {
+      const agent = await client.agent.findFirst({ where: { name: spec.seat, projectId: cashtro.id } });
+      if (!agent) continue;
+      const workerName = spec.id;
+      const found = await client.worker.findFirst({ where: { agentId: agent.id, name: workerName } });
+      if (!found) {
+        await client.worker.create({
+          data: {
+            agentId: agent.id,
+            name: workerName,
+            tool: `n8n:${spec.webhook}`,
+            concurrency: 2,
+            timeoutSec: 180,
+          },
+        });
+      }
+    }
   }
 
   for (const t of backlog.tasks) {

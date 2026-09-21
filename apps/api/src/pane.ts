@@ -8,6 +8,12 @@ export async function renderPane(prisma: PrismaClient, screen: string): Promise<
   const runs = await prisma.run.findMany({ orderBy: { startedAt: "desc" }, take: 20, include: { artifacts: true } });
   const cost = await prisma.run.aggregate({ _sum: { costUsd: true } });
   const paused = await prisma.controlState.findUnique({ where: { id: "global" } });
+  const specialistRows = await prisma.worker.findMany({
+    where: { tool: { startsWith: "n8n:" } },
+    include: { agent: true },
+    orderBy: { name: "asc" },
+  });
+  const specialists = specialistRows.length;
   let report = "_recon report missing_";
   try {
     report = await readFile(path.resolve(process.cwd(), "../../inventory/REPORT.md"), "utf8");
@@ -22,7 +28,7 @@ export async function renderPane(prisma: PrismaClient, screen: string): Promise<
   const page = ["fleet", "queue", "run", "recon"].includes(screen) ? screen : "fleet";
   const body =
     page === "fleet"
-      ? fleet(projects, cost._sum.costUsd ?? 0, paused?.paused ?? false)
+      ? fleet(projects, cost._sum.costUsd ?? 0, paused?.paused ?? false, specialists, specialistRows)
       : page === "queue"
         ? queue(tasks)
         : page === "run"
@@ -47,6 +53,9 @@ export async function renderPane(prisma: PrismaClient, screen: string): Promise<
     button { background:var(--red); color:#fff; border:0; border-radius:8px; padding:6px 10px; font:inherit; }
     main { padding:16px; max-width:720px; }
     .card { border:1px solid var(--line); border-radius:12px; padding:12px; margin:0 0 10px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; margin:12px 0; }
+    .chip { border:1px solid var(--line); border-radius:8px; padding:8px; font-size:.78rem; }
+    .chip strong { display:block; }
     .dot { display:inline-block; width:.6rem; height:.6rem; border-radius:50%; background:var(--mut); margin-right:6px; }
     .dot.ok { background:var(--ok); }
     .dot.bad { background:var(--red); }
@@ -71,7 +80,13 @@ export async function renderPane(prisma: PrismaClient, screen: string): Promise<
 </html>`;
 }
 
-function fleet(projects: Array<{ slug: string; status: string; org: string; kind: string }>, cost: number, paused: boolean) {
+function fleet(
+  projects: Array<{ slug: string; status: string; org: string; kind: string }>,
+  cost: number,
+  paused: boolean,
+  specialists = 0,
+  specialistRows: Array<{ name: string; tool: string; agent: { name: string } }> = [],
+) {
   const rows = projects
     .map((p) => {
       const ok = p.status === "active" || p.status === "concept";
@@ -79,8 +94,16 @@ function fleet(projects: Array<{ slug: string; status: string; org: string; kind
         <div class="mut">${esc(p.org)} · ${esc(p.kind)} · ${esc(p.status)}</div></div>`;
     })
     .join("");
-  return `<p class="mut">Cost recorded: $${cost.toFixed(4)} · kill switch ${paused ? "ON" : "off"}</p>
+  const chips = specialistRows
+    .map(
+      (s) =>
+        `<div class="chip"><strong>${esc(s.name)}</strong><span class="mut">${esc(s.agent.name)} · ${esc(s.tool.replace(/^n8n:/, ""))}</span></div>`,
+    )
+    .join("");
+  return `<p class="mut">Cost recorded: $${cost.toFixed(4)} · kill switch ${paused ? "ON" : "off"} · n8n specialists ${specialists} on the same 14 seats · depth ≤ 3 · fabric inside Voltron, not a second OS</p>
     <form method="post" action="/ui/act/pause"><button type="submit">Pause everything</button></form>
+    <h2 style="font-size:1rem">40 specialists · same 14 seats</h2>
+    <div class="grid">${chips || "<p class='mut'>Reseed to load the n8n fabric.</p>"}</div>
     ${rows || "<p>No projects.</p>"}`;
 }
 

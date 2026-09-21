@@ -143,7 +143,33 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
     return { ok: true, queued: "recon", slug: project.slug };
   });
 
-  app.get("/agents", async () => prisma.agent.findMany());
+  app.get("/agents", async () => prisma.agent.findMany({ include: { workers: true } }));
+
+  app.get("/fleet", async () => {
+    const agents = await prisma.agent.findMany({ include: { workers: true } });
+    const specialists = agents.flatMap((a) =>
+      a.workers
+        .filter((w) => w.tool.startsWith("n8n:"))
+        .map((w) => ({ id: w.name, seat: a.name, webhook: w.tool.slice(4), tool: w.tool })),
+    );
+    const bySeat = Object.fromEntries(
+      agents.map((a) => [a.name, specialists.filter((s) => s.seat === a.name).map((s) => s.id)]),
+    );
+    return {
+      architecture: "wide-not-deep",
+      fabric: "n8n-inside-voltron",
+      seats: agents.length,
+      specialists: specialists.length,
+      depthLimit: 3,
+      n8n: process.env.N8N_BASE_URL ? "bound" : "unbound-fallback-voltron",
+      bySeat,
+      agents: agents.map((a) => ({
+        name: a.name,
+        runtime: a.runtime,
+        workers: a.workers.map((w) => ({ name: w.name, tool: w.tool })),
+      })),
+    };
+  });
 
   app.post("/tasks", async (req, reply) => {
     const parsed = CreateTask.safeParse(req.body);

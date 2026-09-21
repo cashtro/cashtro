@@ -88,6 +88,14 @@ test("registry seed + every mutating route writes an event", async (t) => {
   assert.equal(agents.statusCode, 200);
   assert.ok(agents.json().length >= 14);
 
+  const fabric = await ctx.app.inject({ method: "GET", url: "/fleet", ...auth() });
+  assert.equal(fabric.statusCode, 200);
+  assert.equal(fabric.json().specialists, 40);
+  assert.equal(fabric.json().seats, 14);
+  assert.equal(fabric.json().depthLimit, 3);
+  assert.equal(fabric.json().architecture, "wide-not-deep");
+  assert.match(String(fabric.json().n8n), /unbound/);
+
   const created = await ctx.app.inject({
     method: "POST",
     url: "/tasks",
@@ -211,6 +219,8 @@ test("depth 4 is refused and /ui + /costs render", async (t) => {
   const fleet = await ctx.app.inject({ method: "GET", url: "/ui/fleet" });
   assert.equal(fleet.statusCode, 200);
   assert.match(fleet.body, /scanapp/i);
+  assert.match(fleet.body, /n8n specialists 40/);
+  assert.match(fleet.body, /n8n-40/);
   const costs = await ctx.app.inject({ method: "GET", url: "/costs", ...auth() });
   assert.equal(costs.statusCode, 200);
   assert.equal(typeof costs.json().totalUsd, "number");

@@ -37,7 +37,7 @@ memory store/recall, comms confirm gate, planner backlog, research ingest,
 | --- | --- |
 | Go kernel + desk | **Absorb.** Keep as the local Voltron runtime / process OS |
 | Delivery catalog seed | **Absorb** into registry Projects (kind=product) |
-| 14 agentics | **Absorb** into registry Agents (runtime=http → kernel invoke) |
+| 14 agentics | **Absorb** into registry Agents (runtime=http → kernel invoke). 40 n8n specialists sit on those seats — fabric, not new processes. |
 | OpenRouter bind | **Absorb** as MODEL_ROUTE |
 | New control plane API | **Add.** Does not fork a second OS |
 | Per-island agents in client repos | **Replace** with registry + manifest handshake (Phase 5) |

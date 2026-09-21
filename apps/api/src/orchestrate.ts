@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
 import type { AgentAdapter, RunContext } from "@cashtro/adapters";
-import { DepthError, MAX_DEPTH, assertDepth, createHttpAdapter, defaultAdapters, pickAdapter } from "@cashtro/adapters";
+import { DepthError, MAX_DEPTH, assertDepth, createHttpAdapter, createN8nAdapter, defaultAdapters, pickAdapter, resolveSpecialist } from "@cashtro/adapters";
 import { Task as TaskSchema, type Task } from "@cashtro/sdk";
 
 export type OrchestrateOpts = {
@@ -33,17 +33,28 @@ export async function orchestrate(opts: OrchestrateOpts) {
   const row = await opts.prisma.task.findUnique({ where: { id: opts.taskId } });
   if (!row) return { ok: false as const, status: 404, error: "not found" };
 
+  const seats = await opts.prisma.agent.findMany({ where: { enabled: true }, include: { workers: true } });
+  const assigned = row.assigneeAgentId ? seats.find((s) => s.id === row.assigneeAgentId) : undefined;
+  const fabric = seats.flatMap((seat) =>
+    seat.workers
+      .filter((w) => w.tool.startsWith("n8n:"))
+      .map((w) => ({ id: w.name, seat: seat.name, webhook: w.tool.slice(4), name: w.name })),
+  );
+  const scoped = assigned ? fabric.filter((s) => s.seat === assigned.name) : fabric;
+  const specialist = resolveSpecialist({ title: row.title, body: row.body }, scoped.length ? scoped : fabric);
+
   const agent =
-    (row.assigneeAgentId && (await opts.prisma.agent.findUnique({ where: { id: row.assigneeAgentId } }))) ||
-    (await opts.prisma.agent.findFirst({ where: { enabled: true, runtime: "http" } })) ||
-    (await opts.prisma.agent.findFirst({ where: { enabled: true } }));
+    assigned ||
+    (specialist && seats.find((s) => s.name === specialist.seat)) ||
+    seats.find((s) => s.runtime === "http") ||
+    seats[0];
   if (!agent) return { ok: false as const, status: 409, error: "no agent" };
 
   const task = TaskSchema.parse({
     id: row.id,
     projectId: row.projectId,
     title: row.title,
-    body: row.body,
+    body: specialist ? `${row.body}\nwebhook:${specialist.webhook}`.trim() : row.body,
     source: row.source,
     priority: row.priority,
     status: row.status,
@@ -55,11 +66,17 @@ export async function orchestrate(opts: OrchestrateOpts) {
   const adapters = opts.adapters ?? defaultAdapters();
   if (opts.kernelUrl || opts.fetchImpl) {
     adapters.http = createHttpAdapter({ kernelUrl: opts.kernelUrl, fetchImpl: opts.fetchImpl });
+    adapters.n8n = createN8nAdapter({ fallback: adapters.http, fetchImpl: opts.fetchImpl });
   }
-  let adapter = pickAdapter(agent.runtime, adapters);
+  let adapter = specialist && adapters.n8n ? adapters.n8n : pickAdapter(agent.runtime, adapters);
   if (adapter.id === "http") {
     const health = await adapter.healthcheck();
     if (!health.ok && adapters.local) adapter = adapters.local;
+  } else if (adapter.id === "n8n" && adapters.http && adapters.local) {
+    const health = await adapters.http.healthcheck();
+    if (!health.ok) {
+      adapter = createN8nAdapter({ fallback: adapters.local, baseUrl: process.env.N8N_BASE_URL || "" });
+    }
   }
   const estimate = await adapter.estimateCost(task);
   const cap = Math.min(opts.budgetCap, agent.maxCostPerRun);

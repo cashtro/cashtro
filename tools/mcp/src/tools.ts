@@ -18,6 +18,11 @@ export const TOOLS = [
     inputSchema: { type: "object", properties: { status: { type: "string" } } },
   },
   {
+    name: "list_n8n_fleet",
+    description: "40 n8n specialists on the same 14 Voltron seats. Wide, not deep.",
+    inputSchema: { type: "object", properties: {} },
+  },
+  {
     name: "get_access",
     description: "What this agent can and cannot see on GitHub.",
     inputSchema: { type: "object", properties: {} },
@@ -51,6 +56,9 @@ export async function callTool(root: string, name: string, args: Record<string, 
     };
     const status = typeof args.status === "string" ? args.status : "";
     return { ...raw, tasks: status ? raw.tasks.filter((t) => t.status === status) : raw.tasks };
+  }
+  if (name === "list_n8n_fleet") {
+    return JSON.parse(await readFile(path.join(root, "state/n8n-fleet.json"), "utf8"));
   }
   if (name === "get_access") {
     const inv = JSON.parse(await readFile(path.join(root, "inventory/repos.json"), "utf8")) as {

@@ -83,6 +83,16 @@
 - **Why:** Castro said go attack. Binding a computer-use farm is a
   paid/scope jump. Local verbs unblock the desk tonight.
 
+## 2026-09-21 — n8n is fabric on the same 14 seats
+
+- **Choice:** 40 specialists in `state/n8n-fleet.json`, seeded as
+  `n8n:{webhook}` workers. Adapter unbound → Voltron HTTP. Bound
+  webhook 5xx also falls back. Depth stays 3. No n8n Cloud.
+- **Alternatives:** A second n8n product; paid n8n Cloud; 40 new
+  kernel processes; deeper than 3.
+- **Why:** Castro: same agents, 40× stronger, bigger agentic
+  architecture. Width, not a fork. Self-host compose is optional.
+
 ## 2026-09-21 — MCP reads files, not a second API
 
 - **Choice:** `tools/mcp` reads inventory/backlog/catalog off disk.
