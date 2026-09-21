@@ -8,3 +8,4 @@ coverage.out
 .vscode/
 .env
 .playwright-mcp/
+/data/

@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.0"
 )
 
 // Status is a process lifecycle state.
@@ -138,23 +138,24 @@ const maxEvents = 200
 
 // Kernel is the in-process OS.
 type Kernel struct {
-	mu       sync.RWMutex
-	now      func() time.Time
-	nextID   int
-	seq      int
-	procs    map[string]*Process
-	agents   map[string]Agent
-	caps     map[string]Capability
-	events   []Event
-	cat      *catalog.Catalog
-	mail     []Mail
-	mailSeq  int
-	notes    []Note
-	noteSeq  int
-	facts    []Fact
-	factSeq  int
-	confirms []Confirm
-	confSeq  int
+	mu          sync.RWMutex
+	now         func() time.Time
+	nextID      int
+	seq         int
+	procs       map[string]*Process
+	agents      map[string]Agent
+	caps        map[string]Capability
+	events      []Event
+	cat         *catalog.Catalog
+	mail        []Mail
+	mailSeq     int
+	notes       []Note
+	noteSeq     int
+	facts       []Fact
+	factSeq     int
+	confirms    []Confirm
+	confSeq     int
+	persistPath string
 }
 
 // Option configures the kernel.
@@ -164,6 +165,13 @@ type Option func(*Kernel)
 func WithClock(now func() time.Time) Option {
 	return func(k *Kernel) {
 		k.now = now
+	}
+}
+
+// WithPersistPath writes the OS image to disk after mutates.
+func WithPersistPath(path string) Option {
+	return func(k *Kernel) {
+		k.persistPath = path
 	}
 }
 
@@ -285,6 +293,7 @@ func (k *Kernel) Invoke(ctx context.Context, id string, call Call) (Result, erro
 		return Result{}, err
 	}
 	k.Publish(id, "invoke", res.Message, map[string]any{"capability": call.Capability, "ok": res.OK})
+	k.persist()
 	return res, nil
 }
 

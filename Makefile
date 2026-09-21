@@ -1,4 +1,4 @@
-.PHONY: test vet run build
+.PHONY: test vet run build always-on
 
 test:
 	go test ./...
@@ -10,4 +10,8 @@ run:
 	go run ./cmd/cashtro
 
 build:
+	mkdir -p bin
 	go build -o bin/cashtro ./cmd/cashtro
+
+always-on:
+	./scripts/always-on.sh
