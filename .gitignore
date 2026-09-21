@@ -8,3 +8,9 @@ coverage.out
 .vscode/
 .env
 .playwright-mcp/
+node_modules/
+dist/
+data/
+*.db
+.turbo
+.pnpm-store/

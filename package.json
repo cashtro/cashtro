@@ -1,0 +1,14 @@
+{
+  "name": "cashtro",
+  "private": true,
+  "packageManager": "pnpm@10.33.3",
+  "scripts": {
+    "recon": "pnpm --filter @cashtro/recon start",
+    "api": "pnpm --filter @cashtro/api start",
+    "api:dev": "pnpm --filter @cashtro/api dev",
+    "db:migrate": "pnpm --filter @cashtro/api prisma:migrate",
+    "db:seed": "pnpm --filter @cashtro/api prisma:seed",
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck"
+  }
+}

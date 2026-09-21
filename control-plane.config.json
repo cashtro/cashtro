@@ -1,0 +1,12 @@
+{
+  "controlPlaneRepo": "cashtro/cashtro",
+  "orgs": ["Evolu-Jeunes"],
+  "users": ["cashtro"],
+  "modelRoute": "openrouter",
+  "hardBudgetPerRunUsd": 2,
+  "deployTarget": "local",
+  "db": {
+    "dev": "sqlite",
+    "prod": "postgres"
+  }
+}
