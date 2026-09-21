@@ -95,6 +95,76 @@ func commsInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	}
 }
 
+// Brief is a deterministic design card. The model does not fill this.
+type Brief struct {
+	Goal     string   `json:"goal"`
+	Shape    string   `json:"shape"`
+	Line     []string `json:"line"`
+	Agents   []string `json:"agents"`
+	Gates    []string `json:"gates"`
+	ClosedOK bool     `json:"closedOk"`
+}
+
+func architectInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	goal := payloadQuery(call, "goal")
+	if goal == "" {
+		goal = payloadQuery(call, "prompt")
+	}
+	if goal == "" {
+		goal = "unnamed system"
+	}
+	brief := shapeBrief(goal)
+	k.WriteNote(kernel.Note{
+		Agent:  "architect",
+		Source: "architect.plan",
+		Claim:  brief.Shape + " brief: " + brief.Goal,
+		Quote:  "line " + strings.Join(brief.Line, " → ") + " · agents " + strings.Join(brief.Agents, ", "),
+	})
+	k.Remember("design", brief.Goal)
+	_, _ = k.Post("architect", "planner", "brief", brief.Goal)
+	_, _ = k.Post("architect", "delivery", "brief", brief.Goal)
+	return kernel.Result{OK: true, Message: "shaped " + brief.Shape + " brief", Data: brief}, nil
+}
+
+func shapeBrief(goal string) Brief {
+	q := strings.ToLower(goal)
+	shape := "app"
+	switch {
+	case strings.Contains(q, "os") || strings.Contains(q, "kernel"):
+		shape = "os"
+	case strings.Contains(q, "workflow") || strings.Contains(q, "pipeline"):
+		shape = "workflow"
+	case strings.Contains(q, "agent"):
+		shape = "agent"
+	}
+	agents := []string{"architect", "delivery", "watch", "memory"}
+	if strings.Contains(q, "research") || strings.Contains(q, "aos") || strings.Contains(q, "paper") {
+		agents = append(agents, "research")
+	}
+	if strings.Contains(q, "mail") || strings.Contains(q, "outbound") || strings.Contains(q, "comms") {
+		agents = append(agents, "comms")
+	}
+	if strings.Contains(q, "browser") || strings.Contains(q, "desktop") {
+		agents = append(agents, "operator")
+	}
+	if strings.Contains(q, "cve") || strings.Contains(q, "sast") {
+		agents = append(agents, "security")
+	}
+	gates := []string{"comms.send"}
+	if strings.Contains(q, "production") || strings.Contains(q, "release") || strings.Contains(q, "deploy") {
+		agents = append(agents, "deploy")
+		gates = append(gates, "deploy.release")
+	}
+	return Brief{
+		Goal:     strings.TrimSpace(goal),
+		Shape:    shape,
+		Line:     []string{"idea", "concept", "production"},
+		Agents:   agents,
+		Gates:    gates,
+		ClosedOK: true,
+	}
+}
+
 func plannerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	goal := payloadQuery(call, "goal")
 	if goal == "" {

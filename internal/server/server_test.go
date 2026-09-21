@@ -93,6 +93,13 @@ func TestOSAndAgents(t *testing.T) {
 	if res.Code != http.StatusOK {
 		t.Fatalf("invoke status = %d body=%s", res.Code, res.Body.String())
 	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/architect/invoke", strings.NewReader(`{"capability":"architect.plan","payload":{"goal":"workflow pipeline for research notes"}}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"shape":"workflow"`) {
+		t.Fatalf("architect = %d %s", res.Code, res.Body.String())
+	}
 }
 
 func TestFavicon(t *testing.T) {

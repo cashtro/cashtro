@@ -35,6 +35,7 @@ var ClosedHoursFlow = []string{
 	"memory.store",
 	"memory.recall",
 	"planner.backlog",
+	"architect.plan",
 	"delivery.list",
 	"delivery.create",
 	"delivery.advance",

@@ -19,7 +19,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 8 {
+	if about.Running != 15 || about.Live != 9 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -102,4 +102,31 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || !res.OK || k.Closed() {
 		t.Fatalf("watch.open: %+v closed=%v err=%v", res, k.Closed(), err)
 	}
+
+	res, err = k.Invoke(context.Background(), "architect", kernel.Call{
+		Capability: "architect.plan",
+		Payload:    []byte(`{"goal":"agent OS control plane with outbound comms"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("architect.plan: %+v %v", res, err)
+	}
+	brief, ok := res.Data.(Brief)
+	if !ok || brief.Shape != "os" || brief.Goal == "" {
+		t.Fatalf("brief = %#v ok=%v", res.Data, ok)
+	}
+	if !containsStr(brief.Agents, "comms") || !containsStr(brief.Gates, "comms.send") {
+		t.Fatalf("brief agents/gates = %#v", brief)
+	}
+	if len(k.Recall("design")) == 0 {
+		t.Fatal("architect did not remember the brief")
+	}
+}
+
+func containsStr(xs []string, want string) bool {
+	for _, x := range xs {
+		if x == want {
+			return true
+		}
+	}
+	return false
 }
