@@ -191,6 +191,21 @@ func (c *Catalog) Advance(id string) (Ship, error) {
 	return cloneShip(s), nil
 }
 
+// Replace swaps the board for a persisted image.
+func (c *Catalog) Replace(ships []Ship) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.ships = make(map[string]*Ship, len(ships))
+	for i := range ships {
+		s := ships[i]
+		if s.Stack != nil {
+			s.Stack = append([]string(nil), s.Stack...)
+		}
+		copy := s
+		c.ships[copy.ID] = &copy
+	}
+}
+
 // NextStage returns the following stage on the line.
 func NextStage(current Stage) (Stage, error) {
 	i := stageIndex(current)
@@ -275,6 +290,15 @@ func (c *Catalog) seed() {
 			Stage:  StageIdea,
 			Stack:  []string{"Go"},
 			Notes:  "Stdlib Go board for idea → concept → production",
+		},
+		{
+			ID:     "cashtro-symbols",
+			Name:   "Symbols",
+			Client: "Cashtro",
+			Sector: "internal",
+			Stage:  StageConcept,
+			Stack:  []string{"Go"},
+			Notes:  "Internal Zapier. Triggers and verbs on our kernel. No subscription.",
 		},
 	}
 	for i := range items {

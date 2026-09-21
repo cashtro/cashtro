@@ -10,10 +10,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
 	"github.com/cashtro/cashtro/internal/model"
+	"github.com/cashtro/cashtro/internal/symbols"
 )
 
 // Boot builds a kernel with every Cashtro agentic registered and started.
@@ -23,10 +26,32 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 	for _, agent := range Builtins(cat, model.FromEnv()) {
 		k.Register(agent)
 	}
+	if path := k.PersistPath(); path != "" {
+		if err := kernel.LoadFile(path, k); err != nil && !os.IsNotExist(err) {
+			return nil, err
+		}
+	}
 	if err := k.Boot(context.Background()); err != nil {
 		return nil, err
 	}
+	if envTruthy("CASHTRO_CLOSED") {
+		k.SetClosed(true)
+	}
+	k.RecordPulse("boot")
+	if k.Closed() {
+		keepFlowing(k, "boot while things are closed")
+	}
+	if path := k.PersistPath(); path != "" {
+		if err := kernel.SaveFile(path, k); err != nil {
+			return nil, err
+		}
+	}
 	return k, nil
+}
+
+func envTruthy(key string) bool {
+	v := strings.ToLower(strings.TrimSpace(os.Getenv(key)))
+	return v == "1" || v == "true" || v == "yes"
 }
 
 // Builtins is the process image of Cashtro OS.
@@ -39,6 +64,8 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 		}, func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
 		}),
+		&watchAgent{},
+		&chooserAgent{},
 		&deliveryAgent{cat: cat},
 		&routerAgent{client: router},
 		&researchAgent{},
@@ -87,6 +114,8 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Role: "backlog", Summary: "Turns a goal into idea-stage ships on the delivery line.",
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
+		&symbolsAgent{bus: symbols.New()},
+		&deskAgent{},
 		resident(kernel.Spec{
 			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",

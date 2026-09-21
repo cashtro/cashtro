@@ -29,17 +29,43 @@
       background: radial-gradient(1200px 500px at 10% -10%, #2a2214 0%, transparent 55%), var(--bg);
     }
     a { color: var(--brass); }
-    .bar, .desk, footer { width: min(1240px, calc(100% - 28px)); margin: 0 auto; }
+    .bar, .tabs, .view, footer { width: min(1240px, calc(100% - 28px)); margin: 0 auto; }
     .bar { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; padding: 22px 0 10px; }
     .mark { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
     h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(34px, 5vw, 58px); font-weight: 500; line-height: 0.95; margin: 8px 0 0; }
     h1 em { font-style: italic; color: var(--brass); }
-    .lede { color: var(--muted); max-width: 40rem; line-height: 1.5; margin: 10px 0 0; }
-    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
+    .lede { color: var(--muted); max-width: 42rem; line-height: 1.5; margin: 10px 0 0; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
     .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 5px 10px; font-size: 12px; }
     .chip.live { color: var(--production); }
     .chip.unbound { color: var(--danger); }
-    .desk { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 14px; padding: 16px 0; }
+    .chip.closed { color: var(--concept); }
+    .banner { width: min(1240px, calc(100% - 28px)); margin: 8px auto 0; border: 1px solid var(--concept); background: #1c1810; padding: 10px 14px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concept); }
+    .banner[hidden] { display: none; }
+    .jobs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .job { border: 1px solid var(--line); background: #14110d; padding: 10px; display: grid; gap: 6px; }
+    .job header { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+    .job .kind { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .job .kind.now { color: var(--danger); }
+    .job .kind.soon { color: var(--concept); }
+    .job h3 { margin: 0; font-family: "Cormorant Garamond", Georgia, serif; font-size: 18px; font-weight: 500; }
+    .job p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .plan-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .plan-col ul { list-style: none; margin: 0; padding: 0; }
+    .plan-col li { border: 1px solid var(--line); background: #14110d; padding: 8px; margin-bottom: 6px; font-size: 12px; color: var(--muted); }
+    .plan-col li b { display: block; color: var(--ink); margin-bottom: 3px; font-size: 13px; }
+    .loop { color: var(--muted); font-size: 13px; line-height: 1.5; margin: 0 0 10px; }
+    .request { border: 1px solid var(--line); background: #14110d; padding: 10px; margin-bottom: 8px; }
+    .request h4 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 16px; }
+    .request .raw, .request .meta { color: var(--muted); font-size: 12px; margin: 0 0 6px; }
+    .request pre { white-space: pre-wrap; font: 12px/1.45 "IBM Plex Sans", system-ui, sans-serif; margin: 0 0 8px; }
+    .actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0 0; }
+    .tabs button { width: auto; padding: 7px 14px; }
+    .tabs button.active { border-color: var(--brass); color: var(--brass); }
+    .view { display: none; padding: 16px 0; }
+    #view-desk.on { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 14px; }
+    #view-pick.on, #view-symbols.on, #view-line.on, #view-library.on { display: block; }
     .panel { border: 1px solid var(--line); background: rgba(26, 23, 18, 0.9); padding: 14px; }
     .panel h2 { margin: 0 0 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
     .agents { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -59,80 +85,186 @@
     .card { border: 1px solid var(--line); background: #14110d; padding: 10px; margin-bottom: 8px; }
     .card h4 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 16px; }
     .card p { margin: 0; color: var(--muted); font-size: 12px; }
-    button, input, textarea { font: inherit; color: inherit; background: #100e0b; border: 1px solid var(--line); }
+    button, input, textarea, select { font: inherit; color: inherit; background: #100e0b; border: 1px solid var(--line); }
     button { cursor: pointer; padding: 7px 10px; width: 100%; }
     button:hover { border-color: var(--brass); color: var(--brass); }
     button:disabled { opacity: 0.4; cursor: default; color: var(--muted); border-color: var(--line); }
     form, .inspect { display: grid; gap: 8px; margin-top: 10px; }
     label { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
-    input, textarea { padding: 8px; }
+    input, textarea, select { padding: 8px; }
     .journal { max-height: 220px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--muted); }
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
+    .ok { color: var(--production); }
+    .ide { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; }
+    .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+    .node { border: 1px solid var(--line); background: #14110d; padding: 8px 10px; min-width: 108px; }
+    .node b { display: block; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); }
+    .node span { color: var(--muted); font-size: 12px; }
+    .arrow { color: var(--brass); font-family: "IBM Plex Mono", ui-monospace, monospace; }
+    .sym { border: 1px solid var(--line); background: #14110d; padding: 10px; margin-bottom: 8px; text-align: left; color: inherit; width: 100%; cursor: pointer; }
+    .sym.active, .sym:hover { border-color: var(--brass); }
+    .sym h3 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 20px; font-weight: 500; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hook { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; color: var(--muted); word-break: break-all; }
     footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     @media (max-width: 900px) {
-      .desk, .board, .agents { display: block; }
-      .agent, .col, .panel { margin-bottom: 10px; }
+      #view-desk.on, .board, .agents, .ide, .row, .jobs, .plan-grid, .actions { display: block; }
+      .agent, .col, .panel, .job { margin-bottom: 10px; }
     }
   </style>
 </head>
 <body>
   <header class="bar">
     <div>
-      <div class="mark">Cashtro OS · under construction · FR/EN</div>
-      <h1>AI OS · idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
+      <div class="mark">Cashtro OS · SaaS AI OS · under construction · FR/EN</div>
+      <h1>You pick · Symbols · idea → concept → <em>production</em></h1>
+      <p class="lede" id="lede">You pick the next job. Nothing auto-runs. Symbols is the internal Zapier. Watch keeps work flowing while the desk is closed. OpenRouter stays optional.</p>
     </div>
     <div class="stats" id="stats"></div>
   </header>
-  <main class="desk">
+  <div class="banner" id="closed-banner" hidden>CLOSED HOURS · WORK STILL FLOWING THROUGH HERE</div>
+  <nav class="tabs" id="tabs">
+    <button type="button" data-view="desk" class="active">Desk</button>
+    <button type="button" data-view="pick">You pick</button>
+    <button type="button" data-view="symbols">Symbols</button>
+    <button type="button" data-view="line">Line</button>
+    <button type="button" data-view="library">Library</button>
+  </nav>
+  <main id="view-desk" class="view on">
     <section class="panel">
       <h2>Process table</h2>
       <div class="agents" id="agents"></div>
       <div class="inspect" id="inspect"></div>
+      <div class="panel" style="margin-top:14px">
+        <h2>Closed hours</h2>
+        <p class="lede" id="watch-lede">Desk is open. Close it to keep work flowing unattended. Outbound comms still wait at the human gate.</p>
+        <div class="actions">
+          <button type="button" id="watch-close">Close desk</button>
+          <button type="button" id="watch-pulse">Pulse</button>
+          <button type="button" id="watch-open">Open desk</button>
+        </div>
+        <div class="journal" id="pulses" style="margin-top:10px"></div>
+      </div>
     </section>
     <section>
       <div class="panel">
-        <h2>Delivery line</h2>
-        <div class="board" id="board" aria-label="Delivery board"></div>
+        <h2>Assistant plan</h2>
+        <p class="loop" id="plan-promise"></p>
+        <ol class="loop" id="plan-loop"></ol>
+        <div class="plan-grid" id="plan"></div>
       </div>
       <div class="panel" style="margin-top:14px">
-        <h2>New mandate</h2>
-        <form id="form">
-          <label>Name <input name="name" required placeholder="Ledger desk"></label>
-          <label>Client <input name="client" placeholder="Proximity Agency"></label>
-          <label>Sector <input name="sector" placeholder="finance"></label>
-          <label>Stack <input name="stack" placeholder="Go, Azure"></label>
-          <label>Notes <textarea name="notes" rows="2" placeholder="What has to ship"></textarea></label>
-          <button type="submit">Park it in idea</button>
-          <div class="err" id="form-error"></div>
+        <h2>Request log</h2>
+        <form id="req-form">
+          <label>Ask in your words <textarea name="raw" rows="3" required placeholder="What should I do next?"></textarea></label>
+          <button type="submit">Capture &amp; better</button>
         </form>
+        <div id="requests" style="margin-top:10px"></div>
       </div>
       <div class="panel" style="margin-top:14px">
-        <h2>Research library</h2>
-        <div class="journal" id="notes"></div>
-        <form id="note-form" style="margin-top:10px">
-          <label>Claim <input name="claim" required placeholder="AOS is a control plane"></label>
-          <label>Source <input name="source" placeholder="arxiv:2606.01508"></label>
-          <label>URL <input name="url" placeholder="https://arxiv.org/abs/2606.01508"></label>
-          <button type="submit">Ingest note</button>
-        </form>
-      </div>
-      <div class="panel" style="margin-top:14px">
-        <h2>Human gate</h2>
-        <div class="journal" id="confirms"></div>
-      </div>
-      <div class="panel" style="margin-top:14px">
-        <h2>Journal</h2>
-        <div class="journal" id="journal"></div>
+        <h2>Why we do not pay Zapier</h2>
+        <p class="lede">Connectors are our process table. A Symbol is a trigger plus verbs the kernel already owns. Webhook catch-hooks live on this OS. No app-store bill. No second product.</p>
+        <div class="journal" id="desk-journal"></div>
       </div>
     </section>
   </main>
+  <main id="view-pick" class="view">
+    <section class="panel">
+      <h2>You pick</h2>
+      <p class="lede" id="scan-lede">Scan the connected Gmail (Samsung) and choose a job. Nothing auto-runs.</p>
+      <div class="tabs" role="tablist">
+        <button type="button" id="tab-mail" class="active">Inbox jobs</button>
+        <button type="button" id="tab-verb">What I can do</button>
+      </div>
+      <div class="jobs" id="chooser" aria-label="Chooser desk"></div>
+    </section>
+  </main>
+  <main id="view-symbols" class="view">
+    <div class="ide">
+      <section class="panel">
+        <h2>Symbol table · internal Zapier · $0</h2>
+        <div id="symbol-list"></div>
+      </section>
+      <section>
+        <div class="panel">
+          <h2>Fire / compose</h2>
+          <div id="symbol-inspect" class="inspect"></div>
+          <form id="symbol-form">
+            <label>Name <input name="name" required placeholder="Lead → idea"></label>
+            <label>Summary <input name="summary" placeholder="Catch a payload and park a mandate"></label>
+            <div class="row">
+              <label>Trigger
+                <select name="kind">
+                  <option value="manual">manual</option>
+                  <option value="webhook">webhook</option>
+                  <option value="event">event</option>
+                </select>
+              </label>
+              <label>Event match <input name="match" placeholder="mail"></label>
+            </div>
+            <label>Step cap <input name="cap" required placeholder="delivery.create" list="cap-list"></label>
+            <datalist id="cap-list"></datalist>
+            <label>Fields <textarea name="fields" rows="3" placeholder="name={{name}}&#10;client={{client}}"></textarea></label>
+            <button type="submit">Compose symbol</button>
+            <div class="err" id="symbol-error"></div>
+          </form>
+        </div>
+        <div class="panel" style="margin-top:14px">
+          <h2>Run history</h2>
+          <div class="journal" id="runs"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <main id="view-line" class="view">
+    <div class="panel">
+      <h2>Delivery line</h2>
+      <div class="board" id="board" aria-label="Delivery board"></div>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <h2>New mandate</h2>
+      <form id="form">
+        <label>Name <input name="name" required placeholder="Ledger desk"></label>
+        <label>Client <input name="client" placeholder="Proximity Agency"></label>
+        <label>Sector <input name="sector" placeholder="finance"></label>
+        <label>Stack <input name="stack" placeholder="Go, Azure"></label>
+        <label>Notes <textarea name="notes" rows="2" placeholder="What has to ship"></textarea></label>
+        <button type="submit">Park it in idea</button>
+        <div class="err" id="form-error"></div>
+      </form>
+    </div>
+  </main>
+  <main id="view-library" class="view">
+    <div class="panel">
+      <h2>Research library</h2>
+      <div class="journal" id="notes"></div>
+      <form id="note-form" style="margin-top:10px">
+        <label>Claim <input name="claim" required placeholder="AOS is a control plane"></label>
+        <label>Source <input name="source" placeholder="arxiv:2606.01508"></label>
+        <label>URL <input name="url" placeholder="https://arxiv.org/abs/2606.01508"></label>
+        <button type="submit">Ingest note</button>
+      </form>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <h2>Human gate</h2>
+      <div class="journal" id="confirms"></div>
+    </div>
+    <div class="panel" style="margin-top:14px">
+      <h2>Journal</h2>
+      <div class="journal" id="journal"></div>
+    </div>
+  </main>
   <footer>
     <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · OpenRouter optional</span>
+    <span>stdlib Go · Symbols $0 · you pick · OpenRouter optional</span>
   </footer>
   <script>
     const stages = ["idea", "concept", "production"];
+    let view = "desk";
+    let selected = "desk";
+    let selectedSymbol = "intake-to-idea";
+    let lastInvoke = "";
+    let chooserTab = "mail";
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
       const body = await res.json();
@@ -171,8 +303,163 @@
       el.appendChild(btn);
       return el;
     }
-    let selected = "research";
-    let lastInvoke = "";
+    function jobCard(item) {
+      const el = document.createElement("article");
+      el.className = "job";
+      const head = document.createElement("header");
+      const kind = document.createElement("span");
+      kind.className = "kind" + (item.urgency ? " " + item.urgency : "");
+      kind.textContent = (item.kind || "job") + (item.urgency ? " · " + item.urgency : "");
+      const status = document.createElement("span");
+      status.className = "kind";
+      status.textContent = item.status || "pending";
+      head.appendChild(kind);
+      head.appendChild(status);
+      const title = document.createElement("h3");
+      title.textContent = item.title;
+      const p = document.createElement("p");
+      p.textContent = [item.client, item.summary].filter(Boolean).join(" — ");
+      el.appendChild(head);
+      el.appendChild(title);
+      el.appendChild(p);
+      if (item.status === "pending") {
+        const row = document.createElement("div");
+        row.className = "row";
+        const take = document.createElement("button");
+        take.textContent = item.kind === "verb" ? "Take this verb" : "Take · park on idea";
+        take.addEventListener("click", async () => {
+          take.disabled = true;
+          try {
+            await j("/api/inbox/" + item.id + "/take", { method: "POST" });
+            await render();
+          } catch (err) {
+            take.disabled = false;
+            take.textContent = err.message;
+          }
+        });
+        const skip = document.createElement("button");
+        skip.textContent = "Skip";
+        skip.addEventListener("click", async () => {
+          skip.disabled = true;
+          try {
+            await j("/api/inbox/" + item.id + "/skip", { method: "POST" });
+            await render();
+          } catch (err) {
+            skip.disabled = false;
+            skip.textContent = err.message;
+          }
+        });
+        row.appendChild(take);
+        row.appendChild(skip);
+        el.appendChild(row);
+      }
+      return el;
+    }
+    function planCol(title, items) {
+      const col = document.createElement("section");
+      col.className = "col plan-col";
+      const h = document.createElement("h3");
+      h.innerHTML = "<span></span><span></span>";
+      h.children[0].textContent = title;
+      h.children[1].textContent = String((items || []).length);
+      col.appendChild(h);
+      const ul = document.createElement("ul");
+      (items || []).forEach((item) => {
+        const li = document.createElement("li");
+        li.innerHTML = "<b></b><span></span>";
+        li.querySelector("b").textContent = item.title;
+        li.querySelector("span").textContent = item.detail;
+        ul.appendChild(li);
+      });
+      col.appendChild(ul);
+      return col;
+    }
+    function requestCard(req) {
+      const el = document.createElement("article");
+      el.className = "request";
+      const title = document.createElement("h4");
+      title.textContent = req.title || ("Request #" + req.id);
+      const meta = document.createElement("p");
+      meta.className = "meta";
+      meta.textContent = "#" + req.id + " · pass " + req.pass + " · " + req.status + (req.allowed ? "" : " · cannot") + (req.owner ? " · " + req.owner : "");
+      const raw = document.createElement("p");
+      raw.className = "raw";
+      raw.textContent = "Original: " + req.raw;
+      const pre = document.createElement("pre");
+      pre.textContent = req.improved || "";
+      el.appendChild(title);
+      el.appendChild(meta);
+      el.appendChild(raw);
+      el.appendChild(pre);
+      if (req.status !== "done" && req.status !== "blocked") {
+        const row = document.createElement("div");
+        row.className = "row";
+        const better = document.createElement("button");
+        better.textContent = "Better again";
+        better.addEventListener("click", async () => {
+          better.disabled = true;
+          await j("/api/requests/" + req.id + "/better", { method: "POST" });
+          await render();
+        });
+        const done = document.createElement("button");
+        done.textContent = "Mark done";
+        done.addEventListener("click", async () => {
+          done.disabled = true;
+          await j("/api/requests/" + req.id + "/done", { method: "POST" });
+          await render();
+        });
+        row.appendChild(better);
+        row.appendChild(done);
+        el.appendChild(row);
+      }
+      return el;
+    }
+    function setView(next) {
+      view = next;
+      ["desk", "pick", "symbols", "line", "library"].forEach((id) => {
+        document.getElementById("view-" + id).classList.toggle("on", id === next);
+      });
+      document.querySelectorAll("#tabs > button").forEach((btn) => {
+        btn.classList.toggle("active", btn.getAttribute("data-view") === next);
+      });
+    }
+    document.getElementById("tabs").addEventListener("click", (event) => {
+      const btn = event.target.closest("button[data-view]");
+      if (!btn) return;
+      setView(btn.getAttribute("data-view"));
+    });
+    function node(label, value) {
+      const el = document.createElement("div");
+      el.className = "node";
+      el.innerHTML = "<b></b><span></span>";
+      el.querySelector("b").textContent = label;
+      el.querySelector("span").textContent = value;
+      return el;
+    }
+    function flow(sym) {
+      const wrap = document.createElement("div");
+      wrap.className = "flow";
+      wrap.appendChild(node(sym.on.kind, sym.on.match || "desk"));
+      (sym.steps || []).forEach((step) => {
+        const arrow = document.createElement("span");
+        arrow.className = "arrow";
+        arrow.textContent = "→";
+        wrap.appendChild(arrow);
+        wrap.appendChild(node("verb", step.cap));
+      });
+      return wrap;
+    }
+    function parseFields(text) {
+      const out = {};
+      String(text || "").split("\n").forEach((line) => {
+        const i = line.indexOf("=");
+        if (i <= 0) return;
+        const k = line.slice(0, i).trim();
+        const v = line.slice(i + 1).trim();
+        if (k) out[k] = v;
+      });
+      return out;
+    }
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
       box.replaceChildren();
@@ -192,6 +479,8 @@
           try {
             const payload = cap === "model.chat"
               ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
+              : cap === "desk.capture"
+              ? { capability: cap, payload: { raw: "Keep capturing every Castro request and better it each pass." } }
               : { capability: cap };
             const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
               method: "POST",
@@ -215,22 +504,142 @@
         box.appendChild(hint);
       }
     }
+    function inspectSymbol(sym) {
+      const box = document.getElementById("symbol-inspect");
+      box.replaceChildren();
+      if (!sym) {
+        box.textContent = "Select a symbol.";
+        return;
+      }
+      const title = document.createElement("div");
+      title.className = "mark";
+      title.textContent = sym.name + " · " + (sym.enabled ? "on" : "off") + " · " + (sym.fires || 0) + " fires";
+      box.appendChild(title);
+      const p = document.createElement("p");
+      p.className = "lede";
+      p.textContent = sym.summary || "";
+      box.appendChild(p);
+      box.appendChild(flow(sym));
+      if (sym.on.kind === "webhook") {
+        const hook = document.createElement("div");
+        hook.className = "hook";
+        hook.textContent = "POST " + location.origin + "/api/symbols/" + sym.id + "/hook";
+        box.appendChild(hook);
+      }
+      const payload = document.createElement("textarea");
+      payload.rows = 3;
+      payload.value = sym.id === "signal-human"
+        ? '{"body":"desk ping — no Zapier bill"}'
+        : '{"name":"Hook desk","client":"Cashtro","sector":"internal","notes":"caught without Zapier"}';
+      box.appendChild(payload);
+      const fire = document.createElement("button");
+      fire.textContent = "Fire " + sym.name;
+      fire.addEventListener("click", async () => {
+        fire.disabled = true;
+        try {
+          let body = {};
+          try { body = JSON.parse(payload.value || "{}"); } catch (e) { body = { body: payload.value }; }
+          await j("/api/symbols/" + encodeURIComponent(sym.id) + "/fire", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify(body)
+          });
+          await render();
+        } catch (err) {
+          document.getElementById("symbol-error").textContent = err.message;
+        } finally {
+          fire.disabled = false;
+        }
+      });
+      box.appendChild(fire);
+      const tog = document.createElement("button");
+      tog.textContent = sym.enabled ? "Disable" : "Enable";
+      tog.addEventListener("click", async () => {
+        await j("/api/symbols/" + encodeURIComponent(sym.id) + "/toggle", { method: "POST" });
+        await render();
+      });
+      box.appendChild(tog);
+    }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, agents, ships, events, model, profile, notes, confirms, symbolList, runs, connectors, watch, inbox, plan, requests] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/symbols"), j("/api/runs"), j("/api/connectors"), j("/api/watch"), j("/api/inbox"), j("/api/plan"), j("/api/requests")
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
+      const banner = document.getElementById("closed-banner");
+      banner.hidden = !watch.closed;
+      banner.textContent = watch.closed
+        ? "CLOSED HOURS · WORK STILL FLOWING THROUGH HERE"
+        : "OPEN HOURS · DESK OPEN";
+      document.getElementById("watch-lede").textContent = watch.closed
+        ? "Desk closed. Research, delivery, memory, and planner keep moving. Comms stay gated."
+        : "Desk is open. Close it to keep work flowing unattended. Outbound comms still wait at the human gate.";
+      const scan = inbox.scan || {};
+      document.getElementById("scan-lede").textContent = (scan.device || "Gmail") + " · " + (scan.account || "") +
+        " · " + (scan.inbox || 0) + " inbox · " + (scan.unread || 0) + " unread · " + (scan.starred || 0) + " starred. " +
+        (scan.note || "You pick. Nothing auto-runs.");
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip(os.name + " " + os.version),
         chip("under construction"),
+        chip(watch.closed ? "closed hours" : "desk open", watch.closed ? "closed" : "live"),
+        chip((inbox.pendingCount || 0) + " to pick", "live"),
         chip(os.running + " running"),
+        chip(symbolList.length + " symbols"),
         chip(os.live + " live"),
         chip(os.resident + " resident"),
+        chip(requests.length + " requests"),
         chip(notes.length + " notes"),
         chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
       );
+      const mailJobs = (inbox.mail || []).filter((c) => c.status === "pending");
+      const verbJobs = (inbox.verbs || []).filter((c) => c.status === "pending");
+      document.getElementById("tab-mail").className = chooserTab === "mail" ? "active" : "";
+      document.getElementById("tab-verb").className = chooserTab === "verb" ? "active" : "";
+      document.getElementById("tab-mail").textContent = "Inbox jobs · " + mailJobs.length;
+      document.getElementById("tab-verb").textContent = "What I can do · " + verbJobs.length;
+      const gridJobs = document.getElementById("chooser");
+      gridJobs.replaceChildren();
+      const shown = chooserTab === "verb" ? verbJobs : mailJobs;
+      if (!shown.length) {
+        const empty = document.createElement("p");
+        empty.className = "lede";
+        empty.textContent = chooserTab === "verb" ? "No verbs left to pick." : "No inbox jobs left. Skip or take from What I can do.";
+        gridJobs.appendChild(empty);
+      } else {
+        shown.forEach((item) => gridJobs.appendChild(jobCard(item)));
+      }
+      const pulseBox = document.getElementById("pulses");
+      pulseBox.replaceChildren();
+      (watch.pulses || []).slice(0, 8).forEach((p) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + p.id + "  " + (p.closed ? "closed" : "open") + "  " + (p.note || "pulse");
+        pulseBox.appendChild(line);
+      });
+      document.getElementById("plan-promise").textContent = plan.promise || "";
+      const loop = document.getElementById("plan-loop");
+      loop.replaceChildren();
+      (plan.loop || []).forEach((step) => {
+        const li = document.createElement("li");
+        li.textContent = step;
+        loop.appendChild(li);
+      });
+      const planGrid = document.getElementById("plan");
+      planGrid.replaceChildren(
+        planCol("Can do", plan.can),
+        planCol("Cannot do", plan.cannot),
+        planCol("We create", plan.create),
+        planCol("We do not create", plan.avoid)
+      );
+      const reqs = document.getElementById("requests");
+      reqs.replaceChildren();
+      if (!requests.length) {
+        const empty = document.createElement("div");
+        empty.className = "raw";
+        empty.textContent = "No asks yet. Type above — I save the original and better it.";
+        reqs.appendChild(empty);
+      }
+      requests.forEach((req) => reqs.appendChild(requestCard(req)));
       const grid = document.getElementById("agents");
       grid.replaceChildren();
       agents.forEach((agent) => {
@@ -261,13 +670,17 @@
         items.forEach((ship) => col.appendChild(card(ship)));
         board.appendChild(col);
       });
-      const journal = document.getElementById("journal");
-      journal.replaceChildren();
-      events.slice(-16).reverse().forEach((ev) => {
-        const line = document.createElement("div");
-        line.textContent = ev.seq + "  " + ev.source + "/" + ev.kind + "  " + ev.message;
-        journal.appendChild(line);
-      });
+      const fillJournal = (id, rows) => {
+        const journal = document.getElementById(id);
+        journal.replaceChildren();
+        rows.forEach((ev) => {
+          const line = document.createElement("div");
+          line.textContent = ev.seq + "  " + ev.source + "/" + ev.kind + "  " + ev.message;
+          journal.appendChild(line);
+        });
+      };
+      fillJournal("journal", events.slice(-16).reverse());
+      fillJournal("desk-journal", events.slice(-10).reverse());
       const lib = document.getElementById("notes");
       lib.replaceChildren();
       notes.slice(0, 8).forEach((n) => {
@@ -296,7 +709,71 @@
           gate.appendChild(allow);
         }
       });
+      const list = document.getElementById("symbol-list");
+      list.replaceChildren();
+      symbolList.forEach((sym) => {
+        const btn = document.createElement("button");
+        btn.className = "sym" + (sym.id === selectedSymbol ? " active" : "");
+        const h = document.createElement("h3");
+        h.textContent = sym.name;
+        btn.appendChild(h);
+        const meta = document.createElement("p");
+        meta.className = "lede";
+        meta.textContent = (sym.enabled ? "on" : "off") + " · " + sym.on.kind + " · " + (sym.summary || "");
+        btn.appendChild(meta);
+        btn.appendChild(flow(sym));
+        btn.addEventListener("click", () => { selectedSymbol = sym.id; render(); });
+        list.appendChild(btn);
+      });
+      const currentSym = symbolList.find((s) => s.id === selectedSymbol) || symbolList[0];
+      if (currentSym) selectedSymbol = currentSym.id;
+      inspectSymbol(currentSym);
+      const runBox = document.getElementById("runs");
+      runBox.replaceChildren();
+      if (!runs.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "No fires yet. Catch a webhook or hit Fire.";
+        runBox.appendChild(empty);
+      }
+      runs.slice(0, 12).forEach((run) => {
+        const line = document.createElement("div");
+        line.className = run.ok ? "ok" : "err";
+        line.textContent = "#" + run.id + " " + (run.ok ? "ok" : "fail") + " · " + run.name + " · " + run.message;
+        runBox.appendChild(line);
+      });
+      const caps = document.getElementById("cap-list");
+      caps.replaceChildren();
+      connectors.forEach((c) => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        caps.appendChild(opt);
+      });
     }
+    document.getElementById("tab-mail").addEventListener("click", () => { chooserTab = "mail"; render(); });
+    document.getElementById("tab-verb").addEventListener("click", () => { chooserTab = "verb"; render(); });
+    async function watchCall(path) {
+      await j(path, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: "{}" });
+      await render();
+    }
+    document.getElementById("watch-close").addEventListener("click", () => watchCall("/api/watch/close"));
+    document.getElementById("watch-open").addEventListener("click", () => watchCall("/api/watch/open"));
+    document.getElementById("watch-pulse").addEventListener("click", () => watchCall("/api/watch/pulse"));
+    document.getElementById("req-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        await j("/api/requests", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ raw: data.get("raw") })
+        });
+        event.target.reset();
+        selected = "desk";
+        await render();
+      } catch (e) {
+        document.getElementById("form-error").textContent = e.message;
+      }
+    });
     document.getElementById("form").addEventListener("submit", async (event) => {
       event.preventDefault();
       const err = document.getElementById("form-error");
@@ -339,7 +816,30 @@
         document.getElementById("form-error").textContent = e.message;
       }
     });
-    render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
+    document.getElementById("symbol-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("symbol-error");
+      err.textContent = "";
+      const data = new FormData(event.target);
+      try {
+        const created = await j("/api/symbols", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            name: data.get("name"),
+            summary: data.get("summary"),
+            on: { kind: data.get("kind"), match: data.get("match") },
+            steps: [{ cap: data.get("cap"), fields: parseFields(data.get("fields")) }]
+          })
+        });
+        selectedSymbol = created.id;
+        event.target.reset();
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    render().catch((e) => { document.getElementById("symbol-error").textContent = e.message; });
   </script>
 </body>
 </html>

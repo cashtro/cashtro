@@ -16,13 +16,14 @@ import (
 	"time"
 
 	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/symbols"
 )
 
 const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.6.0"
 )
 
 // Status is a process lifecycle state.
@@ -113,16 +114,19 @@ type Agent interface {
 
 // About is the public OS card.
 type About struct {
-	Name      string `json:"name"`
-	Version   string `json:"version"`
-	Motto     string `json:"motto"`
-	Kernel    Status `json:"kernel"`
-	Agents    int    `json:"agents"`
-	Running   int    `json:"running"`
-	Live      int    `json:"live"`
-	Resident  int    `json:"resident"`
-	Events    int    `json:"events"`
-	Manifesto string `json:"manifesto"`
+	Name      string     `json:"name"`
+	Version   string     `json:"version"`
+	Motto     string     `json:"motto"`
+	Kernel    Status     `json:"kernel"`
+	Agents    int        `json:"agents"`
+	Running   int        `json:"running"`
+	Live      int        `json:"live"`
+	Resident  int        `json:"resident"`
+	Events    int        `json:"events"`
+	Closed    bool       `json:"closed"`
+	LastPulse *time.Time `json:"lastPulse,omitempty"`
+	Requests  int        `json:"requests"`
+	Manifesto string     `json:"manifesto"`
 }
 
 var (
@@ -132,29 +136,44 @@ var (
 	ErrUnknownCapability = errors.New("unknown capability")
 	// ErrNotRunning is returned when invoke hits a stopped process.
 	ErrNotRunning = errors.New("agent not running")
+	// ErrUnknownChoice is returned when a desk job id is unknown.
+	ErrUnknownChoice = errors.New("choice not found")
+	// ErrAlreadyDecided is returned when take/skip hits a decided job.
+	ErrAlreadyDecided = errors.New("already decided")
 )
 
 const maxEvents = 200
 
 // Kernel is the in-process OS.
 type Kernel struct {
-	mu       sync.RWMutex
-	now      func() time.Time
-	nextID   int
-	seq      int
-	procs    map[string]*Process
-	agents   map[string]Agent
-	caps     map[string]Capability
-	events   []Event
-	cat      *catalog.Catalog
-	mail     []Mail
-	mailSeq  int
-	notes    []Note
-	noteSeq  int
-	facts    []Fact
-	factSeq  int
-	confirms []Confirm
-	confSeq  int
+	mu          sync.RWMutex
+	now         func() time.Time
+	nextID      int
+	seq         int
+	procs       map[string]*Process
+	agents      map[string]Agent
+	caps        map[string]Capability
+	events      []Event
+	cat         *catalog.Catalog
+	sym         *symbols.Bus
+	sink        func(Event)
+	mail        []Mail
+	mailSeq     int
+	notes       []Note
+	noteSeq     int
+	facts       []Fact
+	factSeq     int
+	confirms    []Confirm
+	confSeq     int
+	persistPath string
+	closed      bool
+	pulses      []Pulse
+	pulseSeq    int
+	choices     []Choice
+	choiceSeq   int
+	scan        Scan
+	requests    []Request
+	reqSeq      int
 }
 
 // Option configures the kernel.
@@ -164,6 +183,13 @@ type Option func(*Kernel)
 func WithClock(now func() time.Time) Option {
 	return func(k *Kernel) {
 		k.now = now
+	}
+}
+
+// WithPersistPath writes the OS image to disk after mutates.
+func WithPersistPath(path string) Option {
+	return func(k *Kernel) {
+		k.persistPath = path
 	}
 }
 
@@ -219,7 +245,11 @@ func (k *Kernel) Boot(ctx context.Context) error {
 		}
 	}
 	about := k.About()
-	k.Publish("init", "ready", fmt.Sprintf("kernel online · %d agentics · %d live", about.Agents, about.Live), nil)
+	msg := fmt.Sprintf("kernel online · %d agentics · %d live", about.Agents, about.Live)
+	if about.Closed {
+		msg += " · desk closed · work still flowing"
+	}
+	k.Publish("init", "ready", msg, nil)
 	return nil
 }
 
@@ -285,6 +315,7 @@ func (k *Kernel) Invoke(ctx context.Context, id string, call Call) (Result, erro
 		return Result{}, err
 	}
 	k.Publish(id, "invoke", res.Message, map[string]any{"capability": call.Capability, "ok": res.OK})
+	k.persist()
 	return res, nil
 }
 
@@ -341,10 +372,39 @@ func (k *Kernel) Events() []Event {
 	return out
 }
 
-// Publish appends a journal line.
+// Publish appends a journal line and fans it to the event sink.
 func (k *Kernel) Publish(source, kind, message string, data map[string]any) {
+	k.fanout(k.appendEvent(source, kind, message, data))
+}
+
+// SetSink registers a journal listener. Symbols uses this for event triggers.
+func (k *Kernel) SetSink(fn func(Event)) {
 	k.mu.Lock()
 	defer k.mu.Unlock()
+	k.sink = fn
+}
+
+// AttachSymbols lets the symbols agentic publish the internal Zapier bus.
+func (k *Kernel) AttachSymbols(bus *symbols.Bus) {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	k.sym = bus
+}
+
+// Symbols returns the automation bus, if the symbols agentic has attached it.
+func (k *Kernel) Symbols() *symbols.Bus {
+	k.mu.RLock()
+	defer k.mu.RUnlock()
+	return k.sym
+}
+
+func (k *Kernel) appendEvent(source, kind, message string, data map[string]any) Event {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	return k.appendEventLocked(source, kind, message, data)
+}
+
+func (k *Kernel) appendEventLocked(source, kind, message string, data map[string]any) Event {
 	k.seq++
 	ev := Event{
 		Seq:     k.seq,
@@ -357,6 +417,16 @@ func (k *Kernel) Publish(source, kind, message string, data map[string]any) {
 	k.events = append(k.events, ev)
 	if len(k.events) > maxEvents {
 		k.events = append([]Event(nil), k.events[len(k.events)-maxEvents:]...)
+	}
+	return ev
+}
+
+func (k *Kernel) fanout(ev Event) {
+	k.mu.RLock()
+	sink := k.sink
+	k.mu.RUnlock()
+	if sink != nil {
+		sink(ev)
 	}
 }
 
@@ -375,19 +445,29 @@ func (k *Kernel) About() About {
 			resident++
 		}
 	}
+	var lastPulse *time.Time
+	if n := len(k.pulses); n > 0 {
+		t := k.pulses[n-1].At
+		lastPulse = &t
+	}
 	return About{
-		Name:     Name,
-		Version:  Version,
-		Motto:    "I make teams ship: idea → concept → production.",
-		Kernel:   StatusRunning,
-		Agents:   len(k.procs),
-		Running:  running,
-		Live:     live,
-		Resident: resident,
-		Events:   len(k.events),
+		Name:      Name,
+		Version:   Version,
+		Motto:     "I make teams ship: idea → concept → production.",
+		Kernel:    StatusRunning,
+		Agents:    len(k.procs),
+		Running:   running,
+		Live:      live,
+		Resident:  resident,
+		Events:    len(k.events),
+		Closed:    k.closed,
+		LastPulse: lastPulse,
+		Requests:  len(k.requests),
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
-			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
+			"You pick the next job. Agents are processes. Capabilities are verbs. Mail, notes, memory, confirms, and requests are first-class. " +
+			"The desk captures every ask and betters it each pass. Symbols is the internal Zapier: trigger → verbs on our kernel, zero subscription. " +
+			"Delivery is live. Research is live. Watch keeps the desk flowing while things are closed. " +
+			"Outbound comms still wait at the human gate. OpenRouter stays optional. " +
 			"New agentics register into this kernel — they do not fork a second product.",
 	}
 }

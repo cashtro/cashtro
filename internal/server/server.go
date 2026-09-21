@@ -9,6 +9,7 @@ import (
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
+	"github.com/cashtro/cashtro/internal/symbols"
 )
 
 const maxBody = 1 << 20
@@ -36,12 +37,32 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/confirms", s.confirms)
 	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
+	mux.HandleFunc("GET /api/watch", s.watch)
+	mux.HandleFunc("POST /api/watch/close", s.watchClose)
+	mux.HandleFunc("POST /api/watch/open", s.watchOpen)
+	mux.HandleFunc("POST /api/watch/pulse", s.watchPulse)
+	mux.HandleFunc("GET /api/inbox", s.inbox)
+	mux.HandleFunc("POST /api/inbox/{id}/take", s.inboxTake)
+	mux.HandleFunc("POST /api/inbox/{id}/skip", s.inboxSkip)
+	mux.HandleFunc("GET /api/plan", s.plan)
+	mux.HandleFunc("GET /api/requests", s.listRequests)
+	mux.HandleFunc("POST /api/requests", s.captureRequest)
+	mux.HandleFunc("POST /api/requests/{id}/better", s.betterRequest)
+	mux.HandleFunc("POST /api/requests/{id}/done", s.doneRequest)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
 	mux.HandleFunc("POST /api/ships", s.createShip)
 	mux.HandleFunc("GET /api/ships/{id}", s.getShip)
 	mux.HandleFunc("POST /api/ships/{id}/advance", s.advanceShip)
+	mux.HandleFunc("GET /api/symbols", s.listSymbols)
+	mux.HandleFunc("POST /api/symbols", s.createSymbol)
+	mux.HandleFunc("GET /api/symbols/{id}", s.getSymbol)
+	mux.HandleFunc("POST /api/symbols/{id}/fire", s.fireSymbol)
+	mux.HandleFunc("POST /api/symbols/{id}/hook", s.fireSymbol)
+	mux.HandleFunc("POST /api/symbols/{id}/toggle", s.toggleSymbol)
+	mux.HandleFunc("GET /api/runs", s.symbolRuns)
+	mux.HandleFunc("GET /api/connectors", s.connectors)
 	return mux
 }
 
@@ -191,6 +212,116 @@ func (s *api) decideConfirm(w http.ResponseWriter, r *http.Request, allow bool) 
 	writeJSON(w, http.StatusOK, c)
 }
 
+func (s *api) watch(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.WatchCard())
+}
+
+func (s *api) watchClose(w http.ResponseWriter, r *http.Request) {
+	s.invokeWatch(w, r, "watch.close")
+}
+
+func (s *api) watchOpen(w http.ResponseWriter, r *http.Request) {
+	s.invokeWatch(w, r, "watch.open")
+}
+
+func (s *api) watchPulse(w http.ResponseWriter, r *http.Request) {
+	s.invokeWatch(w, r, "watch.pulse")
+}
+
+func (s *api) invokeWatch(w http.ResponseWriter, r *http.Request, cap string) {
+	raw, _ := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if len(raw) == 0 {
+		raw = []byte(`{}`)
+	}
+	res, err := s.k.Invoke(r.Context(), "watch", kernel.Call{Capability: cap, Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) inbox(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.DeskCard())
+}
+
+func (s *api) inboxTake(w http.ResponseWriter, r *http.Request) {
+	s.decideInbox(w, r, "chooser.take")
+}
+
+func (s *api) inboxSkip(w http.ResponseWriter, r *http.Request) {
+	s.decideInbox(w, r, "chooser.skip")
+}
+
+func (s *api) decideInbox(w http.ResponseWriter, r *http.Request, cap string) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "bad choice id"})
+		return
+	}
+	raw, _ := json.Marshal(map[string]int{"id": id})
+	res, err := s.k.Invoke(r.Context(), "chooser", kernel.Call{Capability: cap, Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) plan(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "desk", kernel.Call{Capability: "desk.plan"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) listRequests(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Requests())
+}
+
+func (s *api) captureRequest(w http.ResponseWriter, r *http.Request) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	res, err := s.k.Invoke(r.Context(), "desk", kernel.Call{Capability: "desk.capture", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusCreated, res.Data)
+}
+
+func (s *api) betterRequest(w http.ResponseWriter, r *http.Request) {
+	s.invokeRequest(w, r, "desk.better")
+}
+
+func (s *api) doneRequest(w http.ResponseWriter, r *http.Request) {
+	s.invokeRequest(w, r, "desk.done")
+}
+
+func (s *api) invokeRequest(w http.ResponseWriter, r *http.Request, cap string) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "bad request id"})
+		return
+	}
+	raw, _ := json.Marshal(map[string]int{"id": id})
+	res, err := s.k.Invoke(r.Context(), "desk", kernel.Call{Capability: cap, Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
 func (s *api) profile(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, s.cat.Profile())
 }
@@ -237,6 +368,86 @@ func (s *api) advanceShip(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, res.Data)
 }
 
+func (s *api) listSymbols(w http.ResponseWriter, r *http.Request) {
+	bus := s.k.Symbols()
+	if bus == nil {
+		writeJSON(w, http.StatusNotFound, map[string]string{"error": "symbols bus not attached"})
+		return
+	}
+	writeJSON(w, http.StatusOK, bus.List())
+}
+
+func (s *api) getSymbol(w http.ResponseWriter, r *http.Request) {
+	bus := s.k.Symbols()
+	if bus == nil {
+		writeJSON(w, http.StatusNotFound, map[string]string{"error": "symbols bus not attached"})
+		return
+	}
+	sym, err := bus.Get(r.PathValue("id"))
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, sym)
+}
+
+func (s *api) createSymbol(w http.ResponseWriter, r *http.Request) {
+	var in symbols.Create
+	if err := decodeJSON(r, &in); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	raw, _ := json.Marshal(in)
+	res, err := s.k.Invoke(r.Context(), "symbols", kernel.Call{Capability: "symbols.create", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusCreated, res.Data)
+}
+
+func (s *api) fireSymbol(w http.ResponseWriter, r *http.Request) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	input := symbols.FlattenJSON(raw)
+	input["id"] = r.PathValue("id")
+	payload, _ := json.Marshal(input)
+	res, err := s.k.Invoke(r.Context(), "symbols", kernel.Call{Capability: "symbols.fire", Payload: payload})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) toggleSymbol(w http.ResponseWriter, r *http.Request) {
+	raw, _ := json.Marshal(map[string]string{"id": r.PathValue("id")})
+	res, err := s.k.Invoke(r.Context(), "symbols", kernel.Call{Capability: "symbols.toggle", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) symbolRuns(w http.ResponseWriter, r *http.Request) {
+	bus := s.k.Symbols()
+	if bus == nil {
+		writeJSON(w, http.StatusNotFound, map[string]string{"error": errSymbolsDetached})
+		return
+	}
+	writeJSON(w, http.StatusOK, bus.Runs())
+}
+
+func (s *api) connectors(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Capabilities())
+}
+
+const errSymbolsDetached = "symbols bus not attached"
+
 func decodeJSON(r *http.Request, dst any) error {
 	dec := json.NewDecoder(io.LimitReader(r.Body, maxBody))
 	dec.DisallowUnknownFields()
@@ -248,11 +459,11 @@ func decodeJSON(r *http.Request, dst any) error {
 
 func writeError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent):
+	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent), errors.Is(err, symbols.ErrNotFound), errors.Is(err, kernel.ErrUnknownChoice), errors.Is(err, kernel.ErrUnknownRequest):
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability):
+	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability), errors.Is(err, symbols.ErrInvalid), errors.Is(err, kernel.ErrInvalidRequest):
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning):
+	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning), errors.Is(err, symbols.ErrDisabled), errors.Is(err, symbols.ErrBusy), errors.Is(err, kernel.ErrAlreadyDecided):
 		writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})
 	default:
 		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})
