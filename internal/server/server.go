@@ -44,6 +44,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/review", s.review)
 	mux.HandleFunc("POST /api/browse", s.browse)
 	mux.HandleFunc("POST /api/plan", s.plan)
+	mux.HandleFunc("POST /api/architect", s.architect)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -291,6 +292,25 @@ func (s *api) plan(w http.ResponseWriter, r *http.Request) {
 	}
 	raw, _ := json.Marshal(payload)
 	res, err := s.k.Invoke(r.Context(), "planner", kernel.Call{Capability: "planner.backlog", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) architect(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Goal  string   `json:"goal"`
+		Steps []string `json:"steps"`
+	}
+	_ = decodeJSON(r, &in)
+	payload := map[string]any{"goal": in.Goal}
+	if len(in.Steps) > 0 {
+		payload["steps"] = in.Steps
+	}
+	raw, _ := json.Marshal(payload)
+	res, err := s.k.Invoke(r.Context(), "architect", kernel.Call{Capability: "architect.plan", Payload: raw})
 	if err != nil {
 		writeError(w, err)
 		return
