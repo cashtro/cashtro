@@ -30,8 +30,23 @@ func TestHealthAndProfile(t *testing.T) {
 	if res.Code != http.StatusOK {
 		t.Fatalf("health status = %d", res.Code)
 	}
-	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) {
+	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) || !strings.Contains(res.Body.String(), `"always":true`) {
 		t.Fatalf("health body = %s", res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), `"uptimeSec"`) {
+		t.Fatalf("health missing uptime: %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/health", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"always":true`) {
+		t.Fatalf("api health = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/heartbeat", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"always":true`) {
+		t.Fatalf("heartbeat = %d %s", res.Code, res.Body.String())
 	}
 
 	res = httptest.NewRecorder()
@@ -75,6 +90,58 @@ func TestOSAndAgents(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/trace?q=AOS", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "blast radius") {
+		t.Fatalf("trace = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/security", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "security") {
+		t.Fatalf("security = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/deploy", strings.NewReader(`{"target":"cashtro-os"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "dry-run") {
+		t.Fatalf("deploy = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/review", strings.NewReader(`{"target":"cashtro-os"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "review") {
+		t.Fatalf("review = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/browse", strings.NewReader(`{"url":"http://127.0.0.1:8080/"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "browse planned") {
+		t.Fatalf("browse = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/plan", strings.NewReader(`{"goal":"Overnight Ultron company desk","items":["Giant pulse","Empire backlog"]}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "parked") {
+		t.Fatalf("plan = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/architect", strings.NewReader(`{"goal":"Ultron company control plane","steps":["RBAC gate","Fleet bridge","Always-on"]}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "planned") {
+		t.Fatalf("architect = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/notes", nil))
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "2606.01508") {
 		t.Fatalf("notes = %s", res.Body.String())
@@ -87,7 +154,7 @@ func TestOSAndAgents(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
-	req := httptest.NewRequest(http.MethodPost, "/api/agents/explorer/invoke", strings.NewReader(`{"capability":"explorer.search"}`))
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/explorer/invoke", strings.NewReader(`{"capability":"explorer.search"}`))
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusOK {
 		t.Fatalf("invoke status = %d body=%s", res.Code, res.Body.String())

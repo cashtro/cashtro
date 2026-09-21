@@ -18,7 +18,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 14", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 14 || about.Live != 13 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -31,6 +31,14 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	res, err := k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.about"})
 	if err != nil || !res.OK {
 		t.Fatalf("os.about: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.heartbeat"})
+	if err != nil || !res.OK {
+		t.Fatalf("os.heartbeat: %+v %v", res, err)
+	}
+	if about := k.About(); about.BootedAt.IsZero() {
+		t.Fatalf("expected bootedAt on about: %+v", about)
 	}
 
 	res, err = k.Invoke(context.Background(), "delivery", kernel.Call{Capability: "delivery.list"})
@@ -78,5 +86,53 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})
 	if err != nil || !res.OK {
 		t.Fatalf("research: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "investigator", kernel.Call{
+		Capability: "investigator.trace",
+		Payload:    []byte(`{"query":"AOS"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("investigator: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "architect", kernel.Call{
+		Capability: "architect.plan",
+		Payload:    []byte(`{"goal":"Ship overnight keep-alive desk"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("architect: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "security", kernel.Call{
+		Capability: "security.triage",
+		Payload:    []byte(`{"query":"AOS"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("security: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "deploy", kernel.Call{
+		Capability: "deploy.release",
+		Payload:    []byte(`{"target":"cashtro-os"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("deploy: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "reviewer", kernel.Call{
+		Capability: "reviewer.watch",
+		Payload:    []byte(`{"target":"cashtro-os"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("reviewer: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "operator", kernel.Call{
+		Capability: "operator.browse",
+		Payload:    []byte(`{"url":"http://127.0.0.1:8080/"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("operator: %+v %v", res, err)
 	}
 }

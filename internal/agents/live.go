@@ -37,6 +37,75 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	return kernel.Result{OK: true, Message: "explorer hit " + strconv.Itoa(len(hits)), Data: hits}, nil
 }
 
+func investigatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	q := strings.ToLower(payloadQuery(call, "query"))
+	if q == "" {
+		q = strings.ToLower(payloadQuery(call, "prompt"))
+	}
+	blast := map[string]any{
+		"query":    q,
+		"ships":    []map[string]string{},
+		"notes":    []map[string]string{},
+		"events":   []map[string]string{},
+		"mail":     []map[string]string{},
+		"confirms": []map[string]string{},
+		"facts":    []map[string]string{},
+	}
+	ships := blast["ships"].([]map[string]string)
+	notes := blast["notes"].([]map[string]string)
+	events := blast["events"].([]map[string]string)
+	mail := blast["mail"].([]map[string]string)
+	confirms := blast["confirms"].([]map[string]string)
+	facts := blast["facts"].([]map[string]string)
+
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			blob := strings.ToLower(s.Name + " " + s.Client + " " + s.Notes + " " + s.Sector + " " + string(s.Stage))
+			if q == "" || strings.Contains(blob, q) {
+				ships = append(ships, map[string]string{"id": s.ID, "stage": string(s.Stage), "name": s.Name})
+			}
+		}
+	}
+	for _, n := range k.Notes() {
+		blob := strings.ToLower(n.Claim + " " + n.Source + " " + n.Quote)
+		if q == "" || strings.Contains(blob, q) {
+			notes = append(notes, map[string]string{"source": n.Source, "claim": n.Claim, "url": n.URL})
+		}
+	}
+	for _, ev := range k.Events() {
+		blob := strings.ToLower(ev.Source + " " + ev.Kind + " " + ev.Message)
+		if q == "" || strings.Contains(blob, q) {
+			events = append(events, map[string]string{"kind": ev.Kind, "source": ev.Source, "message": ev.Message})
+		}
+	}
+	for _, m := range k.Inbox("") {
+		blob := strings.ToLower(m.From + " " + m.To + " " + m.Kind + " " + m.Body)
+		if q == "" || strings.Contains(blob, q) {
+			mail = append(mail, map[string]string{"from": m.From, "to": m.To, "body": m.Body})
+		}
+	}
+	for _, c := range k.Confirms() {
+		blob := strings.ToLower(c.Agent + " " + c.Cap + " " + c.Body + " " + c.Status)
+		if q == "" || strings.Contains(blob, q) {
+			confirms = append(confirms, map[string]string{"id": strconv.Itoa(c.ID), "status": c.Status, "body": c.Body})
+		}
+	}
+	for _, f := range k.Recall(q) {
+		facts = append(facts, map[string]string{"topic": f.Topic, "text": f.Text})
+	}
+
+	blast["ships"] = ships
+	blast["notes"] = notes
+	blast["events"] = events
+	blast["mail"] = mail
+	blast["confirms"] = confirms
+	blast["facts"] = facts
+	total := len(ships) + len(notes) + len(events) + len(mail) + len(confirms) + len(facts)
+	_, _ = k.Post("investigator", "memory", "trace", q)
+	k.Remember("incident", "trace "+q+" · "+strconv.Itoa(total)+" hits")
+	return kernel.Result{OK: true, Message: "blast radius " + strconv.Itoa(total), Data: blast}, nil
+}
+
 func memoryInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	switch call.Capability {
 	case "memory.store":
@@ -93,6 +162,292 @@ func commsInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	default:
 		return kernel.Result{}, kernel.ErrUnknownCapability
 	}
+}
+
+func operatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	url := payloadQuery(call, "url")
+	if url == "" {
+		url = payloadQuery(call, "prompt")
+	}
+	if url == "" {
+		url = "http://127.0.0.1:8080/"
+	}
+	steps := []string{
+		"Open " + url,
+		"Read /health and /api/os",
+		"Walk process table and delivery board",
+		"Capture evidence for reviewer.watch",
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "operator",
+		Source: "operator.browse",
+		Claim:  "Browse plan · " + url,
+		Quote:  strings.Join(steps, " → "),
+	})
+	k.Remember("operator", "browse plan · "+url)
+	_, _ = k.Post("operator", "reviewer", "browse", url)
+	return kernel.Result{
+		OK:      true,
+		Message: "browse planned · " + url,
+		Data: map[string]any{
+			"url":   url,
+			"steps": steps,
+			"note":  note,
+			"mode":  "dry-run",
+			"bind":  "computer-use worker not attached · plan only",
+		},
+	}, nil
+}
+
+func reviewerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	target := payloadQuery(call, "target")
+	if target == "" {
+		target = payloadQuery(call, "prompt")
+	}
+	if target == "" {
+		target = "desk"
+	}
+	var idea, concept, prod int
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			switch s.Stage {
+			case catalog.StageIdea:
+				idea++
+			case catalog.StageConcept:
+				concept++
+			case catalog.StageProduction:
+				prod++
+			}
+		}
+	}
+	notes := len(k.Notes())
+	events := len(k.Events())
+	pending := 0
+	for _, c := range k.Confirms() {
+		if c.Status == "pending" {
+			pending++
+		}
+	}
+	checks := []map[string]any{
+		{"name": "production evidence", "ok": prod > 0, "detail": strconv.Itoa(prod) + " ships"},
+		{"name": "research library", "ok": notes >= 3, "detail": strconv.Itoa(notes) + " notes"},
+		{"name": "journal trail", "ok": events > 0, "detail": strconv.Itoa(events) + " events"},
+		{"name": "no pending outbound", "ok": pending == 0, "detail": strconv.Itoa(pending)},
+		{"name": "wip visible", "ok": idea+concept >= 0, "detail": "idea=" + strconv.Itoa(idea) + " concept=" + strconv.Itoa(concept)},
+	}
+	verdict := "pass"
+	for _, c := range checks {
+		if ok, _ := c["ok"].(bool); !ok {
+			verdict = "fail"
+			break
+		}
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "reviewer",
+		Source: "reviewer.watch",
+		Claim:  "QA " + verdict + " · " + target,
+		Quote:  "production=" + strconv.Itoa(prod) + " notes=" + strconv.Itoa(notes) + " events=" + strconv.Itoa(events) + " pending=" + strconv.Itoa(pending),
+	})
+	k.Remember("qa", verdict+" · "+target)
+	_, _ = k.Post("reviewer", "deploy", "qa", verdict+" · "+target)
+	return kernel.Result{
+		OK:      true,
+		Message: "review " + verdict + " · " + target,
+		Data: map[string]any{
+			"target":  target,
+			"verdict": verdict,
+			"checks":  checks,
+			"note":    note,
+			"mode":    "desk-evidence",
+		},
+	}, nil
+}
+
+func deployInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	target := payloadQuery(call, "target")
+	if target == "" {
+		target = payloadQuery(call, "prompt")
+	}
+	if target == "" {
+		target = "cashtro-os"
+	}
+	var idea, concept, prod int
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			switch s.Stage {
+			case catalog.StageIdea:
+				idea++
+			case catalog.StageConcept:
+				concept++
+			case catalog.StageProduction:
+				prod++
+			}
+		}
+	}
+	pending := 0
+	for _, c := range k.Confirms() {
+		if c.Status == "pending" {
+			pending++
+		}
+	}
+	checks := []map[string]any{
+		{"name": "disk image", "ok": k.PersistPath() != "", "detail": k.PersistPath()},
+		{"name": "production ships", "ok": prod > 0, "detail": strconv.Itoa(prod)},
+		{"name": "open idea work", "ok": true, "detail": strconv.Itoa(idea)},
+		{"name": "concept WIP", "ok": true, "detail": strconv.Itoa(concept)},
+		{"name": "pending confirms", "ok": pending == 0, "detail": strconv.Itoa(pending)},
+		{"name": "research notes", "ok": len(k.Notes()) > 0, "detail": strconv.Itoa(len(k.Notes()))},
+	}
+	ready := true
+	for _, c := range checks {
+		if ok, _ := c["ok"].(bool); !ok {
+			ready = false
+			break
+		}
+	}
+	status := "blocked"
+	if ready {
+		status = "ready"
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "deploy",
+		Source: "deploy.release",
+		Claim:  "Release dry-run " + status + " · " + target,
+		Quote:  "idea=" + strconv.Itoa(idea) + " concept=" + strconv.Itoa(concept) + " production=" + strconv.Itoa(prod) + " pending=" + strconv.Itoa(pending),
+	})
+	k.Remember("release", status+" · "+target)
+	_, _ = k.Post("deploy", "security", "release", target)
+	confirm := kernel.Confirm{}
+	if ready {
+		confirm = k.RequestConfirm("deploy", "deploy.release", "promote "+target+" (dry-run only · no outbound)")
+	}
+	return kernel.Result{
+		OK:      true,
+		Message: "deploy " + status + " · " + target,
+		Data: map[string]any{
+			"target":  target,
+			"status":  status,
+			"checks":  checks,
+			"note":    note,
+			"confirm": confirm,
+			"mode":    "dry-run",
+		},
+	}, nil
+}
+
+func securityInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	q := strings.ToLower(payloadQuery(call, "query"))
+	if q == "" {
+		q = strings.ToLower(payloadQuery(call, "prompt"))
+	}
+	keywords := []string{"cve", "secret", "password", "token", "exploit", "breach", "rce", "sqli", "xss", "critical", "fail", "error"}
+	if q != "" {
+		keywords = append(keywords, q)
+	}
+	findings := make([]map[string]string, 0)
+	match := func(blob, kind, id, name string) {
+		low := strings.ToLower(blob)
+		for _, kw := range keywords {
+			if kw != "" && strings.Contains(low, kw) {
+				findings = append(findings, map[string]string{
+					"kind": kind, "id": id, "name": name, "hit": kw,
+				})
+				return
+			}
+		}
+	}
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			match(s.Name+" "+s.Notes+" "+s.Sector+" "+string(s.Stage), "ship", s.ID, s.Name)
+		}
+	}
+	for _, n := range k.Notes() {
+		match(n.Claim+" "+n.Source+" "+n.Quote, "note", n.Source, n.Claim)
+	}
+	for _, ev := range k.Events() {
+		match(ev.Source+" "+ev.Kind+" "+ev.Message, "event", ev.Kind, ev.Message)
+	}
+	severity := "clear"
+	if len(findings) > 0 {
+		severity = "review"
+		k.RequestConfirm("security", "security.triage", "triage "+strconv.Itoa(len(findings))+" hits · query="+q)
+	}
+	k.Remember("security", "triage "+severity+" · "+strconv.Itoa(len(findings))+" hits")
+	_, _ = k.Post("security", "investigator", "triage", q)
+	return kernel.Result{
+		OK:      true,
+		Message: "security " + severity + " · " + strconv.Itoa(len(findings)) + " hits",
+		Data: map[string]any{
+			"severity": severity,
+			"query":    q,
+			"findings": findings,
+		},
+	}, nil
+}
+
+func architectInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	goal := payloadQuery(call, "goal")
+	if goal == "" {
+		goal = payloadQuery(call, "prompt")
+	}
+	if goal == "" {
+		goal = "unnamed system"
+	}
+	steps := payloadList(call, "steps")
+	if len(steps) == 0 {
+		steps = []string{
+			"Map the control plane and process table",
+			"Park the mandate on the delivery line",
+			"Prove it with tests and a desk walkthrough",
+			"Ship only after human confirm on outbound",
+		}
+	}
+	var b strings.Builder
+	b.WriteString("Plan for: ")
+	b.WriteString(goal)
+	b.WriteString("\n")
+	for i, step := range steps {
+		b.WriteString(strconv.Itoa(i + 1))
+		b.WriteString(". ")
+		b.WriteString(step)
+		b.WriteString("\n")
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "architect",
+		Source: "architect.plan",
+		Claim:  "Plan: " + goal,
+		Quote:  strings.TrimSpace(b.String()),
+	})
+	k.Remember("plan", goal)
+	_, _ = k.Post("architect", "planner", "plan", goal)
+	_, _ = k.Post("architect", "delivery", "plan", goal)
+
+	created := make([]catalog.Ship, 0)
+	if cat := k.Catalog(); cat != nil {
+		for _, step := range steps {
+			ship, err := cat.Create(catalog.CreateShip{
+				Name:   step,
+				Client: "Cashtro",
+				Sector: "architecture",
+				Stack:  []string{"Go"},
+				Notes:  "from architect.plan · " + goal,
+			})
+			if err != nil {
+				return kernel.Result{}, err
+			}
+			created = append(created, ship)
+		}
+	}
+	return kernel.Result{
+		OK:      true,
+		Message: "planned " + strconv.Itoa(len(steps)) + " steps for " + goal,
+		Data: map[string]any{
+			"goal":  goal,
+			"steps": steps,
+			"note":  note,
+			"ships": created,
+		},
+	}, nil
 }
 
 func plannerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
@@ -160,6 +515,9 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "XKernel", URL: "https://github.com/JosephBerm/XKernel", Claim: "Treat agents as first-class processes with capability tokens and typed IPC.", Quote: "Unix treats processes; Kubernetes treats containers; an agent OS treats agents."},
 		{Agent: "research", Source: "12-factor agents", URL: "https://github.com/humanlayer/12-factor-agents", Claim: "Own the loop in deterministic code. The model only fills structured next steps.", Quote: "Human confirm sits between selection and invocation. OpenRouter stays optional."},
 		{Agent: "research", Source: "treg", URL: "https://treg.to", Claim: "Exa publication search is available as research.ingest input at $0.007/call when Treg is signed in.", Quote: "catalog_search → catalog_get → call. Token was expired this pass; notes still landed from open sources."},
+		{Agent: "research", Source: "always-on", URL: "https://github.com/cashtro/cashtro", Claim: "Always-on means the cloud VM keeps the kernel looping — closing a laptop does not stop Cashtro OS.", Quote: "scripts/always-on.sh rebuilds and restarts :8080. Autosave flushes data/cashtro.json so hard kills still leave a durable image."},
+		{Agent: "research", Source: "planner-api", URL: "https://github.com/cashtro/cashtro", Claim: "Planner is desk-reachable: POST /api/plan parks goal items as idea-stage ships on the delivery line.", Quote: "Ultron and overnight keep-alives can backlog company work without OpenRouter."},
+		{Agent: "research", Source: "architect-api", URL: "https://github.com/cashtro/cashtro", Claim: "Architect is desk-reachable: POST /api/architect turns a goal into a plan note, memory, and idea-stage ships.", Quote: "Deterministic design loop — no model key required."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)

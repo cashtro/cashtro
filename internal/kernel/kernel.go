@@ -22,7 +22,9 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.10"
+	// DefaultAutosave is how often the disk image flushes while always-on.
+	DefaultAutosave = 60 * time.Second
 )
 
 // Status is a process lifecycle state.
@@ -113,16 +115,18 @@ type Agent interface {
 
 // About is the public OS card.
 type About struct {
-	Name      string `json:"name"`
-	Version   string `json:"version"`
-	Motto     string `json:"motto"`
-	Kernel    Status `json:"kernel"`
-	Agents    int    `json:"agents"`
-	Running   int    `json:"running"`
-	Live      int    `json:"live"`
-	Resident  int    `json:"resident"`
-	Events    int    `json:"events"`
-	Manifesto string `json:"manifesto"`
+	Name      string    `json:"name"`
+	Version   string    `json:"version"`
+	Motto     string    `json:"motto"`
+	Kernel    Status    `json:"kernel"`
+	Agents    int       `json:"agents"`
+	Running   int       `json:"running"`
+	Live      int       `json:"live"`
+	Resident  int       `json:"resident"`
+	Events    int       `json:"events"`
+	BootedAt  time.Time `json:"bootedAt,omitempty"`
+	UptimeSec int64     `json:"uptimeSec"`
+	Manifesto string    `json:"manifesto"`
 }
 
 var (
@@ -138,23 +142,31 @@ const maxEvents = 200
 
 // Kernel is the in-process OS.
 type Kernel struct {
-	mu       sync.RWMutex
-	now      func() time.Time
-	nextID   int
-	seq      int
-	procs    map[string]*Process
-	agents   map[string]Agent
-	caps     map[string]Capability
-	events   []Event
-	cat      *catalog.Catalog
-	mail     []Mail
-	mailSeq  int
-	notes    []Note
-	noteSeq  int
-	facts    []Fact
-	factSeq  int
-	confirms []Confirm
-	confSeq  int
+	mu             sync.RWMutex
+	now            func() time.Time
+	nextID         int
+	seq            int
+	procs          map[string]*Process
+	agents         map[string]Agent
+	caps           map[string]Capability
+	events         []Event
+	cat            *catalog.Catalog
+	mail           []Mail
+	mailSeq        int
+	notes          []Note
+	noteSeq        int
+	facts          []Fact
+	factSeq        int
+	confirms       []Confirm
+	confSeq        int
+	persistPath    string
+	bootedAt       time.Time
+	autosaveEvery  time.Duration
+	stopAutosave   chan struct{}
+	autosaveOnce   sync.Once
+	autosaveStop   sync.Once
+	lastHeartbeat  time.Time
+	heartbeatCount int
 }
 
 // Option configures the kernel.
@@ -164,6 +176,21 @@ type Option func(*Kernel)
 func WithClock(now func() time.Time) Option {
 	return func(k *Kernel) {
 		k.now = now
+	}
+}
+
+// WithPersistPath writes the OS image to disk after mutates.
+func WithPersistPath(path string) Option {
+	return func(k *Kernel) {
+		k.persistPath = path
+	}
+}
+
+// WithAutosave sets the background disk flush interval (always-on durability).
+// Zero keeps DefaultAutosave. Negative disables the loop.
+func WithAutosave(every time.Duration) Option {
+	return func(k *Kernel) {
+		k.autosaveEvery = every
 	}
 }
 
@@ -211,6 +238,9 @@ func (k *Kernel) Register(agent Agent) {
 
 // Boot starts every autostart agentic and writes the init journal.
 func (k *Kernel) Boot(ctx context.Context) error {
+	k.mu.Lock()
+	k.bootedAt = k.now()
+	k.mu.Unlock()
 	k.Publish("init", "boot", Name+" "+Version+" coming up", nil)
 	ids := k.autostartIDs()
 	for _, id := range ids {
@@ -221,6 +251,86 @@ func (k *Kernel) Boot(ctx context.Context) error {
 	about := k.About()
 	k.Publish("init", "ready", fmt.Sprintf("kernel online · %d agentics · %d live", about.Agents, about.Live), nil)
 	return nil
+}
+
+// StartPersistLoop flushes the disk image on an interval so always-on
+// survives hard kills (laptop closed, VM restart) without waiting for
+// the next mutate. Safe to call more than once.
+func (k *Kernel) StartPersistLoop() {
+	path := k.PersistPath()
+	if path == "" {
+		return
+	}
+	every := k.autosaveEvery
+	if every == 0 {
+		every = DefaultAutosave
+	}
+	if every < 0 {
+		return
+	}
+	k.autosaveOnce.Do(func() {
+		k.stopAutosave = make(chan struct{})
+		go func() {
+			t := time.NewTicker(every)
+			defer t.Stop()
+			for {
+				select {
+				case <-t.C:
+					_ = SaveFile(path, k)
+				case <-k.stopAutosave:
+					return
+				}
+			}
+		}()
+		k.Publish("init", "autosave", fmt.Sprintf("disk flush every %s · %s", every, path), map[string]any{
+			"everySec": int(every.Seconds()),
+			"path":     path,
+		})
+	})
+}
+
+// Close stops the autosave loop and writes a final snapshot.
+func (k *Kernel) Close() {
+	k.autosaveStop.Do(func() {
+		if k.stopAutosave != nil {
+			close(k.stopAutosave)
+		}
+	})
+	if path := k.PersistPath(); path != "" {
+		_ = SaveFile(path, k)
+	}
+}
+
+// Heartbeat stamps an always-on keep-alive into memory and the journal.
+func (k *Kernel) Heartbeat(source string) map[string]any {
+	if source == "" {
+		source = "init"
+	}
+	now := k.now()
+	k.mu.Lock()
+	k.lastHeartbeat = now
+	k.heartbeatCount++
+	count := k.heartbeatCount
+	booted := k.bootedAt
+	k.mu.Unlock()
+	uptime := int64(0)
+	if !booted.IsZero() {
+		uptime = int64(now.Sub(booted).Seconds())
+	}
+	msg := fmt.Sprintf("heartbeat #%d · uptime %ds · laptop may be closed", count, uptime)
+	k.Publish(source, "heartbeat", msg, map[string]any{"n": count, "uptimeSec": uptime})
+	k.Remember("always-on", msg)
+	k.persist()
+	return map[string]any{
+		"ok":         true,
+		"n":          count,
+		"at":         now,
+		"uptimeSec":  uptime,
+		"bootedAt":   booted,
+		"persist":    k.PersistPath(),
+		"always":     true,
+		"message":    msg,
+	}
 }
 
 // Spawn boots one agentic.
@@ -285,6 +395,7 @@ func (k *Kernel) Invoke(ctx context.Context, id string, call Call) (Result, erro
 		return Result{}, err
 	}
 	k.Publish(id, "invoke", res.Message, map[string]any{"capability": call.Capability, "ok": res.OK})
+	k.persist()
 	return res, nil
 }
 
@@ -375,16 +486,23 @@ func (k *Kernel) About() About {
 			resident++
 		}
 	}
+	now := k.now()
+	uptime := int64(0)
+	if !k.bootedAt.IsZero() {
+		uptime = int64(now.Sub(k.bootedAt).Seconds())
+	}
 	return About{
-		Name:     Name,
-		Version:  Version,
-		Motto:    "I make teams ship: idea → concept → production.",
-		Kernel:   StatusRunning,
-		Agents:   len(k.procs),
-		Running:  running,
-		Live:     live,
-		Resident: resident,
-		Events:   len(k.events),
+		Name:      Name,
+		Version:   Version,
+		Motto:     "I make teams ship: idea → concept → production.",
+		Kernel:    StatusRunning,
+		Agents:    len(k.procs),
+		Running:   running,
+		Live:      live,
+		Resident:  resident,
+		Events:    len(k.events),
+		BootedAt:  k.bootedAt,
+		UptimeSec: uptime,
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
 			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
 			"Delivery is live. Research is live. OpenRouter stays optional. " +

@@ -21,6 +21,8 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /favicon.ico", s.favicon)
 	mux.HandleFunc("GET /favicon.svg", s.favicon)
 	mux.HandleFunc("GET /health", s.health)
+	mux.HandleFunc("GET /api/health", s.health)
+	mux.HandleFunc("POST /api/heartbeat", s.heartbeat)
 	mux.HandleFunc("GET /api/os", s.osAbout)
 	mux.HandleFunc("GET /api/agents", s.listAgents)
 	mux.HandleFunc("GET /api/agents/{id}", s.getAgent)
@@ -36,6 +38,13 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/confirms", s.confirms)
 	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
+	mux.HandleFunc("GET /api/trace", s.trace)
+	mux.HandleFunc("GET /api/security", s.security)
+	mux.HandleFunc("POST /api/deploy", s.deploy)
+	mux.HandleFunc("POST /api/review", s.review)
+	mux.HandleFunc("POST /api/browse", s.browse)
+	mux.HandleFunc("POST /api/plan", s.plan)
+	mux.HandleFunc("POST /api/architect", s.architect)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -64,14 +73,30 @@ func (s *api) favicon(w http.ResponseWriter, r *http.Request) {
 func (s *api) health(w http.ResponseWriter, r *http.Request) {
 	about := s.k.About()
 	writeJSON(w, http.StatusOK, map[string]any{
-		"status":  "ok",
-		"service": "cashtro",
-		"os":      about.Name,
-		"version": about.Version,
-		"kernel":  about.Kernel,
-		"agents":  about.Agents,
-		"running": about.Running,
+		"status":    "ok",
+		"service":   "cashtro",
+		"os":        about.Name,
+		"version":   about.Version,
+		"kernel":    about.Kernel,
+		"agents":    about.Agents,
+		"running":   about.Running,
+		"live":      about.Live,
+		"notes":     len(s.k.Notes()),
+		"events":    about.Events,
+		"bootedAt":  about.BootedAt,
+		"uptimeSec": about.UptimeSec,
+		"data":      s.k.PersistPath(),
+		"always":    true,
 	})
+}
+
+func (s *api) heartbeat(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "init", kernel.Call{Capability: "os.heartbeat"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
 }
 
 func (s *api) osAbout(w http.ResponseWriter, r *http.Request) {
@@ -189,6 +214,108 @@ func (s *api) decideConfirm(w http.ResponseWriter, r *http.Request, allow bool) 
 		return
 	}
 	writeJSON(w, http.StatusOK, c)
+}
+
+func (s *api) trace(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query().Get("q")
+	raw, _ := json.Marshal(map[string]string{"query": q})
+	res, err := s.k.Invoke(r.Context(), "investigator", kernel.Call{Capability: "investigator.trace", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) security(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query().Get("q")
+	raw, _ := json.Marshal(map[string]string{"query": q})
+	res, err := s.k.Invoke(r.Context(), "security", kernel.Call{Capability: "security.triage", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) deploy(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Target string `json:"target"`
+	}
+	_ = decodeJSON(r, &in)
+	raw, _ := json.Marshal(map[string]string{"target": in.Target})
+	res, err := s.k.Invoke(r.Context(), "deploy", kernel.Call{Capability: "deploy.release", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) review(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Target string `json:"target"`
+	}
+	_ = decodeJSON(r, &in)
+	raw, _ := json.Marshal(map[string]string{"target": in.Target})
+	res, err := s.k.Invoke(r.Context(), "reviewer", kernel.Call{Capability: "reviewer.watch", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) browse(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		URL string `json:"url"`
+	}
+	_ = decodeJSON(r, &in)
+	raw, _ := json.Marshal(map[string]string{"url": in.URL})
+	res, err := s.k.Invoke(r.Context(), "operator", kernel.Call{Capability: "operator.browse", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) plan(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Goal  string   `json:"goal"`
+		Items []string `json:"items"`
+	}
+	_ = decodeJSON(r, &in)
+	payload := map[string]any{"goal": in.Goal}
+	if len(in.Items) > 0 {
+		payload["items"] = in.Items
+	}
+	raw, _ := json.Marshal(payload)
+	res, err := s.k.Invoke(r.Context(), "planner", kernel.Call{Capability: "planner.backlog", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) architect(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Goal  string   `json:"goal"`
+		Steps []string `json:"steps"`
+	}
+	_ = decodeJSON(r, &in)
+	payload := map[string]any{"goal": in.Goal}
+	if len(in.Steps) > 0 {
+		payload["steps"] = in.Steps
+	}
+	raw, _ := json.Marshal(payload)
+	res, err := s.k.Invoke(r.Context(), "architect", kernel.Call{Capability: "architect.plan", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
 }
 
 func (s *api) profile(w http.ResponseWriter, r *http.Request) {
