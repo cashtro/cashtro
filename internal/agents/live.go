@@ -516,6 +516,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "12-factor agents", URL: "https://github.com/humanlayer/12-factor-agents", Claim: "Own the loop in deterministic code. The model only fills structured next steps.", Quote: "Human confirm sits between selection and invocation. OpenRouter stays optional."},
 		{Agent: "research", Source: "treg", URL: "https://treg.to", Claim: "Exa publication search is available as research.ingest input at $0.007/call when Treg is signed in.", Quote: "catalog_search → catalog_get → call. Token was expired this pass; notes still landed from open sources."},
 		{Agent: "research", Source: "always-on", URL: "https://github.com/cashtro/cashtro", Claim: "Always-on means the cloud VM keeps the kernel looping — closing a laptop does not stop Cashtro OS.", Quote: "scripts/always-on.sh rebuilds and restarts :8080. Autosave flushes data/cashtro.json so hard kills still leave a durable image."},
+		{Agent: "research", Source: "planner-api", URL: "https://github.com/cashtro/cashtro", Claim: "Planner is desk-reachable: POST /api/plan parks goal items as idea-stage ships on the delivery line.", Quote: "Ultron and overnight keep-alives can backlog company work without OpenRouter."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)

@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.3.8"
+	Version = "0.3.9"
 	// DefaultAutosave is how often the disk image flushes while always-on.
 	DefaultAutosave = 60 * time.Second
 )

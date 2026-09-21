@@ -43,6 +43,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/deploy", s.deploy)
 	mux.HandleFunc("POST /api/review", s.review)
 	mux.HandleFunc("POST /api/browse", s.browse)
+	mux.HandleFunc("POST /api/plan", s.plan)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -271,6 +272,25 @@ func (s *api) browse(w http.ResponseWriter, r *http.Request) {
 	_ = decodeJSON(r, &in)
 	raw, _ := json.Marshal(map[string]string{"url": in.URL})
 	res, err := s.k.Invoke(r.Context(), "operator", kernel.Call{Capability: "operator.browse", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) plan(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Goal  string   `json:"goal"`
+		Items []string `json:"items"`
+	}
+	_ = decodeJSON(r, &in)
+	payload := map[string]any{"goal": in.Goal}
+	if len(in.Items) > 0 {
+		payload["items"] = in.Items
+	}
+	raw, _ := json.Marshal(payload)
+	res, err := s.k.Invoke(r.Context(), "planner", kernel.Call{Capability: "planner.backlog", Payload: raw})
 	if err != nil {
 		writeError(w, err)
 		return

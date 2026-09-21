@@ -113,6 +113,7 @@ unbound. The rest of the OS stays live.
 | `POST` | `/api/deploy` | Release dry-run gate |
 | `POST` | `/api/review` | QA desk-evidence review |
 | `POST` | `/api/browse` | Operator browse dry-run |
+| `POST` | `/api/plan` | Planner backlog → idea ships |
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
