@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  repoUrl      String?
+  org          String
+  kind         String
+  status       String
+  deployTarget String?
+  healthUrl    String?
+  tags         String   @default("[]")
+  createdAt    DateTime @default(now())
+  capabilities Capability[]
+  agents       Agent[]
+  tasks        Task[]
+}
+
+model Capability {
+  id           String  @id @default(cuid())
+  projectId    String
+  project      Project @relation(fields: [projectId], references: [id])
+  name         String
+  description  String  @default("")
+  inputSchema  String  @default("{}")
+  outputSchema String  @default("{}")
+  invokeSpec   String  @default("")
+}
+
+model Agent {
+  id              String   @id @default(cuid())
+  projectId       String?
+  project         Project? @relation(fields: [projectId], references: [id])
+  name            String
+  role            String
+  runtime         String
+  modelRoute      String   @default("openrouter")
+  systemPromptRef String?
+  maxCostPerRun   Float    @default(2)
+  enabled         Boolean  @default(true)
+  workers         Worker[]
+  runs            Run[]
+  tasks           Task[]
+}
+
+model Worker {
+  id           String @id @default(cuid())
+  agentId      String
+  agent        Agent  @relation(fields: [agentId], references: [id])
+  name         String
+  tool         String
+  concurrency  Int    @default(1)
+  timeoutSec   Int    @default(300)
+}
+
+model Task {
+  id              String   @id @default(cuid())
+  projectId       String?
+  project         Project? @relation(fields: [projectId], references: [id])
+  title           String
+  body            String   @default("")
+  source          String
+  priority        String   @default("p2")
+  status          String   @default("todo")
+  dependsOn       String   @default("[]")
+  assigneeAgentId String?
+  assignee        Agent?   @relation(fields: [assigneeAgentId], references: [id])
+  idempotencyKey  String?  @unique
+  createdAt       DateTime @default(now())
+  runs            Run[]
+}
+
+model Run {
+  id           String    @id @default(cuid())
+  taskId       String
+  task         Task      @relation(fields: [taskId], references: [id])
+  agentId      String
+  agent        Agent     @relation(fields: [agentId], references: [id])
+  startedAt    DateTime  @default(now())
+  endedAt      DateTime?
+  status       String
+  inputTokens  Int       @default(0)
+  outputTokens Int       @default(0)
+  costUsd      Float     @default(0)
+  exitReason   String?
+  artifacts    Artifact[]
+}
+
+model Artifact {
+  id    String @id @default(cuid())
+  runId String
+  run   Run    @relation(fields: [runId], references: [id])
+  type  String
+  path  String
+  sha   String @default("")
+}
+
+model SecretRef {
+  id       String @id @default(cuid())
+  scope    String
+  provider String
+  key      String
+}
+
+model Event {
+  id      String   @id @default(cuid())
+  ts      DateTime @default(now())
+  actor   String
+  type    String
+  payload String   @default("{}")
+}
+
+model ControlState {
+  id      String  @id
+  paused  Boolean @default(false)
+}

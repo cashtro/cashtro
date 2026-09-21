@@ -1,0 +1,157 @@
+{
+  "schemaVersion": "1",
+  "generatedAt": "2026-09-21T21:30:00Z",
+  "source": "cashtro/cashtro README, kernel catalog, mission brief, prior desk work",
+  "tasks": [
+    {
+      "id": "cp-phase-0",
+      "title": "Control plane Phase 0 — bootstrap and access audit",
+      "body": "CURRENT_STATE.md, backlog.json, gh access or ACCESS_REQUIRED.md",
+      "source": "mission",
+      "priority": "p0",
+      "status": "doing",
+      "projectSlug": "cashtro",
+      "dependsOn": []
+    },
+    {
+      "id": "cp-phase-1",
+      "title": "Control plane Phase 1 — recon every reachable repo",
+      "body": "pnpm recon → inventory/repos.json + REPORT.md + GRAPH.md. Idempotent.",
+      "source": "mission",
+      "priority": "p0",
+      "status": "todo",
+      "projectSlug": "cashtro",
+      "dependsOn": ["cp-phase-0"]
+    },
+    {
+      "id": "cp-phase-2",
+      "title": "Control plane Phase 2 — Prisma registry and SDK",
+      "body": "Projects, Capabilities, Agents, Workers, Tasks, Runs, Artifacts, SecretRefs, Events. Seed from inventory + backlog.",
+      "source": "mission",
+      "priority": "p0",
+      "status": "todo",
+      "projectSlug": "cashtro",
+      "dependsOn": ["cp-phase-1"]
+    },
+    {
+      "id": "cp-phase-3",
+      "title": "Control plane Phase 3 — Fastify API",
+      "body": "Projects, agents, tasks, dispatch, pause, runs, metrics, GitHub webhook, OpenAPI /docs.",
+      "source": "mission",
+      "priority": "p0",
+      "status": "todo",
+      "projectSlug": "cashtro",
+      "dependsOn": ["cp-phase-2"]
+    },
+    {
+      "id": "voltron-absorb",
+      "title": "Register Voltron kernel as the local http runtime",
+      "body": "14 agentics on :8080 become Agents with invokeSpec POST /api/agents/:id/invoke",
+      "source": "kernel",
+      "priority": "p1",
+      "status": "todo",
+      "projectSlug": "cashtro",
+      "dependsOn": ["cp-phase-2"]
+    },
+    {
+      "id": "bind-resident",
+      "title": "Bind resident agentics so every seat can execute",
+      "body": "operator, reviewer, architect, deploy, security, investigator still return ready-to-bind",
+      "source": "kernel",
+      "priority": "p1",
+      "status": "todo",
+      "projectSlug": "cashtro",
+      "dependsOn": ["voltron-absorb"]
+    },
+    {
+      "id": "mcp-keys",
+      "title": "MCP access keys per agent (SecretRef, never the value)",
+      "body": "Each agent gets scoped MCP SecretRefs. Values resolve at runtime from env/vault.",
+      "source": "desk-request",
+      "priority": "p1",
+      "status": "todo",
+      "projectSlug": "cashtro",
+      "dependsOn": ["cp-phase-2"]
+    },
+    {
+      "id": "evolu-access",
+      "title": "Unblock Evolu-Jeunes recon with Option A PAT",
+      "body": "See docs/ACCESS_REQUIRED.md. 48 claimed private repos are invisible.",
+      "source": "mission",
+      "priority": "p0",
+      "status": "blocked",
+      "projectSlug": "cashtro",
+      "dependsOn": []
+    },
+    {
+      "id": "ship-btk",
+      "title": "BTK Avocats — production law platform",
+      "body": "WordPress. Live client. Do not touch production.",
+      "source": "catalog",
+      "priority": "p2",
+      "status": "done",
+      "projectSlug": "btk-avocats",
+      "dependsOn": []
+    },
+    {
+      "id": "ship-md-clinic",
+      "title": "MD Clinic — production medical clinic",
+      "body": "WordPress/ACF. Live client. Do not touch production.",
+      "source": "catalog",
+      "priority": "p2",
+      "status": "done",
+      "projectSlug": "md-clinic",
+      "dependsOn": []
+    },
+    {
+      "id": "ship-hypotheque",
+      "title": "Solution Hypothèque QC — production mortgage",
+      "body": "WordPress. Live client. Do not touch production.",
+      "source": "catalog",
+      "priority": "p2",
+      "status": "done",
+      "projectSlug": "solution-hypotheque-qc",
+      "dependsOn": []
+    },
+    {
+      "id": "ship-educonnexion",
+      "title": "Éduconnexion — production education",
+      "body": "WordPress. Live client. Do not touch production.",
+      "source": "catalog",
+      "priority": "p2",
+      "status": "done",
+      "projectSlug": "educonnexion",
+      "dependsOn": []
+    },
+    {
+      "id": "ship-proximity",
+      "title": "Proximity — production agency platform",
+      "body": "Next.js/TypeScript + Azure APIs. Live. Do not touch production.",
+      "source": "catalog",
+      "priority": "p2",
+      "status": "done",
+      "projectSlug": "proximity",
+      "dependsOn": []
+    },
+    {
+      "id": "ship-scanapp",
+      "title": "ScanApp — concept ops product",
+      "body": "TypeScript + Python. Onboard after Evolu-Jeunes access.",
+      "source": "catalog",
+      "priority": "p1",
+      "status": "todo",
+      "projectSlug": "scanapp",
+      "dependsOn": ["evolu-access"]
+    },
+    {
+      "id": "openrouter-optional",
+      "title": "Keep OpenRouter optional to boot",
+      "body": "Kernel boots without a key. Control plane must too.",
+      "source": "readme",
+      "priority": "p1",
+      "status": "done",
+      "projectSlug": "cashtro",
+      "dependsOn": []
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "1",
+  "generatedAt": "2026-09-21T22:03:51.005Z",
+  "controlPlaneRepo": "cashtro/cashtro",
+  "owners": [
+    "cashtro",
+    "Evolu-Jeunes"
+  ],
+  "repos": [
+    {
+      "name": "cashtro",
+      "org": "cashtro",
+      "fullName": "cashtro/cashtro",
+      "visibility": "public",
+      "defaultBranch": "main",
+      "lastCommitAt": "2026-09-21T22:01:17Z",
+      "archived": false,
+      "access": "ok",
+      "primaryLanguage": "Go",
+      "framework": "Go",
+      "packageManager": "go",
+      "runtimeVersion": "go1.22",
+      "deployTarget": [
+        "github-actions"
+      ],
+      "ciStatus": "success",
+      "agentConfig": [],
+      "requiredEnvVars": [],
+      "entryCommands": [
+        "make:test",
+        "make:vet",
+        "make:run",
+        "make:build"
+      ],
+      "openPrs": 13,
+      "openIssues": 0,
+      "riskFlags": [],
+      "scannedAt": "2026-09-21T22:03:51.005Z"
+    },
+    {
+      "name": "*",
+      "org": "Evolu-Jeunes",
+      "fullName": "Evolu-Jeunes/*",
+      "visibility": "unknown",
+      "defaultBranch": null,
+      "lastCommitAt": null,
+      "archived": false,
+      "access": "limited",
+      "primaryLanguage": null,
+      "framework": null,
+      "packageManager": null,
+      "runtimeVersion": null,
+      "deployTarget": [],
+      "ciStatus": null,
+      "agentConfig": [],
+      "requiredEnvVars": [],
+      "entryCommands": [],
+      "openPrs": 0,
+      "openIssues": 0,
+      "riskFlags": [
+        "access-denied"
+      ],
+      "scannedAt": "2026-09-21T22:03:51.005Z"
+    }
+  ]
+}
