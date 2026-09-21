@@ -77,6 +77,7 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/memory` | Episodic recall |
 | `GET` | `/api/confirms` | Human gate |
 | `GET` | `/api/trace?q=` | Investigator blast radius |
+| `GET` | `/api/security?q=` | Security triage |
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |

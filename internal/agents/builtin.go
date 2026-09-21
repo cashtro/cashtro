@@ -77,10 +77,10 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"deploy.release"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "guard", Summary: "Triage CVE and SAST findings on the board before they ship.",
+			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "guard", Summary: "Triages risk keywords across ships, notes, and journal before they ship.",
 			Capabilities: []string{"security.triage"}, Autostart: true,
-		}, nil),
+		}, securityInvoke),
 		resident(kernel.Spec{
 			ID: "memory", Name: "Memory", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "recall", Summary: "Episodic facts. Store and recall without a model.",

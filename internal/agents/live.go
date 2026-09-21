@@ -164,6 +164,56 @@ func commsInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	}
 }
 
+func securityInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	q := strings.ToLower(payloadQuery(call, "query"))
+	if q == "" {
+		q = strings.ToLower(payloadQuery(call, "prompt"))
+	}
+	keywords := []string{"cve", "secret", "password", "token", "exploit", "breach", "rce", "sqli", "xss", "critical", "fail", "error"}
+	if q != "" {
+		keywords = append(keywords, q)
+	}
+	findings := make([]map[string]string, 0)
+	match := func(blob, kind, id, name string) {
+		low := strings.ToLower(blob)
+		for _, kw := range keywords {
+			if kw != "" && strings.Contains(low, kw) {
+				findings = append(findings, map[string]string{
+					"kind": kind, "id": id, "name": name, "hit": kw,
+				})
+				return
+			}
+		}
+	}
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			match(s.Name+" "+s.Notes+" "+s.Sector+" "+string(s.Stage), "ship", s.ID, s.Name)
+		}
+	}
+	for _, n := range k.Notes() {
+		match(n.Claim+" "+n.Source+" "+n.Quote, "note", n.Source, n.Claim)
+	}
+	for _, ev := range k.Events() {
+		match(ev.Source+" "+ev.Kind+" "+ev.Message, "event", ev.Kind, ev.Message)
+	}
+	severity := "clear"
+	if len(findings) > 0 {
+		severity = "review"
+		k.RequestConfirm("security", "security.triage", "triage "+strconv.Itoa(len(findings))+" hits · query="+q)
+	}
+	k.Remember("security", "triage "+severity+" · "+strconv.Itoa(len(findings))+" hits")
+	_, _ = k.Post("security", "investigator", "triage", q)
+	return kernel.Result{
+		OK:      true,
+		Message: "security " + severity + " · " + strconv.Itoa(len(findings)) + " hits",
+		Data: map[string]any{
+			"severity": severity,
+			"query":    q,
+			"findings": findings,
+		},
+	}, nil
+}
+
 func architectInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	goal := payloadQuery(call, "goal")
 	if goal == "" {
