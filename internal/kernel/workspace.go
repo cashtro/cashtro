@@ -64,8 +64,8 @@ func (k *Kernel) InvokeCap(ctx context.Context, cap string, call Call) (Result, 
 // Post drops mail on an agent's desk.
 func (k *Kernel) Post(from, to, kind, body string) (Mail, error) {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	if _, ok := k.procs[to]; !ok {
+		k.mu.Unlock()
 		return Mail{}, fmt.Errorf("%w: %s", ErrUnknownAgent, to)
 	}
 	k.mailSeq++
@@ -76,7 +76,10 @@ func (k *Kernel) Post(from, to, kind, body string) (Mail, error) {
 	}
 	k.seq++
 	k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: from, Kind: "mail", Message: "to " + to + " · " + kind})
-	return m, nil
+	out := m
+	k.mu.Unlock()
+	k.persist()
+	return out, nil
 }
 
 // Inbox returns mail for one agent, oldest first.
@@ -95,7 +98,6 @@ func (k *Kernel) Inbox(to string) []Mail {
 // WriteNote stores a sourced finding.
 func (k *Kernel) WriteNote(n Note) Note {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	k.noteSeq++
 	n.ID = k.noteSeq
 	n.Claim = strings.TrimSpace(n.Claim)
@@ -106,7 +108,10 @@ func (k *Kernel) WriteNote(n Note) Note {
 	}
 	k.seq++
 	k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: n.Agent, Kind: "note", Message: n.Claim, Data: map[string]any{"source": n.Source, "url": n.URL}})
-	return n
+	out := n
+	k.mu.Unlock()
+	k.persist()
+	return out
 }
 
 // Notes returns research records, newest first.
@@ -122,14 +127,16 @@ func (k *Kernel) Notes() []Note {
 // Remember writes an episodic fact.
 func (k *Kernel) Remember(topic, text string) Fact {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	k.factSeq++
 	f := Fact{ID: k.factSeq, Topic: strings.TrimSpace(topic), Text: strings.TrimSpace(text)}
 	k.facts = append(k.facts, f)
 	if len(k.facts) > maxFacts {
 		k.facts = append([]Fact(nil), k.facts[len(k.facts)-maxFacts:]...)
 	}
-	return f
+	out := f
+	k.mu.Unlock()
+	k.persist()
+	return out
 }
 
 // Recall returns facts whose topic or text contains q.
@@ -149,38 +156,47 @@ func (k *Kernel) Recall(q string) []Fact {
 // RequestConfirm parks outbound work until a human allows it.
 func (k *Kernel) RequestConfirm(agent, cap, body string) Confirm {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	k.confSeq++
 	c := Confirm{ID: k.confSeq, Agent: agent, Cap: cap, Body: strings.TrimSpace(body), Status: "pending"}
 	k.confirms = append(k.confirms, c)
 	k.seq++
 	k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: agent, Kind: "confirm.pending", Message: body})
-	return c
+	out := c
+	k.mu.Unlock()
+	k.persist()
+	return out
 }
 
 // DecideConfirm allows or denies a pending confirm.
 func (k *Kernel) DecideConfirm(id int, allow bool) (Confirm, error) {
 	k.mu.Lock()
-	defer k.mu.Unlock()
+	var out Confirm
+	found := false
 	for i := range k.confirms {
 		if k.confirms[i].ID != id {
 			continue
 		}
-		if k.confirms[i].Status != "pending" {
-			return k.confirms[i], nil
+		found = true
+		if k.confirms[i].Status == "pending" {
+			if allow {
+				k.confirms[i].Status = "allowed"
+				k.confirms[i].Outcome = "human allowed · no outbound bind yet"
+			} else {
+				k.confirms[i].Status = "denied"
+				k.confirms[i].Outcome = "human denied"
+			}
+			k.seq++
+			k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: "comms", Kind: "confirm." + k.confirms[i].Status, Message: k.confirms[i].Body})
 		}
-		if allow {
-			k.confirms[i].Status = "allowed"
-			k.confirms[i].Outcome = "human allowed · no outbound bind yet"
-		} else {
-			k.confirms[i].Status = "denied"
-			k.confirms[i].Outcome = "human denied"
-		}
-		k.seq++
-		k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: "comms", Kind: "confirm." + k.confirms[i].Status, Message: k.confirms[i].Body})
-		return k.confirms[i], nil
+		out = k.confirms[i]
+		break
 	}
-	return Confirm{}, fmt.Errorf("confirm %d not found", id)
+	k.mu.Unlock()
+	if !found {
+		return Confirm{}, fmt.Errorf("confirm %d not found", id)
+	}
+	k.persist()
+	return out, nil
 }
 
 // Confirms returns the human gate queue.

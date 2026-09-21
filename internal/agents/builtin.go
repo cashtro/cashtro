@@ -10,6 +10,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -25,6 +26,14 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 	}
 	if err := k.Boot(context.Background()); err != nil {
 		return nil, err
+	}
+	if path := k.PersistPath(); path != "" {
+		if err := kernel.LoadFile(path, k); err != nil && !os.IsNotExist(err) {
+			return nil, err
+		}
+		if err := kernel.SaveFile(path, k); err != nil {
+			return nil, err
+		}
 	}
 	return k, nil
 }
