@@ -64,6 +64,20 @@ test("registry seed + every mutating route writes an event", async (t) => {
   assert.equal(projects.statusCode, 200);
   const list = projects.json();
   assert.ok(list.some((p: { slug: string }) => p.slug === "cashtro"));
+  const scanapp = list.find((p: { slug: string; status: string }) => p.slug === "scanapp");
+  assert.ok(scanapp, "scanapp concept project must be seeded");
+  assert.equal(scanapp.status, "concept");
+
+  const scanDetail = await ctx.app.inject({ method: "GET", url: "/projects/scanapp", ...auth() });
+  assert.equal(scanDetail.statusCode, 200);
+  const scanBody = scanDetail.json();
+  assert.ok(scanBody.capabilities.some((c: { name: string }) => c.name === "scan.ingest"));
+  assert.ok(scanBody.capabilities.some((c: { name: string }) => c.name === "crm.upsert"));
+  assert.ok(scanBody.capabilities.some((c: { name: string }) => c.name === "bot.reply"));
+
+  const scanTasks = await ctx.app.inject({ method: "GET", url: "/tasks?project=scanapp", ...auth() });
+  assert.equal(scanTasks.statusCode, 200);
+  assert.ok(scanTasks.json().length >= 3, "scanapp must have concept work attached");
 
   const detail = await ctx.app.inject({ method: "GET", url: "/projects/cashtro", ...auth() });
   assert.equal(detail.statusCode, 200);

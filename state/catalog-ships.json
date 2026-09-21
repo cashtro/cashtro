@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1",
+  "source": "internal/catalog seed — not GitHub-scanned",
+  "ships": [
+    {
+      "slug": "btk-avocats",
+      "name": "BTK Avocats",
+      "org": "Evolu-Jeunes",
+      "kind": "product",
+      "status": "production",
+      "sector": "law",
+      "stack": ["WordPress"],
+      "liveClient": true,
+      "notes": "Law firm platform. Do not touch production."
+    },
+    {
+      "slug": "md-clinic",
+      "name": "MD Clinic",
+      "org": "Evolu-Jeunes",
+      "kind": "product",
+      "status": "production",
+      "sector": "health",
+      "stack": ["WordPress", "ACF"],
+      "liveClient": true,
+      "notes": "Medical clinic. Do not touch production."
+    },
+    {
+      "slug": "solution-hypotheque-qc",
+      "name": "Solution Hypothèque QC",
+      "org": "Evolu-Jeunes",
+      "kind": "product",
+      "status": "production",
+      "sector": "finance",
+      "stack": ["WordPress"],
+      "liveClient": true,
+      "notes": "Mortgage services. Do not touch production."
+    },
+    {
+      "slug": "educonnexion",
+      "name": "Éduconnexion",
+      "org": "Evolu-Jeunes",
+      "kind": "product",
+      "status": "production",
+      "sector": "education",
+      "stack": ["WordPress"],
+      "liveClient": true,
+      "notes": "Education platform. Do not touch production."
+    },
+    {
+      "slug": "proximity",
+      "name": "Proximity",
+      "org": "Evolu-Jeunes",
+      "kind": "product",
+      "status": "production",
+      "sector": "agency",
+      "stack": ["Next.js", "TypeScript", "Azure"],
+      "liveClient": true,
+      "notes": "Agency platform. Do not touch production."
+    },
+    {
+      "slug": "scanapp",
+      "name": "ScanApp",
+      "org": "Evolu-Jeunes",
+      "kind": "product",
+      "status": "concept",
+      "sector": "ops",
+      "stack": ["TypeScript", "Python"],
+      "liveClient": false,
+      "notes": "Scan, CRM, and AI bots. First non-manager onboard after PAT."
+    },
+    {
+      "slug": "cashtro-catalog",
+      "name": "Cashtro delivery catalog",
+      "org": "cashtro",
+      "kind": "internal",
+      "status": "idea",
+      "sector": "internal",
+      "stack": ["Go"],
+      "liveClient": false,
+      "notes": "Stdlib Go board for idea → concept → production."
+    }
+  ]
+}

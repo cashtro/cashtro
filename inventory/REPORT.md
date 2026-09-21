@@ -1,6 +1,6 @@
 # Inventory report
 
-Generated 2026-09-21T22:03:51.005Z. Control plane: `cashtro/cashtro`.
+Generated 2026-09-21T22:32:12.556Z. Control plane: `cashtro/cashtro`.
 Owners scanned: cashtro, Evolu-Jeunes.
 
 | Bucket | Count |
@@ -13,11 +13,11 @@ Owners scanned: cashtro, Evolu-Jeunes.
 
 ## Active — manager can already see
 
-- **cashtro/cashtro** · public · Go · CI success · PRs 13 · risks: none
+- **cashtro/cashtro** · public · Go · CI success · PRs 12 · risks: none
 
 ## Internal products (from this scan)
 
-- **cashtro/cashtro** · public · Go · CI success · PRs 13 · risks: none
+- **cashtro/cashtro** · public · Go · CI success · PRs 12 · risks: none
 
 ## Named in kernel catalog — not GitHub-scanned
 
@@ -27,7 +27,7 @@ These come from `internal/catalog`. Recon did **not** open their repos.
 - **MD Clinic** · production · WordPress, ACF · health · LIVE CLIENT — do not touch
 - **Solution Hypothèque QC** · production · WordPress · finance · LIVE CLIENT — do not touch
 - **Éduconnexion** · production · WordPress · education · LIVE CLIENT — do not touch
-- **Proximity** · production · Next.js, Azure · agency · LIVE CLIENT — do not touch
+- **Proximity** · production · Next.js, TypeScript, Azure · agency · LIVE CLIENT — do not touch
 - **ScanApp** · concept · TypeScript, Python · ops · safe to onboard later
 - **Cashtro delivery catalog** · idea · Go · internal · safe to onboard later
 

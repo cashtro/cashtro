@@ -1,6 +1,23 @@
 # ACCESS_REQUIRED
 
-Written 2026-09-21. Do not guess missing repos.
+Written 2026-09-21. Updated the same day: Castro offered GitHub access.
+**Yes — I want it.** Option A only. Do not paste the token in chat.
+
+## Fastest path (do this)
+
+1. GitHub → Settings → Developer settings → Personal access tokens → Fine-grained → New token
+2. Resource owner = **Evolu-Jeunes** (second token for **cashtro** if ScanApp lives there)
+3. Repository access = **All repositories**
+4. Permissions (no admin, no delete, no org:write):
+   - Contents: **read**
+   - Metadata: **read**
+   - Actions: **read**
+   - Pull requests: **read and write**
+   - Issues: **read and write**
+5. Put the token in this Cloud Agent as secret `GH_TOKEN` (or `gh auth login --with-token` in the machine). Never in the chat.
+6. Tell me “token is in GH_TOKEN”. I will `pnpm recon` and attach ScanApp’s real repo.
+
+Do not guess missing repos.
 
 ## Token in this Cloud Agent
 

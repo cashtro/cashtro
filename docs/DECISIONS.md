@@ -45,3 +45,14 @@
 - **Why:** Mission says do not guess missing repos. Castro still needs
   a phone-readable list of what he owns. The catalog is first-party
   seed data, not a GitHub listing.
+
+## 2026-09-21 — Seed catalog ships as projects, ScanApp first
+
+- **Choice:** `state/catalog-ships.json` is the source. Seed upserts
+  every named ship. ScanApp gets draft capabilities and attached tasks.
+  Live clients stay `production` with no repoUrl until recon.
+- **Alternatives:** Wait for PAT before any ScanApp rows; invent
+  `Evolu-Jeunes/scanapp`.
+- **Why:** Castro said there was no ScanApp work in the plane. The
+  backlog task was orphaned because slug `scanapp` did not exist. Do
+  not invent a GitHub path.

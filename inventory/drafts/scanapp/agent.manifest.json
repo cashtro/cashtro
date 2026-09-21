@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1",
+  "project": {
+    "slug": "scanapp",
+    "kind": "product",
+    "owner": "Evolu-Jeunes",
+    "stage": "concept"
+  },
+  "capabilities": [
+    {
+      "name": "scan.ingest",
+      "cmd": "pnpm scan:ingest",
+      "timeoutSec": 300,
+      "description": "Ingest a document or image into the scan pipeline"
+    },
+    {
+      "name": "crm.upsert",
+      "cmd": "pnpm crm:upsert",
+      "timeoutSec": 120,
+      "description": "Create or update a CRM contact from scan output"
+    },
+    {
+      "name": "bot.reply",
+      "cmd": "pnpm bot:reply",
+      "timeoutSec": 60,
+      "description": "Draft or send a bot reply. Sending needs approval."
+    }
+  ],
+  "agents": [
+    {
+      "name": "scanapp-operator",
+      "runtime": "http",
+      "promptFile": "docs/SCANAPP.md"
+    }
+  ],
+  "env": ["DATABASE_URL", "OPENROUTER_API_KEY"],
+  "health": { "url": "", "expect": 200 },
+  "notes": "Draft only. repoUrl unknown until recon sees Evolu-Jeunes."
+}

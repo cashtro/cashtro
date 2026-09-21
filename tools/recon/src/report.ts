@@ -38,7 +38,7 @@ export function writeReport(inv: Inventory): string {
   lines.push("");
   for (const s of CATALOG_SHIPS) {
     const flag = s.liveClient ? "LIVE CLIENT — do not touch" : "safe to onboard later";
-    lines.push(`- **${s.name}** · ${s.stage} · ${s.stack} · ${s.sector} · ${flag}`);
+    lines.push(`- **${s.name}** · ${s.status} · ${s.stack.join(", ")} · ${s.sector} · ${flag}`);
   }
   lines.push("");
   lines.push(`## Dead or archivable`);
@@ -86,8 +86,8 @@ export function writeGraph(inv: Inventory): string {
   }
   lines.push(`  subgraph catalog[Kernel catalog — not scanned]`);
   for (const s of CATALOG_SHIPS) {
-    const id = "cat_" + s.name.replace(/[^a-zA-Z0-9]/g, "_");
-    lines.push(`    ${id}[${s.name} / ${s.stage}]`);
+    const id = "cat_" + s.slug.replace(/[^a-zA-Z0-9]/g, "_");
+    lines.push(`    ${id}[${s.name} / ${s.status}]`);
   }
   lines.push(`  end`);
   lines.push(`  manager -.-> catalog`);

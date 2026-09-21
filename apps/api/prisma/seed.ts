@@ -48,6 +48,19 @@ export async function seed(client: PrismaClient = prisma) {
     "state/backlog.json",
     { tasks: [] },
   );
+  const catalog = await readJSON<{
+    ships: Array<{
+      slug: string;
+      name: string;
+      org: string;
+      kind: string;
+      status: string;
+      sector: string;
+      stack: string[];
+      liveClient: boolean;
+      notes: string;
+    }>;
+  }>("state/catalog-ships.json", { ships: [] });
 
   for (const repo of inventory.repos) {
     const slug = repo.access === "ok" ? repo.name : `${repo.org}-denied`.toLowerCase();
@@ -82,6 +95,47 @@ export async function seed(client: PrismaClient = prisma) {
           invokeSpec: "POST http://127.0.0.1:8080/api/agents/{id}/invoke",
         },
       });
+    }
+  }
+
+  for (const ship of catalog.ships) {
+    const project = await client.project.upsert({
+      where: { slug: ship.slug },
+      update: {
+        org: ship.org,
+        kind: ship.kind,
+        status: ship.status,
+        tags: JSON.stringify([ship.status, ship.sector, ...ship.stack, ship.liveClient ? "live-client" : "not-live"]),
+      },
+      create: {
+        slug: ship.slug,
+        repoUrl: null,
+        org: ship.org,
+        kind: ship.kind,
+        status: ship.status,
+        deployTarget: null,
+        healthUrl: null,
+        tags: JSON.stringify([ship.status, ship.sector, ...ship.stack, ship.liveClient ? "live-client" : "not-live"]),
+      },
+    });
+    if (ship.slug === "scanapp") {
+      for (const cap of [
+        { id: "cap-scanapp-scan", name: "scan.ingest", description: "Ingest a document or image into the scan pipeline" },
+        { id: "cap-scanapp-crm", name: "crm.upsert", description: "Create or update a CRM contact from scan output" },
+        { id: "cap-scanapp-bot", name: "bot.reply", description: "Draft or send a bot reply. Sending needs approval." },
+      ]) {
+        await client.capability.upsert({
+          where: { id: cap.id },
+          update: { description: cap.description },
+          create: {
+            id: cap.id,
+            projectId: project.id,
+            name: cap.name,
+            description: cap.description,
+            invokeSpec: `draft:${cap.name}`,
+          },
+        });
+      }
     }
   }
 

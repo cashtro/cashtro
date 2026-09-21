@@ -134,14 +134,44 @@
       "dependsOn": []
     },
     {
+      "id": "scanapp-scope",
+      "title": "ScanApp — lock concept verbs (scan / CRM / bots)",
+      "body": "Concept contract is docs/SCANAPP.md. Three capabilities: scan.ingest, crm.upsert, bot.reply. Not a live client.",
+      "source": "desk-request",
+      "priority": "p0",
+      "status": "doing",
+      "projectSlug": "scanapp",
+      "dependsOn": []
+    },
+    {
+      "id": "scanapp-manifest",
+      "title": "ScanApp — draft agent.manifest.json handshake",
+      "body": "Draft lives at inventory/drafts/scanapp/agent.manifest.json. Open a PR against the real repo after recon finds it.",
+      "source": "desk-request",
+      "priority": "p1",
+      "status": "doing",
+      "projectSlug": "scanapp",
+      "dependsOn": ["scanapp-scope"]
+    },
+    {
+      "id": "scanapp-find-repo",
+      "title": "ScanApp — find the real GitHub repo",
+      "body": "Blocked on Evolu-Jeunes PAT. Do not guess Evolu-Jeunes/scanapp. After access: pnpm recon, attach repoUrl.",
+      "source": "desk-request",
+      "priority": "p0",
+      "status": "blocked",
+      "projectSlug": "scanapp",
+      "dependsOn": ["evolu-access"]
+    },
+    {
       "id": "ship-scanapp",
-      "title": "ScanApp — concept ops product",
-      "body": "TypeScript + Python. Onboard after Evolu-Jeunes access.",
+      "title": "ScanApp — onboard the real repo into the network",
+      "body": "TypeScript + Python. Concept product. Attach repo, merge handshake, do not treat as production.",
       "source": "catalog",
       "priority": "p1",
       "status": "todo",
       "projectSlug": "scanapp",
-      "dependsOn": ["evolu-access"]
+      "dependsOn": ["scanapp-find-repo", "scanapp-manifest"]
     },
     {
       "id": "openrouter-optional",

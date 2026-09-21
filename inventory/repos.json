@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-09-21T22:03:51.005Z",
+  "generatedAt": "2026-09-21T22:32:12.556Z",
   "controlPlaneRepo": "cashtro/cashtro",
   "owners": [
     "cashtro",
@@ -13,12 +13,12 @@
       "fullName": "cashtro/cashtro",
       "visibility": "public",
       "defaultBranch": "main",
-      "lastCommitAt": "2026-09-21T22:01:17Z",
+      "lastCommitAt": "2026-09-21T22:30:43Z",
       "archived": false,
       "access": "ok",
       "primaryLanguage": "Go",
       "framework": "Go",
-      "packageManager": "go",
+      "packageManager": "pnpm",
       "runtimeVersion": "go1.22",
       "deployTarget": [
         "github-actions"
@@ -27,15 +27,22 @@
       "agentConfig": [],
       "requiredEnvVars": [],
       "entryCommands": [
+        "npm:recon",
+        "npm:api",
+        "npm:api:dev",
+        "npm:db:migrate",
+        "npm:db:seed",
+        "npm:test",
+        "npm:typecheck",
         "make:test",
         "make:vet",
         "make:run",
         "make:build"
       ],
-      "openPrs": 13,
+      "openPrs": 12,
       "openIssues": 0,
       "riskFlags": [],
-      "scannedAt": "2026-09-21T22:03:51.005Z"
+      "scannedAt": "2026-09-21T22:32:12.556Z"
     },
     {
       "name": "*",
@@ -60,7 +67,7 @@
       "riskFlags": [
         "access-denied"
       ],
-      "scannedAt": "2026-09-21T22:03:51.005Z"
+      "scannedAt": "2026-09-21T22:32:12.556Z"
     }
   ]
 }

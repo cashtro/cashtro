@@ -69,7 +69,19 @@ pnpm --filter @cashtro/api test
 `GET /docs` and `GET /docs/json` render OpenAPI 3.1.
 Kill switch and $2 budget cap are enforced before dispatch.
 
+## ScanApp concept work — 2026-09-21
+
+Castro: there was no ScanApp work in the control plane. Fixed.
+
+- Registry now seeds `scanapp` as a concept project from `state/catalog-ships.json`
+- Capabilities: `scan.ingest`, `crm.upsert`, `bot.reply`
+- Tasks attached: scope, manifest, find-repo (blocked on PAT), onboard
+- Contract: `docs/SCANAPP.md`
+- Draft handshake: `inventory/drafts/scanapp/agent.manifest.json`
+
+GitHub access: Castro offered. Yes. Option A in `docs/ACCESS_REQUIRED.md`.
+Do not paste the token in chat.
+
 ## Phase 4–7
 
-Not started. Waiting on Castro to read `inventory/REPORT.md` and
-Option A access for Evolu-Jeunes.
+Not started. Waiting on Evolu-Jeunes PAT, then ScanApp onboard.
