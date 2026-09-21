@@ -71,3 +71,15 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
+
+## Control plane
+
+TypeScript front door for the fleet. Does not replace this kernel.
+
+```bash
+pnpm recon            # inventory every reachable repo
+pnpm db:migrate && pnpm db:seed
+pnpm api              # http://127.0.0.1:8787/docs
+```
+
+See `docs/MISSION.md`, `inventory/REPORT.md`, `docs/ACCESS_REQUIRED.md`.
