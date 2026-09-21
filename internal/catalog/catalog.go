@@ -276,6 +276,15 @@ func (c *Catalog) seed() {
 			Stack:  []string{"Go"},
 			Notes:  "Stdlib Go board for idea → concept → production",
 		},
+		{
+			ID:     "cashtro-symbols",
+			Name:   "Symbols",
+			Client: "Cashtro",
+			Sector: "internal",
+			Stage:  StageConcept,
+			Stack:  []string{"Go"},
+			Notes:  "Internal Zapier. Triggers and verbs on our kernel. No subscription.",
+		},
 	}
 	for i := range items {
 		items[i].CreatedAt = fixed

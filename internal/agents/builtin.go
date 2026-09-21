@@ -14,6 +14,7 @@ import (
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
 	"github.com/cashtro/cashtro/internal/model"
+	"github.com/cashtro/cashtro/internal/symbols"
 )
 
 // Boot builds a kernel with every Cashtro agentic registered and started.
@@ -87,6 +88,7 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Role: "backlog", Summary: "Turns a goal into idea-stage ships on the delivery line.",
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
+		&symbolsAgent{bus: symbols.New()},
 		resident(kernel.Spec{
 			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
