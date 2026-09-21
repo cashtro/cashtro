@@ -33,6 +33,12 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			hits = append(hits, map[string]string{"kind": "note", "id": n.Source, "name": n.Claim})
 		}
 	}
+	for _, th := range k.ListTeamThreads() {
+		blob := strings.ToLower(th.Title + " " + th.Tenant + " " + th.Channel + " " + th.Kind)
+		if q == "" || strings.Contains(blob, q) {
+			hits = append(hits, map[string]string{"kind": "teams", "id": th.ID, "name": th.Title})
+		}
+	}
 	_, _ = k.Post("explorer", "research", "search", q)
 	return kernel.Result{OK: true, Message: "explorer hit " + strconv.Itoa(len(hits)), Data: hits}, nil
 }

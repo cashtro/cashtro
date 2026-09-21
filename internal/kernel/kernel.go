@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.0"
 )
 
 // Status is a process lifecycle state.
@@ -155,6 +155,8 @@ type Kernel struct {
 	factSeq  int
 	confirms []Confirm
 	confSeq  int
+	threads  map[string]*TeamThread
+	msgSeq   int
 }
 
 // Option configures the kernel.
@@ -170,10 +172,11 @@ func WithClock(now func() time.Time) Option {
 // New returns an empty kernel. Call Register then Boot.
 func New(opts ...Option) *Kernel {
 	k := &Kernel{
-		now:    func() time.Time { return time.Now().UTC() },
-		procs:  make(map[string]*Process),
-		agents: make(map[string]Agent),
-		caps:   make(map[string]Capability),
+		now:     func() time.Time { return time.Now().UTC() },
+		procs:   make(map[string]*Process),
+		agents:  make(map[string]Agent),
+		caps:    make(map[string]Capability),
+		threads: make(map[string]*TeamThread),
 	}
 	for _, opt := range opts {
 		opt(k)
@@ -387,8 +390,8 @@ func (k *Kernel) About() About {
 		Events:   len(k.events),
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
 			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
-			"New agentics register into this kernel — they do not fork a second product.",
+			"Delivery is live. Research is live. Proximity Microsoft Teams conversation AI sits on the bottom dock. " +
+			"OpenRouter stays optional. New agentics register into this kernel — they do not fork a second product.",
 	}
 }
 

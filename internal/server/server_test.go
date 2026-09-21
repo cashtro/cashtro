@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 15 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +70,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 15 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -118,7 +118,7 @@ func TestIndexHTML(t *testing.T) {
 		t.Fatalf("content-type = %q", ct)
 	}
 	body := res.Body.String()
-	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
+	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") || !strings.Contains(body, "Microsoft Teams") {
 		t.Fatalf("index missing OS shell copy")
 	}
 }
@@ -184,6 +184,50 @@ func TestCreateRejectsUnknownField(t *testing.T) {
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusBadRequest {
 		t.Fatalf("status = %d body=%s", res.Code, res.Body.String())
+	}
+}
+
+func TestTeamsConversationHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/teams", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("teams status = %d body=%s", res.Code, res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), `"tenant":"Proximity"`) || !strings.Contains(res.Body.String(), "proximity-desk") {
+		t.Fatalf("teams = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/teams/say", strings.NewReader(`{"text":"join the weekly meeting","channel":"teams.microsoft","tenant":"Proximity","kind":"conversation"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("say status = %d body=%s", res.Code, res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), "Conversation only") {
+		t.Fatalf("say body = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/teams/say", strings.NewReader(`{"text":"hi","channel":"slack","tenant":"Proximity"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusBadRequest {
+		t.Fatalf("slack say status = %d body=%s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/teams/send", strings.NewReader(`{"body":"draft for Castro","channel":"microsoft-teams","tenant":"Proximity"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"status":"pending"`) {
+		t.Fatalf("send = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/teams/proximity-desk", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"dock":"bottom"`) {
+		t.Fatalf("thread = %s", res.Body.String())
 	}
 }
 

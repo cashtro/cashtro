@@ -82,6 +82,7 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Role: "signal", Summary: "Outbound only after a human confirm. No send until allow.",
 			Capabilities: []string{"comms.send", "comms.pending", "comms.allow", "comms.deny"}, Autostart: true,
 		}, commsInvoke),
+		&teamsAgent{},
 		resident(kernel.Spec{
 			ID: "planner", Name: "Planner", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "backlog", Summary: "Turns a goal into idea-stage ships on the delivery line.",
