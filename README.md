@@ -38,6 +38,8 @@ go run ./cmd/cashtro
 
 Open `http://localhost:8080`.
 
+Research swarm (2026-09-21): [autonomous wealth agents & MCP](docs/research/autonomous-wealth-agents-mcp.md) — how to create agentics and MCP adapters in this kernel, and how to make them autonomous at earning without skipping human confirms.
+
 ### Do we need OpenRouter?
 
 **No, not to boot.** The kernel, process table, delivery board, and journal
