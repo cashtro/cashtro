@@ -63,7 +63,7 @@ func TestOSAndAgents(t *testing.T) {
 	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
-	if !strings.Contains(about.Manifesto, "Processes wear thinkers") {
+	if !strings.Contains(about.Manifesto, "Processes wear builders") {
 		t.Fatalf("manifesto missing naming rule: %s", about.Manifesto)
 	}
 

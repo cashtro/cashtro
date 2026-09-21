@@ -2,26 +2,27 @@ package agents
 
 import "github.com/cashtro/cashtro/internal/kernel"
 
-// Thinkers are the public names processes wear on the desk.
+// Builders are the public names processes wear on the desk.
 //
-// Process IDs and capability verbs stay stable so the kernel can route.
-// Product names (Casa Crypto, Prolifik, ScanApp, Proximity, …) stay on the
-// delivery line. A process never takes a product's name.
-var Thinkers = map[string]string{
-	"init":         "Lovelace",
-	"router":       "Turing",
-	"delivery":     "Deming",
-	"research":     "Hypatia",
-	"explorer":     "Copernicus",
-	"operator":     "Galileo",
-	"reviewer":     "Kant",
-	"architect":    "Leonardo",
-	"deploy":       "Hopper",
-	"security":     "Machiavelli",
-	"memory":       "Locke",
-	"comms":        "Voltaire",
-	"planner":      "Confucius",
-	"investigator": "Socrates",
+// These are builder / creator names — Lautaro, Frida, Diego — not product
+// brands and not philosopher surnames. Process IDs and capability verbs stay
+// stable so the kernel can route. Casa Crypto, Prolifik, ScanApp, Proximity
+// stay on the delivery line. A process never takes a product's name.
+var Builders = map[string]string{
+	"init":         "Lautaro",
+	"architect":    "Frida",
+	"operator":     "Diego",
+	"delivery":     "Antoni",
+	"research":     "Gabriela",
+	"explorer":     "Marco",
+	"reviewer":     "Juana",
+	"deploy":       "Oscar",
+	"security":     "Túpac",
+	"memory":       "Luis",
+	"comms":        "Violeta",
+	"planner":      "Pablo",
+	"investigator": "Caupolicán",
+	"router":       "Hedy",
 }
 
 // ProductNames must never appear as process display names.
@@ -36,15 +37,15 @@ var ProductNames = []string{
 	"Éduconnexion",
 }
 
-// Thinker returns the desk name for a process id.
-func Thinker(id string) string {
-	if name, ok := Thinkers[id]; ok {
+// Builder returns the desk name for a process id.
+func Builder(id string) string {
+	if name, ok := Builders[id]; ok {
 		return name
 	}
 	return id
 }
 
 func wear(spec kernel.Spec) kernel.Spec {
-	spec.Name = Thinker(spec.ID)
+	spec.Name = Builder(spec.ID)
 	return spec
 }

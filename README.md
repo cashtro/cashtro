@@ -26,10 +26,11 @@ e-commerce. Client code stays private. The results are live:
 ## Cashtro OS
 
 This repo is **under construction**. It is the control plane for every
-agentic we build here. Agents are processes. Processes wear thinkers.
-Products keep their names. Capabilities are verbs. Mail, notes, memory,
-and human confirms are first-class. Delivery and research are live. New
-agentics register into this kernel — they do not become a second product.
+agentic we build here. Agents are processes. Processes wear builders —
+Lautaro, Frida, Diego. Products keep their names. Capabilities are verbs.
+Mail, notes, memory, and human confirms are first-class. Delivery and
+research are live. New agentics register into this kernel — they do not
+become a second product.
 
 ```bash
 go test ./...
@@ -39,8 +40,8 @@ go run ./cmd/cashtro
 Open `http://localhost:8080`.
 
 Casa Crypto, Prolifik, ScanApp, and Proximity stay **products** on the
-delivery line. The process table wears well-known intellectuals. IDs and
-capability verbs do not change.
+delivery line. The process table wears builders and creators — Lautaro
+boots the house. IDs and capability verbs do not change.
 
 ```mermaid
 flowchart TB
@@ -50,29 +51,29 @@ flowchart TB
     ScanApp[ScanApp]
     Proximity[Proximity]
   end
-  subgraph thinkers [Process table — thinkers]
-    Lovelace[Lovelace · init]
-    Turing[Turing · router]
-    Deming[Deming · delivery]
-    Hypatia[Hypatia · research]
-    Copernicus[Copernicus · explorer]
-    Galileo[Galileo · operator]
-    Kant[Kant · reviewer]
-    Leonardo[Leonardo · architect]
-    Hopper[Hopper · deploy]
-    Machiavelli[Machiavelli · security]
-    Locke[Locke · memory]
-    Voltaire[Voltaire · comms]
-    Confucius[Confucius · planner]
-    Socrates[Socrates · investigator]
+  subgraph builders [Process table — builders]
+    Lautaro[Lautaro · init]
+    Hedy[Hedy · router]
+    Antoni[Antoni · delivery]
+    Gabriela[Gabriela · research]
+    Marco[Marco · explorer]
+    Diego[Diego · operator]
+    Juana[Juana · reviewer]
+    Frida[Frida · architect]
+    Oscar[Oscar · deploy]
+    Tupac[Túpac · security]
+    Luis[Luis · memory]
+    Violeta[Violeta · comms]
+    Pablo[Pablo · planner]
+    Caupolican[Caupolicán · investigator]
   end
-  Lovelace --> Deming
-  Copernicus --> Hypatia
-  Confucius --> Deming
-  Deming --> CasaCrypto
-  Deming --> Prolifik
-  Deming --> ScanApp
-  Deming --> Proximity
+  Lautaro --> Antoni
+  Marco --> Gabriela
+  Pablo --> Antoni
+  Antoni --> CasaCrypto
+  Antoni --> Prolifik
+  Antoni --> ScanApp
+  Antoni --> Proximity
 ```
 
 ### Do we need OpenRouter?

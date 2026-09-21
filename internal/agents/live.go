@@ -160,7 +160,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "XKernel", URL: "https://github.com/JosephBerm/XKernel", Claim: "Treat agents as first-class processes with capability tokens and typed IPC.", Quote: "Unix treats processes; Kubernetes treats containers; an agent OS treats agents."},
 		{Agent: "research", Source: "12-factor agents", URL: "https://github.com/humanlayer/12-factor-agents", Claim: "Own the loop in deterministic code. The model only fills structured next steps.", Quote: "Human confirm sits between selection and invocation. OpenRouter stays optional."},
 		{Agent: "research", Source: "treg", URL: "https://treg.to", Claim: "Exa publication search is available as research.ingest input at $0.007/call when Treg is signed in.", Quote: "catalog_search → catalog_get → call. Token was expired this pass; notes still landed from open sources."},
-		{Agent: "research", Source: "cashtro-roster", URL: "", Claim: "Processes wear thinkers. Products keep their names — Casa Crypto and Prolifik stay products, never process titles.", Quote: "IDs and verbs stay stable. ScanApp, Proximity, Casa Crypto, Prolifik live on the delivery line."},
+		{Agent: "research", Source: "cashtro-roster", URL: "", Claim: "Processes wear builders — Lautaro, Frida, Diego. Products keep their names — Casa Crypto and Prolifik stay products, never process titles.", Quote: "IDs and verbs stay stable. ScanApp, Proximity, Casa Crypto, Prolifik live on the delivery line."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)

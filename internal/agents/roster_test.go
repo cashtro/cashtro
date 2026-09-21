@@ -9,24 +9,27 @@ import (
 	"github.com/cashtro/cashtro/internal/kernel"
 )
 
-func TestThinkersWearOnDesk(t *testing.T) {
+func TestBuildersWearOnDesk(t *testing.T) {
 	k, err := Boot()
 	if err != nil {
 		t.Fatal(err)
 	}
 	seen := map[string]string{}
 	for _, p := range k.Processes() {
-		want, ok := Thinkers[p.Spec.ID]
+		want, ok := Builders[p.Spec.ID]
 		if !ok {
-			t.Fatalf("process %q has no thinker", p.Spec.ID)
+			t.Fatalf("process %q has no builder", p.Spec.ID)
 		}
 		if p.Spec.Name != want {
-			t.Fatalf("%s name = %q, want thinker %q", p.Spec.ID, p.Spec.Name, want)
+			t.Fatalf("%s name = %q, want builder %q", p.Spec.ID, p.Spec.Name, want)
 		}
 		seen[p.Spec.ID] = p.Spec.Name
 	}
-	if len(seen) != len(Thinkers) {
-		t.Fatalf("desk thinkers = %d, roster = %d", len(seen), len(Thinkers))
+	if len(seen) != len(Builders) {
+		t.Fatalf("desk builders = %d, roster = %d", len(seen), len(Builders))
+	}
+	if Builder("init") != "Lautaro" {
+		t.Fatalf("init must be Lautaro, got %q", Builder("init"))
 	}
 }
 
@@ -49,9 +52,9 @@ func TestProductsStayProducts(t *testing.T) {
 	found := map[string]bool{}
 	for _, ship := range cat.List() {
 		found[ship.Name] = true
-		for _, thinker := range Thinkers {
-			if ship.Name == thinker {
-				t.Fatalf("product ship %q used a thinker name", ship.Name)
+		for _, builder := range Builders {
+			if ship.Name == builder {
+				t.Fatalf("product ship %q used a builder name", ship.Name)
 			}
 		}
 	}
@@ -62,20 +65,20 @@ func TestProductsStayProducts(t *testing.T) {
 	}
 }
 
-func TestExplorerFindsThinkerAndProduct(t *testing.T) {
+func TestExplorerFindsBuilderAndProduct(t *testing.T) {
 	k, err := Boot()
 	if err != nil {
 		t.Fatal(err)
 	}
 	res, err := k.Invoke(context.Background(), "explorer", kernel.Call{
 		Capability: "explorer.search",
-		Payload:    []byte(`{"query":"Hypatia"}`),
+		Payload:    []byte(`{"query":"Lautaro"}`),
 	})
 	if err != nil || !res.OK {
-		t.Fatalf("thinker search: %+v %v", res, err)
+		t.Fatalf("builder search: %+v %v", res, err)
 	}
-	if !hitKind(res.Data, "agent", "research") {
-		t.Fatalf("Hypatia should find process research: %#v", res.Data)
+	if !hitKind(res.Data, "agent", "init") {
+		t.Fatalf("Lautaro should find process init: %#v", res.Data)
 	}
 
 	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{

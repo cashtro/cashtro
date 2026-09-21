@@ -1,24 +1,25 @@
-# Agentic OS plan — thinkers vs products
+# Agentic OS plan — builders vs products
 
-Castro rule: **products stay products**. Processes wear well-known thinkers.
+Castro rule: **products stay products**. Processes wear builder / creator
+names like **Lautaro**.
 
 See `~/.cursor/admiral-fleet/ROSTER.md` for the live roster.
 
 ```mermaid
 flowchart TB
   Castro[Castro]
-  Lovelace[Lovelace · init]
-  Deming[Deming · delivery]
+  Lautaro[Lautaro · init]
+  Antoni[Antoni · delivery]
   subgraph products [Products keep their names]
     CasaCrypto[Casa Crypto]
     Prolifik[Prolifik]
     ScanApp[ScanApp]
     Proximity[Proximity]
   end
-  Castro --> Lovelace
-  Lovelace --> Deming
-  Deming --> CasaCrypto
-  Deming --> Prolifik
-  Deming --> ScanApp
-  Deming --> Proximity
+  Castro --> Lautaro
+  Lautaro --> Antoni
+  Antoni --> CasaCrypto
+  Antoni --> Prolifik
+  Antoni --> ScanApp
+  Antoni --> Proximity
 ```

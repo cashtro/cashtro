@@ -1,21 +1,21 @@
-// cursor-canvas-title: Cashtro OS — thinkers vs products
+// cursor-canvas-title: Cashtro OS — builders vs products
 import { Callout, Grid, H1, H2, Pill, Stack, Stat, Table, Text } from "cursor/canvas";
 
-const thinkers = [
-  ["Lovelace", "init", "kernel", "live"],
-  ["Turing", "router", "model", "resident"],
-  ["Deming", "delivery", "ship", "live"],
-  ["Hypatia", "research", "library", "live"],
-  ["Copernicus", "explorer", "search", "live"],
-  ["Galileo", "operator", "computer-use", "resident"],
-  ["Kant", "reviewer", "qa", "resident"],
-  ["Leonardo", "architect", "design", "resident"],
-  ["Hopper", "deploy", "release", "resident"],
-  ["Machiavelli", "security", "guard", "resident"],
-  ["Locke", "memory", "recall", "live"],
-  ["Voltaire", "comms", "signal", "live"],
-  ["Confucius", "planner", "backlog", "live"],
-  ["Socrates", "investigator", "incident", "resident"],
+const builders = [
+  ["Lautaro", "init", "kernel", "live"],
+  ["Hedy", "router", "model", "resident"],
+  ["Antoni", "delivery", "ship", "live"],
+  ["Gabriela", "research", "library", "live"],
+  ["Marco", "explorer", "search", "live"],
+  ["Diego", "operator", "computer-use", "resident"],
+  ["Juana", "reviewer", "qa", "resident"],
+  ["Frida", "architect", "design", "resident"],
+  ["Oscar", "deploy", "release", "resident"],
+  ["Túpac", "security", "guard", "resident"],
+  ["Luis", "memory", "recall", "live"],
+  ["Violeta", "comms", "signal", "live"],
+  ["Pablo", "planner", "backlog", "live"],
+  ["Caupolicán", "investigator", "incident", "resident"],
 ] as const;
 
 const products = [
@@ -35,28 +35,29 @@ export default function AgenticOsPlan() {
     <Stack gap={20}>
       <H1>Cashtro OS naming</H1>
       <Callout tone="info">
-        Products stay products. Processes wear thinkers. IDs and capability verbs
-        do not change — Lovelace is still process init, Casa Crypto is still a ship.
+        Products stay products. Processes wear builders and creators — Lautaro
+        boots the house. IDs and capability verbs do not change. Casa Crypto
+        stays a ship.
       </Callout>
       <Grid columns={3} gap={12}>
-        <Stat value="14" label="Thinkers on the process table" />
+        <Stat value="14" label="Builders on the process table" />
         <Stat value="9" label="Products on the delivery line" />
-        <Stat value="0" label="Products worn as process titles" tone="success" />
+        <Stat value="Lautaro" label="Kernel seat · init" />
       </Grid>
-      <H2>Process table — thinkers</H2>
+      <H2>Process table — builders</H2>
       <Text tone="secondary" size="small">
-        Source: Cashtro kernel 0.3.0 · roster 2026-09-21
+        Source: Cashtro kernel 0.3.1 · roster 2026-09-21
       </Text>
       <Table
-        headers={["Thinker", "Process ID", "Role", "Mode"]}
+        headers={["Builder", "Process ID", "Role", "Mode"]}
         striped
         stickyHeader
-        rowTone={thinkers.map((row) => (row[3] === "live" ? "success" : "warning"))}
-        rows={thinkers.map((row) => [
+        rowTone={builders.map((row) => (row[3] === "live" ? "success" : "warning"))}
+        rows={builders.map((row) => [
           row[0],
           row[1],
           row[2],
-          <Pill key={row[1]} tone={row[3] === "live" ? "success" : "warning"} size="sm">
+          <Pill key={row[1]} size="sm">
             {row[3]}
           </Pill>,
         ])}

@@ -3,7 +3,8 @@
 // Live agentics execute work now. Resident agentics are first-class
 // processes with a published contract — they boot, appear on the desk,
 // and accept invokes — waiting for a worker bind. Processes wear
-// thinkers on the desk. Products keep their names on the delivery line.
+// builders on the desk (Lautaro, Frida, Diego). Products keep their names
+// on the delivery line.
 // New agentics we create in this workspace register here. They do not
 // become a second product.
 package agents
