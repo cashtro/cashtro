@@ -21,6 +21,10 @@ func TestPersistRoundTrip(t *testing.T) {
 	k.RecordPulse("overnight")
 	k.Offer(Choice{Key: "mail-persist", Kind: KindMail, Title: "Persist me"})
 	k.RecordScan(Scan{Account: "alejandro@proximityagency.ca", Inbox: 3, Unread: 1})
+	_, err := k.SaveRequest(Request{Raw: "do all my tasks", Title: "Standing rule"})
+	if err != nil {
+		t.Fatal(err)
+	}
 	if err := SaveFile(path, k); err != nil {
 		t.Fatal(err)
 	}
@@ -50,6 +54,9 @@ func TestPersistRoundTrip(t *testing.T) {
 	}
 	if k2.LastScan().Unread != 1 {
 		t.Fatalf("scan = %#v", k2.LastScan())
+	}
+	if got := k2.Requests(); len(got) != 1 || got[0].Raw != "do all my tasks" {
+		t.Fatalf("requests = %#v", k2.Requests())
 	}
 }
 

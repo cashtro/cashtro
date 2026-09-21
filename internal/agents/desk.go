@@ -122,6 +122,9 @@ func deskInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 }
 
 func seedDesk(k *kernel.Kernel) {
+	if len(k.Requests()) > 0 {
+		return
+	}
 	k.Remember("assistant", "Castro wants one desk assistant who does every allowed task. Capture every request. Better it each pass. Stay in this kernel.")
 	seeds := []string{
 		"Standing rule: do all my tasks. Save every request. Better it each time. Speak FR/EN. Do not fork a second product.",

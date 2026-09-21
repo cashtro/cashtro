@@ -26,13 +26,13 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 	for _, agent := range Builtins(cat, model.FromEnv()) {
 		k.Register(agent)
 	}
-	if err := k.Boot(context.Background()); err != nil {
-		return nil, err
-	}
 	if path := k.PersistPath(); path != "" {
 		if err := kernel.LoadFile(path, k); err != nil && !os.IsNotExist(err) {
 			return nil, err
 		}
+	}
+	if err := k.Boot(context.Background()); err != nil {
+		return nil, err
 	}
 	if envTruthy("CASHTRO_CLOSED") {
 		k.SetClosed(true)
