@@ -21,7 +21,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if about.Running != 14 || about.Live != 7 {
 		t.Fatalf("about = %+v", about)
 	}
-	if len(k.Notes()) < 5 {
+	if len(k.Notes()) < 6 {
 		t.Fatalf("research seeds = %d", len(k.Notes()))
 	}
 	if k.Catalog() == nil {

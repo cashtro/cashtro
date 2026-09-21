@@ -26,10 +26,10 @@ e-commerce. Client code stays private. The results are live:
 ## Cashtro OS
 
 This repo is **under construction**. It is the control plane for every
-agentic we build here. Agents are processes. Capabilities are verbs.
-Mail, notes, memory, and human confirms are first-class. Delivery and
-research are live. New agentics register into this kernel — they do not
-become a second product.
+agentic we build here. Agents are processes. Processes wear thinkers.
+Products keep their names. Capabilities are verbs. Mail, notes, memory,
+and human confirms are first-class. Delivery and research are live. New
+agentics register into this kernel — they do not become a second product.
 
 ```bash
 go test ./...
@@ -37,6 +37,43 @@ go run ./cmd/cashtro
 ```
 
 Open `http://localhost:8080`.
+
+Casa Crypto, Prolifik, ScanApp, and Proximity stay **products** on the
+delivery line. The process table wears well-known intellectuals. IDs and
+capability verbs do not change.
+
+```mermaid
+flowchart TB
+  subgraph products [Delivery line — products keep their names]
+    CasaCrypto[Casa Crypto]
+    Prolifik[Prolifik]
+    ScanApp[ScanApp]
+    Proximity[Proximity]
+  end
+  subgraph thinkers [Process table — thinkers]
+    Lovelace[Lovelace · init]
+    Turing[Turing · router]
+    Deming[Deming · delivery]
+    Hypatia[Hypatia · research]
+    Copernicus[Copernicus · explorer]
+    Galileo[Galileo · operator]
+    Kant[Kant · reviewer]
+    Leonardo[Leonardo · architect]
+    Hopper[Hopper · deploy]
+    Machiavelli[Machiavelli · security]
+    Locke[Locke · memory]
+    Voltaire[Voltaire · comms]
+    Confucius[Confucius · planner]
+    Socrates[Socrates · investigator]
+  end
+  Lovelace --> Deming
+  Copernicus --> Hypatia
+  Confucius --> Deming
+  Deming --> CasaCrypto
+  Deming --> Prolifik
+  Deming --> ScanApp
+  Deming --> Proximity
+```
 
 ### Do we need OpenRouter?
 

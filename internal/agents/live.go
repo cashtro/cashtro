@@ -14,7 +14,7 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	q := strings.ToLower(payloadQuery(call, "query"))
 	hits := make([]map[string]string, 0)
 	for _, p := range k.Processes() {
-		blob := strings.ToLower(p.Spec.Name + " " + p.Spec.Role + " " + p.Spec.Summary + " " + strings.Join(p.Spec.Capabilities, " "))
+		blob := strings.ToLower(p.Spec.ID + " " + p.Spec.Name + " " + p.Spec.Role + " " + p.Spec.Summary + " " + strings.Join(p.Spec.Capabilities, " "))
 		if q == "" || strings.Contains(blob, q) {
 			hits = append(hits, map[string]string{"kind": "agent", "id": p.Spec.ID, "name": p.Spec.Name})
 		}
@@ -160,6 +160,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "XKernel", URL: "https://github.com/JosephBerm/XKernel", Claim: "Treat agents as first-class processes with capability tokens and typed IPC.", Quote: "Unix treats processes; Kubernetes treats containers; an agent OS treats agents."},
 		{Agent: "research", Source: "12-factor agents", URL: "https://github.com/humanlayer/12-factor-agents", Claim: "Own the loop in deterministic code. The model only fills structured next steps.", Quote: "Human confirm sits between selection and invocation. OpenRouter stays optional."},
 		{Agent: "research", Source: "treg", URL: "https://treg.to", Claim: "Exa publication search is available as research.ingest input at $0.007/call when Treg is signed in.", Quote: "catalog_search → catalog_get → call. Token was expired this pass; notes still landed from open sources."},
+		{Agent: "research", Source: "cashtro-roster", URL: "", Claim: "Processes wear thinkers. Products keep their names — Casa Crypto and Prolifik stay products, never process titles.", Quote: "IDs and verbs stay stable. ScanApp, Proximity, Casa Crypto, Prolifik live on the delivery line."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)
@@ -237,12 +238,12 @@ type researchAgent struct {
 }
 
 func (a *researchAgent) Spec() kernel.Spec {
-	return kernel.Spec{
-		ID: "research", Name: "Research", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+	return wear(kernel.Spec{
+		ID: "research", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 		Role: "library", Summary: "First-class notes. Gathers AOS papers and desk findings while the OS is under construction.",
 		Capabilities: []string{"research.list", "research.ingest", "note.write"},
 		Autostart:    true,
-	}
+	})
 }
 
 func (a *researchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
