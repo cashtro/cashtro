@@ -7,35 +7,25 @@ description: Visual map of Cashtro OS / agentic control plane for Castro. Use wh
 
 When explaining the agentic OS, fleet hierarchy, progress, architecture, or multi-agent structure for Castro: **never text-only**. Open or update a canvas and/or include Mermaid.
 
-## Default Mermaid (update counts from `/api/os`)
+## Default Mermaid (update counts from `/api/about` + `/api/os`)
 
 ```mermaid
 flowchart TB
-  subgraph Kernel["Cashtro OS kernel"]
+  subgraph Ultron["Ultron IDE :9090"]
+    Auth["RBAC · owner/admin/operator/client/viewer"]
+    Cos["Giant · ScanApp · Proximity · Empire · …"]
+    Fleet["agents + workers"]
+  end
+  subgraph Kernel["Cashtro OS :8080"]
     Init["init · os.about / os.heartbeat"]
-    Router["router · optional OpenRouter"]
+    Live["14 agentics · delivery · research"]
   end
-  subgraph Live["Live agentics"]
-    Delivery["delivery"]
-    Research["research"]
-    Explorer["explorer"]
-    Operator["operator"]
-    Reviewer["reviewer"]
-    Architect["architect"]
-    Deploy["deploy"]
-    Security["security"]
-    Memory["memory"]
-    Comms["comms"]
-    Planner["planner"]
-    Investigator["investigator"]
-  end
-  Disk["data/cashtro.json · autosave"]
-  Desk["HTTP desk :8080"]
-  Always["scripts/always-on.sh · cloud VM"]
-  Kernel --> Live
-  Live --> Disk
-  Desk --> Kernel
-  Always --> Desk
+  DiskU["data/ultron.json"]
+  DiskC["data/cashtro.json"]
+  Ultron -->|HTTP bridge| Kernel
+  Auth --> Cos --> Fleet
+  Ultron --> DiskU
+  Kernel --> DiskC
 ```
 
 ## What to show
