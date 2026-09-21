@@ -87,6 +87,7 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Role: "backlog", Summary: "Turns a goal into idea-stage ships on the delivery line.",
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
+		&n8nAgent{},
 		resident(kernel.Spec{
 			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",

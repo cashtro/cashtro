@@ -18,6 +18,7 @@ const KERNEL_AGENTS = [
   { name: "memory", role: "recall", runtime: "http" },
   { name: "comms", role: "signal", runtime: "http" },
   { name: "planner", role: "backlog", runtime: "http" },
+  { name: "n8n", role: "workflow", runtime: "n8n" },
   { name: "investigator", role: "incident", runtime: "http" },
 ];
 

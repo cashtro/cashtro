@@ -67,6 +67,10 @@
     label { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
     input, textarea { padding: 8px; }
     .journal { max-height: 220px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--muted); }
+    .flows { display: grid; gap: 8px; }
+    .flow { border: 1px solid var(--line); background: #14110d; padding: 10px; }
+    .flow b { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 18px; font-weight: 500; }
+    .graph { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; color: var(--muted); margin: 6px 0; }
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
     footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     @media (max-width: 900px) {
@@ -80,7 +84,7 @@
     <div>
       <div class="mark">Cashtro OS · under construction · FR/EN</div>
       <h1>AI OS · idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
+      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. n8n is ours. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
     </div>
     <div class="stats" id="stats"></div>
   </header>
@@ -92,6 +96,18 @@
     </section>
     <section>
       <div class="panel">
+        <h2>Owned n8n</h2>
+        <p class="lede" style="margin-top:0">POST /api/agents/n8n/workflow. Catch-hooks and dual seats live here. No N8N_WEBHOOK_URL, MOONSHOT_API_KEY, or GLM_API_KEY.</p>
+        <div class="flows" id="flows"></div>
+        <form id="flow-form" style="margin-top:10px">
+          <label>Workflow id <input name="id" value="wealth-dual" placeholder="wealth-dual"></label>
+          <label>Prompt <input name="prompt" required placeholder="Advance ScanApp. Keep confirms."></label>
+          <button type="submit">Run owned workflow</button>
+          <div class="err" id="flow-error"></div>
+        </form>
+        <div class="journal" id="flow-runs" style="margin-top:10px"></div>
+      </div>
+      <div class="panel" style="margin-top:14px">
         <h2>Delivery line</h2>
         <div class="board" id="board" aria-label="Delivery board"></div>
       </div>
@@ -129,7 +145,7 @@
   </main>
   <footer>
     <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · OpenRouter optional</span>
+    <span>stdlib Go · owned n8n · OpenRouter optional</span>
   </footer>
   <script>
     const stages = ["idea", "concept", "production"];
@@ -216,8 +232,8 @@
       }
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, agents, ships, events, model, profile, notes, confirms, flows, flowRuns] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/n8n"), j("/api/n8n/runs")
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
@@ -229,6 +245,8 @@
         chip(os.live + " live"),
         chip(os.resident + " resident"),
         chip(notes.length + " notes"),
+        chip(flows.length + " workflows"),
+        chip("n8n owned"),
         chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
       );
       const grid = document.getElementById("agents");
@@ -282,6 +300,47 @@
         empty.textContent = "No outbound drafts. comms.send parks a confirm here.";
         gate.appendChild(empty);
       }
+      const flowBox = document.getElementById("flows");
+      flowBox.replaceChildren();
+      flows.forEach((wf) => {
+        const el = document.createElement("article");
+        el.className = "flow";
+        const graph = (wf.nodes || []).map((n) => n.kind).join(" → ");
+        el.innerHTML = "<b></b><div class='graph'></div><p class='lede' style='margin:0'></p>";
+        el.querySelector("b").textContent = wf.name;
+        el.querySelector(".graph").textContent = (wf.hook ? wf.hook + " · " : "") + graph;
+        el.querySelector("p").textContent = wf.summary + (wf.lastMsg ? " — last: " + wf.lastMsg : "");
+        const run = document.createElement("button");
+        run.textContent = "Fire " + wf.id;
+        run.addEventListener("click", async () => {
+          run.disabled = true;
+          try {
+            await j("/api/agents/n8n/workflow", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+              body: JSON.stringify({ id: wf.id, prompt: wf.name + ". Keep confirms." })
+            });
+            await render();
+          } catch (err) {
+            document.getElementById("flow-error").textContent = err.message;
+            run.disabled = false;
+          }
+        });
+        el.appendChild(run);
+        flowBox.appendChild(el);
+      });
+      const runBox = document.getElementById("flow-runs");
+      runBox.replaceChildren();
+      if (!flowRuns.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "No runs yet. POST /api/agents/n8n/workflow.";
+        runBox.appendChild(empty);
+      }
+      flowRuns.slice(0, 8).forEach((run) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + run.id + " " + run.workflow + " · score " + (run.score || 0) + " · " + run.message + " · owner=" + run.owner + " bound=" + run.bound;
+        runBox.appendChild(line);
+      });
       confirms.forEach((c) => {
         const line = document.createElement("div");
         line.textContent = "#" + c.id + " " + c.status + " — " + c.body;
@@ -315,6 +374,25 @@
           })
         });
         event.target.reset();
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    document.getElementById("flow-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("flow-error");
+      err.textContent = "";
+      const data = new FormData(event.target);
+      try {
+        await j("/api/agents/n8n/workflow", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            id: data.get("id") || "wealth-dual",
+            prompt: data.get("prompt")
+          })
+        });
         await render();
       } catch (e) {
         err.textContent = e.message;

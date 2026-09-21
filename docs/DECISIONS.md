@@ -1,5 +1,17 @@
 # DECISIONS
 
+## 2026-09-21 — Own n8n instead of renting it
+
+- **Choice:** First-party `n8n` agentic + `internal/flow` + `internal/think`.
+  `POST /api/agents/n8n/workflow` fires a graph we store. Dual seats are
+  local propose/critique. Catch-hooks are `POST /api/n8n/{id}/hook`.
+- **Alternatives:** Proxy Castro's n8n Cloud webhook; bind Moonshot and
+  Zhipu GLM keys; keep n8n as a registry runtime label only.
+- **Why:** Castro asked to create and own the same thing, not connect to
+  their keys. Paid vendor seats are a stop-and-ask. The kernel already
+  absorbs new agentics. OpenRouter stays the optional model bus if a
+  later seat wants a paid think — the workflow still runs unbound.
+
 ## 2026-09-21 — Fill the blank mission header
 
 - **Choice:** `CONTROL_PLANE_REPO=cashtro/cashtro`, orgs=`Evolu-Jeunes`,

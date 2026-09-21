@@ -14,11 +14,11 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 14 {
-		t.Fatalf("processes = %d, want 14", len(procs))
+	if len(procs) != 15 {
+		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 15 || about.Live != 8 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -78,5 +78,55 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})
 	if err != nil || !res.OK {
 		t.Fatalf("research: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "n8n", kernel.Call{
+		Capability: "n8n.workflow",
+		Payload:    []byte(`{"prompt":"Advance ScanApp. Keep confirms."}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("n8n.workflow: %+v %v", res, err)
+	}
+}
+
+func TestN8NIsOwned(t *testing.T) {
+	k, err := Boot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := k.Invoke(context.Background(), "n8n", kernel.Call{Capability: "n8n.list"})
+	if err != nil || !res.OK {
+		t.Fatalf("list: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "n8n", kernel.Call{
+		Capability: "n8n.workflow",
+		Payload:    []byte(`{"id":"wealth-dual","prompt":"Park a retainer. Keep the human gate."}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("workflow: %+v %v", res, err)
+	}
+	raw, _ := json.Marshal(res.Data)
+	if !json.Valid(raw) {
+		t.Fatal("data not json")
+	}
+	var run map[string]any
+	if err := json.Unmarshal(raw, &run); err != nil {
+		t.Fatal(err)
+	}
+	if run["owner"] != "cashtro" {
+		t.Fatalf("owner = %v", run["owner"])
+	}
+	if run["bound"] != false {
+		t.Fatalf("bound = %v, owned loop must not call vendor keys", run["bound"])
+	}
+	res, err = k.Invoke(context.Background(), "n8n", kernel.Call{
+		Capability: "n8n.workflow",
+		Payload:    []byte(`{"id":"intake-hook","prompt":"new QC clinic lead"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("hook workflow: %+v %v", res, err)
+	}
+	if len(k.Confirms()) == 0 {
+		t.Fatal("intake-hook should park a human confirm")
 	}
 }

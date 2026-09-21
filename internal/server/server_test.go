@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 15 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +70,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 15 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -120,6 +120,9 @@ func TestIndexHTML(t *testing.T) {
 	body := res.Body.String()
 	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
 		t.Fatalf("index missing OS shell copy")
+	}
+	if !strings.Contains(body, "Owned n8n") || !strings.Contains(body, "/api/agents/n8n/workflow") {
+		t.Fatalf("index missing owned n8n studio")
 	}
 }
 
@@ -184,6 +187,50 @@ func TestCreateRejectsUnknownField(t *testing.T) {
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusBadRequest {
 		t.Fatalf("status = %d body=%s", res.Code, res.Body.String())
+	}
+}
+
+func TestN8NWorkflowHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/n8n", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "wealth-dual") {
+		t.Fatalf("list = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/agents/n8n/workflow", strings.NewReader(`{"prompt":"Advance ScanApp. Keep confirms."}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("workflow status = %d body=%s", res.Code, res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), `"owner":"cashtro"`) || !strings.Contains(res.Body.String(), `"bound":false`) {
+		t.Fatalf("workflow must be owned and unbound: %s", res.Body.String())
+	}
+	if strings.Contains(strings.ToLower(res.Body.String()), "moonshot") || strings.Contains(res.Body.String(), "GLM_API") {
+		t.Fatalf("vendor leak: %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/n8n/intake-hook/hook", strings.NewReader(`{"prompt":"clinic lead"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("hook status = %d body=%s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/n8n/runs", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "wealth-dual") {
+		t.Fatalf("runs = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/n8n/missing/hook", strings.NewReader(`{}`)))
+	if res.Code != http.StatusNotFound {
+		t.Fatalf("missing hook status = %d body=%s", res.Code, res.Body.String())
 	}
 }
 

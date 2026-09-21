@@ -46,7 +46,7 @@
     {
       "id": "voltron-absorb",
       "title": "Register Voltron kernel as the local http runtime",
-      "body": "14 agentics on :8080 become Agents with invokeSpec POST /api/agents/:id/invoke",
+      "body": "15 agentics on :8080 become Agents with invokeSpec POST /api/agents/:id/invoke. n8n is first-party.",
       "source": "kernel",
       "priority": "p1",
       "status": "todo",

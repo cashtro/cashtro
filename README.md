@@ -55,6 +55,13 @@ go run ./cmd/cashtro
 Without a key the `router` process stays **resident** and tells you it is
 unbound. The rest of the OS stays live.
 
+### Do we need n8n / Moonshot / GLM keys?
+
+**No.** `/api/agents/n8n/workflow` is ours. Catch-hooks, node graphs, and
+the propose→critique dual loop run in this kernel. We do not set
+`N8N_WEBHOOK_URL`, `MOONSHOT_API_KEY`, or `GLM_API_KEY`. Those seats are
+internal processes, not vendor accounts.
+
 | Method | Path | What it does |
 | --- | --- | --- |
 | `GET` | `/` | OS desk |
@@ -62,6 +69,10 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/os` | Manifesto and process counts |
 | `GET` | `/api/agents` | Process table |
 | `POST` | `/api/agents/{id}/invoke` | Run a capability |
+| `POST` | `/api/agents/n8n/workflow` | Fire an owned n8n graph (default `wealth-dual`) |
+| `GET` | `/api/n8n` | Workflow table we own |
+| `GET` | `/api/n8n/runs` | Workflow run history |
+| `POST` | `/api/n8n/{id}/hook` | Catch-hook we own (replaces n8n webhook URL) |
 | `GET` | `/api/model` | OpenRouter bind card |
 | `GET` | `/api/notes` | Research library |
 | `POST` | `/api/notes` | Ingest a sourced finding |

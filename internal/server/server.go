@@ -6,8 +6,10 @@ import (
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/flow"
 	"github.com/cashtro/cashtro/internal/kernel"
 )
 
@@ -42,6 +44,13 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/ships", s.createShip)
 	mux.HandleFunc("GET /api/ships/{id}", s.getShip)
 	mux.HandleFunc("POST /api/ships/{id}/advance", s.advanceShip)
+	mux.HandleFunc("POST /api/agents/n8n/workflow", s.n8nWorkflow)
+	mux.HandleFunc("GET /api/n8n", s.n8nList)
+	mux.HandleFunc("GET /api/n8n/runs", s.n8nRuns)
+	mux.HandleFunc("GET /api/n8n/nodes", s.n8nNodes)
+	mux.HandleFunc("GET /api/n8n/{id}", s.n8nGet)
+	mux.HandleFunc("POST /api/n8n/{id}/hook", s.n8nHook)
+	mux.HandleFunc("POST /api/n8n/{id}/toggle", s.n8nToggle)
 	return mux
 }
 
@@ -237,6 +246,73 @@ func (s *api) advanceShip(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, res.Data)
 }
 
+func (s *api) n8nWorkflow(w http.ResponseWriter, r *http.Request) {
+	s.runWorkflow(w, r, "")
+}
+
+func (s *api) n8nHook(w http.ResponseWriter, r *http.Request) {
+	s.runWorkflow(w, r, r.PathValue("id"))
+}
+
+func (s *api) runWorkflow(w http.ResponseWriter, r *http.Request, id string) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	payload := map[string]any{}
+	if len(raw) > 0 {
+		if err := json.Unmarshal(raw, &payload); err != nil {
+			payload = map[string]any{"prompt": strings.TrimSpace(string(raw))}
+		}
+	}
+	if id != "" {
+		payload["id"] = id
+	}
+	body, _ := json.Marshal(payload)
+	res, err := s.k.Invoke(r.Context(), "n8n", kernel.Call{Capability: "n8n.workflow", Payload: body})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	status := http.StatusOK
+	if !res.OK {
+		status = http.StatusConflict
+	}
+	writeJSON(w, status, res.Data)
+}
+
+func (s *api) n8nList(w http.ResponseWriter, r *http.Request) {
+	s.n8nCap(w, r, "n8n.list", nil)
+}
+
+func (s *api) n8nRuns(w http.ResponseWriter, r *http.Request) {
+	s.n8nCap(w, r, "n8n.runs", nil)
+}
+
+func (s *api) n8nNodes(w http.ResponseWriter, r *http.Request) {
+	s.n8nCap(w, r, "n8n.nodes", nil)
+}
+
+func (s *api) n8nGet(w http.ResponseWriter, r *http.Request) {
+	raw, _ := json.Marshal(map[string]string{"id": r.PathValue("id")})
+	s.n8nCap(w, r, "n8n.get", raw)
+}
+
+func (s *api) n8nToggle(w http.ResponseWriter, r *http.Request) {
+	raw, _ := json.Marshal(map[string]string{"id": r.PathValue("id")})
+	s.n8nCap(w, r, "n8n.toggle", raw)
+}
+
+func (s *api) n8nCap(w http.ResponseWriter, r *http.Request, cap string, payload []byte) {
+	res, err := s.k.Invoke(r.Context(), "n8n", kernel.Call{Capability: cap, Payload: payload})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
 func decodeJSON(r *http.Request, dst any) error {
 	dec := json.NewDecoder(io.LimitReader(r.Body, maxBody))
 	dec.DisallowUnknownFields()
@@ -248,11 +324,11 @@ func decodeJSON(r *http.Request, dst any) error {
 
 func writeError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent):
+	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent), errors.Is(err, flow.ErrNotFound):
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability):
+	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability), errors.Is(err, flow.ErrInvalid):
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning):
+	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning), errors.Is(err, flow.ErrDisabled), errors.Is(err, flow.ErrBusy):
 		writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})
 	default:
 		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})

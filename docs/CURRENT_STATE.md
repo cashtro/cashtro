@@ -9,9 +9,11 @@ Stdlib **Go 1.22** process OS. One binary: `cmd/cashtro` → HTTP `:8080`.
 | Path | Role |
 | --- | --- |
 | `internal/kernel` | Process table, invoke bus, journal, mail, notes, memory, confirms |
-| `internal/agents` | 14 registered agentics. 7 live, 7 resident (contract only) |
+| `internal/agents` | 15 registered agentics. 8 live, 7 resident (contract only) |
 | `internal/catalog` | Delivery line: idea → concept → production (in-memory seed) |
 | `internal/model` | Optional OpenRouter client. Boots unbound. |
+| `internal/flow` | Owned n8n graphs, catch-hooks, run history |
+| `internal/think` | Owned propose/critique dual. No Moonshot/GLM keys |
 | `internal/server` | Desk HTML + REST (`/api/os`, `/api/agents`, `/api/ships`, …) |
 | `.github/workflows/go.yml` | `go test` + `go vet` on main/PR |
 | `.cursor/environment.json` | Cloud start: `go run ./cmd/cashtro` on `main` |
@@ -22,6 +24,7 @@ ScanApp (concept); Cashtro delivery catalog (idea).
 
 Live verbs today: `os.about`, delivery CRUD/advance, explorer search,
 memory store/recall, comms confirm gate, planner backlog, research ingest,
+`n8n.workflow` (owned graphs, no vendor keys),
 `model.status` / `model.chat` (chat no-ops without a key).
 
 ## What is dead or missing
@@ -42,7 +45,7 @@ memory store/recall, comms confirm gate, planner backlog, research ingest,
 | --- | --- |
 | Go kernel + desk | **Absorb.** Keep as the local Voltron runtime / process OS |
 | Delivery catalog seed | **Absorb** into registry Projects (kind=product) |
-| 14 agentics | **Absorb** into registry Agents (runtime=http → kernel invoke) |
+| 15 agentics | **Absorb** into registry Agents (`n8n` runtime=n8n, others http → kernel invoke) |
 | OpenRouter bind | **Absorb** as MODEL_ROUTE |
 | New control plane API | **Add.** Does not fork a second OS |
 | Per-island agents in client repos | **Replace** with registry + manifest handshake (Phase 5) |

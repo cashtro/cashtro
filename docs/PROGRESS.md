@@ -69,6 +69,22 @@ pnpm --filter @cashtro/api test
 `GET /docs` and `GET /docs/json` render OpenAPI 3.1.
 Kill switch and $2 budget cap are enforced before dispatch.
 
+## Owned n8n — 2026-09-21
+
+Castro refused vendor keys. The same product is first-party:
+
+- `internal/think` — propose/critique seats we own
+- `internal/flow` — node graphs, catch-hooks, run history
+- `n8n` agentic — `POST /api/agents/n8n/workflow`
+- Desk studio on `/`
+
+```
+go test ./...
+→ ok  (think, flow, agents, server)
+```
+
+No `N8N_WEBHOOK_URL`, `MOONSHOT_API_KEY`, or `GLM_API_KEY`.
+
 ## Phase 4–7
 
 Not started. Waiting on Castro to read `inventory/REPORT.md` and

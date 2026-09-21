@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.0"
 )
 
 // Status is a process lifecycle state.
@@ -387,7 +387,8 @@ func (k *Kernel) About() About {
 		Events:   len(k.events),
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
 			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
+			"Delivery is live. Research is live. n8n is ours: node graphs, catch-hooks, and a local dual loop. " +
+			"OpenRouter stays optional. No Moonshot, GLM, or n8n webhook keys. " +
 			"New agentics register into this kernel — they do not fork a second product.",
 	}
 }
