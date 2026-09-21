@@ -153,7 +153,7 @@ func TestIndexHTML(t *testing.T) {
 		t.Fatalf("content-type = %q", ct)
 	}
 	body := res.Body.String()
-	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") || !strings.Contains(body, "Closed hours") || !strings.Contains(body, "Mailbox") {
+	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") || !strings.Contains(body, "Closed hours") || !strings.Contains(body, "Mailbox") || !strings.Contains(body, "Memory") {
 		t.Fatalf("index missing OS shell copy")
 	}
 }
@@ -265,6 +265,12 @@ func TestClosedHoursHTTP(t *testing.T) {
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/mail", nil))
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"from":"watch"`) {
 		t.Fatalf("mail = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/memory?q=watch", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "closed hours") {
+		t.Fatalf("memory = %s", res.Body.String())
 	}
 
 	res = httptest.NewRecorder()
