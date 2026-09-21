@@ -1,72 +1,64 @@
 # ACCESS_REQUIRED
 
-Written 2026-09-21. Updated the same day: Castro offered GitHub access.
-**Yes — I want it.** Option A only. Do not paste the token in chat.
+Checked again 2026-09-21T22:34Z after Castro connected Cursor to
+cashtro + Evolu-Jeunes. I did check Evolu-Jeunes. Still dark.
 
-## Fastest path (do this)
+Connecting Cursor on your machine is **not** this Cloud Agent's token.
 
-1. GitHub → Settings → Developer settings → Personal access tokens → Fine-grained → New token
-2. Resource owner = **Evolu-Jeunes** (second token for **cashtro** if ScanApp lives there)
-3. Repository access = **All repositories**
-4. Permissions (no admin, no delete, no org:write):
-   - Contents: **read**
-   - Metadata: **read**
-   - Actions: **read**
-   - Pull requests: **read and write**
-   - Issues: **read and write**
-5. Put the token in this Cloud Agent as secret `GH_TOKEN` (or `gh auth login --with-token` in the machine). Never in the chat.
-6. Tell me “token is in GH_TOKEN”. I will `pnpm recon` and attach ScanApp’s real repo.
+## What I just ran
 
-Do not guess missing repos.
+```
+gh auth status
+→ logged in as GitHub account **cursor** (integration token ghs_…)
+   not cashtro, not an Evolu-Jeunes install
 
-## Token in this Cloud Agent
+gh api orgs/Evolu-Jeunes
+→ 200  login=Evolu-Jeunes  id=201155686  name="Evolu Jeunes"
+   public_repos=0
 
-`gh auth status` is logged in as GitHub account **`cursor`** (Cursor
-integration token, `ghs_…`). Not Castro's user. Not an org install.
+gh api graphql organization(login:"Evolu-Jeunes").repositories
+→ totalCount: 0  nodes: []
 
-| Check | Result |
-| --- | --- |
-| `gh api user` | 403 Resource not accessible by integration |
-| `gh repo list cashtro --limit 200` | 1 public repo: `cashtro/cashtro` |
-| `gh api users/cashtro/repos` | same: `cashtro` public |
-| `gh api orgs/Evolu-Jeunes` | 200 — org exists |
-| `gh api orgs/Evolu-Jeunes/repos?type=all` | `[]` — zero visible repos |
-| `gh search repos org:Evolu-Jeunes` | empty |
-| `gh repo list Evolu-Jeunes` | empty |
+gh api orgs/Evolu-Jeunes/repos?type=all
+→ []
 
-README says Evolu-Jeunes holds ~48 private client repos. This token
-cannot see them. Recon records the org as `access: denied` and continues.
+gh api /installation/repositories
+→ total_count: 1
+   repository_selection: **selected**
+   only repo: **cashtro/cashtro**
 
-## Orgs / users affected
-
-- **Evolu-Jeunes** — all repositories (expected private client fleet)
-- **cashtro** — any private repos besides public `cashtro/cashtro`
-- Any other org Castro owns that was not listed in the brief
-
-## What I need — Option A first (fine-grained PAT)
-
-GitHub → Settings → Developer settings → Personal access tokens →
-Fine-grained → new token.
-
-1. Resource owner = **Evolu-Jeunes** (repeat for **cashtro** if needed)
-2. Repository access = **All repositories**
-3. Permissions:
-   - Contents: **read**
-   - Metadata: **read**
-   - Pull requests: **read and write** (needed later for onboard PRs)
-   - Issues: **read and write**
-   - Actions: **read**
-
-Then in this environment:
-
-```bash
-gh auth login --with-token
-pnpm recon
+https://github.com/orgs/Evolu-Jeunes/repositories
+→ "This organization has no public repositories." / 0 repositories
 ```
 
-Option B (GitHub App, long-term) and Option C (machine account) are
-documented in the mission brief. Start with A.
+So: the org is real. Every repo in it is private (or the org is empty).
+This agent’s Cursor GitHub App is installed on **one selected repo**
+(`cashtro/cashtro`). It was never granted Evolu-Jeunes.
 
-I am not requesting a token with admin, org:write, or delete scopes.
-Do not paste the token into chat — put it in the Cloud Agent secret
-store or `gh auth login`.
+## What I need — Cursor GitHub App on the org (do this, not a PAT)
+
+You already connected Cursor. Now give **this Cloud Agent’s GitHub App**
+the org.
+
+1. Open https://github.com/organizations/Evolu-Jeunes/settings/installations
+2. Find **Cursor** (or **Cursor Cloud Agents**). If it is missing: install it.
+3. Repository access = **All repositories** (not “Only select”).
+4. Confirm cashtro user install is not the only one:
+   https://github.com/settings/installations → Cursor → must not be
+   limited to `cashtro/cashtro` if you want private user repos too.
+
+Then tell me “Cursor App is on Evolu-Jeunes / all repos”. I re-run
+`pnpm recon`. I will not invent repo names.
+
+Do not paste a token in chat.
+
+## Fallback — Option A PAT (only if the App cannot be installed on the org)
+
+Fine-grained PAT, resource owner **Evolu-Jeunes**, all repos,
+Contents/Metadata/Actions read, Issues/PRs read-write. Put it in
+`GH_TOKEN` on this Cloud Agent. Never in chat.
+
+## Orgs affected
+
+- **Evolu-Jeunes** — 0 public, all private invisible from here
+- **cashtro** — only public `cashtro/cashtro` is on the installation

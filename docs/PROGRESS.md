@@ -79,8 +79,12 @@ Castro: there was no ScanApp work in the control plane. Fixed.
 - Contract: `docs/SCANAPP.md`
 - Draft handshake: `inventory/drafts/scanapp/agent.manifest.json`
 
-GitHub access: Castro offered. Yes. Option A in `docs/ACCESS_REQUIRED.md`.
-Do not paste the token in chat.
+GitHub access: Castro connected Cursor to cashtro + Evolu-Jeunes.
+Re-checked 22:34Z. This agent is still account `cursor` (ghs_).
+`/installation/repositories` = **selected**, only `cashtro/cashtro`.
+Evolu-Jeunes exists (id 201155686), `public_repos=0`, GraphQL `totalCount=0`.
+Need Cursor GitHub App installed on the **org** with All repositories.
+See `docs/ACCESS_REQUIRED.md`.
 
 ## Phase 4–7
 
