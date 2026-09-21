@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -20,9 +21,25 @@ func main() {
 	addr := flag.String("addr", ":8080", "HTTP listen address")
 	flag.Parse()
 
-	if err := run(*addr); err != nil {
+	if err := run(listenAddr(*addr)); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// listenAddr prefers Azure App Service PORT / WEBSITES_PORT over the flag default.
+func listenAddr(flagAddr string) string {
+	for _, key := range []string{"PORT", "WEBSITES_PORT"} {
+		if p := strings.TrimSpace(os.Getenv(key)); p != "" {
+			if strings.HasPrefix(p, ":") {
+				return p
+			}
+			return ":" + p
+		}
+	}
+	if flagAddr == "" {
+		return ":8080"
+	}
+	return flagAddr
 }
 
 func run(addr string) error {

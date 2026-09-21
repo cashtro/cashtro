@@ -8,3 +8,6 @@ coverage.out
 .vscode/
 .env
 .playwright-mcp/
+.azure/*
+!.azure/deployment-plan.md
+!.azure/.gitignore

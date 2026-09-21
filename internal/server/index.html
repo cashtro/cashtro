@@ -39,6 +39,7 @@
     .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 5px 10px; font-size: 12px; }
     .chip.live { color: var(--production); }
     .chip.unbound { color: var(--danger); }
+    a.chip.use { text-decoration: none; border-color: var(--brass); color: var(--brass); }
     .desk { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 14px; padding: 16px 0; }
     .panel { border: 1px solid var(--line); background: rgba(26, 23, 18, 0.9); padding: 14px; }
     .panel h2 { margin: 0 0 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
@@ -81,6 +82,7 @@
       <div class="mark">Cashtro OS · under construction · FR/EN</div>
       <h1>AI OS · idea → concept → <em>production</em></h1>
       <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
+      <p class="lede" style="margin-top:8px"><a id="use-link" class="chip use" href="/">Start using this desk</a></p>
     </div>
     <div class="stats" id="stats"></div>
   </header>
@@ -129,7 +131,7 @@
   </main>
   <footer>
     <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · OpenRouter optional</span>
+    <span id="use-url">stdlib Go · Azure Web Apps</span>
   </footer>
   <script>
     const stages = ["idea", "concept", "production"];
@@ -221,6 +223,10 @@
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
+      const use = document.getElementById("use-link");
+      use.href = window.location.origin + "/";
+      use.textContent = "Start using this desk · " + window.location.origin;
+      document.getElementById("use-url").textContent = window.location.origin;
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip(os.name + " " + os.version),

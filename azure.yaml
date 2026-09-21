@@ -1,0 +1,16 @@
+name: cashtro
+metadata:
+  template: azd-init
+services:
+  cashtro:
+    project: .
+    language: go
+    host: appservice
+hooks:
+  predeploy:
+    posix:
+      shell: sh
+      run: CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o cashtro ./cmd/cashtro
+    windows:
+      shell: pwsh
+      run: $env:CGO_ENABLED=0; $env:GOOS='linux'; $env:GOARCH='amd64'; go build -o cashtro ./cmd/cashtro

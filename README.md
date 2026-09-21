@@ -25,6 +25,18 @@ e-commerce. Client code stays private. The results are live:
 
 ## Cashtro OS
 
+**Start using it:** after `azd up`, open the printed `CASHTRO_URL`
+(https://azapp….azurewebsites.net). Local desk: [http://localhost:8080](http://localhost:8080).
+
+```mermaid
+flowchart LR
+  you[You] --> url[CASHTRO_URL]
+  url --> appservice[Azure Web Apps]
+  appservice --> desk[Cashtro OS desk]
+  desk --> kernel[Kernel + process table]
+  kernel --> delivery[Delivery line]
+```
+
 This repo is **under construction**. It is the control plane for every
 agentic we build here. Agents are processes. Capabilities are verbs.
 Mail, notes, memory, and human confirms are first-class. Delivery and
@@ -37,6 +49,23 @@ go run ./cmd/cashtro
 ```
 
 Open `http://localhost:8080`.
+
+### Azure Web Apps
+
+The desk is meant to live on Azure App Service, not only on localhost.
+
+```bash
+azd auth login
+azd env new cashtro --no-prompt
+azd env set AZURE_LOCATION canadacentral
+azd env set AZURE_SUBSCRIPTION_ID <team-subscription-id>
+# optional — kernel boots without it
+azd env set OPENROUTER_API_KEY "$OPENROUTER_API_KEY"
+azd up --no-prompt
+azd env get-values   # CASHTRO_URL / WEB_URL
+```
+
+`OPENROUTER_API_KEY` is an App Setting. The kernel stays live if the key is missing.
 
 ### Do we need OpenRouter?
 
