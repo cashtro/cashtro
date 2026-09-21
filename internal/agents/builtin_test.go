@@ -19,7 +19,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 10 {
+	if about.Running != 15 || about.Live != 11 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -134,6 +134,25 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 	if !traceHasKind(trace.Hits, "agent") {
 		t.Fatalf("trace missed watch agent: %#v", trace.Hits)
+	}
+
+	res, err = k.Invoke(context.Background(), "research", kernel.Call{
+		Capability: "research.ingest",
+		Payload:    []byte(`{"claim":"CVE-2024-1234 is a test finding","source":"fixture"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("ingest cve: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "security", kernel.Call{Capability: "security.triage"})
+	if err != nil || !res.OK {
+		t.Fatalf("security.triage: %+v %v", res, err)
+	}
+	triage, ok := res.Data.(Triage)
+	if !ok || triage.Clear || len(triage.Findings) == 0 {
+		t.Fatalf("triage = %#v ok=%v", res.Data, ok)
+	}
+	if triage.Findings[0].Kind != "cve" {
+		t.Fatalf("finding = %#v", triage.Findings[0])
 	}
 }
 

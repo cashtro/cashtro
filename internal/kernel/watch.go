@@ -37,6 +37,7 @@ var ClosedHoursFlow = []string{
 	"planner.backlog",
 	"architect.plan",
 	"investigator.trace",
+	"security.triage",
 	"delivery.list",
 	"delivery.create",
 	"delivery.advance",

@@ -476,3 +476,72 @@ func investigatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, erro
 	_, _ = k.Post("investigator", "security", "trace", q)
 	return kernel.Result{OK: true, Message: "traced " + strconv.Itoa(len(hits)), Data: Trace{Query: q, Hits: hits}}, nil
 }
+
+const maxFindings = 32
+
+// Finding is one security.triage hit.
+type Finding struct {
+	Kind   string `json:"kind"`
+	Source string `json:"source"`
+	Claim  string `json:"claim"`
+}
+
+// Triage is a deterministic scan of the desk. The model does not fill this.
+type Triage struct {
+	Clear    bool      `json:"clear"`
+	Findings []Finding `json:"findings"`
+}
+
+func securityInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	findings := make([]Finding, 0)
+	add := func(source, claim string) {
+		if len(findings) >= maxFindings {
+			return
+		}
+		kind := classifyFinding(claim)
+		if kind == "" {
+			return
+		}
+		findings = append(findings, Finding{Kind: kind, Source: source, Claim: claim})
+	}
+	for _, n := range k.Notes() {
+		add("note:"+n.Source, n.Claim+" "+n.Quote)
+	}
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			add("ship:"+s.ID, s.Name+" "+s.Notes)
+		}
+	}
+	for _, ev := range k.Events() {
+		add("event:"+ev.Source+"/"+ev.Kind, ev.Message)
+	}
+	for _, f := range k.Recall("") {
+		add("fact:"+f.Topic, f.Text)
+	}
+	for _, m := range k.Inbox("") {
+		add("mail:"+m.To, m.Body)
+	}
+	msg := "clear"
+	if len(findings) > 0 {
+		msg = "flagged " + strconv.Itoa(len(findings))
+		k.Remember("security", msg)
+		_, _ = k.Post("security", "investigator", "triage", msg)
+	}
+	return kernel.Result{OK: true, Message: msg, Data: Triage{Clear: len(findings) == 0, Findings: findings}}, nil
+}
+
+func classifyFinding(blob string) string {
+	b := strings.ToLower(blob)
+	switch {
+	case strings.Contains(b, "cve-") || strings.Contains(b, "cve "):
+		return "cve"
+	case strings.Contains(b, "sast"):
+		return "sast"
+	case strings.Contains(b, "secret") || strings.Contains(b, "leak"):
+		return "secret"
+	case strings.Contains(b, "vulnerab") || strings.Contains(b, "xss") || strings.Contains(b, "sqli"):
+		return "vuln"
+	default:
+		return ""
+	}
+}

@@ -107,6 +107,19 @@ func TestOSAndAgents(t *testing.T) {
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"kind":"agent"`) {
 		t.Fatalf("investigator = %d %s", res.Code, res.Body.String())
 	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/notes", strings.NewReader(`{"claim":"SAST finding on the desk","source":"fixture"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated {
+		t.Fatalf("note = %d %s", res.Code, res.Body.String())
+	}
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/security/invoke", strings.NewReader(`{"capability":"security.triage"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"kind":"sast"`) {
+		t.Fatalf("security = %d %s", res.Code, res.Body.String())
+	}
 }
 
 func TestFavicon(t *testing.T) {
