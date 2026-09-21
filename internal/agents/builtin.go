@@ -97,10 +97,10 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
 		resident(kernel.Spec{
-			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
+			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "incident", Summary: "Traces a query across ships, notes, journal, mail, and confirms.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
-		}, nil),
+		}, investigatorInvoke),
 	}
 }
 

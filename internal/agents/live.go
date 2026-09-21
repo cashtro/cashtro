@@ -37,6 +37,75 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	return kernel.Result{OK: true, Message: "explorer hit " + strconv.Itoa(len(hits)), Data: hits}, nil
 }
 
+func investigatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	q := strings.ToLower(payloadQuery(call, "query"))
+	if q == "" {
+		q = strings.ToLower(payloadQuery(call, "prompt"))
+	}
+	blast := map[string]any{
+		"query":    q,
+		"ships":    []map[string]string{},
+		"notes":    []map[string]string{},
+		"events":   []map[string]string{},
+		"mail":     []map[string]string{},
+		"confirms": []map[string]string{},
+		"facts":    []map[string]string{},
+	}
+	ships := blast["ships"].([]map[string]string)
+	notes := blast["notes"].([]map[string]string)
+	events := blast["events"].([]map[string]string)
+	mail := blast["mail"].([]map[string]string)
+	confirms := blast["confirms"].([]map[string]string)
+	facts := blast["facts"].([]map[string]string)
+
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			blob := strings.ToLower(s.Name + " " + s.Client + " " + s.Notes + " " + s.Sector + " " + string(s.Stage))
+			if q == "" || strings.Contains(blob, q) {
+				ships = append(ships, map[string]string{"id": s.ID, "stage": string(s.Stage), "name": s.Name})
+			}
+		}
+	}
+	for _, n := range k.Notes() {
+		blob := strings.ToLower(n.Claim + " " + n.Source + " " + n.Quote)
+		if q == "" || strings.Contains(blob, q) {
+			notes = append(notes, map[string]string{"source": n.Source, "claim": n.Claim, "url": n.URL})
+		}
+	}
+	for _, ev := range k.Events() {
+		blob := strings.ToLower(ev.Source + " " + ev.Kind + " " + ev.Message)
+		if q == "" || strings.Contains(blob, q) {
+			events = append(events, map[string]string{"kind": ev.Kind, "source": ev.Source, "message": ev.Message})
+		}
+	}
+	for _, m := range k.Inbox("") {
+		blob := strings.ToLower(m.From + " " + m.To + " " + m.Kind + " " + m.Body)
+		if q == "" || strings.Contains(blob, q) {
+			mail = append(mail, map[string]string{"from": m.From, "to": m.To, "body": m.Body})
+		}
+	}
+	for _, c := range k.Confirms() {
+		blob := strings.ToLower(c.Agent + " " + c.Cap + " " + c.Body + " " + c.Status)
+		if q == "" || strings.Contains(blob, q) {
+			confirms = append(confirms, map[string]string{"id": strconv.Itoa(c.ID), "status": c.Status, "body": c.Body})
+		}
+	}
+	for _, f := range k.Recall(q) {
+		facts = append(facts, map[string]string{"topic": f.Topic, "text": f.Text})
+	}
+
+	blast["ships"] = ships
+	blast["notes"] = notes
+	blast["events"] = events
+	blast["mail"] = mail
+	blast["confirms"] = confirms
+	blast["facts"] = facts
+	total := len(ships) + len(notes) + len(events) + len(mail) + len(confirms) + len(facts)
+	_, _ = k.Post("investigator", "memory", "trace", q)
+	k.Remember("incident", "trace "+q+" · "+strconv.Itoa(total)+" hits")
+	return kernel.Result{OK: true, Message: "blast radius " + strconv.Itoa(total), Data: blast}, nil
+}
+
 func memoryInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	switch call.Capability {
 	case "memory.store":
