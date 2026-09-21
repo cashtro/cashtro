@@ -10,6 +10,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -26,7 +28,29 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 	if err := k.Boot(context.Background()); err != nil {
 		return nil, err
 	}
+	if path := k.PersistPath(); path != "" {
+		if err := kernel.LoadFile(path, k); err != nil && !os.IsNotExist(err) {
+			return nil, err
+		}
+	}
+	if envTruthy("CASHTRO_CLOSED") {
+		k.SetClosed(true)
+	}
+	k.RecordPulse("boot")
+	if k.Closed() {
+		keepFlowing(k, "boot while things are closed")
+	}
+	if path := k.PersistPath(); path != "" {
+		if err := kernel.SaveFile(path, k); err != nil {
+			return nil, err
+		}
+	}
 	return k, nil
+}
+
+func envTruthy(key string) bool {
+	v := strings.ToLower(strings.TrimSpace(os.Getenv(key)))
+	return v == "1" || v == "true" || v == "yes"
 }
 
 // Builtins is the process image of Cashtro OS.
@@ -39,12 +63,13 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 		}, func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
 		}),
+		&watchAgent{},
 		&deliveryAgent{cat: cat},
 		&routerAgent{client: router},
 		&researchAgent{},
 		resident(kernel.Spec{
 			ID: "explorer", Name: "Explorer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
-			Role: "search", Summary: "Searches processes, ships, and research notes on the desk.",
+			Role: "search", Summary: "Searches processes, ships, notes, pulses, and mail on the desk.",
 			Capabilities: []string{"explorer.search"}, Autostart: true,
 		}, explorerInvoke),
 		resident(kernel.Spec{
@@ -53,25 +78,25 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"operator.browse"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "qa", Summary: "Reads walkthrough video and screenshot artifacts before we call a ship done.",
+			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "qa", Summary: "Lists walkthrough screenshots and videos on disk. No model required.",
 			Capabilities: []string{"reviewer.watch"}, Autostart: true,
-		}, nil),
+		}, reviewerInvoke),
 		resident(kernel.Spec{
-			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "design", Summary: "Shapes AI-powered apps, agents, and workflows before they hit the line.",
+			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "design", Summary: "Shapes a brief before work hits the line. No model required.",
 			Capabilities: []string{"architect.plan"}, Autostart: true,
-		}, nil),
+		}, architectInvoke),
 		resident(kernel.Spec{
 			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeResident,
 			Role: "release", Summary: "Owns CI, preview, and production promotion.",
 			Capabilities: []string{"deploy.release"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "guard", Summary: "Triage CVE and SAST findings on the board before they ship.",
+			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "guard", Summary: "Triage CVE and SAST findings on the desk. No model required. No outbound.",
 			Capabilities: []string{"security.triage"}, Autostart: true,
-		}, nil),
+		}, securityInvoke),
 		resident(kernel.Spec{
 			ID: "memory", Name: "Memory", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "recall", Summary: "Episodic facts. Store and recall without a model.",
@@ -88,10 +113,10 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
 		resident(kernel.Spec{
-			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
+			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "incident", Summary: "Traces ships, journal, mail, and pulses back to a blast radius. No model required.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
-		}, nil),
+		}, investigatorInvoke),
 	}
 }
 

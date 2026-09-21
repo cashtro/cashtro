@@ -36,6 +36,10 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/confirms", s.confirms)
 	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
+	mux.HandleFunc("GET /api/watch", s.watch)
+	mux.HandleFunc("POST /api/watch/close", s.watchClose)
+	mux.HandleFunc("POST /api/watch/open", s.watchOpen)
+	mux.HandleFunc("POST /api/watch/pulse", s.watchPulse)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -64,13 +68,16 @@ func (s *api) favicon(w http.ResponseWriter, r *http.Request) {
 func (s *api) health(w http.ResponseWriter, r *http.Request) {
 	about := s.k.About()
 	writeJSON(w, http.StatusOK, map[string]any{
-		"status":  "ok",
-		"service": "cashtro",
-		"os":      about.Name,
-		"version": about.Version,
-		"kernel":  about.Kernel,
-		"agents":  about.Agents,
-		"running": about.Running,
+		"status":    "ok",
+		"service":   "cashtro",
+		"os":        about.Name,
+		"version":   about.Version,
+		"kernel":    about.Kernel,
+		"agents":    about.Agents,
+		"running":   about.Running,
+		"closed":    about.Closed,
+		"lastPulse": about.LastPulse,
+		"image":     s.k.PersistPath(),
 	})
 }
 
@@ -189,6 +196,35 @@ func (s *api) decideConfirm(w http.ResponseWriter, r *http.Request, allow bool) 
 		return
 	}
 	writeJSON(w, http.StatusOK, c)
+}
+
+func (s *api) watch(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.WatchCard())
+}
+
+func (s *api) watchClose(w http.ResponseWriter, r *http.Request) {
+	s.invokeWatch(w, r, "watch.close")
+}
+
+func (s *api) watchOpen(w http.ResponseWriter, r *http.Request) {
+	s.invokeWatch(w, r, "watch.open")
+}
+
+func (s *api) watchPulse(w http.ResponseWriter, r *http.Request) {
+	s.invokeWatch(w, r, "watch.pulse")
+}
+
+func (s *api) invokeWatch(w http.ResponseWriter, r *http.Request, cap string) {
+	raw, _ := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if len(raw) == 0 {
+		raw = []byte(`{}`)
+	}
+	res, err := s.k.Invoke(r.Context(), "watch", kernel.Call{Capability: cap, Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
 }
 
 func (s *api) profile(w http.ResponseWriter, r *http.Request) {

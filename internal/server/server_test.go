@@ -15,6 +15,7 @@ import (
 
 func handler(t *testing.T) http.Handler {
 	t.Helper()
+	t.Setenv("CASHTRO_CLOSED", "")
 	k, err := agents.Boot()
 	if err != nil {
 		t.Fatal(err)
@@ -30,7 +31,7 @@ func TestHealthAndProfile(t *testing.T) {
 	if res.Code != http.StatusOK {
 		t.Fatalf("health status = %d", res.Code)
 	}
-	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) {
+	if !strings.Contains(res.Body.String(), `"os":"Cashtro OS"`) || !strings.Contains(res.Body.String(), `"lastPulse"`) {
 		t.Fatalf("health body = %s", res.Body.String())
 	}
 
@@ -60,7 +61,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 15 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +71,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 15 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -91,6 +92,40 @@ func TestOSAndAgents(t *testing.T) {
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusOK {
 		t.Fatalf("invoke status = %d body=%s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/architect/invoke", strings.NewReader(`{"capability":"architect.plan","payload":{"goal":"workflow pipeline for research notes"}}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"shape":"workflow"`) {
+		t.Fatalf("architect = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/investigator/invoke", strings.NewReader(`{"capability":"investigator.trace","payload":{"query":"watch"}}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"kind":"agent"`) {
+		t.Fatalf("investigator = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/notes", strings.NewReader(`{"claim":"SAST finding on the desk","source":"fixture"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated {
+		t.Fatalf("note = %d %s", res.Code, res.Body.String())
+	}
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/security/invoke", strings.NewReader(`{"capability":"security.triage"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"kind":"sast"`) {
+		t.Fatalf("security = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/reviewer/invoke", strings.NewReader(`{"capability":"reviewer.watch"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"artifacts"`) {
+		t.Fatalf("reviewer = %d %s", res.Code, res.Body.String())
 	}
 }
 
@@ -118,7 +153,7 @@ func TestIndexHTML(t *testing.T) {
 		t.Fatalf("content-type = %q", ct)
 	}
 	body := res.Body.String()
-	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
+	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") || !strings.Contains(body, "Closed hours") || !strings.Contains(body, "Mailbox") || !strings.Contains(body, "Memory") {
 		t.Fatalf("index missing OS shell copy")
 	}
 }
@@ -194,5 +229,59 @@ func TestStages(t *testing.T) {
 	body, _ := io.ReadAll(res.Body)
 	if !strings.Contains(string(body), `"idea"`) || !strings.Contains(string(body), `"production"`) {
 		t.Fatalf("stages = %s", body)
+	}
+}
+
+func TestClosedHoursHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/watch", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"closed":false`) {
+		t.Fatalf("watch open = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/watch/close", strings.NewReader(`{"note":"things are closed"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"closed":true`) {
+		t.Fatalf("close = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/health", nil))
+	if !strings.Contains(res.Body.String(), `"closed":true`) {
+		t.Fatalf("health closed = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/ships", nil))
+	if !strings.Contains(res.Body.String(), "closed-hours-flow") {
+		t.Fatalf("ships missing closed-hours-flow: %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/mail", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"from":"watch"`) {
+		t.Fatalf("mail = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/memory?q=watch", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "closed hours") {
+		t.Fatalf("memory = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/watch/pulse", strings.NewReader(`{"note":"still here"}`)))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "still here") {
+		t.Fatalf("pulse = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/watch/open", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"closed":false`) {
+		t.Fatalf("open = %d %s", res.Code, res.Body.String())
 	}
 }

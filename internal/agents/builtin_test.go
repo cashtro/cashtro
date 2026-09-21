@@ -3,22 +3,25 @@ package agents
 import (
 	"context"
 	"encoding/json"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/cashtro/cashtro/internal/kernel"
 )
 
 func TestBootLoadsAllAgentics(t *testing.T) {
+	t.Setenv("CASHTRO_CLOSED", "")
 	k, err := Boot()
 	if err != nil {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 14 {
-		t.Fatalf("processes = %d, want 14", len(procs))
+	if len(procs) != 15 {
+		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 15 || about.Live != 12 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -79,4 +82,146 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || !res.OK {
 		t.Fatalf("research: %+v %v", res, err)
 	}
+
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{
+		Capability: "watch.close",
+		Payload:    []byte(`{"note":"things are closed"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("watch.close: %+v %v", res, err)
+	}
+	if !k.Closed() {
+		t.Fatal("desk should be closed")
+	}
+	if _, err := k.Catalog().Get("closed-hours-flow"); err != nil {
+		t.Fatalf("closed-hours ship: %v", err)
+	}
+	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{
+		Capability: "explorer.search",
+		Payload:    []byte(`{"query":"things are closed"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("explorer pulses: %+v %v", res, err)
+	}
+	pulseHit := false
+	if rows, ok := res.Data.([]map[string]string); ok {
+		for _, row := range rows {
+			if row["kind"] == "pulse" {
+				pulseHit = true
+				break
+			}
+		}
+	}
+	if !pulseHit {
+		t.Fatalf("explorer missed pulse hit: %#v", res.Data)
+	}
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{Capability: "watch.pulse"})
+	if err != nil || !res.OK {
+		t.Fatalf("watch.pulse: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{Capability: "watch.open"})
+	if err != nil || !res.OK || k.Closed() {
+		t.Fatalf("watch.open: %+v closed=%v err=%v", res, k.Closed(), err)
+	}
+
+	res, err = k.Invoke(context.Background(), "architect", kernel.Call{
+		Capability: "architect.plan",
+		Payload:    []byte(`{"goal":"agent OS control plane with outbound comms"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("architect.plan: %+v %v", res, err)
+	}
+	brief, ok := res.Data.(Brief)
+	if !ok || brief.Shape != "os" || brief.Goal == "" {
+		t.Fatalf("brief = %#v ok=%v", res.Data, ok)
+	}
+	if !containsStr(brief.Agents, "comms") || !containsStr(brief.Gates, "comms.send") {
+		t.Fatalf("brief agents/gates = %#v", brief)
+	}
+	if len(k.Recall("design")) == 0 {
+		t.Fatal("architect did not remember the brief")
+	}
+
+	res, err = k.Invoke(context.Background(), "investigator", kernel.Call{
+		Capability: "investigator.trace",
+		Payload:    []byte(`{"query":"watch"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("investigator.trace: %+v %v", res, err)
+	}
+	trace, ok := res.Data.(Trace)
+	if !ok || trace.Query != "watch" || len(trace.Hits) == 0 {
+		t.Fatalf("trace = %#v ok=%v", res.Data, ok)
+	}
+	if !traceHasKind(trace.Hits, "agent") {
+		t.Fatalf("trace missed watch agent: %#v", trace.Hits)
+	}
+
+	res, err = k.Invoke(context.Background(), "research", kernel.Call{
+		Capability: "research.ingest",
+		Payload:    []byte(`{"claim":"CVE-2024-1234 is a test finding","source":"fixture"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("ingest cve: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "security", kernel.Call{Capability: "security.triage"})
+	if err != nil || !res.OK {
+		t.Fatalf("security.triage: %+v %v", res, err)
+	}
+	triage, ok := res.Data.(Triage)
+	if !ok || triage.Clear || len(triage.Findings) == 0 {
+		t.Fatalf("triage = %#v ok=%v", res.Data, ok)
+	}
+	if triage.Findings[0].Kind != "cve" {
+		t.Fatalf("finding = %#v", triage.Findings[0])
+	}
+}
+
+func TestReviewerWatch(t *testing.T) {
+	t.Setenv("CASHTRO_CLOSED", "")
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, "walkthrough.png"), []byte("x"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("CASHTRO_ARTIFACTS", dir)
+	k, err := Boot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := k.Invoke(context.Background(), "reviewer", kernel.Call{Capability: "reviewer.watch"})
+	if err != nil || !res.OK {
+		t.Fatalf("reviewer.watch: %+v %v", res, err)
+	}
+	review, ok := res.Data.(Review)
+	if !ok || !review.Ready {
+		t.Fatalf("review = %#v ok=%v", res.Data, ok)
+	}
+	found := false
+	for _, a := range review.Artifacts {
+		if a.Name == "walkthrough.png" && a.Kind == "image" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("missing walkthrough.png: %#v", review.Artifacts)
+	}
+}
+
+func traceHasKind(hits []TraceHit, kind string) bool {
+	for _, h := range hits {
+		if h.Kind == kind {
+			return true
+		}
+	}
+	return false
+}
+
+func containsStr(xs []string, want string) bool {
+	for _, x := range xs {
+		if x == want {
+			return true
+		}
+	}
+	return false
 }
