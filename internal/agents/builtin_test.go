@@ -18,7 +18,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 14", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 8 {
+	if about.Running != 14 || about.Live != 9 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -86,5 +86,13 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("investigator: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "architect", kernel.Call{
+		Capability: "architect.plan",
+		Payload:    []byte(`{"goal":"Ship overnight keep-alive desk"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("architect: %+v %v", res, err)
 	}
 }

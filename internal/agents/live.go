@@ -164,6 +164,71 @@ func commsInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	}
 }
 
+func architectInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	goal := payloadQuery(call, "goal")
+	if goal == "" {
+		goal = payloadQuery(call, "prompt")
+	}
+	if goal == "" {
+		goal = "unnamed system"
+	}
+	steps := payloadList(call, "steps")
+	if len(steps) == 0 {
+		steps = []string{
+			"Map the control plane and process table",
+			"Park the mandate on the delivery line",
+			"Prove it with tests and a desk walkthrough",
+			"Ship only after human confirm on outbound",
+		}
+	}
+	var b strings.Builder
+	b.WriteString("Plan for: ")
+	b.WriteString(goal)
+	b.WriteString("\n")
+	for i, step := range steps {
+		b.WriteString(strconv.Itoa(i + 1))
+		b.WriteString(". ")
+		b.WriteString(step)
+		b.WriteString("\n")
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "architect",
+		Source: "architect.plan",
+		Claim:  "Plan: " + goal,
+		Quote:  strings.TrimSpace(b.String()),
+	})
+	k.Remember("plan", goal)
+	_, _ = k.Post("architect", "planner", "plan", goal)
+	_, _ = k.Post("architect", "delivery", "plan", goal)
+
+	created := make([]catalog.Ship, 0)
+	if cat := k.Catalog(); cat != nil {
+		for _, step := range steps {
+			ship, err := cat.Create(catalog.CreateShip{
+				Name:   step,
+				Client: "Cashtro",
+				Sector: "architecture",
+				Stack:  []string{"Go"},
+				Notes:  "from architect.plan · " + goal,
+			})
+			if err != nil {
+				return kernel.Result{}, err
+			}
+			created = append(created, ship)
+		}
+	}
+	return kernel.Result{
+		OK:      true,
+		Message: "planned " + strconv.Itoa(len(steps)) + " steps for " + goal,
+		Data: map[string]any{
+			"goal":  goal,
+			"steps": steps,
+			"note":  note,
+			"ships": created,
+		},
+	}, nil
+}
+
 func plannerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	goal := payloadQuery(call, "goal")
 	if goal == "" {
