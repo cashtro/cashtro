@@ -103,3 +103,25 @@ func TestInvokeRequiresRunning(t *testing.T) {
 		t.Fatalf("err = %v", err)
 	}
 }
+
+func TestKeepAliveRespawns(t *testing.T) {
+	k := New()
+	k.Register(&stub{spec: Spec{ID: "a", Name: "A", Capabilities: []string{"a.ping"}, Autostart: true}})
+	if err := k.Boot(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if err := k.Stop("a"); err != nil {
+		t.Fatal(err)
+	}
+	spawned, err := k.KeepAlive(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(spawned) != 1 || spawned[0] != "a" {
+		t.Fatalf("spawned = %#v", spawned)
+	}
+	p, _ := k.Process("a")
+	if p.Status != StatusRunning {
+		t.Fatalf("status = %s", p.Status)
+	}
+}

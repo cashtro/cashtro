@@ -68,6 +68,16 @@
     input, textarea { padding: 8px; }
     .journal { max-height: 220px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--muted); }
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
+    .lanes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .lane { border: 1px solid var(--line); min-height: 120px; padding: 10px; }
+    .lane h3 { margin: 0 0 8px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: flex; justify-content: space-between; }
+    .lane.create h3 { color: var(--idea); }
+    .lane.build h3 { color: var(--concept); }
+    .lane.grow h3 { color: var(--production); }
+    .lane.evolve h3 { color: var(--brass); }
+    .pulse-row { display: flex; gap: 8px; }
+    .pulse-row button { width: auto; flex: 1; }
+    @media (max-width: 900px) { .lanes { display: block; } }
     footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
     @media (max-width: 900px) {
       .desk, .board, .agents { display: block; }
@@ -80,7 +90,7 @@
     <div>
       <div class="mark">Cashtro OS · under construction · FR/EN</div>
       <h1>AI OS · idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. OpenRouter is the optional model bus — the kernel does not need it to boot.</p>
+      <p class="lede" id="lede">Every agentic we build here is a process. Pulse never stops. Kimi K3 proposes, GLM critiques, each generation must score higher.</p>
     </div>
     <div class="stats" id="stats"></div>
   </header>
@@ -108,6 +118,16 @@
         </form>
       </div>
       <div class="panel" style="margin-top:14px">
+        <h2>Wealth loop · Kimi K3 + GLM</h2>
+        <div class="pulse-row">
+          <button type="button" id="pulse-btn">Pulse now</button>
+          <button type="button" id="think-btn">Think (Kimi+GLM)</button>
+        </div>
+        <p class="lede" id="forge-lede" style="margin-top:8px">Score starts at 0. Each pulse parks a mandate and must raise the score.</p>
+        <div class="lanes" id="lanes" aria-label="Wealth lanes"></div>
+        <div class="journal" id="gens" style="margin-top:10px"></div>
+      </div>
+      <div class="panel" style="margin-top:14px">
         <h2>Research library</h2>
         <div class="journal" id="notes"></div>
         <form id="note-form" style="margin-top:10px">
@@ -129,7 +149,7 @@
   </main>
   <footer>
     <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · OpenRouter optional</span>
+    <span>stdlib Go · Kimi K3 proposes · GLM critiques · OpenRouter optional</span>
   </footer>
   <script>
     const stages = ["idea", "concept", "production"];
@@ -171,7 +191,7 @@
       el.appendChild(btn);
       return el;
     }
-    let selected = "research";
+    let selected = "pulse";
     let lastInvoke = "";
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
@@ -190,9 +210,10 @@
         b.addEventListener("click", async () => {
           b.disabled = true;
           try {
-            const payload = cap === "model.chat"
-              ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
-              : { capability: cap };
+            let payload = { capability: cap };
+            if (cap === "model.chat" || cap === "model.dual") {
+              payload = { capability: cap, payload: { prompt: "Propose one Cashtro OS move that creates, builds, grows, or evolves wealth. Keep the human gate." } };
+            }
             const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
               method: "POST",
               headers: { "Content-Type": "application/json", "Accept": "application/json" },
@@ -216,21 +237,54 @@
       }
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, agents, ships, events, model, profile, notes, confirms, wealth] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/wealth")
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip(os.name + " " + os.version),
-        chip("under construction"),
-        chip(os.running + " running"),
+        chip(os.running + " running", "live"),
+        chip("gen " + os.generation),
+        chip("score " + os.score, os.score > 0 ? "live" : ""),
         chip(os.live + " live"),
-        chip(os.resident + " resident"),
         chip(notes.length + " notes"),
-        chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
+        chip(model.bound ? "Kimi+GLM live" : "Kimi K3 · GLM unbound", model.bound ? "live" : "unbound")
       );
+      const forgeLede = document.getElementById("forge-lede");
+      const last = (wealth.history && wealth.history[0]) || null;
+      forgeLede.textContent = last
+        ? ("Gen " + last.n + " · " + last.offer + " · score " + last.score + (last.bound ? " · dual bound" : " · deterministic (bind OPENROUTER_API_KEY to think)"))
+        : "Score starts at 0. Pulse keeps every process alive and must raise the score.";
+      const lanes = document.getElementById("lanes");
+      lanes.replaceChildren();
+      ["create", "build", "grow", "evolve"].forEach((lane) => {
+        const col = document.createElement("section");
+        col.className = "lane " + lane;
+        const items = (wealth.offers || []).filter((o) => o.lane === lane);
+        const title = document.createElement("h3");
+        title.innerHTML = "<span></span><span></span>";
+        title.children[0].textContent = lane;
+        title.children[1].textContent = String(items.length);
+        col.appendChild(title);
+        items.forEach((o) => {
+          const el = document.createElement("article");
+          el.className = "card";
+          el.innerHTML = "<h4></h4><p></p>";
+          el.querySelector("h4").textContent = o.name;
+          el.querySelector("p").textContent = "score " + o.score + " · hits " + o.hits + " — " + (o.thesis || "");
+          col.appendChild(el);
+        });
+        lanes.appendChild(col);
+      });
+      const gens = document.getElementById("gens");
+      gens.replaceChildren();
+      (wealth.history || []).slice(0, 8).forEach((g) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + g.n + "  " + g.lane + "  " + g.offer + "  score " + g.score;
+        gens.appendChild(line);
+      });
       const grid = document.getElementById("agents");
       grid.replaceChildren();
       agents.forEach((agent) => {
@@ -339,7 +393,28 @@
         document.getElementById("form-error").textContent = e.message;
       }
     });
+    async function pulse(think) {
+      const err = document.getElementById("form-error");
+      err.textContent = "";
+      try {
+        if (think) {
+          await j("/api/agents/forge/invoke", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({ capability: "forge.think" })
+          });
+        } else {
+          await j("/api/pulse/tick", { method: "POST" });
+        }
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    }
+    document.getElementById("pulse-btn").addEventListener("click", () => pulse(false));
+    document.getElementById("think-btn").addEventListener("click", () => pulse(true));
     render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
+    setInterval(() => { render().catch(() => {}); }, 4000);
   </script>
 </body>
 </html>

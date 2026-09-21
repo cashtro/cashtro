@@ -42,6 +42,10 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/ships", s.createShip)
 	mux.HandleFunc("GET /api/ships/{id}", s.getShip)
 	mux.HandleFunc("POST /api/ships/{id}/advance", s.advanceShip)
+	mux.HandleFunc("GET /api/wealth", s.wealth)
+	mux.HandleFunc("GET /api/forge", s.forge)
+	mux.HandleFunc("GET /api/pulse", s.pulseStatus)
+	mux.HandleFunc("POST /api/pulse/tick", s.pulseTick)
 	return mux
 }
 
@@ -235,6 +239,37 @@ func (s *api) advanceShip(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) wealth(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Ledger())
+}
+
+func (s *api) forge(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "forge", kernel.Call{Capability: "forge.status"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) pulseStatus(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "pulse", kernel.Call{Capability: "pulse.status"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) pulseTick(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "pulse", kernel.Call{Capability: "pulse.tick"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
 }
 
 func decodeJSON(r *http.Request, dst any) error {

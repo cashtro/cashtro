@@ -13,6 +13,9 @@ func TestCardUnbound(t *testing.T) {
 	if st.Bound || st.Provider != "openrouter" {
 		t.Fatalf("card = %+v", st)
 	}
+	if st.Kimi != DefaultKimi || st.GLM != DefaultGLM {
+		t.Fatalf("seats = %+v", st)
+	}
 }
 
 func TestChat(t *testing.T) {
@@ -30,7 +33,7 @@ func TestChat(t *testing.T) {
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			t.Fatal(err)
 		}
-		if req.Model != "openai/gpt-4o-mini" || req.Messages[0].Content != "ping" {
+		if req.Model != "moonshotai/kimi-k3" || req.Messages[0].Content != "ping" {
 			t.Fatalf("req = %+v", req)
 		}
 		_ = json.NewEncoder(w).Encode(chatAPIResponse{
@@ -65,5 +68,42 @@ func TestChatUnbound(t *testing.T) {
 	_, err := c.Chat(context.Background(), ChatRequest{Messages: []Message{{Role: "user", Content: "x"}}})
 	if err == nil {
 		t.Fatal("expected unbound error")
+	}
+}
+
+func TestDual(t *testing.T) {
+	var n int
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		n++
+		var req chatAPIRequest
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			t.Fatal(err)
+		}
+		content := "kimi-ok"
+		if req.Model == DefaultGLM {
+			content = "glm-ok SCORE: 71"
+		}
+		_ = json.NewEncoder(w).Encode(chatAPIResponse{
+			Model: req.Model,
+			Choices: []struct {
+				Message Message `json:"message"`
+			}{{Message: Message{Role: "assistant", Content: content}}},
+		})
+	}))
+	defer srv.Close()
+
+	c := &Client{
+		BaseURL: srv.URL,
+		APIKey:  "test-key",
+		Kimi:    DefaultKimi,
+		GLM:     DefaultGLM,
+		HTTP:    srv.Client(),
+	}
+	got, err := c.Dual(context.Background(), "park a ship pack")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if n != 2 || got.Kimi.Content != "kimi-ok" || got.GLM.Content != "glm-ok SCORE: 71" {
+		t.Fatalf("dual n=%d got=%+v", n, got)
 	}
 }

@@ -13,19 +13,21 @@ import (
 	"time"
 
 	"github.com/cashtro/cashtro/internal/agents"
+	"github.com/cashtro/cashtro/internal/kernel"
 	"github.com/cashtro/cashtro/internal/server"
 )
 
 func main() {
 	addr := flag.String("addr", ":8080", "HTTP listen address")
+	pulseEvery := flag.Duration("pulse", 8*time.Second, "never-stop pulse interval; 0 disables")
 	flag.Parse()
 
-	if err := run(*addr); err != nil {
+	if err := run(*addr, *pulseEvery); err != nil {
 		log.Fatal(err)
 	}
 }
 
-func run(addr string) error {
+func run(addr string, pulseEvery time.Duration) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
@@ -34,7 +36,7 @@ func run(addr string) error {
 		return err
 	}
 	about := k.About()
-	log.Printf("%s %s · %d agentics online", about.Name, about.Version, about.Running)
+	log.Printf("%s %s · %d agentics online · kimi+glm dual · keep %s", about.Name, about.Version, about.Running, pulseEvery)
 
 	httpSrv := &http.Server{
 		Addr:              addr,
@@ -52,6 +54,9 @@ func run(addr string) error {
 	go func() {
 		errCh <- httpSrv.Serve(ln)
 	}()
+	if pulseEvery > 0 {
+		go runPulse(ctx, k, pulseEvery)
+	}
 
 	select {
 	case <-ctx.Done():
@@ -63,5 +68,36 @@ func run(addr string) error {
 			return nil
 		}
 		return err
+	}
+}
+
+func runPulse(ctx context.Context, k *kernel.Kernel, every time.Duration) {
+	keep := time.NewTicker(every)
+	defer keep.Stop()
+	evolveEvery := every * 4
+	if evolveEvery < 30*time.Second {
+		evolveEvery = 30 * time.Second
+	}
+	evolve := time.NewTicker(evolveEvery)
+	defer evolve.Stop()
+
+	do := func(cap string) {
+		res, err := k.Invoke(ctx, "pulse", kernel.Call{Capability: cap})
+		if err != nil {
+			log.Printf("pulse: %v", err)
+			return
+		}
+		log.Printf("%s", res.Message)
+	}
+	do("pulse.tick")
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-keep.C:
+			do("pulse.keep")
+		case <-evolve.C:
+			do("pulse.tick")
+		}
 	}
 }

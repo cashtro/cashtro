@@ -38,31 +38,43 @@ go run ./cmd/cashtro
 
 Open `http://localhost:8080`.
 
-### Do we need OpenRouter?
+### Dual loop · Kimi K3 + GLM
 
-**No, not to boot.** The kernel, process table, delivery board, and journal
-run with zero model keys.
+Pulse never stops. **Keep-alive** respawns autostart processes every 8s.
+**Forge** evolves the wealth playbook on Pulse now, Think, or every ~30s
+in the background. Each tick must raise the score.
+OpenRouter stays optional:
 
-**Yes, if an agentic needs to think.** OpenRouter is the optional model bus:
-one key, many models. Bind it when you want `model.chat` to execute.
+- Unbound: the loop is deterministic. Processes stay up. Offers compound.
+- Bound: `forge.think` sends the prompt to **Kimi K3** (`moonshotai/kimi-k3`)
+  then **GLM-4.5** (`z-ai/glm-4.5`). The kernel still enforces a rising score
+  and the human gate.
 
 ```bash
 export OPENROUTER_API_KEY=sk-or-...
-export OPENROUTER_MODEL=openai/gpt-4o-mini   # optional
+# optional seat overrides
+export OPENROUTER_KIMI_MODEL=moonshotai/kimi-k3
+export OPENROUTER_GLM_MODEL=z-ai/glm-4.5
 go run ./cmd/cashtro
 ```
 
+`GET /api/wealth` · `GET /api/forge` · `POST /api/pulse/tick`
+
 Without a key the `router` process stays **resident** and tells you it is
-unbound. The rest of the OS stays live.
+unbound. Pulse, wealth, delivery, and research stay live.
 
 | Method | Path | What it does |
 | --- | --- | --- |
 | `GET` | `/` | OS desk |
 | `GET` | `/health` | Liveness + kernel counts |
-| `GET` | `/api/os` | Manifesto and process counts |
+| `GET` | `/api/os` | Manifesto, process counts, generation, score |
 | `GET` | `/api/agents` | Process table |
 | `POST` | `/api/agents/{id}/invoke` | Run a capability |
-| `GET` | `/api/model` | OpenRouter bind card |
+| `GET` | `/api/model` | OpenRouter bind card (Kimi + GLM seats) |
+| `GET` | `/api/pulse` | Never-stop heartbeat |
+| `POST` | `/api/pulse/tick` | Keep every autostart running + forge one generation |
+| `GET` | `/api/forge` | Generation history |
+| `GET` | `/api/wealth` | Offer ledger (create / build / grow / evolve) |
 | `GET` | `/api/notes` | Research library |
 | `POST` | `/api/notes` | Ingest a sourced finding |
 | `GET` | `/api/mail` | Agent mailbox |

@@ -14,11 +14,11 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 14 {
-		t.Fatalf("processes = %d, want 14", len(procs))
+	if len(procs) != 17 {
+		t.Fatalf("processes = %d, want 17", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 17 || about.Live != 10 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -78,5 +78,61 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})
 	if err != nil || !res.OK {
 		t.Fatalf("research: %+v %v", res, err)
+	}
+}
+
+func TestPulseKeepsAndForgeImproves(t *testing.T) {
+	k, err := Boot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(k.Offers()) != 10 {
+		t.Fatalf("offers = %d", len(k.Offers()))
+	}
+	if err := k.Stop("explorer"); err != nil {
+		t.Fatal(err)
+	}
+	p, _ := k.Process("explorer")
+	if p.Status != kernel.StatusStopped {
+		t.Fatalf("status = %s", p.Status)
+	}
+
+	ctx := context.Background()
+	res, err := k.Invoke(ctx, "pulse", kernel.Call{Capability: "pulse.tick"})
+	if err != nil || !res.OK {
+		t.Fatalf("pulse: %+v %v", res, err)
+	}
+	p, _ = k.Process("explorer")
+	if p.Status != kernel.StatusRunning {
+		t.Fatalf("explorer not restored: %+v", p)
+	}
+	first := k.Ledger()
+	if first.Generation != 1 || first.Score < 1 || len(first.History) != 1 {
+		t.Fatalf("ledger after pulse = %+v", first)
+	}
+
+	var prev int
+	for i := 0; i < 11; i++ {
+		res, err = k.Invoke(ctx, "forge", kernel.Call{Capability: "forge.tick"})
+		if err != nil || !res.OK {
+			t.Fatalf("forge %d: %+v %v", i, res, err)
+		}
+		led := k.Ledger()
+		if led.Score <= prev {
+			t.Fatalf("score did not rise: %d -> %d", prev, led.Score)
+		}
+		prev = led.Score
+	}
+	if k.Generation() != 12 {
+		t.Fatalf("generation = %d", k.Generation())
+	}
+
+	res, err = k.Invoke(ctx, "wealth", kernel.Call{Capability: "wealth.ledger"})
+	if err != nil || !res.OK {
+		t.Fatalf("wealth: %+v %v", res, err)
+	}
+	res, err = k.Invoke(ctx, "router", kernel.Call{Capability: "model.dual", Payload: []byte(`{"prompt":"ping"}`)})
+	if err != nil || res.OK {
+		t.Fatalf("unbound dual should be ok=false: %+v %v", res, err)
 	}
 }

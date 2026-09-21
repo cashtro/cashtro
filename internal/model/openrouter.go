@@ -20,8 +20,12 @@ import (
 const (
 	// DefaultBaseURL is the OpenRouter chat API root.
 	DefaultBaseURL = "https://openrouter.ai/api/v1"
-	// DefaultModel is a cheap, capable default until OPENROUTER_MODEL is set.
-	DefaultModel = "openai/gpt-4o-mini"
+	// DefaultModel is the proposer seat until OPENROUTER_MODEL is set.
+	DefaultModel = "moonshotai/kimi-k3"
+	// DefaultKimi is Moonshot Kimi K3 — propose, code, long-horizon loops.
+	DefaultKimi = "moonshotai/kimi-k3"
+	// DefaultGLM is Z.ai GLM-4.5 — critique, score, agent alignment.
+	DefaultGLM = "z-ai/glm-4.5"
 )
 
 // Message is one chat turn.
@@ -47,8 +51,16 @@ type Status struct {
 	Provider string `json:"provider"`
 	Bound    bool   `json:"bound"`
 	Model    string `json:"model"`
+	Kimi     string `json:"kimi"`
+	GLM      string `json:"glm"`
 	BaseURL  string `json:"baseUrl"`
 	Hint     string `json:"hint"`
+}
+
+// DualResponse is one Kimi proposal plus one GLM critique.
+type DualResponse struct {
+	Kimi ChatResponse `json:"kimi"`
+	GLM  ChatResponse `json:"glm"`
 }
 
 // Client talks to an OpenAI-compatible OpenRouter endpoint.
@@ -56,6 +68,8 @@ type Client struct {
 	BaseURL string
 	APIKey  string
 	Model   string
+	Kimi    string
+	GLM     string
 	HTTP    *http.Client
 	Referer string
 	Title   string
@@ -71,6 +85,14 @@ func FromEnv() *Client {
 	if model == "" {
 		model = DefaultModel
 	}
+	kimi := strings.TrimSpace(os.Getenv("OPENROUTER_KIMI_MODEL"))
+	if kimi == "" {
+		kimi = DefaultKimi
+	}
+	glm := strings.TrimSpace(os.Getenv("OPENROUTER_GLM_MODEL"))
+	if glm == "" {
+		glm = DefaultGLM
+	}
 	base := strings.TrimSpace(os.Getenv("OPENROUTER_BASE_URL"))
 	if base == "" {
 		base = DefaultBaseURL
@@ -79,6 +101,8 @@ func FromEnv() *Client {
 		BaseURL: strings.TrimRight(base, "/"),
 		APIKey:  key,
 		Model:   model,
+		Kimi:    kimi,
+		GLM:     glm,
 		HTTP:    &http.Client{Timeout: 45 * time.Second},
 		Referer: "https://github.com/cashtro/cashtro",
 		Title:   "Cashtro OS",
@@ -97,17 +121,35 @@ func Card(c *Client) Status {
 			Provider: "openrouter",
 			Bound:    false,
 			Model:    DefaultModel,
+			Kimi:     DefaultKimi,
+			GLM:      DefaultGLM,
 			BaseURL:  DefaultBaseURL,
-			Hint:     "Kernel is up without a model. Set OPENROUTER_API_KEY to bind the router.",
+			Hint:     "Kernel is up without a model. Set OPENROUTER_API_KEY to let Kimi K3 propose and GLM critique.",
 		}
 	}
 	return Status{
 		Provider: "openrouter",
 		Bound:    true,
 		Model:    c.Model,
+		Kimi:     c.kimiID(),
+		GLM:      c.glmID(),
 		BaseURL:  c.BaseURL,
-		Hint:     "Router live. Agentics can think through OpenRouter.",
+		Hint:     "Router live. Kimi K3 proposes, GLM critiques, score must rise.",
 	}
+}
+
+func (c *Client) kimiID() string {
+	if c != nil && strings.TrimSpace(c.Kimi) != "" {
+		return c.Kimi
+	}
+	return DefaultKimi
+}
+
+func (c *Client) glmID() string {
+	if c != nil && strings.TrimSpace(c.GLM) != "" {
+		return c.GLM
+	}
+	return DefaultGLM
 }
 
 type chatAPIRequest struct {
@@ -185,4 +227,34 @@ func (c *Client) Chat(ctx context.Context, req ChatRequest) (ChatResponse, error
 		outModel = model
 	}
 	return ChatResponse{Model: outModel, Content: parsed.Choices[0].Message.Content}, nil
+}
+
+// Dual sends the prompt to Kimi K3, then asks GLM to critique the proposal.
+func (c *Client) Dual(ctx context.Context, prompt string) (DualResponse, error) {
+	if !Bound(c) {
+		return DualResponse{}, fmt.Errorf("openrouter unbound")
+	}
+	prompt = strings.TrimSpace(prompt)
+	if prompt == "" {
+		return DualResponse{}, fmt.Errorf("prompt required")
+	}
+	kimi, err := c.Chat(ctx, ChatRequest{
+		Model:    c.kimiID(),
+		Messages: []Message{{Role: "user", Content: prompt}},
+	})
+	if err != nil {
+		return DualResponse{}, fmt.Errorf("kimi: %w", err)
+	}
+	glm, err := c.Chat(ctx, ChatRequest{
+		Model: c.glmID(),
+		Messages: []Message{
+			{Role: "user", Content: prompt},
+			{Role: "assistant", Content: kimi.Content},
+			{Role: "user", Content: "Critique that proposal for Cashtro OS. Keep human confirms. Score 1-100. End with SCORE: n."},
+		},
+	})
+	if err != nil {
+		return DualResponse{}, fmt.Errorf("glm: %w", err)
+	}
+	return DualResponse{Kimi: kimi, GLM: glm}, nil
 }

@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 17 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +70,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 17 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -120,6 +120,9 @@ func TestIndexHTML(t *testing.T) {
 	body := res.Body.String()
 	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
 		t.Fatalf("index missing OS shell copy")
+	}
+	if !strings.Contains(body, "Kimi K3") || !strings.Contains(body, "Pulse now") {
+		t.Fatalf("index missing dual-loop desk")
 	}
 }
 
@@ -194,5 +197,37 @@ func TestStages(t *testing.T) {
 	body, _ := io.ReadAll(res.Body)
 	if !strings.Contains(string(body), `"idea"`) || !strings.Contains(string(body), `"production"`) {
 		t.Fatalf("stages = %s", body)
+	}
+}
+
+func TestPulseAndWealthHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/wealth", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"offers"`) {
+		t.Fatalf("wealth = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/pulse/tick", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("tick status = %d body=%s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/os", nil))
+	var about kernel.About
+	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
+		t.Fatal(err)
+	}
+	if about.Generation < 1 || about.Score < 1 {
+		t.Fatalf("os after tick = %+v", about)
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/forge", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"history"`) {
+		t.Fatalf("forge = %s", res.Body.String())
 	}
 }
