@@ -64,8 +64,8 @@ func (k *Kernel) InvokeCap(ctx context.Context, cap string, call Call) (Result, 
 // Post drops mail on an agent's desk.
 func (k *Kernel) Post(from, to, kind, body string) (Mail, error) {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	if _, ok := k.procs[to]; !ok {
+		k.mu.Unlock()
 		return Mail{}, fmt.Errorf("%w: %s", ErrUnknownAgent, to)
 	}
 	k.mailSeq++
@@ -74,8 +74,9 @@ func (k *Kernel) Post(from, to, kind, body string) (Mail, error) {
 	if len(k.mail) > maxMail {
 		k.mail = append([]Mail(nil), k.mail[len(k.mail)-maxMail:]...)
 	}
-	k.seq++
-	k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: from, Kind: "mail", Message: "to " + to + " · " + kind})
+	ev := k.appendEventLocked(from, "mail", "to "+to+" · "+kind, nil)
+	k.mu.Unlock()
+	k.fanout(ev)
 	return m, nil
 }
 
@@ -95,7 +96,6 @@ func (k *Kernel) Inbox(to string) []Mail {
 // WriteNote stores a sourced finding.
 func (k *Kernel) WriteNote(n Note) Note {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	k.noteSeq++
 	n.ID = k.noteSeq
 	n.Claim = strings.TrimSpace(n.Claim)
@@ -104,8 +104,9 @@ func (k *Kernel) WriteNote(n Note) Note {
 	if len(k.notes) > maxNotes {
 		k.notes = append([]Note(nil), k.notes[len(k.notes)-maxNotes:]...)
 	}
-	k.seq++
-	k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: n.Agent, Kind: "note", Message: n.Claim, Data: map[string]any{"source": n.Source, "url": n.URL}})
+	ev := k.appendEventLocked(n.Agent, "note", n.Claim, map[string]any{"source": n.Source, "url": n.URL})
+	k.mu.Unlock()
+	k.fanout(ev)
 	return n
 }
 
@@ -149,25 +150,26 @@ func (k *Kernel) Recall(q string) []Fact {
 // RequestConfirm parks outbound work until a human allows it.
 func (k *Kernel) RequestConfirm(agent, cap, body string) Confirm {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	k.confSeq++
 	c := Confirm{ID: k.confSeq, Agent: agent, Cap: cap, Body: strings.TrimSpace(body), Status: "pending"}
 	k.confirms = append(k.confirms, c)
-	k.seq++
-	k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: agent, Kind: "confirm.pending", Message: body})
+	ev := k.appendEventLocked(agent, "confirm.pending", c.Body, nil)
+	k.mu.Unlock()
+	k.fanout(ev)
 	return c
 }
 
 // DecideConfirm allows or denies a pending confirm.
 func (k *Kernel) DecideConfirm(id int, allow bool) (Confirm, error) {
 	k.mu.Lock()
-	defer k.mu.Unlock()
 	for i := range k.confirms {
 		if k.confirms[i].ID != id {
 			continue
 		}
 		if k.confirms[i].Status != "pending" {
-			return k.confirms[i], nil
+			c := k.confirms[i]
+			k.mu.Unlock()
+			return c, nil
 		}
 		if allow {
 			k.confirms[i].Status = "allowed"
@@ -176,10 +178,13 @@ func (k *Kernel) DecideConfirm(id int, allow bool) (Confirm, error) {
 			k.confirms[i].Status = "denied"
 			k.confirms[i].Outcome = "human denied"
 		}
-		k.seq++
-		k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: "comms", Kind: "confirm." + k.confirms[i].Status, Message: k.confirms[i].Body})
-		return k.confirms[i], nil
+		ev := k.appendEventLocked("comms", "confirm."+k.confirms[i].Status, k.confirms[i].Body, nil)
+		c := k.confirms[i]
+		k.mu.Unlock()
+		k.fanout(ev)
+		return c, nil
 	}
+	k.mu.Unlock()
 	return Confirm{}, fmt.Errorf("confirm %d not found", id)
 }
 

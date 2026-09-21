@@ -16,13 +16,14 @@ import (
 	"time"
 
 	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/symbols"
 )
 
 const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.0"
 )
 
 // Status is a process lifecycle state.
@@ -147,6 +148,8 @@ type Kernel struct {
 	caps     map[string]Capability
 	events   []Event
 	cat      *catalog.Catalog
+	sym      *symbols.Bus
+	sink     func(Event)
 	mail     []Mail
 	mailSeq  int
 	notes    []Note
@@ -341,10 +344,39 @@ func (k *Kernel) Events() []Event {
 	return out
 }
 
-// Publish appends a journal line.
+// Publish appends a journal line and fans it to the event sink.
 func (k *Kernel) Publish(source, kind, message string, data map[string]any) {
+	k.fanout(k.appendEvent(source, kind, message, data))
+}
+
+// SetSink registers a journal listener. Symbols uses this for event triggers.
+func (k *Kernel) SetSink(fn func(Event)) {
 	k.mu.Lock()
 	defer k.mu.Unlock()
+	k.sink = fn
+}
+
+// AttachSymbols lets the symbols agentic publish the internal Zapier bus.
+func (k *Kernel) AttachSymbols(bus *symbols.Bus) {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	k.sym = bus
+}
+
+// Symbols returns the automation bus, if the symbols agentic has attached it.
+func (k *Kernel) Symbols() *symbols.Bus {
+	k.mu.RLock()
+	defer k.mu.RUnlock()
+	return k.sym
+}
+
+func (k *Kernel) appendEvent(source, kind, message string, data map[string]any) Event {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	return k.appendEventLocked(source, kind, message, data)
+}
+
+func (k *Kernel) appendEventLocked(source, kind, message string, data map[string]any) Event {
 	k.seq++
 	ev := Event{
 		Seq:     k.seq,
@@ -357,6 +389,16 @@ func (k *Kernel) Publish(source, kind, message string, data map[string]any) {
 	k.events = append(k.events, ev)
 	if len(k.events) > maxEvents {
 		k.events = append([]Event(nil), k.events[len(k.events)-maxEvents:]...)
+	}
+	return ev
+}
+
+func (k *Kernel) fanout(ev Event) {
+	k.mu.RLock()
+	sink := k.sink
+	k.mu.RUnlock()
+	if sink != nil {
+		sink(ev)
 	}
 }
 
@@ -387,6 +429,7 @@ func (k *Kernel) About() About {
 		Events:   len(k.events),
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
 			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
+			"Symbols is the internal Zapier: trigger → verbs on our kernel, zero subscription. " +
 			"Delivery is live. Research is live. OpenRouter stays optional. " +
 			"New agentics register into this kernel — they do not fork a second product.",
 	}

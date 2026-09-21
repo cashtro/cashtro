@@ -38,6 +38,12 @@ go run ./cmd/cashtro
 
 Open `http://localhost:8080`.
 
+### Do we need Zapier?
+
+**No.** Symbols is the internal Zapier. Triggers and kernel verbs live on
+this OS. Webhook catch-hooks are `POST /api/symbols/{id}/hook`. Connectors
+are the process table. There is no subscription and no second product.
+
 ### Do we need OpenRouter?
 
 **No, not to boot.** The kernel, process table, delivery board, and journal
@@ -71,3 +77,9 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
+| `GET` | `/api/symbols` | Internal Zapier table |
+| `POST` | `/api/symbols` | Compose a symbol |
+| `POST` | `/api/symbols/{id}/fire` | Run it now |
+| `POST` | `/api/symbols/{id}/hook` | Catch-hook (webhook trigger) |
+| `GET` | `/api/runs` | Symbol fire history |
+| `GET` | `/api/connectors` | Kernel verbs you can wire |
