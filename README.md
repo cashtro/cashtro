@@ -21,6 +21,10 @@ e-commerce. Client code stays private. The results are live:
 
 📩 alejandro@proximityagency.ca
 
+The OS desk keeps a **Microsoft Teams conversation AI** on the bottom dock,
+scoped to **Proximity** only. It will not open Slack, mail, meetings, or files.
+Outbound to real Teams still waits on a human confirm.
+
 ---
 
 ## Cashtro OS
@@ -68,6 +72,9 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/mail` | Agent mailbox |
 | `GET` | `/api/memory` | Episodic recall |
 | `GET` | `/api/confirms` | Human gate |
+| `GET` | `/api/teams` | Proximity Microsoft Teams conversation dock |
+| `POST` | `/api/teams/say` | One conversation turn (Teams only) |
+| `POST` | `/api/teams/send` | Park outbound to real Teams until allow |
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |

@@ -44,6 +44,30 @@ func TestMailboxNotesMemoryConfirm(t *testing.T) {
 	if err != nil || decided.Status != "allowed" {
 		t.Fatalf("decide = %+v %v", decided, err)
 	}
+
+	_, err = k.OpenTeamThread(TeamOpen{Channel: "slack", Tenant: "Proximity", Kind: "conversation"})
+	if !errors.Is(err, ErrTeamChannel) {
+		t.Fatalf("slack = %v", err)
+	}
+	_, err = k.OpenTeamThread(TeamOpen{Channel: "teams.microsfot", Tenant: "lroximity", Kind: "meeting"})
+	if !errors.Is(err, ErrTeamKind) {
+		t.Fatalf("meeting = %v", err)
+	}
+	_, err = k.OpenTeamThread(TeamOpen{Channel: "teams.microsoft", Tenant: "other-co", Kind: "conversation"})
+	if !errors.Is(err, ErrTeamTenant) {
+		t.Fatalf("tenant = %v", err)
+	}
+	th, err := k.OpenTeamThread(TeamOpen{ID: "proximity-desk", Title: "Proximity desk", Channel: "teams.microsfot", Tenant: "lroximity", Kind: "conversation"})
+	if err != nil || th.Channel != TeamChannelMicrosoft || th.Tenant != TeamTenantProximity || th.Dock != "bottom" {
+		t.Fatalf("open = %+v %v", th, err)
+	}
+	th, err = k.AppendTeamMessage(th.ID, "user", "status on the agency platform")
+	if err != nil || len(th.Messages) != 1 {
+		t.Fatalf("say = %+v %v", th, err)
+	}
+	if k.TeamCard().Threads != 1 {
+		t.Fatalf("card = %+v", k.TeamCard())
+	}
 }
 
 func TestInvokeCap(t *testing.T) {

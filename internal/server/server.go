@@ -42,6 +42,10 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/ships", s.createShip)
 	mux.HandleFunc("GET /api/ships/{id}", s.getShip)
 	mux.HandleFunc("POST /api/ships/{id}/advance", s.advanceShip)
+	mux.HandleFunc("GET /api/teams", s.teams)
+	mux.HandleFunc("GET /api/teams/{id}", s.teamThread)
+	mux.HandleFunc("POST /api/teams/say", s.teamSay)
+	mux.HandleFunc("POST /api/teams/send", s.teamSend)
 	return mux
 }
 
@@ -237,6 +241,58 @@ func (s *api) advanceShip(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, res.Data)
 }
 
+func (s *api) teams(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, map[string]any{
+		"card":    s.k.TeamCard(),
+		"threads": s.k.ListTeamThreads(),
+	})
+}
+
+func (s *api) teamThread(w http.ResponseWriter, r *http.Request) {
+	th, err := s.k.GetTeamThread(r.PathValue("id"))
+	if err != nil {
+		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusOK, th)
+}
+
+func (s *api) teamSay(w http.ResponseWriter, r *http.Request) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	res, err := s.k.Invoke(r.Context(), "teams", kernel.Call{Capability: "teams.say", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) teamSend(w http.ResponseWriter, r *http.Request) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	res, err := s.k.Invoke(r.Context(), "teams", kernel.Call{Capability: "teams.send", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
 func decodeJSON(r *http.Request, dst any) error {
 	dec := json.NewDecoder(io.LimitReader(r.Body, maxBody))
 	dec.DisallowUnknownFields()
@@ -248,9 +304,11 @@ func decodeJSON(r *http.Request, dst any) error {
 
 func writeError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent):
+	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent), errors.Is(err, kernel.ErrTeamThread):
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability):
+	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability),
+		errors.Is(err, kernel.ErrTeamChannel), errors.Is(err, kernel.ErrTeamKind),
+		errors.Is(err, kernel.ErrTeamTenant), errors.Is(err, kernel.ErrTeamEmpty):
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning):
 		writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})

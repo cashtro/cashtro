@@ -68,10 +68,29 @@
     input, textarea { padding: 8px; }
     .journal { max-height: 220px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--muted); }
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
-    footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    footer { border-top: 1px solid var(--line); padding: 14px 0 220px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    .teams-dock {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      border-top: 1px solid var(--line);
+      background: rgba(16, 14, 11, 0.96);
+      backdrop-filter: blur(8px);
+    }
+    .teams-inner { width: min(1240px, calc(100% - 28px)); margin: 0 auto; padding: 10px 0 12px; display: grid; gap: 8px; }
+    .teams-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+    .teams-head p { margin: 0; color: var(--muted); font-size: 12px; }
+    .teams-log {
+      max-height: 120px; overflow: auto; border: 1px solid var(--line);
+      background: #14110d; padding: 8px 10px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; line-height: 1.45;
+    }
+    .teams-log .turn { margin: 0 0 6px; }
+    .teams-log .role { color: var(--brass); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
+    .teams-form { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; }
+    .teams-err { color: var(--danger); font-size: 12px; min-height: 1em; }
     @media (max-width: 900px) {
       .desk, .board, .agents { display: block; }
       .agent, .col, .panel { margin-bottom: 10px; }
+      .teams-form { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -131,6 +150,21 @@
     <span id="contact">alejandro@proximityagency.ca</span>
     <span>stdlib Go · OpenRouter optional</span>
   </footer>
+  <aside class="teams-dock" id="teams-dock" aria-label="Proximity Microsoft Teams conversation">
+    <div class="teams-inner">
+      <div class="teams-head">
+        <div class="mark">Proximity · Microsoft Teams · conversation only</div>
+        <p id="teams-hint">Bottom dock · no Slack, mail, meetings, or files</p>
+      </div>
+      <div class="teams-log" id="teams-log"></div>
+      <form class="teams-form" id="teams-form">
+        <input name="text" required autocomplete="off" placeholder="Talk on the Proximity Teams desk…">
+        <button type="submit">Say</button>
+        <button type="button" id="teams-send">Park outbound</button>
+      </form>
+      <div class="teams-err" id="teams-error"></div>
+    </div>
+  </aside>
   <script>
     const stages = ["idea", "concept", "production"];
     async function j(url, opts) {
@@ -192,6 +226,8 @@
           try {
             const payload = cap === "model.chat"
               ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
+              : cap === "teams.say"
+              ? { capability: cap, payload: { text: "Status on the Proximity desk.", thread: "proximity-desk", channel: "teams.microsoft", tenant: "Proximity", kind: "conversation" } }
               : { capability: cap };
             const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
               method: "POST",
@@ -339,7 +375,76 @@
         document.getElementById("form-error").textContent = e.message;
       }
     });
+    function paintTeams(thread) {
+      const log = document.getElementById("teams-log");
+      log.replaceChildren();
+      (thread.messages || []).forEach((m) => {
+        const line = document.createElement("div");
+        line.className = "turn";
+        const role = document.createElement("span");
+        role.className = "role";
+        role.textContent = m.role + " · ";
+        line.appendChild(role);
+        line.appendChild(document.createTextNode(m.body));
+        log.appendChild(line);
+      });
+      log.scrollTop = log.scrollHeight;
+    }
+    async function loadTeams() {
+      const data = await j("/api/teams");
+      if (data.card && data.card.hint) {
+        document.getElementById("teams-hint").textContent = data.card.hint;
+      }
+      const thread = (data.threads || []).find((t) => t.id === "proximity-desk") || (data.threads || [])[0];
+      if (thread) paintTeams(thread);
+    }
+    document.getElementById("teams-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("teams-error");
+      err.textContent = "";
+      const data = new FormData(event.target);
+      const btn = event.target.querySelector("button[type=submit]");
+      btn.disabled = true;
+      try {
+        const thread = await j("/api/teams/say", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            text: data.get("text"),
+            thread: "proximity-desk",
+            channel: "teams.microsoft",
+            tenant: "Proximity",
+            kind: "conversation"
+          })
+        });
+        event.target.reset();
+        paintTeams(thread);
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      } finally {
+        btn.disabled = false;
+      }
+    });
+    document.getElementById("teams-send").addEventListener("click", async () => {
+      const err = document.getElementById("teams-error");
+      err.textContent = "";
+      const input = document.querySelector("#teams-form input[name=text]");
+      const body = (input && input.value.trim()) || "Proximity Teams conversation draft";
+      try {
+        await j("/api/teams/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ body: body, channel: "microsoft-teams", tenant: "Proximity" })
+        });
+        if (input) input.value = "";
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
     render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
+    loadTeams().catch((e) => { document.getElementById("teams-error").textContent = e.message; });
   </script>
 </body>
 </html>
