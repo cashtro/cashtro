@@ -164,6 +164,78 @@ func commsInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	}
 }
 
+func deployInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	target := payloadQuery(call, "target")
+	if target == "" {
+		target = payloadQuery(call, "prompt")
+	}
+	if target == "" {
+		target = "cashtro-os"
+	}
+	var idea, concept, prod int
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			switch s.Stage {
+			case catalog.StageIdea:
+				idea++
+			case catalog.StageConcept:
+				concept++
+			case catalog.StageProduction:
+				prod++
+			}
+		}
+	}
+	pending := 0
+	for _, c := range k.Confirms() {
+		if c.Status == "pending" {
+			pending++
+		}
+	}
+	checks := []map[string]any{
+		{"name": "disk image", "ok": k.PersistPath() != "", "detail": k.PersistPath()},
+		{"name": "production ships", "ok": prod > 0, "detail": strconv.Itoa(prod)},
+		{"name": "open idea work", "ok": true, "detail": strconv.Itoa(idea)},
+		{"name": "concept WIP", "ok": true, "detail": strconv.Itoa(concept)},
+		{"name": "pending confirms", "ok": pending == 0, "detail": strconv.Itoa(pending)},
+		{"name": "research notes", "ok": len(k.Notes()) > 0, "detail": strconv.Itoa(len(k.Notes()))},
+	}
+	ready := true
+	for _, c := range checks {
+		if ok, _ := c["ok"].(bool); !ok {
+			ready = false
+			break
+		}
+	}
+	status := "blocked"
+	if ready {
+		status = "ready"
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "deploy",
+		Source: "deploy.release",
+		Claim:  "Release dry-run " + status + " · " + target,
+		Quote:  "idea=" + strconv.Itoa(idea) + " concept=" + strconv.Itoa(concept) + " production=" + strconv.Itoa(prod) + " pending=" + strconv.Itoa(pending),
+	})
+	k.Remember("release", status+" · "+target)
+	_, _ = k.Post("deploy", "security", "release", target)
+	confirm := kernel.Confirm{}
+	if ready {
+		confirm = k.RequestConfirm("deploy", "deploy.release", "promote "+target+" (dry-run only · no outbound)")
+	}
+	return kernel.Result{
+		OK:      true,
+		Message: "deploy " + status + " · " + target,
+		Data: map[string]any{
+			"target":  target,
+			"status":  status,
+			"checks":  checks,
+			"note":    note,
+			"confirm": confirm,
+			"mode":    "dry-run",
+		},
+	}, nil
+}
+
 func securityInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	q := strings.ToLower(payloadQuery(call, "query"))
 	if q == "" {

@@ -38,6 +38,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
 	mux.HandleFunc("GET /api/trace", s.trace)
 	mux.HandleFunc("GET /api/security", s.security)
+	mux.HandleFunc("POST /api/deploy", s.deploy)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -213,6 +214,20 @@ func (s *api) security(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query().Get("q")
 	raw, _ := json.Marshal(map[string]string{"query": q})
 	res, err := s.k.Invoke(r.Context(), "security", kernel.Call{Capability: "security.triage", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) deploy(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Target string `json:"target"`
+	}
+	_ = decodeJSON(r, &in)
+	raw, _ := json.Marshal(map[string]string{"target": in.Target})
+	res, err := s.k.Invoke(r.Context(), "deploy", kernel.Call{Capability: "deploy.release", Payload: raw})
 	if err != nil {
 		writeError(w, err)
 		return

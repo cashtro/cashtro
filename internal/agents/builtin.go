@@ -72,10 +72,10 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"architect.plan"}, Autostart: true,
 		}, architectInvoke),
 		resident(kernel.Spec{
-			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "release", Summary: "Owns CI, preview, and production promotion.",
+			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "release", Summary: "Dry-run release gate: checklist, note, and human confirm before promote.",
 			Capabilities: []string{"deploy.release"}, Autostart: true,
-		}, nil),
+		}, deployInvoke),
 		resident(kernel.Spec{
 			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "guard", Summary: "Triages risk keywords across ships, notes, and journal before they ship.",

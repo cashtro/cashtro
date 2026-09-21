@@ -87,6 +87,14 @@ func TestOSAndAgents(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/deploy", strings.NewReader(`{"target":"cashtro-os"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "dry-run") {
+		t.Fatalf("deploy = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/notes", nil))
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "2606.01508") {
 		t.Fatalf("notes = %s", res.Body.String())
@@ -99,7 +107,7 @@ func TestOSAndAgents(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
-	req := httptest.NewRequest(http.MethodPost, "/api/agents/explorer/invoke", strings.NewReader(`{"capability":"explorer.search"}`))
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/explorer/invoke", strings.NewReader(`{"capability":"explorer.search"}`))
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusOK {
 		t.Fatalf("invoke status = %d body=%s", res.Code, res.Body.String())
