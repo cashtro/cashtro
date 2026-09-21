@@ -3,6 +3,7 @@ package agents
 import (
 	"context"
 	"encoding/json"
+	"strings"
 	"testing"
 
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -76,6 +77,13 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("explorer: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{
+		Capability: "explorer.search",
+		Payload:    []byte(`{"query":"overnight cashtro giant"}`),
+	})
+	if err != nil || !res.OK || !strings.Contains(res.Message, "explorer hit") || res.Message == "explorer hit 0" {
+		t.Fatalf("tokenized explorer: %+v %v", res, err)
 	}
 
 	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})

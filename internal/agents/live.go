@@ -15,21 +15,21 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	hits := make([]map[string]string, 0)
 	for _, p := range k.Processes() {
 		blob := strings.ToLower(p.Spec.Name + " " + p.Spec.Role + " " + p.Spec.Summary + " " + strings.Join(p.Spec.Capabilities, " "))
-		if q == "" || strings.Contains(blob, q) {
+		if matchesQuery(blob, q) {
 			hits = append(hits, map[string]string{"kind": "agent", "id": p.Spec.ID, "name": p.Spec.Name})
 		}
 	}
 	if cat := k.Catalog(); cat != nil {
 		for _, s := range cat.List() {
 			blob := strings.ToLower(s.Name + " " + s.Client + " " + s.Notes + " " + string(s.Stage))
-			if q == "" || strings.Contains(blob, q) {
+			if matchesQuery(blob, q) {
 				hits = append(hits, map[string]string{"kind": "ship", "id": s.ID, "name": s.Name})
 			}
 		}
 	}
 	for _, n := range k.Notes() {
 		blob := strings.ToLower(n.Claim + " " + n.Source + " " + n.Quote)
-		if q == "" || strings.Contains(blob, q) {
+		if matchesQuery(blob, q) {
 			hits = append(hits, map[string]string{"kind": "note", "id": n.Source, "name": n.Claim})
 		}
 	}
@@ -165,6 +165,21 @@ func seedResearch(k *kernel.Kernel) {
 		k.WriteNote(n)
 		k.Remember("research", n.Claim)
 	}
+}
+
+func matchesQuery(blob, q string) bool {
+	if q == "" {
+		return true
+	}
+	if strings.Contains(blob, q) {
+		return true
+	}
+	for _, w := range strings.Fields(q) {
+		if w != "" && strings.Contains(blob, w) {
+			return true
+		}
+	}
+	return false
 }
 
 func payloadQuery(call kernel.Call, key string) string {
