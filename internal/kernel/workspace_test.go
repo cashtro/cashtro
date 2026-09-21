@@ -61,3 +61,21 @@ func TestInvokeCap(t *testing.T) {
 		t.Fatalf("err = %v", err)
 	}
 }
+
+func TestEventSink(t *testing.T) {
+	k := New()
+	k.Register(&stub{spec: Spec{ID: "a", Name: "A", Capabilities: []string{"a.ping"}, Autostart: true}})
+	got := make(chan Event, 4)
+	k.SetSink(func(ev Event) { got <- ev })
+	if err := k.Boot(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	select {
+	case ev := <-got:
+		if ev.Kind != "boot" {
+			t.Fatalf("first sink = %+v", ev)
+		}
+	default:
+		t.Fatal("expected sink events from boot")
+	}
+}

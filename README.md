@@ -27,16 +27,23 @@ e-commerce. Client code stays private. The results are live:
 
 This repo is **under construction**. It is the control plane for every
 agentic we build here. Agents are processes. Capabilities are verbs.
-Mail, notes, memory, and human confirms are first-class. Delivery and
-research are live. New agentics register into this kernel — they do not
-become a second product.
+Mail, notes, memory, human confirms, and desk requests are first-class.
+You pick the next job. Symbols is the internal Zapier. Watch keeps work
+flowing while the desk is closed. New agentics register into this kernel
+— they do not become a second product.
 
 ```bash
 go test ./...
 go run ./cmd/cashtro
 ```
 
-Open `http://localhost:8080`.
+Open `http://localhost:8080`. Chrome: **Desk · You pick · Symbols · Line · Library**.
+
+### Do we need Zapier?
+
+**No.** Symbols is the internal Zapier. Triggers and kernel verbs live on
+this OS. Webhook catch-hooks are `POST /api/symbols/{id}/hook`. Connectors
+are the process table. There is no subscription and no second product.
 
 ### Do we need OpenRouter?
 
@@ -68,6 +75,21 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/mail` | Agent mailbox |
 | `GET` | `/api/memory` | Episodic recall |
 | `GET` | `/api/confirms` | Human gate |
-| `GET` | `/api/ships` | Delivery line |
+| `GET` | `/api/inbox` | You-pick jobs (mail + verbs) |
+| `POST` | `/api/inbox/{id}/take` | Take a job (mail parks on idea) |
+| `POST` | `/api/inbox/{id}/skip` | Skip a job |
+| `GET` | `/api/watch` | Closed-hours card |
+| `POST` | `/api/watch/close` | Close desk · work still flowing |
+| `POST` | `/api/watch/open` | Open desk |
+| `POST` | `/api/watch/pulse` | Heartbeat |
+| `GET` | `/api/plan` | Can / cannot / create |
+| `GET` | `/api/requests` | Saved asks (original never overwritten) |
+| `POST` | `/api/requests` | Capture & better an ask |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
+| `GET` | `/api/symbols` | Internal Zapier table |
+| `POST` | `/api/symbols` | Compose a symbol |
+| `POST` | `/api/symbols/{id}/fire` | Run it now |
+| `POST` | `/api/symbols/{id}/hook` | Catch-hook (webhook trigger) |
+| `GET` | `/api/runs` | Symbol fire history |
+| `GET` | `/api/connectors` | Kernel verbs you can wire |

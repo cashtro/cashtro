@@ -6,5 +6,5 @@
 coverage.out
 .idea/
 .vscode/
-.env
+data/
 .playwright-mcp/

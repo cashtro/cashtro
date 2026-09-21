@@ -33,6 +33,14 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			hits = append(hits, map[string]string{"kind": "note", "id": n.Source, "name": n.Claim})
 		}
 	}
+	if bus := k.Symbols(); bus != nil {
+		for _, s := range bus.List() {
+			blob := strings.ToLower(s.Name + " " + s.Summary + " " + string(s.On.Kind))
+			if q == "" || strings.Contains(blob, q) {
+				hits = append(hits, map[string]string{"kind": "symbol", "id": s.ID, "name": s.Name})
+			}
+		}
+	}
 	_, _ = k.Post("explorer", "research", "search", q)
 	return kernel.Result{OK: true, Message: "explorer hit " + strconv.Itoa(len(hits)), Data: hits}, nil
 }
@@ -160,6 +168,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "XKernel", URL: "https://github.com/JosephBerm/XKernel", Claim: "Treat agents as first-class processes with capability tokens and typed IPC.", Quote: "Unix treats processes; Kubernetes treats containers; an agent OS treats agents."},
 		{Agent: "research", Source: "12-factor agents", URL: "https://github.com/humanlayer/12-factor-agents", Claim: "Own the loop in deterministic code. The model only fills structured next steps.", Quote: "Human confirm sits between selection and invocation. OpenRouter stays optional."},
 		{Agent: "research", Source: "treg", URL: "https://treg.to", Claim: "Exa publication search is available as research.ingest input at $0.007/call when Treg is signed in.", Quote: "catalog_search → catalog_get → call. Token was expired this pass; notes still landed from open sources."},
+		{Agent: "research", Source: "cashtro-symbols", URL: "", Claim: "Symbols is our internal Zapier. Triggers and kernel verbs. No subscription.", Quote: "A Symbol is trigger → steps. Connectors are the process table. Webhook catch-hooks live at /api/symbols/{id}/hook."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)
@@ -254,4 +263,136 @@ func (a *researchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 
 func (a *researchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
 	return researchInvoke(a.k, call)
+}
+
+type chooserAgent struct {
+	k *kernel.Kernel
+}
+
+func (a *chooserAgent) Spec() kernel.Spec {
+	return kernel.Spec{
+		ID: "chooser", Name: "Chooser", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+		Role: "desk", Summary: "You pick. Inbox jobs from Gmail plus the verbs this OS can run. Take or skip — nothing auto-runs.",
+		Capabilities: []string{"chooser.list", "chooser.take", "chooser.skip", "chooser.scan"},
+		Autostart:    true,
+	}
+}
+
+func (a *chooserAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
+	a.k = k
+	seedChooser(k)
+	desk := k.DeskCard()
+	k.Publish("chooser", "desk", "you pick · "+strconv.Itoa(desk.PendingN)+" pending", map[string]any{
+		"pending": desk.PendingN,
+		"inbox":   desk.Scan.Inbox,
+		"unread":  desk.Scan.Unread,
+	})
+	return nil
+}
+
+func (a *chooserAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
+	return chooserInvoke(a.k, call)
+}
+
+func chooserInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	switch call.Capability {
+	case "chooser.list", "chooser.scan":
+		d := k.DeskCard()
+		return kernel.Result{OK: true, Message: "pending " + strconv.Itoa(d.PendingN), Data: d}, nil
+	case "chooser.take":
+		c, err := k.Take(payloadInt(call, "id"))
+		if err != nil {
+			return kernel.Result{}, err
+		}
+		return kernel.Result{OK: true, Message: "took " + c.Title, Data: c}, nil
+	case "chooser.skip":
+		c, err := k.Skip(payloadInt(call, "id"))
+		if err != nil {
+			return kernel.Result{}, err
+		}
+		return kernel.Result{OK: true, Message: "skipped " + c.Title, Data: c}, nil
+	default:
+		return kernel.Result{}, kernel.ErrUnknownCapability
+	}
+}
+
+type watchAgent struct {
+	k *kernel.Kernel
+}
+
+func (a *watchAgent) Spec() kernel.Spec {
+	return kernel.Spec{
+		ID: "watch", Name: "Watch", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
+		Role: "night", Summary: "Keeps the desk flowing while things are closed. Pulse and persist. Outbound still needs a human.",
+		Capabilities: []string{"watch.status", "watch.close", "watch.open", "watch.pulse"},
+		Autostart:    true,
+	}
+}
+
+func (a *watchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
+	a.k = k
+	k.Publish("watch", "ready", "closed-hours watch online", nil)
+	return nil
+}
+
+func (a *watchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
+	return watchInvoke(a.k, call)
+}
+
+func watchInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	note := payloadQuery(call, "note")
+	if note == "" {
+		note = payloadQuery(call, "prompt")
+	}
+	switch call.Capability {
+	case "watch.status":
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.close":
+		if note == "" {
+			note = "things are closed"
+		}
+		k.SetClosed(true)
+		k.RecordPulse(note)
+		keepFlowing(k, note)
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.open":
+		if note == "" {
+			note = "desk open"
+		}
+		k.SetClosed(false)
+		k.RecordPulse(note)
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	case "watch.pulse":
+		if note == "" {
+			note = "pulse"
+		}
+		k.RecordPulse(note)
+		if k.Closed() {
+			keepFlowing(k, note)
+		}
+		w := k.WatchCard()
+		return kernel.Result{OK: true, Message: w.Message, Data: w}, nil
+	default:
+		return kernel.Result{}, kernel.ErrUnknownCapability
+	}
+}
+
+func keepFlowing(k *kernel.Kernel, note string) {
+	if cat := k.Catalog(); cat != nil {
+		if _, err := cat.Get("closed-hours-flow"); err != nil {
+			_, _ = cat.Create(catalog.CreateShip{
+				Name:   "Closed-hours flow",
+				Client: "Cashtro OS",
+				Sector: "ops",
+				Stack:  []string{"Go"},
+				Notes:  "Keep the work flowing through here while things are closed.",
+			})
+		}
+	}
+	k.Remember("watch", "closed hours · "+note)
+	_, _ = k.Post("watch", "research", "pulse", "keep gathering while the desk is closed")
+	_, _ = k.Post("watch", "planner", "pulse", "keep the line moving")
 }

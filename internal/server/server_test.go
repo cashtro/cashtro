@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 18 || !strings.Contains(about.Manifesto, "under construction") || !strings.Contains(about.Manifesto, "You pick") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +70,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 18 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -118,7 +118,7 @@ func TestIndexHTML(t *testing.T) {
 		t.Fatalf("content-type = %q", ct)
 	}
 	body := res.Body.String()
-	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
+	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") || !strings.Contains(body, "Symbols") || !strings.Contains(body, "You pick") || !strings.Contains(body, "Assistant plan") {
 		t.Fatalf("index missing OS shell copy")
 	}
 }
@@ -194,5 +194,107 @@ func TestStages(t *testing.T) {
 	body, _ := io.ReadAll(res.Body)
 	if !strings.Contains(string(body), `"idea"`) || !strings.Contains(string(body), `"production"`) {
 		t.Fatalf("stages = %s", body)
+	}
+}
+
+func TestSymbolsHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/symbols", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "intake-to-idea") {
+		t.Fatalf("symbols = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/symbols/intake-to-idea/hook", strings.NewReader(`{"name":"Hook desk","client":"Cashtro","notes":"no zapier bill"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("hook status = %d body=%s", res.Code, res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), `"ok":true`) {
+		t.Fatalf("hook run = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/ships/hook-desk", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"idea"`) {
+		t.Fatalf("ship after hook = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/runs", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "intake-to-idea") {
+		t.Fatalf("runs = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/connectors", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "symbols.fire") {
+		t.Fatalf("connectors = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	body := `{"name":"Pulse copy","on":{"kind":"manual"},"steps":[{"cap":"os.about"}]}`
+	req = httptest.NewRequest(http.MethodPost, "/api/symbols", strings.NewReader(body))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated {
+		t.Fatalf("create status = %d body=%s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/symbols/missing/fire", strings.NewReader("{}")))
+	if res.Code != http.StatusNotFound {
+		t.Fatalf("missing fire = %d %s", res.Code, res.Body.String())
+	}
+}
+
+func TestChooserWatchAndDeskHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/inbox", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"unread":163`) {
+		t.Fatalf("inbox = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/watch", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "OPEN HOURS") {
+		t.Fatalf("watch open = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/watch/close", strings.NewReader(`{"note":"things are closed"}`)))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "CLOSED HOURS") {
+		t.Fatalf("watch close = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/os", nil))
+	if !strings.Contains(res.Body.String(), `"closed":true`) {
+		t.Fatalf("os closed = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/watch/open", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "OPEN HOURS") {
+		t.Fatalf("watch open again = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/plan", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "can") {
+		t.Fatalf("plan = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/requests", strings.NewReader(`{"raw":"park a mandate for the brass desk"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated {
+		t.Fatalf("capture status = %d body=%s", res.Code, res.Body.String())
 	}
 }
