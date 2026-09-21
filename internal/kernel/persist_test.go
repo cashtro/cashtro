@@ -43,6 +43,16 @@ func TestPersistRoundTrip(t *testing.T) {
 	if got := k2.Pulses(); len(got) != 1 || got[0].Note != "overnight" {
 		t.Fatalf("pulses = %#v", k2.Pulses())
 	}
+	foundPulse := false
+	for _, ev := range k2.Events() {
+		if ev.Kind == "pulse" && ev.Source == "watch" {
+			foundPulse = true
+			break
+		}
+	}
+	if !foundPulse {
+		t.Fatalf("journal lost pulse event: %#v", k2.Events())
+	}
 }
 
 func TestLoadMissingFile(t *testing.T) {

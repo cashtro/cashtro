@@ -17,6 +17,8 @@ type Snapshot struct {
 	Confirms []Confirm      `json:"confirms"`
 	Mail     []Mail         `json:"mail"`
 	Pulses   []Pulse        `json:"pulses,omitempty"`
+	Events   []Event        `json:"events,omitempty"`
+	Seq      int            `json:"seq,omitempty"`
 	Ships    []catalog.Ship `json:"ships,omitempty"`
 }
 
@@ -46,6 +48,8 @@ func (k *Kernel) Snapshot() Snapshot {
 		Confirms: append([]Confirm(nil), k.confirms...),
 		Mail:     append([]Mail(nil), k.mail...),
 		Pulses:   append([]Pulse(nil), k.pulses...),
+		Events:   append([]Event(nil), k.events...),
+		Seq:      k.seq,
 	}
 	cat := k.cat
 	k.mu.RUnlock()
@@ -69,6 +73,16 @@ func (k *Kernel) Restore(s Snapshot) {
 	k.confSeq = maxID(s.Confirms, func(c Confirm) int { return c.ID })
 	k.mailSeq = maxID(s.Mail, func(m Mail) int { return m.ID })
 	k.pulseSeq = maxID(s.Pulses, func(p Pulse) int { return p.ID })
+	if len(s.Events) > 0 {
+		k.events = append([]Event(nil), s.Events...)
+		if len(k.events) > maxEvents {
+			k.events = append([]Event(nil), k.events[len(k.events)-maxEvents:]...)
+		}
+		k.seq = s.Seq
+		if last := k.events[len(k.events)-1].Seq; last > k.seq {
+			k.seq = last
+		}
+	}
 	cat := k.cat
 	k.mu.Unlock()
 	if cat != nil && len(s.Ships) > 0 {
@@ -105,6 +119,9 @@ func LoadFile(path string, k *Kernel) error {
 		return err
 	}
 	k.Restore(s)
+	if len(s.Events) > 0 {
+		k.Publish("init", "restore", "journal restored from disk", map[string]any{"events": len(s.Events)})
+	}
 	return nil
 }
 
