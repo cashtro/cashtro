@@ -38,6 +38,19 @@ go run ./cmd/cashtro
 
 Open `http://localhost:8080`.
 
+### Voltron (overnight, non-stop)
+
+Voltron is this kernel assembled: every registered agentic under one
+supervisor. On this machine it must stay up. The supervisor rebuilds
+and restarts Cashtro OS if the process dies.
+
+```bash
+make voltron          # start and keep restarting
+make voltron-status   # /health probe
+```
+
+Logs and heartbeat: `/tmp/voltron/voltron.log`, `/tmp/voltron/status.json`.
+
 ### Do we need OpenRouter?
 
 **No, not to boot.** The kernel, process table, delivery board, and journal

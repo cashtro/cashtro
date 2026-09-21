@@ -121,6 +121,9 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
 		t.Fatalf("index missing OS shell copy")
 	}
+	if !strings.Contains(body, "VOLTR") || !strings.Contains(body, "Crew") {
+		t.Fatalf("index missing Voltron desk")
+	}
 }
 
 func TestShipLifecycleHTTP(t *testing.T) {
