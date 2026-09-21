@@ -3,8 +3,8 @@
   "install": "go build ./... && go vet ./...",
   "terminals": [
     {
-      "name": "cashtro",
-      "command": "go run ./cmd/cashtro"
+      "name": "voltron",
+      "command": "./scripts/voltron.sh start"
     }
   ]
 }
