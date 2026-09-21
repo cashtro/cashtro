@@ -92,6 +92,9 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
 		}, nil),
+		&pulseAgent{},
+		&forgeAgent{client: router},
+		&wealthAgent{},
 	}
 }
 
@@ -169,15 +172,15 @@ type routerAgent struct {
 
 func (a *routerAgent) Spec() kernel.Spec {
 	mode := kernel.ModeResident
-	summary := "Optional OpenRouter model bus. Kernel boots without a key."
+	summary := "Optional OpenRouter bus. Kimi K3 proposes, GLM critiques. Kernel boots without a key."
 	if model.Bound(a.client) {
 		mode = kernel.ModeLive
-		summary = "OpenRouter bound. Agentics can think through this router."
+		summary = "OpenRouter bound. Kimi K3 proposes, GLM critiques, score must rise."
 	}
 	return kernel.Spec{
 		ID: "router", Name: "Router", Kind: kernel.KindSystem, Mode: mode,
 		Role: "model", Summary: summary,
-		Capabilities: []string{"model.status", "model.chat"},
+		Capabilities: []string{"model.status", "model.chat", "model.dual"},
 		Autostart:    true,
 	}
 }
@@ -217,6 +220,23 @@ func (a *routerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Resu
 			return kernel.Result{}, err
 		}
 		return kernel.Result{OK: true, Message: "routed " + out.Model, Data: out}, nil
+	case "model.dual":
+		if !model.Bound(a.client) {
+			st := model.Card(a.client)
+			return kernel.Result{OK: false, Message: st.Hint, Data: st}, nil
+		}
+		prompt := payloadQuery(call, "prompt")
+		if prompt == "" {
+			prompt = payloadQuery(call, "goal")
+		}
+		if prompt == "" {
+			prompt = "Propose one Cashtro OS move that creates, builds, grows, or evolves wealth. Keep the human gate."
+		}
+		out, err := a.client.Dual(ctx, prompt)
+		if err != nil {
+			return kernel.Result{}, err
+		}
+		return kernel.Result{OK: true, Message: "kimi+glm dual", Data: out}, nil
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)
 	}

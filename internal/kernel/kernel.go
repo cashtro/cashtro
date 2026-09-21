@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.0"
 )
 
 // Status is a process lifecycle state.
@@ -113,16 +113,18 @@ type Agent interface {
 
 // About is the public OS card.
 type About struct {
-	Name      string `json:"name"`
-	Version   string `json:"version"`
-	Motto     string `json:"motto"`
-	Kernel    Status `json:"kernel"`
-	Agents    int    `json:"agents"`
-	Running   int    `json:"running"`
-	Live      int    `json:"live"`
-	Resident  int    `json:"resident"`
-	Events    int    `json:"events"`
-	Manifesto string `json:"manifesto"`
+	Name       string `json:"name"`
+	Version    string `json:"version"`
+	Motto      string `json:"motto"`
+	Kernel     Status `json:"kernel"`
+	Agents     int    `json:"agents"`
+	Running    int    `json:"running"`
+	Live       int    `json:"live"`
+	Resident   int    `json:"resident"`
+	Events     int    `json:"events"`
+	Generation int    `json:"generation"`
+	Score      int    `json:"score"`
+	Manifesto  string `json:"manifesto"`
 }
 
 var (
@@ -155,6 +157,10 @@ type Kernel struct {
 	factSeq  int
 	confirms []Confirm
 	confSeq  int
+	offers   []Offer
+	gens     []Generation
+	score    int
+	gen      int
 }
 
 // Option configures the kernel.
@@ -257,6 +263,48 @@ func (k *Kernel) Spawn(ctx context.Context, id string) error {
 	k.mu.Unlock()
 	k.Publish(id, "spawn", proc.Spec.Name+" running", map[string]any{"mode": string(proc.Spec.Mode)})
 	return nil
+}
+
+// Stop parks a running agentic without unregistering it.
+func (k *Kernel) Stop(id string) error {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	p, ok := k.procs[id]
+	if !ok {
+		return fmt.Errorf("%w: %s", ErrUnknownAgent, id)
+	}
+	p.Status = StatusStopped
+	p.Note = "stopped"
+	return nil
+}
+
+// KeepAlive beats every running autostart process and respawns the rest.
+func (k *Kernel) KeepAlive(ctx context.Context) ([]string, error) {
+	ids := k.autostartIDs()
+	spawned := make([]string, 0)
+	for _, id := range ids {
+		p, err := k.Process(id)
+		if err != nil {
+			return spawned, err
+		}
+		if p.Status == StatusRunning {
+			k.beat(id)
+			continue
+		}
+		if err := k.Spawn(ctx, id); err != nil {
+			return spawned, err
+		}
+		spawned = append(spawned, id)
+	}
+	return spawned, nil
+}
+
+func (k *Kernel) beat(id string) {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	if p, ok := k.procs[id]; ok {
+		p.LastBeat = k.now()
+	}
 }
 
 // Invoke routes a capability call to a running agentic.
@@ -376,19 +424,22 @@ func (k *Kernel) About() About {
 		}
 	}
 	return About{
-		Name:     Name,
-		Version:  Version,
-		Motto:    "I make teams ship: idea → concept → production.",
-		Kernel:   StatusRunning,
-		Agents:   len(k.procs),
-		Running:  running,
-		Live:     live,
-		Resident: resident,
-		Events:   len(k.events),
+		Name:       Name,
+		Version:    Version,
+		Motto:      "I make teams ship: idea → concept → production.",
+		Kernel:     StatusRunning,
+		Agents:     len(k.procs),
+		Running:    running,
+		Live:       live,
+		Resident:   resident,
+		Events:     len(k.events),
+		Generation: k.gen,
+		Score:      k.score,
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
-			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
-			"New agentics register into this kernel — they do not fork a second product.",
+			"Agents are processes. Capabilities are verbs. Pulse never stops. " +
+			"Kimi K3 proposes, GLM critiques, each generation must score higher. " +
+			"Wealth is ships and retainers on this board — not a second product. " +
+			"Mail, notes, memory, and confirms stay first-class. OpenRouter stays optional.",
 	}
 }
 

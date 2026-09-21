@@ -33,6 +33,12 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			hits = append(hits, map[string]string{"kind": "note", "id": n.Source, "name": n.Claim})
 		}
 	}
+	for _, o := range k.Offers() {
+		blob := strings.ToLower(o.Name + " " + string(o.Lane) + " " + o.Thesis + " " + o.SKU)
+		if q == "" || strings.Contains(blob, q) {
+			hits = append(hits, map[string]string{"kind": "offer", "id": o.ID, "name": o.Name})
+		}
+	}
 	_, _ = k.Post("explorer", "research", "search", q)
 	return kernel.Result{OK: true, Message: "explorer hit " + strconv.Itoa(len(hits)), Data: hits}, nil
 }
@@ -160,6 +166,8 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "XKernel", URL: "https://github.com/JosephBerm/XKernel", Claim: "Treat agents as first-class processes with capability tokens and typed IPC.", Quote: "Unix treats processes; Kubernetes treats containers; an agent OS treats agents."},
 		{Agent: "research", Source: "12-factor agents", URL: "https://github.com/humanlayer/12-factor-agents", Claim: "Own the loop in deterministic code. The model only fills structured next steps.", Quote: "Human confirm sits between selection and invocation. OpenRouter stays optional."},
 		{Agent: "research", Source: "treg", URL: "https://treg.to", Claim: "Exa publication search is available as research.ingest input at $0.007/call when Treg is signed in.", Quote: "catalog_search → catalog_get → call. Token was expired this pass; notes still landed from open sources."},
+		{Agent: "research", Source: "openrouter:kimi-k3", URL: "https://openrouter.ai/moonshotai/kimi-k3", Claim: "Kimi K3 is the proposer seat: long-horizon coding and tool loops.", Quote: "moonshotai/kimi-k3. Dual with GLM. Score must rise each generation."},
+		{Agent: "research", Source: "openrouter:glm-4.5", URL: "https://openrouter.ai/z-ai/glm-4.5", Claim: "GLM-4.5 is the critic seat: alignment, score, keep the human gate.", Quote: "z-ai/glm-4.5. Cashtro earns autonomy. Money never does."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)
@@ -247,7 +255,9 @@ func (a *researchAgent) Spec() kernel.Spec {
 
 func (a *researchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 	a.k = k
-	seedResearch(k)
+	if len(k.Notes()) == 0 {
+		seedResearch(k)
+	}
 	k.Publish("research", "library", "seeded construction notes", map[string]any{"notes": len(k.Notes())})
 	return nil
 }
