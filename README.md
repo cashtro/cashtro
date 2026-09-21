@@ -46,6 +46,36 @@ go run ./cmd/cashtro
 
 Open `http://localhost:8080`.
 
+---
+
+## Ultron IDE (company control plane)
+
+**Separated infrastructure** above Cashtro OS. Run Giant, ScanApp, Proximity,
+Empire and every company from one authorized IDE desk. Clients authenticate
+with RBAC. The server does **not** need a Cursor token.
+
+```bash
+go run ./cmd/ultron                 # :9090
+# or always-on:
+./scripts/ultron-on.sh
+# both Cashtro + Ultron:
+./scripts/fleet-on.sh
+```
+
+Open `http://localhost:9090`.
+
+Default owner (first boot only):
+
+- email: `alejandro@proximityagency.ca`
+- password: `ultron-change-me` (override with `ULTRON_OWNER_PASSWORD`)
+
+| Layer | Port | Role |
+| --- | --- | --- |
+| **Ultron** | `:9090` | IDE · companies · fleet · RBAC · bridges Cashtro |
+| **Cashtro OS** | `:8080` | Agentic kernel · delivery · research · disk |
+
+Disk image: `data/ultron.json`. See `.cursor/skills/ultron-ide/SKILL.md`.
+
 ### Do we need OpenRouter?
 
 **No, not to boot.** The kernel, process table, delivery board, journal,
