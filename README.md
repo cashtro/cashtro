@@ -103,7 +103,8 @@ That loop rebuilds, starts `:8080`, and restarts on crash. State lands in
 `data/cashtro.json` — notes, ships, pulses, **and the journal**. `Watch`
 is a live system process: close the desk and
 it pulses, persists, parks a closed-hours mandate, and keeps research /
-delivery / memory moving. Outbound `comms.send` still waits at the human
-gate. Overnight wake-ups can also be scheduled as Cursor timers on this
-agent conversation.
+delivery / memory moving. While the process is up it also heartbeats
+every 30m (`CASHTRO_PULSE_EVERY`, or `0` to disable). Outbound
+`comms.send` still waits at the human gate. Overnight wake-ups can also
+be scheduled as Cursor timers on this agent conversation.
 

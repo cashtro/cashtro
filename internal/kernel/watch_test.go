@@ -1,6 +1,7 @@
 package kernel
 
 import (
+	"context"
 	"testing"
 	"time"
 )
@@ -35,5 +36,32 @@ func TestClosedHoursPulse(t *testing.T) {
 	}
 	if got := k.Pulses(); len(got) != 1 {
 		t.Fatalf("pulses = %+v", got)
+	}
+}
+
+func TestRunClosedPulses(t *testing.T) {
+	k := New()
+	k.SetClosed(true)
+	ctx, cancel := context.WithCancel(context.Background())
+	done := make(chan struct{})
+	go func() {
+		k.RunClosedPulses(ctx, 8*time.Millisecond)
+		close(done)
+	}()
+	deadline := time.Now().Add(400 * time.Millisecond)
+	for time.Now().Before(deadline) {
+		if len(k.Pulses()) >= 1 {
+			break
+		}
+		time.Sleep(5 * time.Millisecond)
+	}
+	if len(k.Pulses()) < 1 {
+		t.Fatal("watchdog did not pulse")
+	}
+	cancel()
+	select {
+	case <-done:
+	case <-time.After(200 * time.Millisecond):
+		t.Fatal("watchdog did not stop")
 	}
 }

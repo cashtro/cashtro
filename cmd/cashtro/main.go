@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -34,6 +35,21 @@ func envOr(key, fallback string) string {
 	return fallback
 }
 
+func pulseEvery() time.Duration {
+	v := strings.TrimSpace(os.Getenv("CASHTRO_PULSE_EVERY"))
+	if v == "" {
+		return 30 * time.Minute
+	}
+	if v == "0" || v == "off" {
+		return 0
+	}
+	d, err := time.ParseDuration(v)
+	if err != nil || d < 0 {
+		return 30 * time.Minute
+	}
+	return d
+}
+
 func run(addr, data string) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
@@ -44,6 +60,11 @@ func run(addr, data string) error {
 	}
 	about := k.About()
 	log.Printf("%s %s · %d agentics online · image %s · %s", about.Name, about.Version, about.Running, data, map[bool]string{true: "desk closed · work still flowing", false: "desk open"}[about.Closed])
+
+	if every := pulseEvery(); every > 0 {
+		go k.RunClosedPulses(ctx, every)
+		log.Printf("closed-hours watchdog every %s", every)
+	}
 
 	httpSrv := &http.Server{
 		Addr:              addr,

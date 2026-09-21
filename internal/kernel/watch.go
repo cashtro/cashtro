@@ -1,6 +1,7 @@
 package kernel
 
 import (
+	"context"
 	"strings"
 	"time"
 )
@@ -157,4 +158,23 @@ func (k *Kernel) WatchCard() Watch {
 		w.LastPulse = &last
 	}
 	return w
+}
+
+// RunClosedPulses heartbeats while the desk is closed. Stops when ctx is done.
+func (k *Kernel) RunClosedPulses(ctx context.Context, every time.Duration) {
+	if every <= 0 {
+		return
+	}
+	tick := time.NewTicker(every)
+	defer tick.Stop()
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-tick.C:
+			if k.Closed() {
+				k.RecordPulse("watchdog")
+			}
+		}
+	}
 }
