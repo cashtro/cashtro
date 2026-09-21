@@ -134,6 +134,9 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
 		t.Fatalf("index missing OS shell copy")
 	}
+	if !strings.Contains(body, "GIANT") || !strings.Contains(body, "Ecosystem") || !strings.Contains(body, "Giant ecosystem") {
+		t.Fatalf("index missing Giant ecosystem shell")
+	}
 }
 
 func TestShipLifecycleHTTP(t *testing.T) {

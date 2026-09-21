@@ -9,8 +9,15 @@ import (
 func TestSeededCatalog(t *testing.T) {
 	c := New()
 	ships := c.List()
-	if len(ships) != 7 {
-		t.Fatalf("list len = %d, want 7", len(ships))
+	if len(ships) != 10 {
+		t.Fatalf("list len = %d, want 10", len(ships))
+	}
+	giant, err := c.Get("giant")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if giant.Stage != StageProduction || giant.Client != "Giant" {
+		t.Fatalf("giant = %+v", giant)
 	}
 	if ships[0].Stage != StageIdea {
 		t.Fatalf("first stage = %s, want idea", ships[0].Stage)
