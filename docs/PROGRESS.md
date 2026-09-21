@@ -86,6 +86,26 @@ Evolu-Jeunes exists (id 201155686), `public_repos=0`, GraphQL `totalCount=0`.
 Need Cursor GitHub App installed on the **org** with All repositories.
 See `docs/ACCESS_REQUIRED.md`.
 
-## Phase 4–7
+## Phase 4 — 2026-09-21
 
-Not started. Waiting on Evolu-Jeunes PAT, then ScanApp onboard.
+Adapters + orchestrator. Depth 3 hard stop. HTTP → Voltron.
+
+```
+pnpm --filter @cashtro/adapters test
+pnpm --filter @cashtro/api test   # includes e2e if :8080 is up
+```
+
+## Phase 5 — 2026-09-21
+
+`agent.manifest.json` + `AGENTS.md` on cashtro. `pnpm onboard cashtro/cashtro`.
+Does not invent Evolu-Jeunes repo paths.
+
+## Phase 6 — 2026-09-21
+
+`GET /costs`, pause drains queued jobs, `pnpm secret-scan` + CI job.
+Budget cap still blocks before dispatch.
+
+## Phase 7 — 2026-09-21
+
+Four screens: Fastify `/ui` (phone) and Next.js `apps/web`.
+Evolu-Jeunes still dark — recon cannot grow until Cursor App is on the org.

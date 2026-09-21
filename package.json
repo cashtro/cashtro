@@ -4,6 +4,9 @@
   "packageManager": "pnpm@10.33.3",
   "scripts": {
     "recon": "pnpm --filter @cashtro/recon start",
+    "onboard": "pnpm --filter @cashtro/onboard start",
+    "secret-scan": "pnpm --filter @cashtro/secret-scan start",
+    "web": "pnpm --filter @cashtro/web dev",
     "api": "pnpm --filter @cashtro/api start",
     "api:dev": "pnpm --filter @cashtro/api dev",
     "db:migrate": "pnpm --filter @cashtro/api prisma:migrate",

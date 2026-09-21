@@ -68,9 +68,11 @@ export async function seed(client: PrismaClient = prisma) {
       where: { slug },
       update: {
         repoUrl: repo.access === "ok" ? `https://github.com/${repo.fullName}` : null,
+        org: repo.org,
+        kind: repo.name === "cashtro" ? "control-plane" : repo.access === "ok" ? "internal" : "internal",
         status: repo.access === "ok" ? "active" : "denied",
         deployTarget: (repo.deployTarget || []).join(",") || null,
-        tags: JSON.stringify([repo.visibility, repo.framework || "unknown"]),
+        tags: JSON.stringify([repo.visibility, repo.framework || "unknown", repo.access]),
       },
       create: {
         slug,

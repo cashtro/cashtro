@@ -56,3 +56,21 @@
 - **Why:** Castro said there was no ScanApp work in the plane. The
   backlog task was orphaned because slug `scanapp` did not exist. Do
   not invent a GitHub path.
+
+## 2026-09-21 — HTTP adapter is the first real runtime
+
+- **Choice:** Phase 4 ships `http` (Voltron kernel), `openrouter` /
+  `bedrock` alias (no live spend without a key), `cursor` and
+  `claude-code` as resident stubs. Depth hard-stop is 3 in code.
+- **Alternatives:** Require Redis/BullMQ; call OpenRouter for the
+  first E2E; wait for Evolu-Jeunes.
+- **Why:** Voltron is already on :8080. OpenRouter spend needs a key
+  and would burn the $2 cap. Redis is still not on this box.
+
+## 2026-09-21 — Four screens on Fastify `/ui` plus Next.js `apps/web`
+
+- **Choice:** Phone pane is Fastify `/ui/{fleet,queue,run,recon}`
+  against the same DB. `apps/web` is the Next.js shell.
+- **Alternatives:** Next only; wait for Phase 7.
+- **Why:** Castro said keep working. The Fastify pane loads without a
+  second process. Next talks to the same API.

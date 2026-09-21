@@ -3,11 +3,17 @@ import swagger from "@fastify/swagger";
 import swaggerUi from "@fastify/swagger-ui";
 import { PrismaClient } from "@prisma/client";
 import { CreateTask } from "@cashtro/sdk";
+import type { AgentAdapter } from "@cashtro/adapters";
+import { drainQueue, orchestrate } from "./orchestrate.js";
+import { renderPane } from "./pane.js";
 
 export type AppOpts = {
   prisma: PrismaClient;
   apiKeys?: Array<{ id: string; secret: string; scope: string }>;
   budgetCap?: number;
+  kernelUrl?: string;
+  fetchImpl?: typeof fetch;
+  adapters?: Record<string, AgentAdapter>;
 };
 
 function parseKeys(raw: string | undefined): Array<{ id: string; secret: string; scope: string }> {
@@ -46,7 +52,7 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
 
   app.decorateRequest("actor", "");
   app.addHook("preHandler", async (req, reply) => {
-    if (req.method === "GET" && (req.url === "/docs" || req.url.startsWith("/docs/") || req.url.startsWith("/documentation") || req.url === "/metrics" || req.url === "/health")) {
+    if (req.method === "GET" && (req.url === "/docs" || req.url.startsWith("/docs/") || req.url.startsWith("/documentation") || req.url === "/metrics" || req.url === "/health" || req.url === "/ui" || req.url.startsWith("/ui/"))) {
       req.actor = "public";
       return;
     }
@@ -67,6 +73,15 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
   }
 
   app.get("/health", async () => ({ status: "ok", service: "control-plane" }));
+  app.get("/ui", async (req, reply) => {
+    reply.header("content-type", "text/html; charset=utf-8");
+    return renderPane(prisma, "fleet");
+  });
+  app.get("/ui/:screen", async (req, reply) => {
+    const { screen } = req.params as { screen: string };
+    reply.header("content-type", "text/html; charset=utf-8");
+    return renderPane(prisma, screen);
+  });
 
   app.get("/projects", async (req) => {
     const q = req.query as { kind?: string; status?: string; tag?: string };
@@ -128,39 +143,20 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
   });
 
   app.post("/tasks/:id/dispatch", async (req, reply) => {
-    const control = await prisma.controlState.findUnique({ where: { id: "global" } });
-    if (control?.paused) return reply.code(409).send({ error: "paused" });
     const { id } = req.params as { id: string };
-    const task = await prisma.task.findUnique({ where: { id } });
-    if (!task) return reply.code(404).send({ error: "not found" });
-    const agent =
-      (task.assigneeAgentId && (await prisma.agent.findUnique({ where: { id: task.assigneeAgentId } }))) ||
-      (await prisma.agent.findFirst({ where: { enabled: true } }));
-    if (!agent) return reply.code(409).send({ error: "no agent" });
-    const estimate = 0.01;
-    if (estimate > Math.min(budgetCap, agent.maxCostPerRun)) {
-      const blocked = await prisma.run.create({
-        data: { taskId: task.id, agentId: agent.id, status: "blocked-budget", costUsd: 0, exitReason: "over-budget" },
-      });
-      await emit(req.actor, "run.blocked-budget", { runId: blocked.id });
-      return reply.code(409).send({ error: "over-budget", run: blocked });
-    }
-    const run = await prisma.run.create({
-      data: {
-        taskId: task.id,
-        agentId: agent.id,
-        status: "succeeded",
-        endedAt: new Date(),
-        inputTokens: 0,
-        outputTokens: 0,
-        costUsd: estimate,
-        exitReason: "local-queue",
-      },
+    const body = (req.body || {}) as { depth?: number };
+    const result = await orchestrate({
+      prisma,
+      taskId: id,
+      actor: req.actor,
+      budgetCap,
+      depth: body.depth,
+      kernelUrl: opts.kernelUrl,
+      fetchImpl: opts.fetchImpl,
+      adapters: opts.adapters,
     });
-    await prisma.artifact.create({ data: { runId: run.id, type: "report", path: `runs/${run.id}.json`, sha: run.id } });
-    await prisma.task.update({ where: { id: task.id }, data: { status: "done", assigneeAgentId: agent.id } });
-    await emit(req.actor, "task.dispatch", { taskId: task.id, runId: run.id, costUsd: estimate });
-    return run;
+    if (!result.ok) return reply.code(result.status).send(result);
+    return result.run;
   });
 
   app.post("/tasks/:id/cancel", async (req, reply) => {
@@ -179,8 +175,24 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
       update: { paused: true },
       create: { id: "global", paused: true },
     });
-    await emit(req.actor, "control.pause", { paused: true });
-    return state;
+    const drained = await drainQueue(prisma, req.actor);
+    await emit(req.actor, "control.pause", { paused: true, drained });
+    return { ...state, drained };
+  });
+
+  app.get("/control", async () => {
+    const state = await prisma.controlState.findUnique({ where: { id: "global" } });
+    const queued = await prisma.job.count({ where: { status: "queued" } });
+    return { paused: state?.paused ?? false, queued };
+  });
+
+  app.get("/costs", async () => {
+    const since = new Date(Date.now() - 7 * 24 * 3600 * 1000);
+    const runs = await prisma.run.findMany({ where: { startedAt: { gte: since } } });
+    const total = runs.reduce((n, r) => n + r.costUsd, 0);
+    const byAgent: Record<string, number> = {};
+    for (const r of runs) byAgent[r.agentId] = (byAgent[r.agentId] || 0) + r.costUsd;
+    return { windowDays: 7, runs: runs.length, totalUsd: total, byAgent, hardCapPerRun: budgetCap };
   });
 
   app.post("/control/resume", async (req) => {

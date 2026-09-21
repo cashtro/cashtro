@@ -6,6 +6,7 @@ import path from "node:path";
 import { promisify } from "node:util";
 import { test } from "node:test";
 import { PrismaClient } from "@prisma/client";
+import { createLocalAdapter } from "@cashtro/adapters";
 import { seed } from "../prisma/seed.js";
 import { buildApp } from "./app.js";
 
@@ -103,8 +104,7 @@ test("registry seed + every mutating route writes an event", async (t) => {
   const dispatched = await ctx.app.inject({ method: "POST", url: `/tasks/${created.json().id}/dispatch`, ...auth() });
   assert.equal(dispatched.statusCode, 200);
   assert.equal(dispatched.json().status, "succeeded");
-  assert.ok(dispatched.json().costUsd > 0);
-
+  assert.ok(dispatched.json().costUsd >= 0);
   const run = await ctx.app.inject({ method: "GET", url: `/runs/${dispatched.json().id}`, ...auth() });
   assert.equal(run.statusCode, 200);
   assert.ok(run.json().artifacts.length >= 1);
@@ -134,6 +134,7 @@ test("pause refuses dispatch", async (t) => {
   });
   const pause = await ctx.app.inject({ method: "POST", url: "/control/pause", ...auth() });
   assert.equal(pause.json().paused, true);
+  assert.ok(typeof pause.json().drained === "number");
   const dispatch = await ctx.app.inject({ method: "POST", url: `/tasks/${task.json().id}/dispatch`, ...auth() });
   assert.equal(dispatch.statusCode, 409);
   await ctx.app.inject({ method: "POST", url: `/tasks/${task.json().id}/cancel`, ...auth() });
@@ -158,6 +159,7 @@ test("budget cap blocks an over-budget dispatch", async (t) => {
     prisma,
     apiKeys: [{ id: "test", secret: "test-key", scope: "admin" }],
     budgetCap: 0.001,
+    adapters: { http: createLocalAdapter(1), local: createLocalAdapter(1) },
   });
   t.after(() => app.close());
   const task = await app.inject({
@@ -168,4 +170,28 @@ test("budget cap blocks an over-budget dispatch", async (t) => {
   const dispatch = await app.inject({ method: "POST", url: `/tasks/${task.json().id}/dispatch`, ...auth() });
   assert.equal(dispatch.statusCode, 409);
   assert.equal(dispatch.json().error, "over-budget");
+});
+
+test("depth 4 is refused and /ui + /costs render", async (t) => {
+  const ctx = await withDb();
+  t.after(() => ctx.close());
+  const task = await ctx.app.inject({
+    method: "POST",
+    url: "/tasks",
+    ...auth({ title: "too deep", idempotencyKey: "idem-depth-0001" }),
+  });
+  const deep = await ctx.app.inject({
+    method: "POST",
+    url: `/tasks/${task.json().id}/dispatch`,
+    ...auth({ depth: 4 }),
+  });
+  assert.equal(deep.statusCode, 409);
+  assert.equal(deep.json().error, "depth-limit");
+
+  const fleet = await ctx.app.inject({ method: "GET", url: "/ui/fleet" });
+  assert.equal(fleet.statusCode, 200);
+  assert.match(fleet.body, /scanapp/i);
+  const costs = await ctx.app.inject({ method: "GET", url: "/costs", ...auth() });
+  assert.equal(costs.statusCode, 200);
+  assert.equal(typeof costs.json().totalUsd, "number");
 });

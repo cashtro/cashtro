@@ -121,3 +121,13 @@ model ControlState {
   id      String  @id
   paused  Boolean @default(false)
 }
+
+model Job {
+  id        String   @id @default(cuid())
+  taskId    String
+  runId     String?
+  status    String   @default("queued")
+  depth     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,5 +1,10 @@
+import path from "node:path";
 import { PrismaClient } from "@prisma/client";
 import { buildApp } from "./app.js";
+
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = `file:${path.resolve(process.cwd(), "../data/control-plane.db")}`;
+}
 
 const prisma = new PrismaClient();
 const port = Number(process.env.PORT || 8787);

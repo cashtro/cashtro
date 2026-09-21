@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1",
+  "project": {
+    "slug": "cashtro",
+    "kind": "control-plane",
+    "owner": "cashtro"
+  },
+  "capabilities": [
+    {
+      "name": "test",
+      "cmd": "pnpm test",
+      "timeoutSec": 300
+    },
+    {
+      "name": "build",
+      "cmd": "pnpm build",
+      "timeoutSec": 600
+    }
+  ],
+  "agents": [
+    {
+      "name": "cashtro-operator",
+      "runtime": "http",
+      "promptFile": "AGENTS.md"
+    }
+  ],
+  "env": [
+    "DATABASE_URL"
+  ],
+  "health": {
+    "url": "",
+    "expect": 200
+  }
+}
