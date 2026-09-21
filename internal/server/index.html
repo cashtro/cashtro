@@ -133,6 +133,10 @@
         </form>
       </div>
       <div class="panel" style="margin-top:14px">
+        <h2>Mailbox</h2>
+        <div class="journal" id="mail"></div>
+      </div>
+      <div class="panel" style="margin-top:14px">
         <h2>Human gate</h2>
         <div class="journal" id="confirms"></div>
       </div>
@@ -231,8 +235,8 @@
       }
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms, watch] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/watch")
+      const [os, agents, ships, events, model, profile, notes, confirms, watch, mail] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/watch"), j("/api/mail")
       ]);
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
@@ -249,6 +253,7 @@
         chip(os.live + " live"),
         chip(os.resident + " resident"),
         chip(notes.length + " notes"),
+        chip((mail || []).length + " mail"),
         chip((watch.pulses || []).length + " pulses"),
         chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
       );
@@ -295,6 +300,18 @@
         const line = document.createElement("div");
         line.textContent = n.source + " — " + n.claim;
         lib.appendChild(line);
+      });
+      const mailbox = document.getElementById("mail");
+      mailbox.replaceChildren();
+      if (!mail.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "Empty. Watch pulses drop mail here while the desk is closed.";
+        mailbox.appendChild(empty);
+      }
+      mail.slice(-12).reverse().forEach((m) => {
+        const line = document.createElement("div");
+        line.textContent = m.from + " → " + m.to + " · " + m.kind + " — " + m.body;
+        mailbox.appendChild(line);
       });
       const gate = document.getElementById("confirms");
       gate.replaceChildren();
