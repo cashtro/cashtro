@@ -120,6 +120,13 @@ func TestOSAndAgents(t *testing.T) {
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"kind":"sast"`) {
 		t.Fatalf("security = %d %s", res.Code, res.Body.String())
 	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/agents/reviewer/invoke", strings.NewReader(`{"capability":"reviewer.watch"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"artifacts"`) {
+		t.Fatalf("reviewer = %d %s", res.Code, res.Body.String())
+	}
 }
 
 func TestFavicon(t *testing.T) {

@@ -3,6 +3,8 @@ package agents
 import (
 	"context"
 	"encoding/json"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -19,7 +21,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 11 {
+	if about.Running != 15 || about.Live != 12 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -172,6 +174,37 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 	if triage.Findings[0].Kind != "cve" {
 		t.Fatalf("finding = %#v", triage.Findings[0])
+	}
+}
+
+func TestReviewerWatch(t *testing.T) {
+	t.Setenv("CASHTRO_CLOSED", "")
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, "walkthrough.png"), []byte("x"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("CASHTRO_ARTIFACTS", dir)
+	k, err := Boot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := k.Invoke(context.Background(), "reviewer", kernel.Call{Capability: "reviewer.watch"})
+	if err != nil || !res.OK {
+		t.Fatalf("reviewer.watch: %+v %v", res, err)
+	}
+	review, ok := res.Data.(Review)
+	if !ok || !review.Ready {
+		t.Fatalf("review = %#v ok=%v", res.Data, ok)
+	}
+	found := false
+	for _, a := range review.Artifacts {
+		if a.Name == "walkthrough.png" && a.Kind == "image" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Fatalf("missing walkthrough.png: %#v", review.Artifacts)
 	}
 }
 

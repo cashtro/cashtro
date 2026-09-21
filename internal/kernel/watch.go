@@ -38,6 +38,7 @@ var ClosedHoursFlow = []string{
 	"architect.plan",
 	"investigator.trace",
 	"security.triage",
+	"reviewer.watch",
 	"delivery.list",
 	"delivery.create",
 	"delivery.advance",

@@ -3,6 +3,8 @@ package agents
 import (
 	"context"
 	"encoding/json"
+	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
@@ -559,6 +561,85 @@ func classifyFinding(blob string) string {
 		return "secret"
 	case strings.Contains(b, "vulnerab") || strings.Contains(b, "xss") || strings.Contains(b, "sqli"):
 		return "vuln"
+	default:
+		return ""
+	}
+}
+
+const maxArtifacts = 32
+
+// Artifact is one walkthrough file on disk.
+type Artifact struct {
+	Name string `json:"name"`
+	Path string `json:"path"`
+	Kind string `json:"kind"`
+}
+
+// Review is a deterministic artifact pass. The model does not fill this.
+type Review struct {
+	Ready     bool       `json:"ready"`
+	Artifacts []Artifact `json:"artifacts"`
+	Roots     []string   `json:"roots"`
+}
+
+func reviewerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	_ = call
+	roots := artifactRoots()
+	arts := listArtifacts(roots)
+	msg := "no walkthrough artifacts"
+	if len(arts) > 0 {
+		msg = "watched " + strconv.Itoa(len(arts))
+		k.Remember("review", msg)
+	}
+	return kernel.Result{OK: true, Message: msg, Data: Review{Ready: len(arts) > 0, Artifacts: arts, Roots: roots}}, nil
+}
+
+func artifactRoots() []string {
+	out := make([]string, 0, 3)
+	if v := strings.TrimSpace(os.Getenv("CASHTRO_ARTIFACTS")); v != "" {
+		out = append(out, v)
+	}
+	out = append(out, "/opt/cursor/artifacts", "artifacts")
+	return out
+}
+
+func listArtifacts(roots []string) []Artifact {
+	seen := make(map[string]bool)
+	out := make([]Artifact, 0)
+	for _, root := range roots {
+		entries, err := os.ReadDir(root)
+		if err != nil {
+			continue
+		}
+		for _, e := range entries {
+			if e.IsDir() {
+				continue
+			}
+			name := e.Name()
+			kind := artifactKind(filepath.Ext(name))
+			if kind == "" {
+				continue
+			}
+			p := filepath.Join(root, name)
+			if seen[p] {
+				continue
+			}
+			seen[p] = true
+			out = append(out, Artifact{Name: name, Path: p, Kind: kind})
+			if len(out) >= maxArtifacts {
+				return out
+			}
+		}
+	}
+	return out
+}
+
+func artifactKind(ext string) string {
+	switch strings.ToLower(ext) {
+	case ".png", ".jpg", ".jpeg", ".webp", ".gif":
+		return "image"
+	case ".mp4", ".webm":
+		return "video"
 	default:
 		return ""
 	}
