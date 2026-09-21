@@ -235,14 +235,14 @@ func routeAsk(raw string) (owner, verb, reason string) {
 	switch {
 	case hasAny(low, "send", "email", "slack", "tweet", "outbound"):
 		return "comms", "comms.send", "Outbound waits on the human gate."
+	case hasAny(low, "backlog", "mandate", "park it", "park a", "delivery line"):
+		return "planner", "planner.backlog", "Goals become idea-stage ships."
+	case hasAny(low, "advance", "move to concept", "production"):
+		return "delivery", "delivery.advance", "The live line is idea → concept → production."
 	case hasAny(low, "remember", "recall", "memory"):
 		return "memory", "memory.store", "Facts live on the memory agentic."
 	case hasAny(low, "research", "paper", "arxiv", "note", "find out"):
 		return "research", "research.ingest", "Findings belong in the research library, not only in chat."
-	case hasAny(low, "backlog", "mandate", "park it", "delivery line"):
-		return "planner", "planner.backlog", "Goals become idea-stage ships."
-	case hasAny(low, "advance", "move to concept", "production"):
-		return "delivery", "delivery.advance", "The live line is idea → concept → production."
 	case hasAny(low, "browse", "screenshot", "click through"):
 		return "operator", "operator.browse", "Operator is resident; the assistant can still verify the UI."
 	case hasAny(low, "deploy", "release", "ci"):
@@ -269,9 +269,6 @@ func titleFrom(raw, verb string) string {
 	cleaned := collapseSpace(raw)
 	cleaned = strings.TrimRight(cleaned, ".!?")
 	runes := []rune(cleaned)
-	if len(runes) > 72 {
-		runes = append(runes[:72], '…')
-	}
 	if len(runes) == 0 {
 		return verb
 	}

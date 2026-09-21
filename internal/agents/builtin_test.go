@@ -131,6 +131,18 @@ func TestDeskCapturesAndBetters(t *testing.T) {
 		t.Fatalf("improved missing acceptance: %s", second.Improved)
 	}
 
+	res, err = k.Invoke(context.Background(), "desk", kernel.Call{
+		Capability: "desk.capture",
+		Payload:    []byte(`{"raw":"park a north desk mandate"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("mandate capture: %+v %v", res, err)
+	}
+	mandate, ok := res.Data.(kernel.Request)
+	if !ok || mandate.Owner != "planner" {
+		t.Fatalf("mandate owner = %+v", res.Data)
+	}
+
 	res, err = k.Invoke(context.Background(), "desk", kernel.Call{Capability: "desk.capture"})
 	if err != nil || res.OK {
 		t.Fatalf("empty capture should be ok=false: %+v %v", res, err)
