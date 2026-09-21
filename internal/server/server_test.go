@@ -137,6 +137,9 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(body, "GIANT") || !strings.Contains(body, "Ecosystem") || !strings.Contains(body, "Giant ecosystem") {
 		t.Fatalf("index missing Giant ecosystem shell")
 	}
+	if !strings.Contains(body, "Add a company") || !strings.Contains(body, "Castro") {
+		t.Fatalf("index missing evolvable fleet forms")
+	}
 }
 
 func TestShipLifecycleHTTP(t *testing.T) {
@@ -200,6 +203,68 @@ func TestCreateRejectsUnknownField(t *testing.T) {
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusBadRequest {
 		t.Fatalf("status = %d body=%s", res.Code, res.Body.String())
+	}
+}
+
+func TestCompanyFleetHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/companies", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"Giant"`) {
+		t.Fatalf("companies = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/companies/giant", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "Giant Conductor") {
+		t.Fatalf("giant card = %s", res.Body.String())
+	}
+	if strings.Contains(res.Body.String(), `"inherited":true`) {
+		t.Fatal("giant should not inherit Castro's while it has its own roster")
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/companies", strings.NewReader(`{"name":"Northwind","sector":"ops","notes":"new tenant"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated {
+		t.Fatalf("create company = %d %s", res.Code, res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), `"usingMine":true`) || !strings.Contains(res.Body.String(), "Delivery") {
+		t.Fatalf("empty company should use Castro's: %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/companies/northwind/agents", strings.NewReader(`{"name":"Northwind Clerk","role":"ops","cashtroId":"delivery","capabilities":["delivery.list"]}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated || !strings.Contains(res.Body.String(), "northwind-clerk") {
+		t.Fatalf("add agentic = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/companies/northwind/agents/northwind-clerk/invoke", strings.NewReader(`{"capability":"delivery.list"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"ok":true`) {
+		t.Fatalf("invoke own bind = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/companies/northwind/agents/planner/invoke", strings.NewReader(`{"capability":"planner.backlog","payload":{"goal":"desk"}}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("invoke Castro mine = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/companies/scanapp/agents/scan-ingest/invoke", strings.NewReader(`{"capability":"scan.ingest"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "resident") {
+		t.Fatalf("unbound own agentic = %d %s", res.Code, res.Body.String())
 	}
 }
 

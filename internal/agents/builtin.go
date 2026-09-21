@@ -12,6 +12,7 @@ import (
 	"fmt"
 
 	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/fleet"
 	"github.com/cashtro/cashtro/internal/kernel"
 	"github.com/cashtro/cashtro/internal/model"
 )
@@ -20,6 +21,7 @@ import (
 func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 	k := kernel.New(opts...)
 	cat := catalog.New()
+	k.AttachTenants(fleet.New())
 	for _, agent := range Builtins(cat, model.FromEnv()) {
 		k.Register(agent)
 	}

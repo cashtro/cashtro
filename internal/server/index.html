@@ -169,6 +169,10 @@
     .dot { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--fog); }
     .dot.live { color: var(--mint); }
     .dot.resident { color: var(--amber); }
+    .dot.own { color: var(--amber); }
+    .dot.castro { color: var(--mint); }
+    .check { display: flex; align-items: center; gap: .55rem; color: var(--fog); font-size: .85rem; }
+    .check input { width: auto; accent-color: var(--mint); }
 
     .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
     @media (max-width: 900px) { .board { grid-template-columns: 1fr; } }
@@ -203,7 +207,7 @@
     form, .inspect { display: grid; gap: .7rem; }
     .inspect { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid var(--line); }
     label { font-size: .75rem; color: var(--fog); display: grid; gap: .3rem; letter-spacing: .04em; }
-    input, textarea {
+    input, textarea, select {
       padding: .7rem .8rem; background: #0a100e; border: 1px solid var(--line); color: var(--paper);
     }
     .forms { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
@@ -242,6 +246,7 @@
         <button type="button" class="view-btn active" data-view="desk">Desk<small>Processes + inspect</small></button>
         <button type="button" class="view-btn" data-view="line">Line<small>Idea → concept → production</small></button>
         <button type="button" class="view-btn" data-view="library">Library<small>Notes, gate, journal</small></button>
+        <button type="button" class="view-btn" data-view="fleet">Fleet<small>Add companies + agentics</small></button>
       </div>
       <div>
         <div class="nav-label">Ecosystem</div>
@@ -263,7 +268,7 @@
       <section class="view on" id="view-desk">
         <div class="desk">
           <section class="panel">
-            <h2>Process table</h2>
+            <h2>Process table · <span id="agent-source">Castro's kernel</span></h2>
             <div class="agents" id="agents"></div>
             <div class="inspect" id="inspect"></div>
           </section>
@@ -318,27 +323,60 @@
         </section>
       </section>
 
+      <section class="view" id="view-fleet">
+        <div class="forms">
+          <section class="panel">
+            <h2>Add a company</h2>
+            <p class="lede">New tenant on the Giant desk. Leave agentics empty and they use Castro's.</p>
+            <form id="company-form">
+              <label>Name <input name="name" required placeholder="Northwind"></label>
+              <label>Sector <input name="sector" placeholder="ops"></label>
+              <label>Stack <input name="stack" placeholder="Go, TypeScript"></label>
+              <label>Notes <textarea name="notes" rows="2" placeholder="What this company ships"></textarea></label>
+              <label class="check"><input type="checkbox" name="useMine" checked> Use Castro's agentics if they have none</label>
+              <button class="primary" type="submit">Add company</button>
+              <div class="err" id="company-error"></div>
+            </form>
+          </section>
+          <section class="panel">
+            <h2>Add an agentic · <span id="agentic-co">pick a company</span></h2>
+            <p class="lede">Own roster for this tenant. Bind a Cashtro id to run through Castro's kernel.</p>
+            <form id="agentic-form">
+              <label>Name <input name="name" required placeholder="Northwind Clerk"></label>
+              <label>Role <input name="role" placeholder="ops"></label>
+              <label>Bind Castro agentic
+                <select name="cashtroId" id="cashtro-bind">
+                  <option value="">none — resident until bound</option>
+                </select>
+              </label>
+              <label>Capabilities <input name="capabilities" placeholder="delivery.list, northwind.sync"></label>
+              <label>Summary <input name="summary" placeholder="Runs Northwind intake"></label>
+              <button class="primary" type="submit">Bind agentic</button>
+              <div class="err" id="agentic-error"></div>
+            </form>
+          </section>
+        </div>
+        <section class="panel" style="margin-top:1.1rem">
+          <h2>Company roster</h2>
+          <div class="agents" id="roster"></div>
+        </section>
+      </section>
+
       <footer>
-        <span>Giant · ScanApp · Proximity · Empire · Evolu-Jeunes · Cashtro</span>
+        <span id="fleet-foot">Giant ecosystem · add companies · Castro's agentics as fallback</span>
         <span>stdlib Go · Azure Web Apps</span>
       </footer>
     </main>
   </div>
   <script>
     const stages = ["idea", "concept", "production"];
-    const ecosystem = [
-      { id: "all", name: "All companies", mark: "∞", sector: "fleet", note: "Every tenant on one desk" },
-      { id: "giant", name: "Giant", mark: "G", sector: "platform", note: "Flagship multi-tenant platform" },
-      { id: "scanapp", name: "ScanApp", mark: "S", sector: "ops", note: "Scan, CRM, and AI bots" },
-      { id: "proximity", name: "Proximity", mark: "P", sector: "agency", note: "Agency platform + client delivery" },
-      { id: "empire", name: "Empire", mark: "E", sector: "holding", note: "Holding / empire orchestration" },
-      { id: "evolu-jeunes", name: "Evolu-Jeunes", mark: "EJ", sector: "org", note: "Org that ships many client mandates" },
-      { id: "cashtro", name: "Cashtro", mark: "C", sector: "os", note: "Agentic OS kernel underneath" }
-    ];
+    const allCompany = { id: "all", name: "All companies", mark: "∞", sector: "fleet", notes: "Every tenant on one desk", usingMine: true };
+    let companies = [];
     let selected = "research";
     let lastInvoke = "";
     let company = "all";
     let view = "desk";
+    let roster = [];
 
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
@@ -353,7 +391,11 @@
       return el;
     }
     function currentCompany() {
-      return ecosystem.find((c) => c.id === company) || ecosystem[0];
+      if (company === "all") return allCompany;
+      return companies.find((c) => c.id === company) || allCompany;
+    }
+    function rail() {
+      return [allCompany].concat(companies);
     }
     function matchCompany(ship) {
       if (company === "all") return true;
@@ -430,15 +472,17 @@
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
       box.replaceChildren();
+      const spec = agent.spec || agent;
       const title = document.createElement("div");
       title.className = "nav-label";
-      title.textContent = agent.spec.name + " · " + agent.spec.mode;
+      const src = spec.inherited ? "Castro's" : (spec.source === "own" ? "own" : spec.mode);
+      title.textContent = spec.name + " · " + (spec.mode || "") + " · " + src;
       const p = document.createElement("p");
       p.className = "lede";
-      p.textContent = lastInvoke || agent.spec.summary;
+      p.textContent = lastInvoke || spec.summary;
       box.appendChild(title);
       box.appendChild(p);
-      (agent.spec.capabilities || []).forEach((cap) => {
+      (spec.capabilities || []).forEach((cap) => {
         const b = document.createElement("button");
         b.className = "ghost-btn";
         b.textContent = "Invoke " + cap;
@@ -448,7 +492,10 @@
             const payload = cap === "model.chat"
               ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
               : { capability: cap };
-            const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
+            const url = company !== "all"
+              ? "/api/companies/" + encodeURIComponent(company) + "/agents/" + encodeURIComponent(spec.id) + "/invoke"
+              : "/api/agents/" + encodeURIComponent(spec.id) + "/invoke";
+            const res = await j(url, {
               method: "POST",
               headers: { "Content-Type": "application/json", "Accept": "application/json" },
               body: JSON.stringify(payload)
@@ -463,7 +510,7 @@
         });
         box.appendChild(b);
       });
-      if (agent.spec.id === "router" && model && !model.bound) {
+      if (spec.id === "router" && model && !model.bound) {
         const hint = document.createElement("p");
         hint.className = "err";
         hint.textContent = "No OPENROUTER_API_KEY. Kernel is up. Bind a key when an agentic needs to think.";
@@ -473,37 +520,80 @@
     function paintCompanies() {
       const box = document.getElementById("companies");
       box.replaceChildren();
-      ecosystem.forEach((co) => {
+      rail().forEach((co) => {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "company" + (co.id === company ? " active" : "");
         btn.innerHTML = "<span class='mark'></span><span><b></b><small></small></span>";
-        btn.querySelector(".mark").textContent = co.mark;
+        btn.querySelector(".mark").textContent = co.mark || "?";
         btn.querySelector("b").textContent = co.name;
-        btn.querySelector("small").textContent = co.sector;
-        btn.addEventListener("click", () => { company = co.id; render(); });
+        const mine = co.id !== "all" && (co.usingMine || !co.ownAgents);
+        btn.querySelector("small").textContent = mine && co.id !== "all" && !co.ownAgents
+          ? (co.sector || "") + " · Castro's"
+          : (co.sector || "");
+        btn.addEventListener("click", () => { company = co.id; lastInvoke = ""; render(); });
         box.appendChild(btn);
       });
     }
     function paintFleet(ships) {
       const box = document.getElementById("fleet");
       box.replaceChildren();
-      ecosystem.filter((c) => c.id !== "all").forEach((co) => {
+      companies.forEach((co) => {
         const count = ships.filter((s) => {
           const hay = [s.id, s.name, s.client, s.sector].join(" ").toLowerCase();
-          return hay.includes(co.id) || hay.includes(co.name.toLowerCase());
+          return hay.includes(co.id) || hay.includes((co.name || "").toLowerCase());
         }).length;
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "tile" + (co.id === company ? " active" : "");
         btn.innerHTML = "<span class='mark'></span><b></b><small></small><div class='count'></div>";
-        btn.querySelector(".mark").textContent = co.mark;
+        btn.querySelector(".mark").textContent = co.mark || "?";
         btn.querySelector("b").textContent = co.name;
-        btn.querySelector("small").textContent = co.note;
-        btn.querySelector(".count").textContent = count + (count === 1 ? " ship" : " ships");
-        btn.addEventListener("click", () => { company = co.id; render(); });
+        btn.querySelector("small").textContent = co.notes || co.sector || "";
+        const own = co.ownAgents || 0;
+        btn.querySelector(".count").textContent = count + (count === 1 ? " ship" : " ships") +
+          " · " + (own ? own + " own" : "Castro's");
+        btn.addEventListener("click", () => { company = co.id; lastInvoke = ""; render(); });
         box.appendChild(btn);
       });
+    }
+    function paintRoster(agents) {
+      const box = document.getElementById("roster");
+      box.replaceChildren();
+      if (!agents.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = company === "all" ? "Pick a company to see its roster." : "No own agentics. This tenant uses Castro's.";
+        box.appendChild(empty);
+        return;
+      }
+      agents.forEach((agent) => {
+        const row = document.createElement("div");
+        row.className = "agent";
+        row.innerHTML = "<div><b></b><span></span></div><div class='dot'></div>";
+        row.querySelector("b").textContent = agent.name;
+        row.querySelector("span").textContent = (agent.inherited ? "Castro's · " : "own · ") + agent.role + " — " + agent.summary;
+        const dot = row.querySelector(".dot");
+        dot.className = "dot " + (agent.inherited ? "castro" : "own");
+        dot.textContent = agent.inherited ? "castro" : "own";
+        box.appendChild(row);
+      });
+    }
+    function fillBinds(agents) {
+      const sel = document.getElementById("cashtro-bind");
+      const keep = sel.value;
+      sel.replaceChildren();
+      const none = document.createElement("option");
+      none.value = "";
+      none.textContent = "none — resident until bound";
+      sel.appendChild(none);
+      agents.forEach((a) => {
+        const opt = document.createElement("option");
+        opt.value = a.spec.id;
+        opt.textContent = a.spec.name + " · " + a.spec.id;
+        sel.appendChild(opt);
+      });
+      sel.value = keep;
     }
     function showView(next) {
       view = next;
@@ -511,9 +601,10 @@
       document.querySelectorAll(".view-btn").forEach((el) => el.classList.toggle("active", el.getAttribute("data-view") === next));
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, agents, ships, events, model, profile, notes, confirms, tenants] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/companies")
       ]);
+      companies = tenants;
       document.getElementById("lede").textContent = os.manifesto;
       document.getElementById("contact").textContent = profile.email;
       document.getElementById("who").textContent = profile.name;
@@ -532,8 +623,11 @@
       );
       paintCompanies();
       paintFleet(ships);
+      fillBinds(agents);
+      document.getElementById("fleet-foot").textContent = companies.map((c) => c.name).join(" · ");
       const co = currentCompany();
       document.getElementById("eco-label").textContent = co.name;
+      document.getElementById("agentic-co").textContent = co.id === "all" ? "pick a company" : co.name;
       const headline = document.getElementById("headline");
       headline.innerHTML = co.id === "all"
         ? "AI OS · idea → concept → <em>production</em>"
@@ -544,20 +638,36 @@
       if (sector && !sector.value && co.id !== "all") sector.placeholder = co.sector;
       const grid = document.getElementById("agents");
       grid.replaceChildren();
-      agents.forEach((agent) => {
+      roster = [];
+      if (co.id === "all") {
+        document.getElementById("agent-source").textContent = "Castro's kernel";
+        roster = agents.map((a) => ({
+          id: a.spec.id, name: a.spec.name, role: a.spec.role, mode: a.spec.mode,
+          summary: a.spec.summary, capabilities: a.spec.capabilities, inherited: false, source: "castro"
+        }));
+      } else {
+        const card = await j("/api/companies/" + encodeURIComponent(co.id));
+        roster = card.agents || [];
+        document.getElementById("agent-source").textContent = card.usingMine && !(card.agentIds || []).length
+          ? "Castro's (this company has none)"
+          : (card.usingMine ? "own + Castro's" : "own roster");
+      }
+      roster.forEach((agent) => {
         const btn = document.createElement("button");
-        btn.className = "agent" + (agent.spec.id === selected ? " active" : "");
+        btn.className = "agent" + (agent.id === selected ? " active" : "");
         btn.innerHTML = "<div><b></b><span></span></div><div class='dot'></div>";
-        btn.querySelector("b").textContent = agent.spec.name;
-        btn.querySelector("span").textContent = agent.spec.role + " — " + agent.spec.summary;
+        btn.querySelector("b").textContent = agent.name;
+        btn.querySelector("span").textContent = agent.role + " — " + agent.summary;
         const dot = btn.querySelector(".dot");
-        dot.className = "dot " + agent.spec.mode;
-        dot.textContent = agent.spec.mode;
-        btn.addEventListener("click", () => { selected = agent.spec.id; lastInvoke = ""; render(); });
+        const tag = agent.inherited ? "castro" : (agent.source === "own" ? "own" : agent.mode);
+        dot.className = "dot " + tag;
+        dot.textContent = tag;
+        btn.addEventListener("click", () => { selected = agent.id; lastInvoke = ""; render(); });
         grid.appendChild(btn);
       });
-      const current = agents.find((a) => a.spec.id === selected) || agents[0];
-      inspect(current, model);
+      const current = roster.find((a) => a.id === selected) || roster[0];
+      if (current) inspect(current, model);
+      paintRoster(roster);
       const visible = ships.filter(matchCompany);
       paintBoard(document.getElementById("board"), visible);
       paintBoard(document.getElementById("board-line"), visible);
@@ -621,6 +731,59 @@
         });
         event.target.reset();
         showView("line");
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    document.getElementById("company-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("company-error");
+      err.textContent = "";
+      const data = new FormData(event.target);
+      try {
+        const created = await j("/api/companies", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            name: data.get("name"),
+            sector: data.get("sector"),
+            notes: data.get("notes"),
+            stack: String(data.get("stack") || "").split(",").map((s) => s.trim()).filter(Boolean),
+            useMine: data.get("useMine") === "on"
+          })
+        });
+        event.target.reset();
+        event.target.elements.useMine.checked = true;
+        company = created.id;
+        showView("desk");
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    document.getElementById("agentic-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("agentic-error");
+      err.textContent = "";
+      if (company === "all") {
+        err.textContent = "Pick a company in the rail first.";
+        return;
+      }
+      const data = new FormData(event.target);
+      try {
+        await j("/api/companies/" + encodeURIComponent(company) + "/agents", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            name: data.get("name"),
+            role: data.get("role"),
+            cashtroId: data.get("cashtroId"),
+            summary: data.get("summary"),
+            capabilities: String(data.get("capabilities") || "").split(",").map((s) => s.trim()).filter(Boolean)
+          })
+        });
+        event.target.reset();
         await render();
       } catch (e) {
         err.textContent = e.message;

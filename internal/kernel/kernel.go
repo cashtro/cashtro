@@ -155,6 +155,7 @@ type Kernel struct {
 	factSeq  int
 	confirms []Confirm
 	confSeq  int
+	tenants  any
 }
 
 // Option configures the kernel.
@@ -193,6 +194,20 @@ func (k *Kernel) Catalog() *catalog.Catalog {
 	k.mu.RLock()
 	defer k.mu.RUnlock()
 	return k.cat
+}
+
+// AttachTenants hangs the Giant company plane on the kernel.
+func (k *Kernel) AttachTenants(v any) {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	k.tenants = v
+}
+
+// Tenants returns the company plane, if Boot attached one.
+func (k *Kernel) Tenants() any {
+	k.mu.RLock()
+	defer k.mu.RUnlock()
+	return k.tenants
 }
 
 // Register loads an agentic into the process table as stopped.

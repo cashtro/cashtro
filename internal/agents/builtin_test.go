@@ -27,6 +27,9 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if k.Catalog() == nil {
 		t.Fatal("delivery did not attach catalog")
 	}
+	if k.Tenants() == nil {
+		t.Fatal("boot did not attach the Giant company plane")
+	}
 
 	res, err := k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.about"})
 	if err != nil || !res.OK {
