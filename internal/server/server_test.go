@@ -22,6 +22,19 @@ func handler(t *testing.T) http.Handler {
 	return New(k)
 }
 
+func TestDeskHasStartUsingLink(t *testing.T) {
+	h := handler(t)
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("index status = %d", res.Code)
+	}
+	body := res.Body.String()
+	if !strings.Contains(body, `id="use-link"`) || !strings.Contains(body, "Start using this desk") {
+		t.Fatalf("desk is missing the start-using link: %s", body[:min(len(body), 400)])
+	}
+}
+
 func TestHealthAndProfile(t *testing.T) {
 	h := handler(t)
 
@@ -120,6 +133,9 @@ func TestIndexHTML(t *testing.T) {
 	body := res.Body.String()
 	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
 		t.Fatalf("index missing OS shell copy")
+	}
+	if !strings.Contains(body, "GIANT") || !strings.Contains(body, "Ecosystem") || !strings.Contains(body, "Giant ecosystem") {
+		t.Fatalf("index missing Giant ecosystem shell")
 	}
 }
 
