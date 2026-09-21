@@ -33,6 +33,24 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			hits = append(hits, map[string]string{"kind": "note", "id": n.Source, "name": n.Claim})
 		}
 	}
+	for _, p := range k.Pulses() {
+		blob := strings.ToLower(p.Note)
+		if q == "" || strings.Contains(blob, q) {
+			hits = append(hits, map[string]string{"kind": "pulse", "id": strconv.Itoa(p.ID), "name": p.Note})
+		}
+	}
+	for _, m := range k.Inbox("") {
+		blob := strings.ToLower(m.From + " " + m.To + " " + m.Kind + " " + m.Body)
+		if q == "" || strings.Contains(blob, q) {
+			hits = append(hits, map[string]string{"kind": "mail", "id": strconv.Itoa(m.ID), "name": m.Body})
+		}
+	}
+	for _, c := range k.Confirms() {
+		blob := strings.ToLower(c.Body + " " + c.Status)
+		if q == "" || strings.Contains(blob, q) {
+			hits = append(hits, map[string]string{"kind": "confirm", "id": strconv.Itoa(c.ID), "name": c.Body})
+		}
+	}
 	_, _ = k.Post("explorer", "research", "search", q)
 	return kernel.Result{OK: true, Message: "explorer hit " + strconv.Itoa(len(hits)), Data: hits}, nil
 }

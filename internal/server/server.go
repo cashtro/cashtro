@@ -68,14 +68,16 @@ func (s *api) favicon(w http.ResponseWriter, r *http.Request) {
 func (s *api) health(w http.ResponseWriter, r *http.Request) {
 	about := s.k.About()
 	writeJSON(w, http.StatusOK, map[string]any{
-		"status":  "ok",
-		"service": "cashtro",
-		"os":      about.Name,
-		"version": about.Version,
-		"kernel":  about.Kernel,
-		"agents":  about.Agents,
-		"running": about.Running,
-		"closed":  about.Closed,
+		"status":    "ok",
+		"service":   "cashtro",
+		"os":        about.Name,
+		"version":   about.Version,
+		"kernel":    about.Kernel,
+		"agents":    about.Agents,
+		"running":   about.Running,
+		"closed":    about.Closed,
+		"lastPulse": about.LastPulse,
+		"image":     s.k.PersistPath(),
 	})
 }
 

@@ -94,6 +94,25 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if _, err := k.Catalog().Get("closed-hours-flow"); err != nil {
 		t.Fatalf("closed-hours ship: %v", err)
 	}
+	res, err = k.Invoke(context.Background(), "explorer", kernel.Call{
+		Capability: "explorer.search",
+		Payload:    []byte(`{"query":"things are closed"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("explorer pulses: %+v %v", res, err)
+	}
+	pulseHit := false
+	if rows, ok := res.Data.([]map[string]string); ok {
+		for _, row := range rows {
+			if row["kind"] == "pulse" {
+				pulseHit = true
+				break
+			}
+		}
+	}
+	if !pulseHit {
+		t.Fatalf("explorer missed pulse hit: %#v", res.Data)
+	}
 	res, err = k.Invoke(context.Background(), "watch", kernel.Call{Capability: "watch.pulse"})
 	if err != nil || !res.OK {
 		t.Fatalf("watch.pulse: %+v %v", res, err)

@@ -69,7 +69,7 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 		&researchAgent{},
 		resident(kernel.Spec{
 			ID: "explorer", Name: "Explorer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
-			Role: "search", Summary: "Searches processes, ships, and research notes on the desk.",
+			Role: "search", Summary: "Searches processes, ships, notes, pulses, and mail on the desk.",
 			Capabilities: []string{"explorer.search"}, Autostart: true,
 		}, explorerInvoke),
 		resident(kernel.Spec{

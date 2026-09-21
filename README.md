@@ -34,7 +34,8 @@ in a second empty `cashtro-os` clone.
 Agents are processes. Capabilities are verbs. Mail, notes, memory, and
 human confirms are first-class. Delivery, research, **Architect.plan**,
 **Investigator.trace**, and **Security.triage** are live without a model.
-Watch keeps the desk flowing while things are closed. The disk image is
+Watch keeps the desk flowing while things are closed. Explorer searches
+pulses and mail. `/health` reports the last pulse. The disk image is
 `data/cashtro.json`. New agentics register into this kernel — they do not
 fork a second product.
 
