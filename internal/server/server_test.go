@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -60,7 +61,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 15 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +71,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 15 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -120,6 +121,9 @@ func TestIndexHTML(t *testing.T) {
 	body := res.Body.String()
 	if !strings.Contains(body, "Cashtro OS") || !strings.Contains(body, "idea → concept") {
 		t.Fatalf("index missing OS shell copy")
+	}
+	if !strings.Contains(body, "Assistant plan") || !strings.Contains(body, "Request log") {
+		t.Fatalf("index missing desk shell")
 	}
 }
 
@@ -194,5 +198,62 @@ func TestStages(t *testing.T) {
 	body, _ := io.ReadAll(res.Body)
 	if !strings.Contains(string(body), `"idea"`) || !strings.Contains(string(body), `"production"`) {
 		t.Fatalf("stages = %s", body)
+	}
+}
+
+func TestDeskPlanAndRequestsHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/plan", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"can"`) || !strings.Contains(res.Body.String(), `"cannot"`) {
+		t.Fatalf("plan = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/requests", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"raw"`) {
+		t.Fatalf("list requests = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/requests", strings.NewReader(`{"raw":"park a new mandate for the north desk"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated {
+		t.Fatalf("capture status = %d body=%s", res.Code, res.Body.String())
+	}
+	var created kernel.Request
+	if err := json.Unmarshal(res.Body.Bytes(), &created); err != nil {
+		t.Fatal(err)
+	}
+	if created.ID == 0 || created.Pass != 1 || created.Raw == "" {
+		t.Fatalf("created = %+v", created)
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/requests/"+strconv.Itoa(created.ID)+"/better", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("better status = %d body=%s", res.Code, res.Body.String())
+	}
+	var bettered kernel.Request
+	if err := json.Unmarshal(res.Body.Bytes(), &bettered); err != nil {
+		t.Fatal(err)
+	}
+	if bettered.Pass != 2 || bettered.Raw != created.Raw {
+		t.Fatalf("bettered = %+v", bettered)
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/requests/"+strconv.Itoa(created.ID)+"/done", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"done"`) {
+		t.Fatalf("done = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/requests", strings.NewReader(`{"raw":""}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusBadRequest {
+		t.Fatalf("empty capture status = %d", res.Code)
 	}
 }

@@ -44,6 +44,31 @@ func TestMailboxNotesMemoryConfirm(t *testing.T) {
 	if err != nil || decided.Status != "allowed" {
 		t.Fatalf("decide = %+v %v", decided, err)
 	}
+
+	if _, err := k.SaveRequest(Request{}); !errors.Is(err, ErrInvalidRequest) {
+		t.Fatalf("empty request = %v", err)
+	}
+	req, err := k.SaveRequest(Request{Raw: "  ship the desk  ", Title: "Ship the desk", Improved: "first pass", Pass: 1, Allowed: true})
+	if err != nil || req.ID == 0 || req.Raw != "ship the desk" {
+		t.Fatalf("capture = %+v %v", req, err)
+	}
+	req.Pass = 2
+	req.Improved = "second pass"
+	req.Raw = "should not stick"
+	bettered, err := k.SaveRequest(req)
+	if err != nil || bettered.Raw != "ship the desk" || bettered.Pass != 2 || bettered.Improved != "second pass" {
+		t.Fatalf("better = %+v %v", bettered, err)
+	}
+	done, err := k.AdvanceRequest(bettered.ID, StatusDone)
+	if err != nil || done.Status != StatusDone {
+		t.Fatalf("advance = %+v %v", done, err)
+	}
+	if len(k.Requests()) != 1 {
+		t.Fatalf("requests = %#v", k.Requests())
+	}
+	if _, err := k.RequestByID(99); !errors.Is(err, ErrUnknownRequest) {
+		t.Fatalf("missing = %v", err)
+	}
 }
 
 func TestInvokeCap(t *testing.T) {

@@ -33,6 +33,12 @@ func explorerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			hits = append(hits, map[string]string{"kind": "note", "id": n.Source, "name": n.Claim})
 		}
 	}
+	for _, req := range k.Requests() {
+		blob := strings.ToLower(req.Raw + " " + req.Title + " " + req.Improved + " " + req.Status)
+		if q == "" || strings.Contains(blob, q) {
+			hits = append(hits, map[string]string{"kind": "request", "id": strconv.Itoa(req.ID), "name": req.Title})
+		}
+	}
 	_, _ = k.Post("explorer", "research", "search", q)
 	return kernel.Result{OK: true, Message: "explorer hit " + strconv.Itoa(len(hits)), Data: hits}, nil
 }
@@ -254,4 +260,28 @@ func (a *researchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 
 func (a *researchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
 	return researchInvoke(a.k, call)
+}
+
+type deskAgent struct {
+	k *kernel.Kernel
+}
+
+func (a *deskAgent) Spec() kernel.Spec {
+	return kernel.Spec{
+		ID: "desk", Name: "Desk", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+		Role: "assistant", Summary: "Castro's assistant. Captures every ask, betters it each pass, and publishes what we can and cannot do.",
+		Capabilities: []string{"desk.plan", "desk.capture", "desk.better", "desk.list", "desk.done"},
+		Autostart:    true,
+	}
+}
+
+func (a *deskAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
+	a.k = k
+	seedDesk(k)
+	k.Publish("desk", "plan", "assistant plan live · requests seeded", map[string]any{"requests": len(k.Requests())})
+	return nil
+}
+
+func (a *deskAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
+	return deskInvoke(a.k, call)
 }

@@ -36,6 +36,11 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/confirms", s.confirms)
 	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
+	mux.HandleFunc("GET /api/plan", s.plan)
+	mux.HandleFunc("GET /api/requests", s.listRequests)
+	mux.HandleFunc("POST /api/requests", s.captureRequest)
+	mux.HandleFunc("POST /api/requests/{id}/better", s.betterRequest)
+	mux.HandleFunc("POST /api/requests/{id}/done", s.doneRequest)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -191,6 +196,60 @@ func (s *api) decideConfirm(w http.ResponseWriter, r *http.Request, allow bool) 
 	writeJSON(w, http.StatusOK, c)
 }
 
+func (s *api) plan(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "desk", kernel.Call{Capability: "desk.plan"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) listRequests(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Requests())
+}
+
+func (s *api) captureRequest(w http.ResponseWriter, r *http.Request) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	res, err := s.k.Invoke(r.Context(), "desk", kernel.Call{Capability: "desk.capture", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusCreated, res.Data)
+}
+
+func (s *api) betterRequest(w http.ResponseWriter, r *http.Request) {
+	s.invokeRequest(w, r, "desk.better")
+}
+
+func (s *api) doneRequest(w http.ResponseWriter, r *http.Request) {
+	s.invokeRequest(w, r, "desk.done")
+}
+
+func (s *api) invokeRequest(w http.ResponseWriter, r *http.Request, cap string) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "bad request id"})
+		return
+	}
+	raw, _ := json.Marshal(map[string]int{"id": id})
+	res, err := s.k.Invoke(r.Context(), "desk", kernel.Call{Capability: cap, Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
 func (s *api) profile(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, s.cat.Profile())
 }
@@ -248,9 +307,9 @@ func decodeJSON(r *http.Request, dst any) error {
 
 func writeError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent):
+	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent), errors.Is(err, kernel.ErrUnknownRequest):
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability):
+	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability), errors.Is(err, kernel.ErrInvalidRequest):
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning):
 		writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})

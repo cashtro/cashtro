@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.2.0"
+	Version = "0.3.0"
 )
 
 // Status is a process lifecycle state.
@@ -122,6 +122,7 @@ type About struct {
 	Live      int    `json:"live"`
 	Resident  int    `json:"resident"`
 	Events    int    `json:"events"`
+	Requests  int    `json:"requests"`
 	Manifesto string `json:"manifesto"`
 }
 
@@ -155,6 +156,8 @@ type Kernel struct {
 	factSeq  int
 	confirms []Confirm
 	confSeq  int
+	requests []Request
+	reqSeq   int
 }
 
 // Option configures the kernel.
@@ -385,9 +388,10 @@ func (k *Kernel) About() About {
 		Live:     live,
 		Resident: resident,
 		Events:   len(k.events),
+		Requests: len(k.requests),
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
-			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
+			"Agents are processes. Capabilities are verbs. Mail, notes, memory, confirms, and requests are first-class. " +
+			"The desk captures every ask and betters it each pass. Delivery is live. Research is live. OpenRouter stays optional. " +
 			"New agentics register into this kernel — they do not fork a second product.",
 	}
 }
