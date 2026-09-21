@@ -10,6 +10,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -26,7 +28,29 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 	if err := k.Boot(context.Background()); err != nil {
 		return nil, err
 	}
+	if path := k.PersistPath(); path != "" {
+		if err := kernel.LoadFile(path, k); err != nil && !os.IsNotExist(err) {
+			return nil, err
+		}
+	}
+	if envTruthy("CASHTRO_CLOSED") {
+		k.SetClosed(true)
+	}
+	k.RecordPulse("boot")
+	if k.Closed() {
+		keepFlowing(k, "boot while things are closed")
+	}
+	if path := k.PersistPath(); path != "" {
+		if err := kernel.SaveFile(path, k); err != nil {
+			return nil, err
+		}
+	}
 	return k, nil
+}
+
+func envTruthy(key string) bool {
+	v := strings.ToLower(strings.TrimSpace(os.Getenv(key)))
+	return v == "1" || v == "true" || v == "yes"
 }
 
 // Builtins is the process image of Cashtro OS.
@@ -39,6 +63,8 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 		}, func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
 		}),
+		&watchAgent{},
+		&chooserAgent{},
 		&deliveryAgent{cat: cat},
 		&routerAgent{client: router},
 		&researchAgent{},

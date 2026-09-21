@@ -9,17 +9,26 @@ import (
 )
 
 func TestBootLoadsAllAgentics(t *testing.T) {
+	t.Setenv("CASHTRO_CLOSED", "")
 	k, err := Boot()
 	if err != nil {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 14 {
-		t.Fatalf("processes = %d, want 14", len(procs))
+	if len(procs) != 16 {
+		t.Fatalf("processes = %d, want 16", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 16 || about.Live != 9 {
 		t.Fatalf("about = %+v", about)
+	}
+	desk := k.DeskCard()
+	if desk.PendingN < 10 || desk.Scan.Unread != 163 {
+		t.Fatalf("chooser desk = %+v", desk)
+	}
+	res, err := k.Invoke(context.Background(), "chooser", kernel.Call{Capability: "chooser.list"})
+	if err != nil || !res.OK {
+		t.Fatalf("chooser.list: %+v %v", res, err)
 	}
 	if len(k.Notes()) < 5 {
 		t.Fatalf("research seeds = %d", len(k.Notes()))
@@ -28,7 +37,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal("delivery did not attach catalog")
 	}
 
-	res, err := k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.about"})
+	res, err = k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.about"})
 	if err != nil || !res.OK {
 		t.Fatalf("os.about: %+v %v", res, err)
 	}
@@ -78,5 +87,27 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})
 	if err != nil || !res.OK {
 		t.Fatalf("research: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{
+		Capability: "watch.close",
+		Payload:    []byte(`{"note":"things are closed"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("watch.close: %+v %v", res, err)
+	}
+	if !k.Closed() {
+		t.Fatal("desk should be closed")
+	}
+	if _, err := k.Catalog().Get("closed-hours-flow"); err != nil {
+		t.Fatalf("closed-hours ship: %v", err)
+	}
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{Capability: "watch.pulse"})
+	if err != nil || !res.OK {
+		t.Fatalf("watch.pulse: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "watch", kernel.Call{Capability: "watch.open"})
+	if err != nil || !res.OK || k.Closed() {
+		t.Fatalf("watch.open: %+v closed=%v err=%v", res, k.Closed(), err)
 	}
 }
