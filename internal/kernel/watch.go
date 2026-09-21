@@ -39,6 +39,7 @@ var ClosedHoursFlow = []string{
 	"delivery.create",
 	"delivery.advance",
 	"os.about",
+	"chooser.list",
 }
 
 // ClosedHoursGated still needs a human — outbound or a live operator.
@@ -50,9 +51,9 @@ var ClosedHoursGated = []string{
 
 func closedMessage(closed bool) string {
 	if closed {
-		return "desk closed · work still flowing"
+		return "CLOSED HOURS · work still flowing through here"
 	}
-	return "desk open · human on site"
+	return "OPEN HOURS · desk open · human on site"
 }
 
 // Closed reports whether the desk is in closed hours.

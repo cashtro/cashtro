@@ -257,6 +257,57 @@ func (a *researchAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Re
 	return researchInvoke(a.k, call)
 }
 
+type chooserAgent struct {
+	k *kernel.Kernel
+}
+
+func (a *chooserAgent) Spec() kernel.Spec {
+	return kernel.Spec{
+		ID: "chooser", Name: "Chooser", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+		Role: "desk", Summary: "You pick. Inbox jobs from Gmail plus the verbs this OS can run. Take or skip — nothing auto-runs.",
+		Capabilities: []string{"chooser.list", "chooser.take", "chooser.skip", "chooser.scan"},
+		Autostart:    true,
+	}
+}
+
+func (a *chooserAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
+	a.k = k
+	seedChooser(k)
+	desk := k.DeskCard()
+	k.Publish("chooser", "desk", "you pick · "+strconv.Itoa(desk.PendingN)+" pending", map[string]any{
+		"pending": desk.PendingN,
+		"inbox":   desk.Scan.Inbox,
+		"unread":  desk.Scan.Unread,
+	})
+	return nil
+}
+
+func (a *chooserAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
+	return chooserInvoke(a.k, call)
+}
+
+func chooserInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	switch call.Capability {
+	case "chooser.list", "chooser.scan":
+		d := k.DeskCard()
+		return kernel.Result{OK: true, Message: "pending " + strconv.Itoa(d.PendingN), Data: d}, nil
+	case "chooser.take":
+		c, err := k.Take(payloadInt(call, "id"))
+		if err != nil {
+			return kernel.Result{}, err
+		}
+		return kernel.Result{OK: true, Message: "took " + c.Title, Data: c}, nil
+	case "chooser.skip":
+		c, err := k.Skip(payloadInt(call, "id"))
+		if err != nil {
+			return kernel.Result{}, err
+		}
+		return kernel.Result{OK: true, Message: "skipped " + c.Title, Data: c}, nil
+	default:
+		return kernel.Result{}, kernel.ErrUnknownCapability
+	}
+}
+
 type watchAgent struct {
 	k *kernel.Kernel
 }

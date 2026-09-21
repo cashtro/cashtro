@@ -40,6 +40,9 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/watch/close", s.watchClose)
 	mux.HandleFunc("POST /api/watch/open", s.watchOpen)
 	mux.HandleFunc("POST /api/watch/pulse", s.watchPulse)
+	mux.HandleFunc("GET /api/inbox", s.inbox)
+	mux.HandleFunc("POST /api/inbox/{id}/take", s.inboxTake)
+	mux.HandleFunc("POST /api/inbox/{id}/skip", s.inboxSkip)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -225,6 +228,33 @@ func (s *api) invokeWatch(w http.ResponseWriter, r *http.Request, cap string) {
 	writeJSON(w, http.StatusOK, res.Data)
 }
 
+func (s *api) inbox(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.DeskCard())
+}
+
+func (s *api) inboxTake(w http.ResponseWriter, r *http.Request) {
+	s.decideInbox(w, r, "chooser.take")
+}
+
+func (s *api) inboxSkip(w http.ResponseWriter, r *http.Request) {
+	s.decideInbox(w, r, "chooser.skip")
+}
+
+func (s *api) decideInbox(w http.ResponseWriter, r *http.Request, cap string) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "bad choice id"})
+		return
+	}
+	raw, _ := json.Marshal(map[string]int{"id": id})
+	res, err := s.k.Invoke(r.Context(), "chooser", kernel.Call{Capability: cap, Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
 func (s *api) profile(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, s.cat.Profile())
 }
@@ -282,11 +312,11 @@ func decodeJSON(r *http.Request, dst any) error {
 
 func writeError(w http.ResponseWriter, err error) {
 	switch {
-	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent):
+	case errors.Is(err, catalog.ErrNotFound), errors.Is(err, kernel.ErrUnknownAgent), errors.Is(err, kernel.ErrUnknownChoice):
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
 	case errors.Is(err, catalog.ErrInvalid), errors.Is(err, kernel.ErrUnknownCapability):
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
-	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning):
+	case errors.Is(err, catalog.ErrDone), errors.Is(err, kernel.ErrNotRunning), errors.Is(err, kernel.ErrAlreadyDecided):
 		writeJSON(w, http.StatusConflict, map[string]string{"error": err.Error()})
 	default:
 		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": err.Error()})

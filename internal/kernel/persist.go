@@ -18,6 +18,8 @@ type Snapshot struct {
 	Mail     []Mail         `json:"mail"`
 	Pulses   []Pulse        `json:"pulses,omitempty"`
 	Ships    []catalog.Ship `json:"ships,omitempty"`
+	Choices  []Choice       `json:"choices,omitempty"`
+	Scan     *Scan          `json:"scan,omitempty"`
 }
 
 // PersistPath returns the disk image path, if any.
@@ -46,6 +48,11 @@ func (k *Kernel) Snapshot() Snapshot {
 		Confirms: append([]Confirm(nil), k.confirms...),
 		Mail:     append([]Mail(nil), k.mail...),
 		Pulses:   append([]Pulse(nil), k.pulses...),
+		Choices:  append([]Choice(nil), k.choices...),
+	}
+	if k.scan.Account != "" {
+		scan := k.scan
+		s.Scan = &scan
 	}
 	cat := k.cat
 	k.mu.RUnlock()
@@ -64,11 +71,16 @@ func (k *Kernel) Restore(s Snapshot) {
 	k.confirms = append([]Confirm(nil), s.Confirms...)
 	k.mail = append([]Mail(nil), s.Mail...)
 	k.pulses = append([]Pulse(nil), s.Pulses...)
+	k.choices = append([]Choice(nil), s.Choices...)
+	if s.Scan != nil {
+		k.scan = *s.Scan
+	}
 	k.noteSeq = maxID(s.Notes, func(n Note) int { return n.ID })
 	k.factSeq = maxID(s.Facts, func(f Fact) int { return f.ID })
 	k.confSeq = maxID(s.Confirms, func(c Confirm) int { return c.ID })
 	k.mailSeq = maxID(s.Mail, func(m Mail) int { return m.ID })
 	k.pulseSeq = maxID(s.Pulses, func(p Pulse) int { return p.ID })
+	k.choiceSeq = maxID(s.Choices, func(c Choice) int { return c.ID })
 	cat := k.cat
 	k.mu.Unlock()
 	if cat != nil && len(s.Ships) > 0 {

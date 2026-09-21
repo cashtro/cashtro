@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.4.0"
+	Version = "0.5.0"
 )
 
 // Status is a process lifecycle state.
@@ -134,6 +134,10 @@ var (
 	ErrUnknownCapability = errors.New("unknown capability")
 	// ErrNotRunning is returned when invoke hits a stopped process.
 	ErrNotRunning = errors.New("agent not running")
+	// ErrUnknownChoice is returned when a desk job id is unknown.
+	ErrUnknownChoice = errors.New("choice not found")
+	// ErrAlreadyDecided is returned when take/skip hits a decided job.
+	ErrAlreadyDecided = errors.New("already decided")
 )
 
 const maxEvents = 200
@@ -161,6 +165,9 @@ type Kernel struct {
 	closed      bool
 	pulses      []Pulse
 	pulseSeq    int
+	choices     []Choice
+	choiceSeq   int
+	scan        Scan
 }
 
 // Option configures the kernel.
@@ -411,7 +418,7 @@ func (k *Kernel) About() About {
 		Closed:    k.closed,
 		LastPulse: lastPulse,
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
-			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
+			"You pick the next job. Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
 			"Delivery is live. Research is live. Watch keeps the desk flowing while things are closed. " +
 			"Outbound comms still wait at the human gate. OpenRouter stays optional. " +
 			"New agentics register into this kernel — they do not fork a second product.",

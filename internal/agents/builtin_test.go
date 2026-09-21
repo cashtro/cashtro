@@ -15,12 +15,20 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 15 {
-		t.Fatalf("processes = %d, want 15", len(procs))
+	if len(procs) != 16 {
+		t.Fatalf("processes = %d, want 16", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 8 {
+	if about.Running != 16 || about.Live != 9 {
 		t.Fatalf("about = %+v", about)
+	}
+	desk := k.DeskCard()
+	if desk.PendingN < 10 || desk.Scan.Unread != 163 {
+		t.Fatalf("chooser desk = %+v", desk)
+	}
+	res, err := k.Invoke(context.Background(), "chooser", kernel.Call{Capability: "chooser.list"})
+	if err != nil || !res.OK {
+		t.Fatalf("chooser.list: %+v %v", res, err)
 	}
 	if len(k.Notes()) < 5 {
 		t.Fatalf("research seeds = %d", len(k.Notes()))
@@ -29,7 +37,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal("delivery did not attach catalog")
 	}
 
-	res, err := k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.about"})
+	res, err = k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.about"})
 	if err != nil || !res.OK {
 		t.Fatalf("os.about: %+v %v", res, err)
 	}

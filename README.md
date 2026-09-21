@@ -32,9 +32,9 @@ on this agent can only write this repo, so the kernel lives here — not
 in a second empty `cashtro-os` clone.
 
 Agents are processes. Capabilities are verbs. Mail, notes, memory, and
-human confirms are first-class. Delivery and research are live. The
-disk image is `data/cashtro.json`. New agentics register into this
-kernel — they do not fork a second product.
+human confirms are first-class. **You pick the next job** on the desk.
+Delivery and research are live. The disk image is `data/cashtro.json`.
+New agentics register into this kernel — they do not fork a second product.
 
 ```bash
 go test ./...
@@ -79,6 +79,9 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
+| `GET` | `/api/inbox` | Chooser desk: Gmail scan + jobs to take or skip |
+| `POST` | `/api/inbox/{id}/take` | Take a job (mail parks on idea) |
+| `POST` | `/api/inbox/{id}/skip` | Skip a job |
 | `GET` | `/api/watch` | Closed-hours status and pulses |
 | `POST` | `/api/watch/close` | Close the desk; work keeps flowing |
 | `POST` | `/api/watch/pulse` | Heartbeat (parks work while closed) |

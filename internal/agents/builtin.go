@@ -64,6 +64,7 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
 		}),
 		&watchAgent{},
+		&chooserAgent{},
 		&deliveryAgent{cat: cat},
 		&routerAgent{client: router},
 		&researchAgent{},
