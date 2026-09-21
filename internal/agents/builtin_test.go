@@ -18,7 +18,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 14", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 11 {
+	if about.Running != 14 || about.Live != 12 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -110,5 +110,13 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("deploy: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "reviewer", kernel.Call{
+		Capability: "reviewer.watch",
+		Payload:    []byte(`{"target":"cashtro-os"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("reviewer: %+v %v", res, err)
 	}
 }

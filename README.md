@@ -79,6 +79,7 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/trace?q=` | Investigator blast radius |
 | `GET` | `/api/security?q=` | Security triage |
 | `POST` | `/api/deploy` | Release dry-run gate |
+| `POST` | `/api/review` | QA desk-evidence review |
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |

@@ -62,10 +62,10 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Capabilities: []string{"operator.browse"}, Autostart: true,
 		}, nil),
 		resident(kernel.Spec{
-			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "qa", Summary: "Reads walkthrough video and screenshot artifacts before we call a ship done.",
+			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "qa", Summary: "Reviews desk evidence before we call a ship done — notes, board, journal.",
 			Capabilities: []string{"reviewer.watch"}, Autostart: true,
-		}, nil),
+		}, reviewerInvoke),
 		resident(kernel.Spec{
 			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "design", Summary: "Turns a goal into a deterministic plan note, memory, and idea-stage ships.",

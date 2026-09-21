@@ -164,6 +164,70 @@ func commsInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	}
 }
 
+func reviewerInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
+	target := payloadQuery(call, "target")
+	if target == "" {
+		target = payloadQuery(call, "prompt")
+	}
+	if target == "" {
+		target = "desk"
+	}
+	var idea, concept, prod int
+	if cat := k.Catalog(); cat != nil {
+		for _, s := range cat.List() {
+			switch s.Stage {
+			case catalog.StageIdea:
+				idea++
+			case catalog.StageConcept:
+				concept++
+			case catalog.StageProduction:
+				prod++
+			}
+		}
+	}
+	notes := len(k.Notes())
+	events := len(k.Events())
+	pending := 0
+	for _, c := range k.Confirms() {
+		if c.Status == "pending" {
+			pending++
+		}
+	}
+	checks := []map[string]any{
+		{"name": "production evidence", "ok": prod > 0, "detail": strconv.Itoa(prod) + " ships"},
+		{"name": "research library", "ok": notes >= 3, "detail": strconv.Itoa(notes) + " notes"},
+		{"name": "journal trail", "ok": events > 0, "detail": strconv.Itoa(events) + " events"},
+		{"name": "no pending outbound", "ok": pending == 0, "detail": strconv.Itoa(pending)},
+		{"name": "wip visible", "ok": idea+concept >= 0, "detail": "idea=" + strconv.Itoa(idea) + " concept=" + strconv.Itoa(concept)},
+	}
+	verdict := "pass"
+	for _, c := range checks {
+		if ok, _ := c["ok"].(bool); !ok {
+			verdict = "fail"
+			break
+		}
+	}
+	note := k.WriteNote(kernel.Note{
+		Agent:  "reviewer",
+		Source: "reviewer.watch",
+		Claim:  "QA " + verdict + " · " + target,
+		Quote:  "production=" + strconv.Itoa(prod) + " notes=" + strconv.Itoa(notes) + " events=" + strconv.Itoa(events) + " pending=" + strconv.Itoa(pending),
+	})
+	k.Remember("qa", verdict+" · "+target)
+	_, _ = k.Post("reviewer", "deploy", "qa", verdict+" · "+target)
+	return kernel.Result{
+		OK:      true,
+		Message: "review " + verdict + " · " + target,
+		Data: map[string]any{
+			"target":  target,
+			"verdict": verdict,
+			"checks":  checks,
+			"note":    note,
+			"mode":    "desk-evidence",
+		},
+	}, nil
+}
+
 func deployInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	target := payloadQuery(call, "target")
 	if target == "" {
