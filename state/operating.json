@@ -1054,7 +1054,7 @@
           "Photos : en générer une ou en trouver une. Jamais l'image mal traitée de la base sur la fiche publique.",
           "Boutique : le stock disponible devient catalogue commandable. Le flux commande vendeur n'est pas fini dans le repo.",
           "Autour : vendre, promouvoir, marketing et média, automatisés sur ces fiches.",
-          "Proximity n'est pas dans cette chaîne. Empire vend le stock en live, sur toutes les plateformes live."
+          "Le stock vient de inventory-scanner-theta.vercel.app. Le repo est le marketplace, qui vend via MCP et Stripe. Empire vend le même stock en live. Proximity n'est pas dans cette chaîne."
         ]
       },
       {

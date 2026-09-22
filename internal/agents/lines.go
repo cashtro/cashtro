@@ -42,12 +42,15 @@ func Lines() []Line {
 		},
 		{
 			ID: "scanapp", Name: "Scan App Marketplace", Brain: "Hustler",
-			Mandate: "Boutique interne, aujourd'hui sans vente et sans client. Le but est de générer des ventes " +
-				"en vendant les items plus cher, pour un profit. Scanner déjà capable : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR. " +
-				"Photo trouvée en ligne seulement avec les droits ; sinon une image à nous, pas une copie. " +
-				"Prix en dollars canadiens, taxes non incluses, campagne pour le Canada entier. Proximity n'est pas dans cette chaîne. " +
-				"La vente live passe par Empire, sur toutes les plateformes live.",
-			Controls: "CMP vend et promeut au Canada. Opérations tient le scan et la boutique interne. Contrôle vérifie les droits photo.",
+			Mandate: "Le stock est scanné sur https://inventory-scanner-theta.vercel.app/. " +
+				"Le repo Evolu-Jeunes/ScanApp ne contient que le marketplace, et c'est lui qui fonctionne. " +
+				"Ce marketplace vend sur son site, qui sera connecté à MCP et à Stripe. " +
+				"Boutique encore sans vente et sans client. But : vendre plus cher, profit, système interne. " +
+				"Codes déjà lus : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR. " +
+				"Photo en ligne seulement avec les droits, sinon une image à nous. " +
+				"Prix CAD, taxes non incluses, Canada entier. Proximity n'est pas dans cette chaîne. " +
+				"Le live passe par Empire, sur toutes les plateformes.",
+			Controls: "CMP vend sur le marketplace (MCP + Stripe) et au Canada. Opérations lit le stock sur le scanner Vercel. Contrôle vérifie les droits photo.",
 			Repos:    []string{"Evolu-Jeunes/ScanApp"},
 		},
 		{

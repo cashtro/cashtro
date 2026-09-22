@@ -44,15 +44,15 @@ func Chain(line string) ([]ChainStep, bool) {
 	switch line {
 	case "scanapp":
 		return []ChainStep{
-			{Line: "scanapp", Order: 1, Agent: "operator", Do: "Scanner : code, format, source. Le moteur se remplace sans réécrire l'app."},
+			{Line: "scanapp", Order: 1, Agent: "operator", Do: "Lire le stock sur https://inventory-scanner-theta.vercel.app/. Le repo ne fait pas le scan, il tient le marketplace."},
 			{Line: "scanapp", Order: 2, Agent: "operator", Do: "Écrire le stock vrai : ajout, retrait, vente, vérification."},
 			{Line: "scanapp", Order: 3, Agent: "delivery", Do: "Garder l'image de la base en interne. Elle ne va pas sur la fiche."},
 			{Line: "scanapp", Order: 4, Agent: "comms", Do: "Monter la fiche depuis le produit scanné : nom, prix, code, lieu, description."},
 			{Line: "scanapp", Order: 5, Agent: "architect", Do: "Photo trouvée en ligne seulement avec les droits. Sinon une image à nous. Jamais une copie d'une photo sans droits."},
 			{Line: "scanapp", Order: 6, Agent: "reviewer", Do: "Contrôle : droits photo, et consentement si une personne est dans le cadre."},
-			{Line: "scanapp", Order: 7, Agent: "delivery", Do: "Boutique : le stock disponible devient catalogue commandable."},
+			{Line: "scanapp", Order: 7, Agent: "delivery", Do: "Le marketplace du repo vend ce catalogue. Le site de vente sera connecté à MCP et à Stripe."},
 			{Line: "scanapp", Order: 8, Agent: "comms", Do: "Vendre, promouvoir, marketing et média sur la fiche prête."},
-			{Line: "scanapp", Order: 9, Agent: "operator", Do: "Boutique interne. Empire vend en live sur toutes les plateformes. Proximity n'est pas dans cette chaîne."},
+			{Line: "scanapp", Order: 9, Agent: "operator", Do: "Vente sur le marketplace (MCP, Stripe) et en live via Empire. Proximity n'est pas dans cette chaîne."},
 		}, true
 	default:
 		return nil, false
