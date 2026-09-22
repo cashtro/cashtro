@@ -35,6 +35,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/notes", s.writeNote)
 	mux.HandleFunc("GET /api/mail", s.mail)
 	mux.HandleFunc("GET /api/memory", s.memory)
+	mux.HandleFunc("POST /api/memory", s.writeMemory)
 	mux.HandleFunc("GET /api/confirms", s.confirms)
 	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
@@ -188,6 +189,28 @@ func (s *api) mail(w http.ResponseWriter, r *http.Request) {
 
 func (s *api) memory(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, s.k.Recall(r.URL.Query().Get("q")))
+}
+
+func (s *api) writeMemory(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Topic string `json:"topic"`
+		Text  string `json:"text"`
+	}
+	if err := decodeJSON(r, &in); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	raw, _ := json.Marshal(map[string]string{"topic": in.Topic, "text": in.Text})
+	res, err := s.k.Invoke(r.Context(), "memory", kernel.Call{Capability: "memory.store", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusCreated, res.Data)
 }
 
 func (s *api) confirms(w http.ResponseWriter, r *http.Request) {

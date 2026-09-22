@@ -518,6 +518,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "always-on", URL: "https://github.com/cashtro/cashtro", Claim: "Always-on means the cloud VM keeps the kernel looping — closing a laptop does not stop Cashtro OS.", Quote: "scripts/always-on.sh rebuilds and restarts :8080. Autosave flushes data/cashtro.json so hard kills still leave a durable image."},
 		{Agent: "research", Source: "planner-api", URL: "https://github.com/cashtro/cashtro", Claim: "Planner is desk-reachable: POST /api/plan parks goal items as idea-stage ships on the delivery line.", Quote: "Ultron and overnight keep-alives can backlog company work without OpenRouter."},
 		{Agent: "research", Source: "architect-api", URL: "https://github.com/cashtro/cashtro", Claim: "Architect is desk-reachable: POST /api/architect turns a goal into a plan note, memory, and idea-stage ships.", Quote: "Deterministic design loop — no model key required."},
+		{Agent: "research", Source: "memory-api", URL: "https://github.com/cashtro/cashtro", Claim: "Memory is desk-writable: POST /api/memory stores episodic facts; GET /api/memory recalls them.", Quote: "Working memory survives always-on restarts via data/cashtro.json."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)

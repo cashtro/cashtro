@@ -107,6 +107,7 @@ unbound. The rest of the OS stays live.
 | `POST` | `/api/notes` | Ingest a sourced finding |
 | `GET` | `/api/mail` | Agent mailbox |
 | `GET` | `/api/memory` | Episodic recall |
+| `POST` | `/api/memory` | Store an episodic fact |
 | `GET` | `/api/confirms` | Human gate |
 | `GET` | `/api/trace?q=` | Investigator blast radius |
 | `GET` | `/api/security?q=` | Security triage |
