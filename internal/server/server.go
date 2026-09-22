@@ -51,6 +51,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/teal/idea", s.tealInvoke("teal.idea"))
 	mux.HandleFunc("GET /api/teal/interns", s.tealInterns)
 	mux.HandleFunc("POST /api/teal/interns", s.tealInvoke("teal.assign"))
+	mux.HandleFunc("POST /api/teal/assign", s.tealInvoke("teal.assign"))
 	mux.HandleFunc("POST /api/teal/question", s.tealInvoke("teal.question"))
 	mux.HandleFunc("POST /api/teal/help", s.tealInvoke("teal.help"))
 	mux.HandleFunc("POST /api/teal/listen", s.tealInvoke("teal.listen"))

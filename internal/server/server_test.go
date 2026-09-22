@@ -226,6 +226,13 @@ func TestTealAndVapiHTTP(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/teal/assign", strings.NewReader(`{"id":"intern-code","help":"pair on Pandora landing"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "assigned") && !strings.Contains(res.Body.String(), "intern-code") {
+		t.Fatalf("assign = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
 	req = httptest.NewRequest(http.MethodPost, "/api/teal/ingest", strings.NewReader(`{"channel":"slack","text":"x"}`))
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusBadRequest {
