@@ -44,6 +44,11 @@ func craftFor(id string) []Craft {
 			{Mark: "règle", Fill: "Règle : permis ou interdit, citée, pas un avis."},
 			{Mark: "ça casse", Fill: "Ça casse : le cas qui fait perdre de l'argent ou des données."},
 		}
+	case "azure":
+		return []Craft{
+			{Mark: "ressource azure", Fill: "Ressource Azure : le service ou le site branché, nommé."},
+			{Mark: "site live", Fill: "Site live : lecture seule, preview, puis accord. Pas de réécriture directe."},
+		}
 	case "optimisation":
 		return []Craft{
 			{Mark: "rejet", Fill: "Rejet : l'option plus lourde, avec son score."},

@@ -91,7 +91,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if got := status["agents"]; got != 15 {
 		t.Fatalf("board agents = %v, want 15", got)
 	}
-	if got := status["lines"]; got != 9 {
+	if got := status["lines"]; got != 10 {
 		t.Fatalf("board lines = %v, want 9", got)
 	}
 
@@ -100,7 +100,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.lines: %+v %v", res, err)
 	}
 	lines, ok := res.Data.([]Line)
-	if !ok || len(lines) != 9 {
+	if !ok || len(lines) != 10 {
 		t.Fatalf("lines = %#v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
@@ -115,7 +115,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 
 	org := Chart()
-	if len(org.Seats) != 3 || len(org.Departments) != 6 || len(org.Divisions) != 8 {
+	if len(org.Seats) != 3 || len(org.Departments) != 7 || len(org.Divisions) != 8 {
 		t.Fatalf("org seats/depts/divs = %d %d %d", len(org.Seats), len(org.Departments), len(org.Divisions))
 	}
 	var scanWork int
@@ -134,12 +134,12 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || res.OK {
 		t.Fatalf("chain without context should ask: %+v %v", res, err)
 	}
-	if qs, ok := res.Data.([]Question); !ok || len(qs) != 4 || qs[0].ID != "marge" {
+	if qs, ok := res.Data.([]Question); !ok || len(qs) != 1 || qs[0].ID != "catalogue" {
 		t.Fatalf("questions = %#v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.chain",
-		Payload:    []byte(`{"id":"scanapp","answers":{"marge":"pas encore chiffrée","marketplace":"pas déployé","catalogue":"fiches seulement","stripe":"site seulement"}}`),
+		Payload:    []byte(`{"id":"scanapp","answers":{"catalogue":"à confirmer"}}`),
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.chain: %+v %v", res, err)

@@ -58,6 +58,16 @@ func Links() []Link {
 			Agents: []string{"research", "memory", "architect"},
 		},
 		{
+			From: "marketplace", To: "scanapp",
+			Via:    "le marketplace fetch les items du Scan App pour les vendre. Deux projets, deux écosystèmes. Il ne scanne pas.",
+			Agents: []string{"delivery", "comms"},
+		},
+		{
+			From: "azure", To: "proximity",
+			Via:    "l'équipe Azure gère le système branché, en même temps que le reste. Pas le Scan App, pas le marketplace.",
+			Agents: []string{"deploy", "operator"},
+		},
+		{
 			From: "optimisation", To: "direction",
 			Via:    "Optimisation contredit chaque proposition et ne laisse passer que l'option la plus courte",
 			Agents: []string{"reviewer", "explorer", "manager"},

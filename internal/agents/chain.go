@@ -50,7 +50,7 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "scanapp", Order: 4, Agent: "comms", Do: "Monter la fiche depuis le produit scanné : nom, prix, code, lieu, description."},
 			{Line: "scanapp", Order: 5, Agent: "architect", Do: "Photo trouvée en ligne seulement avec les droits. Sinon une image à nous. Jamais une copie d'une photo sans droits."},
 			{Line: "scanapp", Order: 6, Agent: "reviewer", Do: "Contrôle : droits photo, et consentement si une personne est dans le cadre."},
-			{Line: "scanapp", Order: 7, Agent: "delivery", Do: "Le marketplace du repo vend ce catalogue. Le site de vente sera connecté à MCP et à Stripe."},
+			{Line: "scanapp", Order: 7, Agent: "delivery", Do: "Le marketplace est un autre projet. Il fetch ces items pour les vendre. Il ne scanne pas."},
 			{Line: "scanapp", Order: 8, Agent: "comms", Do: "Vendre, promouvoir, marketing et média sur la fiche prête."},
 			{Line: "scanapp", Order: 9, Agent: "operator", Do: "Vente sur le marketplace (MCP, Stripe) et en live via Empire. Proximity n'est pas dans cette chaîne."},
 		}, true

@@ -90,6 +90,14 @@ func Chart() Organization {
 				},
 			},
 			{
+				ID: "azure", Name: "Azure", ReportsTo: "cto", Chief: "deploy",
+				Mandate: "Équipe du système branché sur Azure. Elle tourne en même temps que les autres. Sites Proximity, WordPress, PHP, ACF Pro. Elle ne scanne pas et elle ne vend pas le marketplace.",
+				Members: []Member{
+					{Agent: "deploy", Title: "chef d'équipe Azure", Skills: []string{"Azure", "preview", "release"}},
+					{Agent: "operator", Title: "confection des sites Azure", Skills: []string{"WordPress", "PHP", "ACF Pro"}},
+				},
+			},
+			{
 				ID: "controle", Name: "Contrôle", ReportsTo: "ceo", Chief: "security",
 				Mandate: "Dit si c'est permis et si ça peut casser. Ne choisit pas la meilleure option : c'est le métier d'Optimisation.",
 				Members: []Member{
@@ -107,7 +115,7 @@ func Chart() Organization {
 			},
 		},
 		Divisions: []Division{
-			{ID: "proximity", Name: "Proximity Agency", Chief: "operator", Department: "operations", Revenue: "Sites clients WordPress / PHP / ACF Pro.", Guard: "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow."},
+			{ID: "proximity", Name: "Proximity Agency", Chief: "operator", Department: "azure", Revenue: "Sites clients WordPress / PHP / ACF Pro, branchés sur Azure.", Guard: "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow. L'équipe Azure gère ça en parallèle."},
 			{
 				ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche",
 				Revenue: "Le scan tient le stock vrai. La fiche vend ce stock. La promo et le média tournent autour de la fiche, pas autour de la photo seule.",

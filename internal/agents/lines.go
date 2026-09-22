@@ -41,16 +41,25 @@ func Lines() []Line {
 			},
 		},
 		{
-			ID: "scanapp", Name: "Scan App Marketplace", Brain: "Hustler",
-			Mandate: "Le stock est scanné sur https://inventory-scanner-theta.vercel.app/. " +
-				"Le repo Evolu-Jeunes/ScanApp ne contient que le marketplace, et c'est lui qui fonctionne. " +
-				"Ce marketplace vend sur son site, qui sera connecté à MCP et à Stripe. " +
-				"Boutique encore sans vente et sans client. But : vendre plus cher, profit, système interne. " +
-				"Codes déjà lus : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR. " +
+			ID: "scanapp", Name: "Scan App", Brain: "Forgeron",
+			Mandate: "Projet déployé : la fonction scan. https://inventory-scanner-theta.vercel.app/ " +
+				"gère les produits, scanne les codes et met le stock à jour. " +
+				"Codes lus : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR. " +
+				"Ce n'est pas le marketplace. Empire vend aussi ces produits en live.",
+			Controls: "Opérations tient le scanner déployé. Empire vend ce stock en live.",
+			Repos:    []string{},
+		},
+		{
+			ID: "marketplace", Name: "Scan App Marketplace", Brain: "Hustler",
+			Mandate: "Autre projet, autre écosystème. Il ne scanne pas. " +
+				"Il vend les items qu'il fetch depuis le Scan App. " +
+				"Le repo Evolu-Jeunes/ScanApp est ce marketplace, et c'est lui qui fonctionne. " +
+				"Son site de vente sera connecté à MCP et à Stripe. " +
+				"Encore sans vente et sans client. But : vendre plus cher, profit. " +
+				"Prix CAD, taxes non incluses, Canada entier. " +
 				"Photo en ligne seulement avec les droits, sinon une image à nous. " +
-				"Prix CAD, taxes non incluses, Canada entier. Proximity n'est pas dans cette chaîne. " +
-				"Le live passe par Empire, sur toutes les plateformes. Empire vend aussi les produits du Scan App.",
-			Controls: "CMP vend sur le marketplace (MCP + Stripe) et au Canada. Opérations lit le stock sur le scanner Vercel. Contrôle vérifie les droits photo.",
+				"Proximity et Azure ne sont pas dans cet écosystème.",
+			Controls: "CMP vend. Le fetch lit le Scan App. Il ne le pilote pas.",
 			Repos:    []string{"Evolu-Jeunes/ScanApp"},
 		},
 		{

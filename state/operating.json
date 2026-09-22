@@ -322,7 +322,7 @@
       "language": "TypeScript",
       "brain": "Hustler",
       "line": "Scan App Marketplace",
-      "lineId": "scanapp",
+      "lineId": "marketplace",
       "status": "concept"
     },
     {
@@ -579,6 +579,12 @@
     },
     {
       "id": "scanapp",
+      "name": "Scan App",
+      "brain": "Forgeron",
+      "repos": null
+    },
+    {
+      "id": "marketplace",
       "name": "Scan App Marketplace",
       "brain": "Hustler",
       "repos": [
@@ -732,6 +738,24 @@
         "research",
         "memory",
         "architect"
+      ]
+    },
+    {
+      "from": "marketplace",
+      "to": "scanapp",
+      "via": "le marketplace fetch les items du Scan App pour les vendre. Deux projets, deux écosystèmes. Il ne scanne pas.",
+      "agents": [
+        "delivery",
+        "comms"
+      ]
+    },
+    {
+      "from": "azure",
+      "to": "proximity",
+      "via": "l'équipe Azure gère le système branché, en même temps que le reste. Pas le Scan App, pas le marketplace.",
+      "agents": [
+        "deploy",
+        "operator"
       ]
     },
     {
@@ -956,6 +980,43 @@
         ]
       },
       {
+        "id": "azure",
+        "name": "Azure",
+        "reportsTo": "cto",
+        "chief": "deploy",
+        "mandate": "Équipe du système branché sur Azure. Elle tourne en même temps que les autres. Sites Proximity, WordPress, PHP, ACF Pro. Elle ne scanne pas et elle ne vend pas le marketplace.",
+        "craft": [
+          {
+            "mark": "ressource azure",
+            "fill": "Ressource Azure : le service ou le site branché, nommé."
+          },
+          {
+            "mark": "site live",
+            "fill": "Site live : lecture seule, preview, puis accord. Pas de réécriture directe."
+          }
+        ],
+        "members": [
+          {
+            "agent": "deploy",
+            "title": "chef d'équipe Azure",
+            "skills": [
+              "Azure",
+              "preview",
+              "release"
+            ]
+          },
+          {
+            "agent": "operator",
+            "title": "confection des sites Azure",
+            "skills": [
+              "WordPress",
+              "PHP",
+              "ACF Pro"
+            ]
+          }
+        ]
+      },
+      {
         "id": "controle",
         "name": "Contrôle",
         "reportsTo": "ceo",
@@ -1035,9 +1096,9 @@
         "id": "proximity",
         "name": "Proximity Agency",
         "chief": "operator",
-        "department": "operations",
-        "revenue": "Sites clients WordPress / PHP / ACF Pro.",
-        "guard": "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow."
+        "department": "azure",
+        "revenue": "Sites clients WordPress / PHP / ACF Pro, branchés sur Azure.",
+        "guard": "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow. L'équipe Azure gère ça en parallèle."
       },
       {
         "id": "scanapp",
