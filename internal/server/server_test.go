@@ -155,6 +155,12 @@ func TestOSAndAgents(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/search?q=delivery", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "explorer hit") {
+		t.Fatalf("search = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/notes", nil))
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "2606.01508") {
 		t.Fatalf("notes = %s", res.Body.String())

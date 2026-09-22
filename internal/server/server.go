@@ -46,6 +46,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/browse", s.browse)
 	mux.HandleFunc("POST /api/plan", s.plan)
 	mux.HandleFunc("POST /api/architect", s.architect)
+	mux.HandleFunc("GET /api/search", s.search)
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -334,6 +335,17 @@ func (s *api) architect(w http.ResponseWriter, r *http.Request) {
 	}
 	raw, _ := json.Marshal(payload)
 	res, err := s.k.Invoke(r.Context(), "architect", kernel.Call{Capability: "architect.plan", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res)
+}
+
+func (s *api) search(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query().Get("q")
+	raw, _ := json.Marshal(map[string]string{"query": q})
+	res, err := s.k.Invoke(r.Context(), "explorer", kernel.Call{Capability: "explorer.search", Payload: raw})
 	if err != nil {
 		writeError(w, err)
 		return

@@ -116,6 +116,7 @@ unbound. The rest of the OS stays live.
 | `POST` | `/api/browse` | Operator browse dry-run |
 | `POST` | `/api/plan` | Planner backlog → idea ships |
 | `POST` | `/api/architect` | Architect plan → note + idea ships |
+| `GET` | `/api/search?q=` | Explorer search across agents/ships/notes |
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
