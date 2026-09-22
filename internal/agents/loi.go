@@ -89,9 +89,10 @@ func Loi() Compliance {
 				ID: "image", Name: "Image et photos", Where: "Québec",
 				Source: "Code civil du Québec, art. 35 et suivants, et Loi 25",
 				Rules: []string{
-					"Photo d'une personne identifiable : consentement, ou une exception réelle. On ne vend pas cette image comme fiche.",
-					"Photo de fiche : droit sur l'image détenu ou licencié. Pas de photo grattée.",
-					"Donnée de scan qui identifie une personne : c'est un renseignement personnel. Pas de vente sans base légale.",
+					"Scan App vend des produits scannés (code, prix, stock), pas des personnes.",
+					"L'image de la base ne va pas sur la fiche. On génère ou on trouve une photo dont on a les droits.",
+					"Si une photo montre une personne identifiable : consentement, sinon elle ne sort pas.",
+					"Gratter une photo sur le web n'est pas « trouver une photo ».",
 				},
 			},
 			{

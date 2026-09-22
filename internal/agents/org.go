@@ -38,8 +38,9 @@ type Division struct {
 	Name       string `json:"name"`
 	Chief      string `json:"chief"`
 	Department string `json:"department"`
-	Revenue    string `json:"revenue"`
-	Guard      string `json:"guard"`
+	Revenue    string   `json:"revenue"`
+	Guard      string   `json:"guard"`
+	Work       []string `json:"work,omitempty"`
 }
 
 // Chart returns the operating chart.
@@ -94,12 +95,26 @@ func Chart() Organization {
 		},
 		Divisions: []Division{
 			{ID: "proximity", Name: "Proximity Agency", Chief: "operator", Department: "operations", Revenue: "Sites clients WordPress / PHP / ACF Pro.", Guard: "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow."},
-			{ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche", Revenue: "Fiches vendues à partir de la donnée scan, avec de vraies photos.", Guard: "Photo dont on a les droits. Si la donnée identifie une personne : Loi 25, pas de vente sans base légale."},
+			{
+				ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche",
+				Revenue: "Le scan tient le stock vrai. La fiche vend ce stock. La promo et le média tournent autour de la fiche, pas autour de la photo seule.",
+				Guard:   "On ne publie pas l'image brute de la base. Photo générée ou trouvée, avec les droits. Une personne identifiable n'est pas un produit.",
+				Work: []string{
+					"Scanner interchangeable (caméra, USB, ZXing, BarcodeDetector) : code, format, source.",
+					"Le scan écrit le stock : ajout, retrait, vente, vérification. Produit = code unique, sku, prix, quantité, emplacement.",
+					"La base garde souvent une image mauvaise ou vide. Ce n'est pas la fiche.",
+					"Fiche de vente : nom, prix, code, lieu, description, à partir du produit scanné.",
+					"Photos : en générer une ou en trouver une. Jamais l'image mal traitée de la base sur la fiche publique.",
+					"Boutique : le stock disponible devient catalogue commandable. Le flux commande vendeur n'est pas fini dans le repo.",
+					"Autour : vendre, promouvoir, marketing et média, automatisés sur ces fiches.",
+					"Proximity publie la fiche sur les sites. Empire la vend en live. Ils ne réinventent pas le stock.",
+				},
+			},
 			{ID: "panda", Name: "Panda", Chief: "architect", Department: "ingenierie", Revenue: "White-glove : IA, installation, cours, entreprises et particuliers.", Guard: "On vend le service. On ne déploie pas chez le client sans allow."},
 			{ID: "nft-giant", Name: "NFT + Giant", Chief: "security", Department: "controle", Revenue: "Art avec utilité, token Giant, tirages de visibilité.", Guard: "Pas de mint ni de campagne sans revue risque et allow."},
 			{ID: "ecole", Name: "École", Chief: "research", Department: "marche", Revenue: "Cours tech (WordPress, Web3).", Guard: "Le cours décrit. Il ne promet pas un gain de trading."},
 			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Revenue: "Gestion marketing des business corporate.", Guard: "Une campagne à la fois. Mesurer avant d'élargir."},
-			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Revenue: "Live sell des items, podcast, UGC.", Guard: "Le live vend ce qui est déjà une fiche. Pas de stock inventé."},
+			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Revenue: "Live sell sur Kick : podcast, UGC, items du scan.", Guard: "Le live vend une fiche déjà scannée. Pas de stock inventé. Kick diffuse, il ne remplace pas le stock."},
 			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
 		},
 	}

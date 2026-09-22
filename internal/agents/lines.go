@@ -42,9 +42,11 @@ func Lines() []Line {
 		},
 		{
 			ID: "scanapp", Name: "Scan App Marketplace", Brain: "Hustler",
-			Mandate: "Prendre la donnée du Scan App et la vendre. Système automatisé de vente, promotion, marketing et média. " +
-				"Générer et trouver de vraies photos de fiche, pas les photos mal traitées de la base.",
-			Controls: "Hustler vend et promeut. Forgeron améliore les fiches. Mémoire du scan reste dans le repo.",
+			Mandate: "Chaîne complète : scanner interchangeable, stock vrai (code, sku, prix, quantité, lieu), " +
+				"fiche de vente montée sur ce stock, photo générée ou trouvée à la place de l'image mauvaise de la base, " +
+				"boutique commandable, puis vente, promo, marketing et média automatisés. " +
+				"Le repo aujourd'hui a le scan, les produits, l'historique et l'ébauche vendeur. La photo, la commande et le média ne sont pas finis.",
+			Controls: "CMP vend et promeut. Opérations tient le scan et la boutique. Ingénierie remplace l'image de la base. Contrôle vérifie les droits photo.",
 			Repos:    []string{"Evolu-Jeunes/ScanApp"},
 		},
 		{
@@ -74,9 +76,9 @@ func Lines() []Line {
 		},
 		{
 			ID: "empire", Name: "Empire Media", Brain: "Forgeron",
-			Mandate: "Live dans une maison équipée (BirdDog, 5 à 6 caméras) : podcast, UGC, live sell. " +
-				"Branché sur une app pour vendre les items pendant le live. Diffusion maison, les streamers ne dépendent pas d'une plateforme externe.",
-			Controls: "Forgeron tient le studio et l'app de vente. Hustler remplit le live.",
+			Mandate: "Studio maison : BirdDog, 5 à 6 caméras, endroit pro pour podcast, UGC et live sell. " +
+				"L'app vend les items du Scan App pendant le live. Diffusion sur Kick, pour que les streamers ne soient pas coupés comme sur les autres plateformes.",
+			Controls: "Forgeron tient le studio, l'app de vente et la sortie Kick. Hustler remplit le live. Le stock vient du scan.",
 			Repos:    []string{"Evolu-Jeunes/Empire-", "Evolu-Jeunes/EmpireMedia"},
 		},
 		{

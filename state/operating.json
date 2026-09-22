@@ -656,7 +656,7 @@
     {
       "from": "proximity",
       "to": "scanapp",
-      "via": "les sites Proximity publient les fiches du Scan App, photos propres comprises",
+      "via": "les sites Proximity publient la fiche déjà montée par Scan App (stock scanné, photo propre), ils ne refont pas l'inventaire",
       "agents": [
         "operator",
         "deploy",
@@ -688,7 +688,7 @@
     {
       "from": "empire",
       "to": "scanapp",
-      "via": "le live sell d'Empire vend les items du Scan App",
+      "via": "le live Empire, diffusé sur Kick, vend un produit dont le stock et la fiche viennent du scan",
       "agents": [
         "operator",
         "comms",
@@ -968,8 +968,18 @@
         "name": "Scan App",
         "chief": "comms",
         "department": "marche",
-        "revenue": "Fiches vendues à partir de la donnée scan, avec de vraies photos.",
-        "guard": "Photo dont on a les droits. Si la donnée identifie une personne : Loi 25, pas de vente sans base légale."
+        "revenue": "Le scan tient le stock vrai. La fiche vend ce stock. La promo et le média tournent autour de la fiche, pas autour de la photo seule.",
+        "guard": "On ne publie pas l'image brute de la base. Photo générée ou trouvée, avec les droits. Une personne identifiable n'est pas un produit.",
+        "work": [
+          "Scanner interchangeable (caméra, USB, ZXing, BarcodeDetector) : code, format, source.",
+          "Le scan écrit le stock : ajout, retrait, vente, vérification. Produit = code unique, sku, prix, quantité, emplacement.",
+          "La base garde souvent une image mauvaise ou vide. Ce n'est pas la fiche.",
+          "Fiche de vente : nom, prix, code, lieu, description, à partir du produit scanné.",
+          "Photos : en générer une ou en trouver une. Jamais l'image mal traitée de la base sur la fiche publique.",
+          "Boutique : le stock disponible devient catalogue commandable. Le flux commande vendeur n'est pas fini dans le repo.",
+          "Autour : vendre, promouvoir, marketing et média, automatisés sur ces fiches.",
+          "Proximity publie la fiche sur les sites. Empire la vend en live. Ils ne réinventent pas le stock."
+        ]
       },
       {
         "id": "panda",
@@ -1008,8 +1018,8 @@
         "name": "Empire Media",
         "chief": "delivery",
         "department": "operations",
-        "revenue": "Live sell des items, podcast, UGC.",
-        "guard": "Le live vend ce qui est déjà une fiche. Pas de stock inventé."
+        "revenue": "Live sell sur Kick : podcast, UGC, items du scan.",
+        "guard": "Le live vend une fiche déjà scannée. Pas de stock inventé. Kick diffuse, il ne remplace pas le stock."
       },
       {
         "id": "trading",
@@ -1092,9 +1102,10 @@
         "where": "Québec",
         "source": "Code civil du Québec, art. 35 et suivants, et Loi 25",
         "rules": [
-          "Photo d'une personne identifiable : consentement, ou une exception réelle. On ne vend pas cette image comme fiche.",
-          "Photo de fiche : droit sur l'image détenu ou licencié. Pas de photo grattée.",
-          "Donnée de scan qui identifie une personne : c'est un renseignement personnel. Pas de vente sans base légale."
+          "Scan App vend des produits scannés (code, prix, stock), pas des personnes.",
+          "L'image de la base ne va pas sur la fiche. On génère ou on trouve une photo dont on a les droits.",
+          "Si une photo montre une personne identifiable : consentement, sinon elle ne sort pas.",
+          "Gratter une photo sur le web n'est pas « trouver une photo »."
         ]
       },
       {

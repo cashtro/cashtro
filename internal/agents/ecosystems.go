@@ -19,7 +19,7 @@ func Links() []Link {
 		},
 		{
 			From: "proximity", To: "scanapp",
-			Via:    "les sites Proximity publient les fiches du Scan App, photos propres comprises",
+			Via:    "les sites Proximity publient la fiche déjà montée par Scan App (stock scanné, photo propre), ils ne refont pas l'inventaire",
 			Agents: []string{"operator", "deploy", "reviewer", "delivery"},
 		},
 		{
@@ -34,7 +34,7 @@ func Links() []Link {
 		},
 		{
 			From: "empire", To: "scanapp",
-			Via:    "le live sell d'Empire vend les items du Scan App",
+			Via:    "le live Empire, diffusé sur Kick, vend un produit dont le stock et la fiche viennent du scan",
 			Agents: []string{"operator", "comms", "delivery", "reviewer"},
 		},
 		{

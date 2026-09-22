@@ -118,6 +118,15 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if len(org.Seats) != 3 || len(org.Departments) != 5 || len(org.Divisions) != 8 {
 		t.Fatalf("org seats/depts/divs = %d %d %d", len(org.Seats), len(org.Departments), len(org.Divisions))
 	}
+	var scanWork int
+	for _, d := range org.Divisions {
+		if d.ID == "scanapp" {
+			scanWork = len(d.Work)
+		}
+	}
+	if scanWork < 8 {
+		t.Fatalf("scanapp chain = %d steps", scanWork)
+	}
 	if len(org.Members()) != 15 {
 		t.Fatalf("employees = %d, want 15", len(org.Members()))
 	}
