@@ -26,10 +26,10 @@ e-commerce. Client code stays private. The results are live:
 ## Cashtro OS
 
 This repo is **under construction**. It is the control plane for every
-agentic we build here. Agents are processes. Capabilities are verbs.
-Mail, notes, memory, and human confirms are first-class. Delivery and
-research are live. New agentics register into this kernel — they do not
-become a second product.
+agentic we build here. Agents are processes with divorced rules. Capabilities are verbs.
+Mail, notes, memory, human confirms, and asks are first-class. Delivery,
+research, and L'Inquisiteur are live. New agentics register into this
+kernel — they do not become a second product.
 
 ```bash
 go test ./...

@@ -113,7 +113,13 @@ flowchart TB
     Evolu_Jeunes_Pollo["Pollo<br/>Evolu"]
   end
   orfevre --> Evolu_Jeunes_Alaska
-  manager --> hustler["Le Hustler<br/>empire A a Z"]
+	manager --> hustler["Le Hustler<br/>empire A a Z"]
+	manager --> inquisitor["L'Inquisiteur<br/>contredit · teste · bloque · smarter"]
+	inquisitor --> hustler
+	inquisitor --> architecte
+	inquisitor --> cartographe
+	inquisitor --> forgeron
+	inquisitor --> orfevre
   subgraph sub_hustler["Le Hustler · sous-cerveaux"]
     hustler_s1["Strategue"]
     hustler_s2["Traqueur"]
@@ -157,8 +163,11 @@ flowchart TB
   vapi --> Evolu_Jeunes_AI_BOT
   vapi --> cashtro_Pandora
   manager --> evolu_teal["Evolu-Jeunes/Teal<br/>fresh voice repo · :8090"]
-  vapi --> evolu_teal
-  teal --> evolu_teal
+	vapi --> evolu_teal
+	teal --> evolu_teal
+	inquisitor --> teal
+	inquisitor --> vapi
+	inquisitor --> evolu_teal
   Evolu_Jeunes_Proximity -.-> Evolu_Jeunes_ProximityApp
   Evolu_Jeunes_Proximity -.-> Evolu_Jeunes_Proximity_Agentic
   Evolu_Jeunes_h20 -.-> Evolu_Jeunes_H2oH2o

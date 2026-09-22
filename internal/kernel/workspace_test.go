@@ -44,6 +44,18 @@ func TestMailboxNotesMemoryConfirm(t *testing.T) {
 	if err != nil || decided.Status != "allowed" {
 		t.Fatalf("decide = %+v %v", decided, err)
 	}
+
+	ask := k.RequestAsk("inquisitor", "smarter", "proximity", []string{"Quelle lacune?"})
+	if ask.Status != "pending" || ask.ID == 0 {
+		t.Fatalf("ask = %+v", ask)
+	}
+	answered, err := k.AnswerAsk(ask.ID, map[string]string{"Quelle lacune?": "usine WP"})
+	if err != nil || answered.Status != "answered" {
+		t.Fatalf("answer ask = %+v %v", answered, err)
+	}
+	if len(k.Asks()) != 1 {
+		t.Fatalf("asks = %#v", k.Asks())
+	}
 }
 
 func TestInvokeCap(t *testing.T) {

@@ -97,6 +97,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 		&managerAgent{},
 		&tealAgent{},
 		&vapiAgent{},
+		&inquisitorAgent{},
 	}
 }
 
@@ -108,7 +109,7 @@ type managerAgent struct {
 }
 
 func (a *managerAgent) Spec() kernel.Spec {
-	return kernel.Spec{
+	return stamp(kernel.Spec{
 		ID: "manager", Name: "Manager", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 		Role:    "epicenter",
 		Summary: "Epicenter project manager. Oversees all 57 repos, reads fiches, queries Graphify, coordinates the 5 brains.",
@@ -123,7 +124,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.graphify",
 		},
 		Autostart: true,
-	}
+	})
 }
 
 func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
@@ -243,12 +244,12 @@ type deliveryAgent struct {
 }
 
 func (a *deliveryAgent) Spec() kernel.Spec {
-	return kernel.Spec{
+	return stamp(kernel.Spec{
 		ID: "delivery", Name: "Delivery", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 		Role: "ship", Summary: "The live line: idea → concept → production.",
 		Capabilities: []string{"delivery.list", "delivery.create", "delivery.advance", "delivery.profile"},
 		Autostart:    true,
-	}
+	})
 }
 
 func (a *deliveryAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
@@ -317,12 +318,12 @@ func (a *routerAgent) Spec() kernel.Spec {
 		mode = kernel.ModeLive
 		summary = "Router live on both lanes: Ollama internal, Kimi K3 + GLM 5.3 max external."
 	}
-	return kernel.Spec{
+	return stamp(kernel.Spec{
 		ID: "router", Name: "Router", Kind: kernel.KindSystem, Mode: mode,
 		Role: "model", Summary: summary,
 		Capabilities: []string{"model.status", "model.chat"},
 		Autostart:    true,
-	}
+	})
 }
 
 func (a *routerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
@@ -383,7 +384,7 @@ type residentAgent struct {
 }
 
 func resident(spec kernel.Spec, fn func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error)) *residentAgent {
-	return &residentAgent{spec: spec, fn: fn}
+	return &residentAgent{spec: stamp(spec), fn: fn}
 }
 
 func (a *residentAgent) Spec() kernel.Spec { return a.spec }

@@ -112,7 +112,7 @@ type tealAgent struct {
 }
 
 func (a *tealAgent) Spec() kernel.Spec {
-	return kernel.Spec{
+	return stamp(kernel.Spec{
 		ID: "teal", Name: "Teal", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 		Role:    "corporate-brain",
 		Summary: "Corporate Teal brain. Teams scrape + intern desk. Voice is the live vapi agent across every business line.",
@@ -133,7 +133,7 @@ func (a *tealAgent) Spec() kernel.Spec {
 			"teal.card",
 		},
 		Autostart: true,
-	}
+	})
 }
 
 func (a *tealAgent) Boot(ctx context.Context, k *kernel.Kernel) error {

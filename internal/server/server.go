@@ -37,6 +37,17 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/confirms", s.confirms)
 	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
+	mux.HandleFunc("GET /api/asks", s.asks)
+	mux.HandleFunc("POST /api/asks/{id}/answer", s.answerAsk)
+	mux.HandleFunc("GET /api/inquisitor", s.inquisitorStatus)
+	mux.HandleFunc("POST /api/inquisitor/audit", s.inquisitorInvoke("inquisitor.audit"))
+	mux.HandleFunc("POST /api/inquisitor/block", s.inquisitorInvoke("inquisitor.block"))
+	mux.HandleFunc("POST /api/inquisitor/release", s.inquisitorInvoke("inquisitor.release"))
+	mux.HandleFunc("POST /api/inquisitor/smarter", s.inquisitorInvoke("inquisitor.smarter"))
+	mux.HandleFunc("POST /api/inquisitor/optimize", s.inquisitorInvoke("inquisitor.optimize"))
+	mux.HandleFunc("POST /api/inquisitor/dissent", s.inquisitorInvoke("inquisitor.dissent"))
+	mux.HandleFunc("POST /api/inquisitor/ask", s.inquisitorInvoke("inquisitor.ask"))
+	mux.HandleFunc("POST /api/inquisitor/answer", s.inquisitorInvoke("inquisitor.answer"))
 	mux.HandleFunc("GET /api/profile", s.profile)
 	mux.HandleFunc("GET /api/stages", s.stages)
 	mux.HandleFunc("GET /api/ships", s.listShips)
@@ -191,6 +202,75 @@ func (s *api) memory(w http.ResponseWriter, r *http.Request) {
 
 func (s *api) confirms(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, s.k.Confirms())
+}
+
+func (s *api) asks(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, s.k.Asks())
+}
+
+func (s *api) answerAsk(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "bad ask id"})
+		return
+	}
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	if len(bytes.TrimSpace(raw)) == 0 {
+		raw = []byte(`{}`)
+	}
+	var payload map[string]any
+	if err := json.Unmarshal(raw, &payload); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	payload["id"] = id
+	body, _ := json.Marshal(payload)
+	res, err := s.k.Invoke(r.Context(), "inquisitor", kernel.Call{Capability: "inquisitor.answer", Payload: body})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) inquisitorStatus(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "inquisitor", kernel.Call{Capability: "inquisitor.status"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) inquisitorInvoke(cap string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+		if err != nil {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+			return
+		}
+		if len(bytes.TrimSpace(raw)) == 0 {
+			raw = []byte(`{}`)
+		}
+		res, err := s.k.Invoke(r.Context(), "inquisitor", kernel.Call{Capability: cap, Payload: raw})
+		if err != nil {
+			writeError(w, err)
+			return
+		}
+		if !res.OK {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+			return
+		}
+		writeJSON(w, http.StatusOK, res.Data)
+	}
 }
 
 func (s *api) allowConfirm(w http.ResponseWriter, r *http.Request) {

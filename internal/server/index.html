@@ -168,6 +168,10 @@
     .talk-log { max-height: 140px; overflow: auto; font-size: 12px; color: var(--muted); line-height: 1.45; }
     .talk-log .me { color: var(--ink); }
     .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .depts { display: flex; flex-wrap: wrap; gap: 6px; max-height: 160px; overflow: auto; }
+    .depts button { font-size: 11px; padding: 6px 8px; }
+    .depts button.blocked { border-color: var(--danger); color: var(--danger); }
+    .depts button.active { border-color: var(--live); color: var(--live); }
     footer {
       border-top: 1px solid var(--line);
       padding: 16px 0 32px;
@@ -209,7 +213,7 @@
             <p class="sub">Cashtro OS · assembled · FR/EN</p>
           </div>
         </div>
-        <p class="lede" id="lede">Fourteen seats. One body. idea → concept → production.</p>
+        <p class="lede" id="lede">Eighteen seats. One body. idea → concept → production. L'Inquisiteur contradicts.</p>
       </div>
       <div class="stats" id="stats"></div>
     </header>
@@ -245,6 +249,24 @@
             <div class="err" id="vapi-err"></div>
           </form>
           <div class="talk-log" id="talk-log"></div>
+        </div>
+        <div class="panel">
+          <h2>L'Inquisiteur</h2>
+          <p class="lede" id="inq-hint">Contradict, test, block until a department self-improves. Always the most optimized option.</p>
+          <div class="depts" id="depts"></div>
+          <div class="row2">
+            <button type="button" id="inq-audit">Audit corporation</button>
+            <button class="primary" type="button" id="inq-smarter">Smarter all</button>
+          </div>
+          <form id="inq-ask">
+            <label>Answer a pending ask
+              <input name="note" placeholder="What is missing, and the more specialized option…">
+            </label>
+            <button type="submit">Answer latest ask</button>
+          </form>
+          <div class="ok" id="inq-ok"></div>
+          <div class="err" id="inq-err"></div>
+          <div class="journal" id="asks"></div>
         </div>
         <div class="panel">
           <h2>Journal</h2>
@@ -308,7 +330,8 @@
       investigator: { name: "Seeker", color: "#ffb020" },
       manager: { name: "Epicenter", color: "#6ea8ff" },
       teal: { name: "Teal", color: "#2dd4bf" },
-      vapi: { name: "Vapi", color: "#c084fc" }
+      vapi: { name: "Vapi", color: "#c084fc" },
+      inquisitor: { name: "L'Inquisiteur", color: "#ff6b5a" }
     };
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
@@ -364,6 +387,12 @@
       p.textContent = lastInvoke || agent.spec.summary;
       box.appendChild(title);
       box.appendChild(p);
+      (agent.spec.rules || []).slice(0, 4).forEach((rule) => {
+        const line = document.createElement("div");
+        line.className = "lede";
+        line.textContent = "rule · " + rule;
+        box.appendChild(line);
+      });
       (agent.spec.capabilities || []).forEach((cap) => {
         const b = document.createElement("button");
         b.className = "cap";
@@ -397,10 +426,10 @@
       }
     }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms, vapi] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/vapi")
+      const [os, agents, ships, events, model, profile, notes, confirms, vapi, inquisitor, asks] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/vapi"), j("/api/inquisitor"), j("/api/asks")
       ]);
-      document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";
+      document.getElementById("lede").textContent = os.motto || "Eighteen seats. One body. idea → concept → production.";
       document.getElementById("contact").textContent = profile.email;
       const stats = document.getElementById("stats");
       stats.replaceChildren(
@@ -410,7 +439,8 @@
         chip(os.resident + " resident"),
         chip(notes.length + " notes"),
         chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound"),
-        chip(vapi.keyBound ? "Vapi live" : "Vapi local", vapi.keyBound ? "live" : "unbound")
+        chip(vapi.keyBound ? "Vapi live" : "Vapi local", vapi.keyBound ? "live" : "unbound"),
+        chip((inquisitor.blocked || 0) + " blocked", inquisitor.blocked ? "unbound" : "live")
       );
       const grid = document.getElementById("agents");
       grid.replaceChildren();
@@ -480,6 +510,7 @@
         }
       });
       paintVapi(vapi);
+      paintInquisitor(inquisitor, asks);
     }
     async function paintVapi(status) {
       const hint = document.getElementById("vapi-hint");
@@ -530,6 +561,46 @@
         them.textContent = (t.voice || "vapi") + " · " + t.reply;
         log.appendChild(me);
         log.appendChild(them);
+      });
+    }
+    function paintInquisitor(status, asks) {
+      const hint = document.getElementById("inq-hint");
+      hint.textContent = (status.rule || "contradict · test · optimize") + " · " + (status.blocked || 0) + " blocked · POST /api/inquisitor/smarter";
+      const box = document.getElementById("depts");
+      box.replaceChildren();
+      (status.departments || []).forEach((d) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = d.id + " · " + (d.score || 0);
+        if (d.blocked) b.className = "blocked";
+        b.title = (d.contradict || d.mandate || "");
+        b.addEventListener("click", async () => {
+          document.getElementById("inq-err").textContent = "";
+          try {
+            await j("/api/inquisitor/smarter", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+              body: JSON.stringify({ department: d.id })
+            });
+            await render();
+          } catch (e) {
+            document.getElementById("inq-err").textContent = e.message;
+          }
+        });
+        box.appendChild(b);
+      });
+      const list = document.getElementById("asks");
+      list.replaceChildren();
+      const pending = (asks || []).filter((a) => a.status === "pending").slice(-6).reverse();
+      if (!pending.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "No pending asks. Mutating inquisitor verbs park questions here before they act.";
+        list.appendChild(empty);
+      }
+      pending.forEach((a) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + a.id + " " + a.action + " · " + (a.line || "corporation") + " — " + (a.questions || []).join(" / ");
+        list.appendChild(line);
       });
     }
     document.getElementById("form").addEventListener("submit", async (event) => {
@@ -627,6 +698,60 @@
         });
       } catch (e) {
         document.getElementById("vapi-err").textContent = e.message;
+      }
+    });
+    document.getElementById("inq-audit").addEventListener("click", async () => {
+      document.getElementById("inq-err").textContent = "";
+      document.getElementById("inq-ok").textContent = "";
+      try {
+        const data = await j("/api/inquisitor/audit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ department: "corporation" })
+        });
+        document.getElementById("inq-ok").textContent = "audited " + ((data.departments && data.departments.length) || 0);
+        await render();
+      } catch (e) {
+        document.getElementById("inq-err").textContent = e.message;
+      }
+    });
+    document.getElementById("inq-smarter").addEventListener("click", async () => {
+      document.getElementById("inq-err").textContent = "";
+      document.getElementById("inq-ok").textContent = "";
+      try {
+        const data = await j("/api/inquisitor/smarter", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ department: "corporation" })
+        });
+        document.getElementById("inq-ok").textContent = "ticked " + (data.ticked || 0);
+        await render();
+      } catch (e) {
+        document.getElementById("inq-err").textContent = e.message;
+      }
+    });
+    document.getElementById("inq-ask").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      document.getElementById("inq-err").textContent = "";
+      document.getElementById("inq-ok").textContent = "";
+      const note = new FormData(event.target).get("note");
+      try {
+        const asks = await j("/api/asks");
+        const pending = (asks || []).filter((a) => a.status === "pending").pop();
+        if (!pending) {
+          document.getElementById("inq-err").textContent = "no pending ask";
+          return;
+        }
+        await j("/api/asks/" + pending.id + "/answer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ answers: { note: note } })
+        });
+        event.target.reset();
+        document.getElementById("inq-ok").textContent = "answered #" + pending.id;
+        await render();
+      } catch (e) {
+        document.getElementById("inq-err").textContent = e.message;
       }
     });
     render().catch((e) => { document.getElementById("form-error").textContent = e.message; });

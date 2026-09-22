@@ -49,6 +49,17 @@ type Confirm struct {
 	Outcome string `json:"outcome,omitempty"`
 }
 
+// Ask is a context gate: specific questions Castro answers before an action.
+type Ask struct {
+	ID        int               `json:"id"`
+	Agent     string            `json:"agent"`
+	Action    string            `json:"action"`
+	Line      string            `json:"line,omitempty"`
+	Questions []string          `json:"questions"`
+	Answers   map[string]string `json:"answers,omitempty"`
+	Status    string            `json:"status"`
+}
+
 // InvokeCap routes a verb without the caller naming the owner.
 func (k *Kernel) InvokeCap(ctx context.Context, cap string, call Call) (Result, error) {
 	k.mu.RLock()
@@ -189,6 +200,51 @@ func (k *Kernel) Confirms() []Confirm {
 	defer k.mu.RUnlock()
 	out := make([]Confirm, len(k.confirms))
 	copy(out, k.confirms)
+	return out
+}
+
+// RequestAsk parks specific questions before a mutating action.
+func (k *Kernel) RequestAsk(agent, action, line string, questions []string) Ask {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	k.askSeq++
+	a := Ask{
+		ID:        k.askSeq,
+		Agent:     agent,
+		Action:    strings.TrimSpace(action),
+		Line:      strings.TrimSpace(line),
+		Questions: questions,
+		Status:    "pending",
+	}
+	k.asks = append(k.asks, a)
+	k.seq++
+	k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: agent, Kind: "ask.pending", Message: action})
+	return a
+}
+
+// AnswerAsk fills answers for a pending ask.
+func (k *Kernel) AnswerAsk(id int, answers map[string]string) (Ask, error) {
+	k.mu.Lock()
+	defer k.mu.Unlock()
+	for i := range k.asks {
+		if k.asks[i].ID != id {
+			continue
+		}
+		k.asks[i].Answers = answers
+		k.asks[i].Status = "answered"
+		k.seq++
+		k.events = append(k.events, Event{Seq: k.seq, At: k.now(), Source: "inquisitor", Kind: "ask.answered", Message: k.asks[i].Action})
+		return k.asks[i], nil
+	}
+	return Ask{}, fmt.Errorf("ask %d not found", id)
+}
+
+// Asks returns the context-gate queue.
+func (k *Kernel) Asks() []Ask {
+	k.mu.RLock()
+	defer k.mu.RUnlock()
+	out := make([]Ask, len(k.asks))
+	copy(out, k.asks)
 	return out
 }
 

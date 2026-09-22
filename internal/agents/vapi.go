@@ -48,7 +48,7 @@ type PendingCall struct {
 }
 
 func (a *vapiAgent) Spec() kernel.Spec {
-	return kernel.Spec{
+	return stamp(kernel.Spec{
 		ID: "vapi", Name: "Vapi", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 		Role:    "voice",
 		Summary: "Vapi voice lane across every bridge project. Talk, automated outbound calls, changeable voices.",
@@ -63,7 +63,7 @@ func (a *vapiAgent) Spec() kernel.Spec {
 			"vapi.bridge",
 		},
 		Autostart: true,
-	}
+	})
 }
 
 func (a *vapiAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
@@ -246,6 +246,9 @@ func (a *vapiAgent) planCall(call kernel.Call) (kernel.Result, error) {
 	lineID := firstNonEmpty(payloadQuery(call, "line"), a.line)
 	voice := a.voice
 	a.mu.Unlock()
+	if DepartmentBlocked(a.k, lineID) {
+		return kernel.Result{OK: false, Message: "inquisitor blocked department " + lineID + " until it self-improves"}, nil
+	}
 	body := "Vapi outbound " + to + " · line " + lineID + " · voice " + voice.Name + " · " + prompt
 	c := a.k.RequestConfirm("vapi", "vapi.call", body)
 	plan := PendingCall{ConfirmID: c.ID, To: to, Line: lineID, Voice: voice, Prompt: prompt}

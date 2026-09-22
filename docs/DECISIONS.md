@@ -1,5 +1,21 @@
 # DECISIONS
 
+## 2026-09-22 — L'Inquisiteur contradicts, blocks, and steps up every department
+
+- **Choice:** Live kernel agentic `inquisitor`. Ten lines + five brains +
+  the corporation are departments. Each has a `smarter` loop that fills
+  its own gaps. `Spec.Rules` divorces every agentic. Mutating inquisitor
+  verbs park specific questions on the ask-gate before they act. Dissent
+  can `block` a department; `vapi.call` refuses a blocked line until that
+  department self-improves. Boot ticks every department once and does
+  **not** freeze the desk.
+- **Why:** Castro said the chain was not specialized enough. Push every
+  department to the maximum so it can close its own lacunes. Always
+  understand before targeting an action. Always contradict and test
+  toward the most optimized option.
+- **Stop:** Do not auto-block the whole corporation at boot. Do not buy
+  Vapi numbers or fire paid calls.
+
 ## 2026-09-22 — Evolu-Jeunes/Teal is a fresh voice repo
 
 - **Choice:** Put the Vapi/Teal voice brain in a fresh Evolu-Jeunes

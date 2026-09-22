@@ -61,7 +61,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 17 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 18 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -71,7 +71,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 17 {
+	if len(procs) != 18 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -127,6 +127,9 @@ func TestIndexHTML(t *testing.T) {
 	}
 	if !strings.Contains(body, "Voice lane") || !strings.Contains(body, "/api/vapi/talk") {
 		t.Fatalf("index missing Vapi lane")
+	}
+	if !strings.Contains(body, "L'Inquisiteur") || !strings.Contains(body, "/api/inquisitor") {
+		t.Fatalf("index missing Inquisitor lane")
 	}
 }
 
@@ -303,5 +306,49 @@ func TestStages(t *testing.T) {
 	body, _ := io.ReadAll(res.Body)
 	if !strings.Contains(string(body), `"idea"`) || !strings.Contains(string(body), `"production"`) {
 		t.Fatalf("stages = %s", body)
+	}
+}
+
+func TestInquisitorHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/inquisitor", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "hustler") {
+		t.Fatalf("inquisitor = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/inquisitor/dissent", strings.NewReader(`{"action":"one shared brain"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "reject") {
+		t.Fatalf("dissent = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/inquisitor/block", strings.NewReader(`{"department":"panda"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "blocked") {
+		t.Fatalf("block = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/vapi/call", strings.NewReader(`{"to":"+15555550199","line":"panda"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusBadRequest || !strings.Contains(res.Body.String(), "blocked") {
+		t.Fatalf("blocked call = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/inquisitor/smarter", strings.NewReader(`{"department":"panda"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("smarter = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/asks", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "pending") && !strings.Contains(res.Body.String(), "smarter") {
+		t.Fatalf("asks = %d %s", res.Code, res.Body.String())
 	}
 }
