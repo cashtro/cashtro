@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>workspace — Complete Call Flow &amp; Architecture Documentation</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --bg: #0f172a; --surface: #1e293b; --border: #334155;
+  --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8;
+  --warn: #fbbf24; --err: #f87171; --ok: #34d399;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+h1 { font-size: 2.4rem; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 1.7rem; margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); }
+h3 { font-size: 1.25rem; margin: 32px 0 12px; color: var(--accent); }
+h4 { font-size: 1.05rem; margin: 20px 0 8px; color: var(--warn); }
+p { margin: 8px 0; color: var(--muted); }
+.subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 32px; }
+.mermaid { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; overflow-x: auto; position: relative; }
+.mermaid.is-enhanced { padding: 0; overflow: hidden; min-height: 260px; }
+.mermaid-viewport { padding: 54px 24px 24px; overflow: hidden; cursor: grab; touch-action: none; min-height: 260px; }
+.mermaid-viewport.is-dragging { cursor: grabbing; }
+.mermaid-viewport svg { max-width: none !important; height: auto; transform-origin: 0 0; transition: transform 120ms ease; }
+.mermaid-toolbar { position: absolute; top: 10px; right: 10px; z-index: 3; display: flex; align-items: center; gap: 6px; padding: 6px; background: rgba(15,23,42,0.92); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.28); }
+.mermaid-toolbar button, .mermaid-toolbar .zoom-level { height: 28px; min-width: 32px; border: 1px solid var(--border); border-radius: 6px; background: #1e293b; color: var(--text); font: 600 0.78rem system-ui, sans-serif; display: inline-flex; align-items: center; justify-content: center; }
+.mermaid-toolbar button { cursor: pointer; }
+.mermaid-toolbar button:hover { border-color: var(--accent); color: var(--accent); }
+.mermaid-toolbar .zoom-level { min-width: 52px; color: var(--muted); background: transparent; }
+.call-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.92rem; }
+.call-table th { background: #1a2744; color: var(--accent); text-align: left; padding: 10px 14px; border: 1px solid var(--border); }
+.call-table td { padding: 8px 14px; border: 1px solid var(--border); vertical-align: top; }
+.call-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+.tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+.tag-async { background: #7c3aed33; color: #a78bfa; }
+.tag-class { background: #05966933; color: var(--ok); }
+.tag-func { background: #2563eb33; color: var(--accent); }
+.tag-cmd { background: #d9770633; color: var(--warn); }
+.tag-endpoint { background: #dc262633; color: var(--err); }
+.tag-hook { background: #db277733; color: #f472b6; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin: 16px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin: 16px 0; }
+.arrow-chain { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--accent); padding: 10px; background: rgba(56,189,248,0.06); border-radius: 6px; }
+code { font-family: 'Fira Code', 'Cascadia Code', monospace; background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 3px; font-size: 0.88em; }
+ul, ol { margin: 8px 0 8px 24px; color: var(--muted); }
+li { margin: 4px 0; }
+a { color: var(--accent); }
+hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.nav { position: sticky; top: 0; background: var(--bg); z-index: 10; padding: 12px 0; border-bottom: 1px solid var(--border); display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.9rem; }
+.nav a { text-decoration: none; }
+.nav a:hover { text-decoration: underline; }
+@media (max-width: 768px) { .container { padding: 16px; } h1 { font-size: 1.8rem; } }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>workspace — Complete Call Flow &amp; Architecture Documentation</h1>
+<p class="subtitle">Generated from graphify knowledge graph: 42 nodes, 75 edges, 5 communities. Commit: 26dd180</p>
+
+<div class="nav">
+    <a href="#overview">Architecture Overview</a>
+    <a href="#extract-pipeline">Extraction Pipeline</a>
+</div>
+
+<!-- ====== Architecture Overview ====== -->
+<h2 id="overview">1. Architecture Overview</h2>
+
+<div class="mermaid">
+
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    EXTRACT_PIPELINE_5F350230("Extraction Pipeline<br/><small>42 nodes</small>")
+    class EXTRACT_PIPELINE_5F350230 module;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>Architecture Layers</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>Layer</th><th>Nodes</th><th>Communities</th></tr>
+      <tr><td>Extraction Pipeline</td><td>42</td><td><code>0, 1, 2, 3, 4</code></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Core Flow</h4>
+    <div class="arrow-chain">Extraction Pipeline</div>
+  </div>
+</div>
+<div class="grid">
+  <div class="card">
+    <h4>Graph Report Highlights</h4>
+    <ul>
+      <li>42 nodes · 75 edges · 5 communities</li>
+      <li>Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS</li>
+      <li>Token cost: 0 input · 0 output</li>
+      <li>1. `Kernel()` - 16 edges</li>
+      <li>2. `OwnsEvoluJeunes()` - 11 edges</li>
+      <li>3. `Fleet()` - 9 edges</li>
+    </ul>
+  </div>
+</div>
+<hr>
+<!-- ====== 2. Extraction Pipeline ====== -->
+<h2 id="extract-pipeline">2. Extraction Pipeline</h2>
+<p>Extraction Pipeline groups implementation around cashtro, agentsgo, orggo, evolujeunes, mostly in cashtro/agents.go, evolujeunes/org.go, castro/owns.go. This section covers 42 nodes and 75 internal edges; the diagram shows only representative relationships to stay readable.</p>
+
+<div class="mermaid">
+%%{init: {"theme": "dark", "themeVariables": {"fontSize": "15.0px", "fontFamily": "Segoe UI, system-ui, sans-serif", "primaryColor": "#1e293b", "primaryTextColor": "#e2e8f0", "primaryBorderColor": "#38bdf8", "secondaryColor": "#0f172a", "tertiaryColor": "#334155", "lineColor": "#64748b", "textColor": "#e2e8f0"}, "flowchart": {"htmlLabels": true, "curve": "basis", "nodeSpacing": 48, "rankSpacing": 64, "padding": 14, "diagramPadding": 10, "useMaxWidth": true}}}%%
+flowchart LR
+    %% Section: Extraction Pipeline (42 nodes, 75 edges)
+    subgraph extract_pipeline_cashtro_agents_go_ca3c984c["cashtro/agents.go"]
+        cashtro_agents_kernel_e997e75b("Kernel()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_delivery_cd32fb75("Delivery()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_explorer_55f15a38("Explorer()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_init_65b92d04("Init()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_operator_9d91e7c7("Operator()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_research_5f675932("Research()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_router_4381a9c7("Router()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_architect_f878847b("Architect()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_comms_50a20698("Comms()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_deploy_6c3f32c3("Deploy()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_memory_101055f3("Memory()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_reviewer_03fbccbe("Reviewer()<br/><small>cashtro/agents.go</small>")
+        cashtro_agents_security_76059728("Security()<br/><small>cashtro/agents.go</small>")
+    end
+    subgraph extract_pipeline_castro_owns_go_33127b24["castro/owns.go"]
+        castro_owns_ownsevolujeunes_591ccc0f("OwnsEvoluJeunes()<br/><small>castro/owns.go</small>")
+        castro_owns_ownscashtro_8ff09a94("OwnsCashtro()<br/><small>castro/owns.go</small>")
+        castro_owns_ef9965e2("owns.go")
+        castro_owns_map_dbc8ff57("Map()<br/><small>castro/owns.go</small>")
+    end
+    evolujeunes_org_fleet_a5a7ca66("Fleet()<br/><small>evolujeunes/org.go</small>")
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_delivery_cd32fb75
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_explorer_55f15a38
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_init_65b92d04
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_operator_9d91e7c7
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_research_5f675932
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_router_4381a9c7
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_architect_f878847b
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_comms_50a20698
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_deploy_6c3f32c3
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_memory_101055f3
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_reviewer_03fbccbe
+    cashtro_agents_kernel_e997e75b -->|calls| cashtro_agents_security_76059728
+    castro_owns_map_dbc8ff57 -->|calls| castro_owns_ownscashtro_8ff09a94
+    castro_owns_map_dbc8ff57 -->|calls| castro_owns_ownsevolujeunes_591ccc0f
+    castro_owns_ownscashtro_8ff09a94 -->|calls| cashtro_agents_kernel_e997e75b
+    castro_owns_ownsevolujeunes_591ccc0f -->|calls| evolujeunes_org_fleet_a5a7ca66
+    castro_owns_ownsevolujeunes_591ccc0f -->|calls| cashtro_agents_delivery_cd32fb75
+    castro_owns_ownsevolujeunes_591ccc0f -->|calls| cashtro_agents_explorer_55f15a38
+    %% Omitted for readability: 24 nodes, 0 edges
+    class cashtro_agents_kernel_e997e75b function;
+    class cashtro_agents_delivery_cd32fb75 function;
+    class cashtro_agents_explorer_55f15a38 function;
+    class cashtro_agents_init_65b92d04 function;
+    class cashtro_agents_operator_9d91e7c7 function;
+    class cashtro_agents_research_5f675932 function;
+    class cashtro_agents_router_4381a9c7 api;
+    class cashtro_agents_architect_f878847b function;
+    class cashtro_agents_comms_50a20698 function;
+    class cashtro_agents_deploy_6c3f32c3 function;
+    class cashtro_agents_memory_101055f3 function;
+    class cashtro_agents_reviewer_03fbccbe function;
+    class cashtro_agents_security_76059728 function;
+    class castro_owns_ownsevolujeunes_591ccc0f function;
+    class castro_owns_ownscashtro_8ff09a94 function;
+    class castro_owns_ef9965e2 module;
+    class castro_owns_map_dbc8ff57 function;
+    class evolujeunes_org_fleet_a5a7ca66 function;
+    classDef entry fill:#422006,stroke:#fbbf24,color:#fde68a,stroke-width:1px;
+    classDef api fill:#450a0a,stroke:#f87171,color:#fee2e2,stroke-width:1px;
+    classDef async fill:#2e1065,stroke:#a78bfa,color:#ede9fe,stroke-width:1px;
+    classDef klass fill:#064e3b,stroke:#34d399,color:#d1fae5,stroke-width:1px;
+    classDef ui fill:#831843,stroke:#f472b6,color:#fce7f3,stroke-width:1px;
+    classDef module fill:#172554,stroke:#60a5fa,color:#dbeafe,stroke-width:1px;
+    classDef test fill:#3f3f46,stroke:#a1a1aa,color:#f4f4f5,stroke-width:1px;
+    classDef concept fill:#292524,stroke:#a8a29e,color:#fafaf9,stroke-dasharray:4 3;
+    classDef function fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:1px;
+</div>
+
+<h3>Call Details</h3>
+<table class="call-table">
+<tr>
+  <th style="width:5%">#</th>
+  <th style="width:28%">Node</th>
+  <th style="width:10%">Type</th>
+  <th style="width:17%">Caller</th>
+  <th style="width:20%">Callees</th>
+  <th style="width:20%">Description</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td><code>agents.go</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>agents.go node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td><code>Architect()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Architect() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td><code>Comms()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Comms() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td><code>Deploy()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Deploy() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td><code>Init()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Init() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>6</td>
+  <td><code>Investigator()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Investigator() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>7</td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>OwnsCashtro()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td><code>Architect()</code><br><small style="color:var(--muted)">cashtro/agents.go</small><br><code>Comms()</code><br><small style="color:var(--muted)">cashtro/agents.go</small><br><code>Delivery()</code><br><small style="color:var(--muted)">cashtro/agents.go</small><br>+11 more</td>
+  <td>Kernel() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>8</td>
+  <td><code>Memory()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Memory() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>9</td>
+  <td><code>Operator()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Operator() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>10</td>
+  <td><code>Research()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Research() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>11</td>
+  <td><code>Reviewer()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Reviewer() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>12</td>
+  <td><code>Router()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-endpoint">API</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Router() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>13</td>
+  <td><code>Security()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Security() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>14</td>
+  <td><code>org.go</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>org.go node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>15</td>
+  <td><code>BTKAvocats()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>BTKAvocats() node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>16</td>
+  <td><code>CashtroDeliveryCatalog()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>CashtroDeliveryCatalog() node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>17</td>
+  <td><code>Educonnexion()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Educonnexion() node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>18</td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>OwnsEvoluJeunes()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td><code>BTKAvocats()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small><br><code>CashtroDeliveryCatalog()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small><br><code>Educonnexion()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small><br>+4 more</td>
+  <td>Fleet() node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>19</td>
+  <td><code>MDClinic()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-cmd">Entry</span></td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>MDClinic() node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>20</td>
+  <td><code>Proximity()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Proximity() node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>21</td>
+  <td><code>ScanApp()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Starts scanning or handles scan status.</td>
+</tr>
+<tr>
+  <td>22</td>
+  <td><code>SolutionHypothequeQC()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Fleet()</code><br><small style="color:var(--muted)">evolujeunes/org.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>SolutionHypothequeQC() node in evolujeunes/org.go.</td>
+</tr>
+<tr>
+  <td>23</td>
+  <td><code>ControlPlane()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>OwnsCashtro()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>ControlPlane() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>24</td>
+  <td><code>Repo()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>OwnsCashtro()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Repo() node in cashtro/agents.go.</td>
+</tr>
+<tr>
+  <td>25</td>
+  <td><code>Home</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td><span class="tag tag-class">Class</span></td>
+  <td>External entry / no inbound edge</td>
+  <td>No direct outbound edge</td>
+  <td>Home node in castro/owns.go.</td>
+</tr>
+<tr>
+  <td>26</td>
+  <td><code>owns.go</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td><span class="tag tag-class">Module</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>internal graphifytree cashtro</code><br><code>internal graphifytree evolujeunes</code></td>
+  <td>owns.go node in castro/owns.go.</td>
+</tr>
+<tr>
+  <td>27</td>
+  <td><code>Map()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td>External entry / no inbound edge</td>
+  <td><code>OwnsCashtro()</code><br><small style="color:var(--muted)">castro/owns.go</small><br><code>OwnsEvoluJeunes()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td>Map() node in castro/owns.go.</td>
+</tr>
+<tr>
+  <td>28</td>
+  <td><code>OwnsCashtro()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>Map()</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td><code>ControlPlane()</code><br><small style="color:var(--muted)">cashtro/agents.go</small><br><code>Kernel()</code><br><small style="color:var(--muted)">cashtro/agents.go</small><br><code>Repo()</code><br><small style="color:var(--muted)">cashtro/agents.go</small></td>
+  <td>OwnsCashtro() node in castro/owns.go.</td>
+</tr>
+<tr>
+  <td>29</td>
+  <td><code>go_pkg_github_com_cashtro_cashtro_internal_graphifytree_cashtro</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>owns.go</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Turns a local path or remote repository into analysis context.</td>
+</tr>
+<tr>
+  <td>30</td>
+  <td><code>go_pkg_github_com_cashtro_cashtro_internal_graphifytree_evolujeunes</code><br><small style="color:var(--muted)"></small></td>
+  <td><span class="tag tag-func">Function</span></td>
+  <td><code>owns.go</code><br><small style="color:var(--muted)">castro/owns.go</small></td>
+  <td>No direct outbound edge</td>
+  <td>Turns a local path or remote repository into analysis context.</td>
+</tr>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <h4>Key Files</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><th>File</th><th>Coverage</th></tr>
+      <tr><td><code>cashtro/agents.go</code></td><td>18 nodes</td></tr>
+<tr><td><code>evolujeunes/org.go</code></td><td>13 nodes</td></tr>
+<tr><td><code>castro/owns.go</code></td><td>5 nodes</td></tr>
+<tr><td><code>castro/owns_test.go</code></td><td>2 nodes</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Design Notes</h4>
+    <p>This section comes from graphify community clustering. Relationship summary: contains x34, calls x34, references x4, imports x3. The diagram prioritizes high-confidence calls or usage relationships; the table keeps the broader node inventory.</p>
+  </div>
+</div>
+<hr>
+
+<h2 id="stats">Project Statistics</h2>
+
+<div class="grid">
+  <div class="card">
+    <h4>Graph</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>Nodes</td><td>42</td></tr>
+      <tr><td>Edges</td><td>75</td></tr>
+      <tr><td>Hyperedges</td><td>0</td></tr>
+      <tr><td>Communities</td><td>5</td></tr>
+      <tr><td>Documented Sections</td><td>1</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Edge Confidence</h4>
+    <table style="width:100%;font-size:0.85rem;">
+      <tr><td>EXTRACTED</td><td>75</td></tr>
+      <tr><td>INFERRED</td><td>0</td></tr>
+      <tr><td>AMBIGUOUS</td><td>0</td></tr>
+    </table>
+  </div>
+</div>
+
+<div style="text-align:center; padding:40px 0; color: var(--muted); font-size:0.9rem;">
+  <p>workspace — Architecture Documentation</p>
+  <p>Generated: 2026-09-22 02:25 UTC · graphify callflow-html</p>
+</div>
+
+</div><!-- .container -->
+
+<script>
+(function () {
+  const mermaidConfig = {
+    startOnLoad: false,
+    theme: 'dark',
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, useMaxWidth: true },
+    themeVariables: {
+      primaryColor: '#1e293b',
+      primaryTextColor: '#e2e8f0',
+      primaryBorderColor: '#38bdf8',
+      secondaryColor: '#0f172a',
+      tertiaryColor: '#334155',
+      lineColor: '#64748b',
+      textColor: '#e2e8f0',
+    }
+  };
+
+  mermaid.initialize(mermaidConfig);
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function enhanceMermaidDiagrams() {
+    document.querySelectorAll('.mermaid').forEach((container) => {
+      if (container.dataset.zoomReady === 'true') return;
+      const svg = container.querySelector('svg');
+      if (!svg) return;
+
+      container.dataset.zoomReady = 'true';
+      container.classList.add('is-enhanced');
+
+      const viewport = document.createElement('div');
+      viewport.className = 'mermaid-viewport';
+      svg.parentNode.insertBefore(viewport, svg);
+      viewport.appendChild(svg);
+
+      const toolbar = document.createElement('div');
+      toolbar.className = 'mermaid-toolbar';
+      toolbar.innerHTML = [
+        '<button type="button" data-action="zoom-out" title="Zoom out">-</button>',
+        '<span class="zoom-level" data-role="level">100%</span>',
+        '<button type="button" data-action="zoom-in" title="Zoom in">+</button>',
+        '<button type="button" data-action="fit" title="Fit width">Fit</button>',
+        '<button type="button" data-action="reset" title="Reset view">Reset</button>'
+      ].join('');
+      container.insertBefore(toolbar, viewport);
+
+      const state = { scale: 1, x: 0, y: 0, dragging: false, startX: 0, startY: 0, originX: 0, originY: 0 };
+      const level = toolbar.querySelector('[data-role="level"]');
+
+      function applyTransform() {
+        svg.style.transform = `translate(${state.x}px, ${state.y}px) scale(${state.scale})`;
+        level.textContent = `${Math.round(state.scale * 100)}%`;
+      }
+
+      function zoomBy(delta) {
+        state.scale = clamp(state.scale + delta, 0.25, 3);
+        applyTransform();
+      }
+
+      function reset() {
+        state.scale = 1;
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      function fitWidth() {
+        const rawWidth = svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width
+          ? svg.viewBox.baseVal.width
+          : svg.getBoundingClientRect().width / state.scale;
+        if (!rawWidth) {
+          reset();
+          return;
+        }
+        state.scale = clamp((viewport.clientWidth - 48) / rawWidth, 0.25, 1.4);
+        state.x = 0;
+        state.y = 0;
+        applyTransform();
+      }
+
+      toolbar.addEventListener('click', (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+        const action = button.dataset.action;
+        if (action === 'zoom-in') zoomBy(0.15);
+        if (action === 'zoom-out') zoomBy(-0.15);
+        if (action === 'fit') fitWidth();
+        if (action === 'reset') reset();
+      });
+
+      viewport.addEventListener('wheel', (event) => {
+        if (!event.ctrlKey && !event.metaKey) return;
+        event.preventDefault();
+        zoomBy(event.deltaY < 0 ? 0.1 : -0.1);
+      }, { passive: false });
+
+      viewport.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0) return;
+        state.dragging = true;
+        state.startX = event.clientX;
+        state.startY = event.clientY;
+        state.originX = state.x;
+        state.originY = state.y;
+        viewport.classList.add('is-dragging');
+        viewport.setPointerCapture(event.pointerId);
+      });
+
+      viewport.addEventListener('pointermove', (event) => {
+        if (!state.dragging) return;
+        state.x = state.originX + event.clientX - state.startX;
+        state.y = state.originY + event.clientY - state.startY;
+        applyTransform();
+      });
+
+      function endDrag(event) {
+        if (!state.dragging) return;
+        state.dragging = false;
+        viewport.classList.remove('is-dragging');
+        if (viewport.hasPointerCapture(event.pointerId)) {
+          viewport.releasePointerCapture(event.pointerId);
+        }
+      }
+
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      applyTransform();
+    });
+  }
+
+  function renderMermaid() {
+    const result = mermaid.run
+      ? mermaid.run({ querySelector: '.mermaid' })
+      : Promise.resolve();
+    Promise.resolve(result)
+      .then(enhanceMermaidDiagrams)
+      .catch((error) => {
+        console.error('Mermaid render failed:', error);
+        enhanceMermaidDiagrams();
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderMermaid);
+  } else {
+    renderMermaid();
+  }
+})();
+</script>
+
+</body>
+</html>

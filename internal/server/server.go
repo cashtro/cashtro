@@ -9,6 +9,7 @@ import (
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
+	"github.com/cashtro/cashtro/internal/orgmap"
 )
 
 const maxBody = 1 << 20
@@ -18,6 +19,8 @@ func New(k *kernel.Kernel) http.Handler {
 	s := &api{k: k, cat: k.Catalog()}
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", s.index)
+	mux.HandleFunc("GET /map", s.fleetMap)
+	mux.HandleFunc("GET /api/map", s.fleetMapJSON)
 	mux.HandleFunc("GET /favicon.ico", s.favicon)
 	mux.HandleFunc("GET /favicon.svg", s.favicon)
 	mux.HandleFunc("GET /health", s.health)
@@ -53,6 +56,17 @@ type api struct {
 func (s *api) index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	_, _ = w.Write(indexHTML)
+}
+
+func (s *api) fleetMap(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	_, _ = w.Write(orgmap.PageHTML())
+}
+
+func (s *api) fleetMapJSON(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Cache-Control", "no-store")
+	_, _ = w.Write(orgmap.JSON())
 }
 
 func (s *api) favicon(w http.ResponseWriter, r *http.Request) {

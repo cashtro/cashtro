@@ -1,0 +1,293 @@
+{
+  "title": "Cashtro × Evolu-Jeunes",
+  "generatedAt": "2026-09-22T02:00:00Z",
+  "summary": "Cashtro is the public control plane. Evolu-Jeunes is the private delivery org. They are one fleet under Castro. Client production stays dark.",
+  "links": [
+    {
+      "label": "cashtro/cashtro",
+      "url": "https://github.com/cashtro/cashtro"
+    },
+    {
+      "label": "Evolu-Jeunes org",
+      "url": "https://github.com/Evolu-Jeunes"
+    },
+    {
+      "label": "evoluJeunes member",
+      "url": "https://github.com/evoluJeunes"
+    },
+    {
+      "label": "evolujeunes.ca",
+      "url": "https://evolujeunes.ca"
+    },
+    {
+      "label": "Desk map",
+      "url": "http://127.0.0.1:8080/map"
+    },
+    {
+      "label": "Markdown map",
+      "url": "https://github.com/cashtro/cashtro/blob/main/docs/FLEET_MAP.md"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "castro",
+      "name": "Castro",
+      "kind": "person",
+      "access": "ok",
+      "notes": "Scrum Master \u0026 Software Engineer · Founder"
+    },
+    {
+      "id": "cashtro-user",
+      "name": "cashtro",
+      "kind": "github-user",
+      "org": "cashtro",
+      "access": "ok",
+      "url": "https://github.com/cashtro",
+      "notes": "Public GitHub user. 1 public repo."
+    },
+    {
+      "id": "cashtro-repo",
+      "name": "cashtro/cashtro",
+      "kind": "control-plane",
+      "org": "cashtro",
+      "access": "ok",
+      "stage": "active",
+      "url": "https://github.com/cashtro/cashtro",
+      "notes": "Cashtro OS / Voltron. Go kernel + TypeScript control plane."
+    },
+    {
+      "id": "kernel",
+      "name": "Cashtro OS kernel",
+      "kind": "runtime",
+      "org": "cashtro",
+      "access": "ok",
+      "url": "http://127.0.0.1:8080",
+      "notes": "14 agentics on :8080. 7 live, 7 resident."
+    },
+    {
+      "id": "control-plane",
+      "name": "Control plane API",
+      "kind": "runtime",
+      "org": "cashtro",
+      "access": "ok",
+      "url": "http://127.0.0.1:8787/docs",
+      "notes": "Recon, Prisma registry, Fastify. $2/run cap."
+    },
+    {
+      "id": "evolu-org",
+      "name": "Evolu-Jeunes",
+      "kind": "github-org",
+      "org": "Evolu-Jeunes",
+      "access": "limited",
+      "url": "https://github.com/Evolu-Jeunes",
+      "notes": "Delivery org. 0 public repos. ~48 private client trees expected."
+    },
+    {
+      "id": "evolu-member",
+      "name": "evoluJeunes",
+      "kind": "github-user",
+      "org": "Evolu-Jeunes",
+      "access": "ok",
+      "url": "https://github.com/evoluJeunes",
+      "notes": "Public member of the Evolu-Jeunes org."
+    },
+    {
+      "id": "evolu-site",
+      "name": "evolujeunes.ca",
+      "kind": "production-site",
+      "org": "Evolu-Jeunes",
+      "access": "live-client",
+      "stage": "production",
+      "url": "https://evolujeunes.ca",
+      "notes": "LIVE nonprofit site. Do not touch production."
+    },
+    {
+      "id": "evolu-dark",
+      "name": "~48 private repos",
+      "kind": "org-wall",
+      "org": "Evolu-Jeunes",
+      "access": "limited",
+      "notes": "Cursor GitHub token cannot list them. See docs/ACCESS_REQUIRED.md."
+    },
+    {
+      "id": "ship-cashtro-catalog",
+      "name": "Cashtro delivery catalog",
+      "kind": "catalog-ship",
+      "org": "Evolu-Jeunes",
+      "access": "catalog-only",
+      "stage": "idea",
+      "notes": "Stdlib Go board for idea → concept → production"
+    },
+    {
+      "id": "ship-scanapp",
+      "name": "ScanApp",
+      "kind": "catalog-ship",
+      "org": "Evolu-Jeunes",
+      "access": "catalog-only",
+      "stage": "concept",
+      "notes": "Scan, CRM, and AI bots"
+    },
+    {
+      "id": "ship-btk-avocats",
+      "name": "BTK Avocats",
+      "kind": "catalog-ship",
+      "org": "Evolu-Jeunes",
+      "access": "live-client",
+      "stage": "production",
+      "notes": "Law firm platform LIVE CLIENT — do not touch."
+    },
+    {
+      "id": "ship-md-clinic",
+      "name": "MD Clinic",
+      "kind": "catalog-ship",
+      "org": "Evolu-Jeunes",
+      "access": "live-client",
+      "stage": "production",
+      "notes": "Medical clinic LIVE CLIENT — do not touch."
+    },
+    {
+      "id": "ship-proximity",
+      "name": "Proximity",
+      "kind": "catalog-ship",
+      "org": "Evolu-Jeunes",
+      "access": "live-client",
+      "stage": "production",
+      "notes": "Agency platform LIVE CLIENT — do not touch."
+    },
+    {
+      "id": "ship-solution-hypotheque-qc",
+      "name": "Solution Hypothèque QC",
+      "kind": "catalog-ship",
+      "org": "Evolu-Jeunes",
+      "access": "live-client",
+      "stage": "production",
+      "notes": "Mortgage services LIVE CLIENT — do not touch."
+    },
+    {
+      "id": "ship-educonnexion",
+      "name": "Éduconnexion",
+      "kind": "catalog-ship",
+      "org": "Evolu-Jeunes",
+      "access": "live-client",
+      "stage": "production",
+      "notes": "Education platform LIVE CLIENT — do not touch."
+    }
+  ],
+  "edges": [
+    {
+      "from": "castro",
+      "to": "cashtro-user",
+      "rel": "owns"
+    },
+    {
+      "from": "castro",
+      "to": "evolu-org",
+      "rel": "owns"
+    },
+    {
+      "from": "cashtro-user",
+      "to": "cashtro-repo",
+      "rel": "contains"
+    },
+    {
+      "from": "cashtro-repo",
+      "to": "kernel",
+      "rel": "runs"
+    },
+    {
+      "from": "cashtro-repo",
+      "to": "control-plane",
+      "rel": "runs"
+    },
+    {
+      "from": "control-plane",
+      "to": "evolu-org",
+      "rel": "recon-scans"
+    },
+    {
+      "from": "evolu-org",
+      "to": "evolu-member",
+      "rel": "has-member"
+    },
+    {
+      "from": "evolu-org",
+      "to": "evolu-site",
+      "rel": "publishes"
+    },
+    {
+      "from": "evolu-org",
+      "to": "evolu-dark",
+      "rel": "holds"
+    },
+    {
+      "from": "kernel",
+      "to": "ship-cashtro-catalog",
+      "rel": "catalog-seeds"
+    },
+    {
+      "from": "evolu-org",
+      "to": "ship-cashtro-catalog",
+      "rel": "expected-repo"
+    },
+    {
+      "from": "kernel",
+      "to": "ship-scanapp",
+      "rel": "catalog-seeds"
+    },
+    {
+      "from": "evolu-org",
+      "to": "ship-scanapp",
+      "rel": "expected-repo"
+    },
+    {
+      "from": "kernel",
+      "to": "ship-btk-avocats",
+      "rel": "catalog-seeds"
+    },
+    {
+      "from": "evolu-org",
+      "to": "ship-btk-avocats",
+      "rel": "expected-repo"
+    },
+    {
+      "from": "kernel",
+      "to": "ship-md-clinic",
+      "rel": "catalog-seeds"
+    },
+    {
+      "from": "evolu-org",
+      "to": "ship-md-clinic",
+      "rel": "expected-repo"
+    },
+    {
+      "from": "kernel",
+      "to": "ship-proximity",
+      "rel": "catalog-seeds"
+    },
+    {
+      "from": "evolu-org",
+      "to": "ship-proximity",
+      "rel": "expected-repo"
+    },
+    {
+      "from": "kernel",
+      "to": "ship-solution-hypotheque-qc",
+      "rel": "catalog-seeds"
+    },
+    {
+      "from": "evolu-org",
+      "to": "ship-solution-hypotheque-qc",
+      "rel": "expected-repo"
+    },
+    {
+      "from": "kernel",
+      "to": "ship-educonnexion",
+      "rel": "catalog-seeds"
+    },
+    {
+      "from": "evolu-org",
+      "to": "ship-educonnexion",
+      "rel": "expected-repo"
+    }
+  ]
+}

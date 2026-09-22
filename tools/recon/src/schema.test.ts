@@ -54,7 +54,12 @@ test("report lists catalog ships as unscanned", () => {
   assert.match(md, /ScanApp/);
   assert.match(md, /BTK Avocats/);
   assert.match(md, /not GitHub-scanned/);
-  assert.match(writeGraph(inv), /Kernel catalog/);
+  const graph = writeGraph(inv);
+  assert.match(graph, /cashtro GitHub user/);
+  assert.match(graph, /Evolu-Jeunes GitHub org/);
+  assert.match(graph, /control plane \/ recon/);
+  assert.match(graph, /BTK Avocats/);
+  assert.doesNotMatch(graph, /manager --> cashtro/);
 });
 
 test("inventory schema rejects a bad row", () => {
