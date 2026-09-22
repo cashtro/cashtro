@@ -1,0 +1,26 @@
+{
+  "cashtro/agents.go": {
+    "mtime": 1790043868.8766103,
+    "seen": 1790043880.06591,
+    "ast_hash": "bba9ab195b244119c567727ca30d8425",
+    "semantic_hash": "bba9ab195b244119c567727ca30d8425"
+  },
+  "castro/owns.go": {
+    "mtime": 1790043868.8726103,
+    "seen": 1790043880.0659134,
+    "ast_hash": "389a5e7f7196a5d2d381872842e48741",
+    "semantic_hash": "389a5e7f7196a5d2d381872842e48741"
+  },
+  "castro/owns_test.go": {
+    "mtime": 1790043868.9166107,
+    "seen": 1790043880.0659149,
+    "ast_hash": "c7683df161306e4d3b0039e572a772f5",
+    "semantic_hash": "c7683df161306e4d3b0039e572a772f5"
+  },
+  "evolujeunes/org.go": {
+    "mtime": 1790043868.8766103,
+    "seen": 1790043880.0659158,
+    "ast_hash": "901865811a716d5da9b6d8442d4640ad",
+    "semantic_hash": "901865811a716d5da9b6d8442d4640ad"
+  }
+}

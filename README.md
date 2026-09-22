@@ -98,3 +98,5 @@ pnpm api              # http://127.0.0.1:8787/docs
 
 See `docs/MISSION.md`, `inventory/REPORT.md`, `docs/ACCESS_REQUIRED.md`,
 and the joint map: [`docs/FLEET_MAP.md`](docs/FLEET_MAP.md) · desk `http://localhost:8080/map`.
+
+Graphify tree of both homes and every agentic: [`docs/GRAPHIFY.md`](docs/GRAPHIFY.md).

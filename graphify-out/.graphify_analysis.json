@@ -1,0 +1,189 @@
+{
+  "communities": {
+    "0": [
+      "cashtro_agents",
+      "cashtro_agents_architect",
+      "cashtro_agents_comms",
+      "cashtro_agents_deploy",
+      "cashtro_agents_init",
+      "cashtro_agents_investigator",
+      "cashtro_agents_kernel",
+      "cashtro_agents_memory",
+      "cashtro_agents_operator",
+      "cashtro_agents_research",
+      "cashtro_agents_reviewer",
+      "cashtro_agents_router",
+      "cashtro_agents_security"
+    ],
+    "1": [
+      "evolujeunes_org",
+      "evolujeunes_org_btkavocats",
+      "evolujeunes_org_cashtrodeliverycatalog",
+      "evolujeunes_org_educonnexion",
+      "evolujeunes_org_fleet",
+      "evolujeunes_org_mdclinic",
+      "evolujeunes_org_proximity",
+      "evolujeunes_org_scanapp",
+      "evolujeunes_org_solutionhypothequeqc"
+    ],
+    "2": [
+      "cashtro_agents_controlplane",
+      "cashtro_agents_repo",
+      "castro_home",
+      "castro_owns",
+      "castro_owns_map",
+      "castro_owns_ownscashtro",
+      "go_pkg_github_com_cashtro_cashtro_internal_graphifytree_cashtro",
+      "go_pkg_github_com_cashtro_cashtro_internal_graphifytree_evolujeunes"
+    ],
+    "3": [
+      "cashtro_agents_delivery",
+      "cashtro_agents_explorer",
+      "cashtro_agents_planner",
+      "castro_owns_ownsevolujeunes",
+      "evolujeunes_org_member",
+      "evolujeunes_org_org",
+      "evolujeunes_org_privaterepos",
+      "evolujeunes_org_site"
+    ],
+    "4": [
+      "castro_owns_test",
+      "castro_owns_test_testmaphasbothhomesandeveryagentic",
+      "go_pkg_testing",
+      "go_type_testing_t"
+    ]
+  },
+  "cohesion": {
+    "0": 0.2948717948717949,
+    "1": 0.4166666666666667,
+    "2": 0.35714285714285715,
+    "3": 0.25,
+    "4": 0.5
+  },
+  "gods": [
+    {
+      "id": "cashtro_agents_kernel",
+      "label": "Kernel()",
+      "degree": 16
+    },
+    {
+      "id": "castro_owns_ownsevolujeunes",
+      "label": "OwnsEvoluJeunes()",
+      "degree": 11
+    },
+    {
+      "id": "evolujeunes_org_fleet",
+      "label": "Fleet()",
+      "degree": 9
+    },
+    {
+      "id": "castro_owns_ownscashtro",
+      "label": "OwnsCashtro()",
+      "degree": 6
+    },
+    {
+      "id": "castro_home",
+      "label": "Home",
+      "degree": 4
+    },
+    {
+      "id": "castro_owns_map",
+      "label": "Map()",
+      "degree": 4
+    },
+    {
+      "id": "cashtro_agents_delivery",
+      "label": "Delivery()",
+      "degree": 3
+    },
+    {
+      "id": "cashtro_agents_explorer",
+      "label": "Explorer()",
+      "degree": 3
+    },
+    {
+      "id": "cashtro_agents_planner",
+      "label": "Planner()",
+      "degree": 3
+    },
+    {
+      "id": "cashtro_agents_repo",
+      "label": "Repo()",
+      "degree": 2
+    }
+  ],
+  "surprises": [
+    {
+      "source": "OwnsCashtro()",
+      "target": "Repo()",
+      "source_files": [
+        "castro/owns.go",
+        "cashtro/agents.go"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `Repo()` unexpectedly reaches hub `OwnsCashtro()`"
+    },
+    {
+      "source": "OwnsCashtro()",
+      "target": "Kernel()",
+      "source_files": [
+        "castro/owns.go",
+        "cashtro/agents.go"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "OwnsCashtro()",
+      "target": "ControlPlane()",
+      "source_files": [
+        "castro/owns.go",
+        "cashtro/agents.go"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `ControlPlane()` unexpectedly reaches hub `OwnsCashtro()`"
+    },
+    {
+      "source": "OwnsEvoluJeunes()",
+      "target": "Fleet()",
+      "source_files": [
+        "castro/owns.go",
+        "evolujeunes/org.go"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    },
+    {
+      "source": "OwnsEvoluJeunes()",
+      "target": "Member()",
+      "source_files": [
+        "castro/owns.go",
+        "evolujeunes/org.go"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `Member()` unexpectedly reaches hub `OwnsEvoluJeunes()`"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `OwnsEvoluJeunes()` connect `Community 3` to `Community 1`, `Community 2`?",
+      "why": "High betweenness centrality (0.409) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Kernel()` connect `Community 0` to `Community 2`, `Community 3`?",
+      "why": "High betweenness centrality (0.234) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Fleet()` connect `Community 1` to `Community 3`?",
+      "why": "High betweenness centrality (0.232) - this node is a cross-community bridge."
+    }
+  ]
+}
