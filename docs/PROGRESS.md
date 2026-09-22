@@ -124,6 +124,12 @@ this branch so a rebuild does not drop the overnight supervisor.
 - GitHub webhook opens idempotent tasks
 - `/ui` queue can dispatch; fleet can pause
 
+## Roadmap map — 2026-09-22
+
+Graphify guide in `docs/ROADMAP.md`. Visual: Castro → control plane →
+40 specialists → Voltron. Gate is Evolu-Jeunes Cursor App. Next is
+ScanApp recon. Live clients stay untouched.
+
 ## n8n fabric — 2026-09-21 23:40Z
 
 Castro: n8n.io inside the same agents, 40× stronger, bigger architecture.
