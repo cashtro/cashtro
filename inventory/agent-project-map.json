@@ -1,0 +1,3700 @@
+{
+  "schemaVersion": "1",
+  "generatedAt": "2026-09-22T01:43:48Z",
+  "source": "cursor-cloud list-cloud-agents + kernel catalog + named cloud work",
+  "reachableRepo": "cashtro/cashtro",
+  "counts": {
+    "projects": 13,
+    "kernelAgents": 14,
+    "cloudFamilies": 100,
+    "cloudRuns": 196,
+    "workedEdges": 170
+  },
+  "projects": [
+    {
+      "slug": "cashtro",
+      "name": "cashtro/cashtro",
+      "kind": "control-plane",
+      "stage": "active",
+      "access": "ok",
+      "notes": "Manager repo. Go kernel + TypeScript control plane."
+    },
+    {
+      "slug": "evolu-jeunes",
+      "name": "Evolu-Jeunes/*",
+      "kind": "org",
+      "stage": "denied",
+      "access": "limited",
+      "notes": "48 claimed private repos. Token cannot see them."
+    },
+    {
+      "slug": "btk-avocats",
+      "name": "BTK Avocats",
+      "kind": "product",
+      "stage": "production",
+      "access": "catalog-only",
+      "notes": "LIVE CLIENT. Law firm WordPress platform."
+    },
+    {
+      "slug": "md-clinic",
+      "name": "MD Clinic",
+      "kind": "product",
+      "stage": "production",
+      "access": "catalog-only",
+      "notes": "LIVE CLIENT. Medical clinic WordPress/ACF."
+    },
+    {
+      "slug": "solution-hypotheque-qc",
+      "name": "Solution Hypoth\u00e8que QC",
+      "kind": "product",
+      "stage": "production",
+      "access": "catalog-only",
+      "notes": "LIVE CLIENT. Mortgage services."
+    },
+    {
+      "slug": "educonnexion",
+      "name": "\u00c9duconnexion",
+      "kind": "product",
+      "stage": "production",
+      "access": "catalog-only",
+      "notes": "LIVE CLIENT. Education platform."
+    },
+    {
+      "slug": "proximity",
+      "name": "Proximity",
+      "kind": "product",
+      "stage": "production",
+      "access": "catalog-only",
+      "notes": "LIVE CLIENT. Agency Next.js + Azure."
+    },
+    {
+      "slug": "scanapp",
+      "name": "ScanApp",
+      "kind": "product",
+      "stage": "concept",
+      "access": "catalog-only",
+      "notes": "Scan, CRM, and AI bots. Safe to onboard later."
+    },
+    {
+      "slug": "cashtro-catalog",
+      "name": "Cashtro delivery catalog",
+      "kind": "product",
+      "stage": "idea",
+      "access": "ok",
+      "notes": "Stdlib Go board for idea \u2192 concept \u2192 production."
+    },
+    {
+      "slug": "axel",
+      "name": "Axel brand AI bot",
+      "kind": "idea",
+      "stage": "idea",
+      "access": "named-only",
+      "notes": "Named by a cloud agent. Not in the kernel catalog."
+    },
+    {
+      "slug": "happier",
+      "name": "Happier non-profit",
+      "kind": "idea",
+      "stage": "idea",
+      "access": "named-only",
+      "notes": "Named by a cloud agent. Not in the kernel catalog."
+    },
+    {
+      "slug": "wealth",
+      "name": "Wealth / trading agents",
+      "kind": "idea",
+      "stage": "idea",
+      "access": "named-only",
+      "notes": "Named by wealth and trading cloud agents."
+    },
+    {
+      "slug": "n8n-desk",
+      "name": "Internal n8n desk",
+      "kind": "internal",
+      "stage": "concept",
+      "access": "named-only",
+      "notes": "n8n workflow and desk browser-test work."
+    }
+  ],
+  "kernelAgents": [
+    {
+      "id": "init",
+      "name": "Init",
+      "role": "kernel",
+      "mode": "live",
+      "work": "Boots the OS and publishes the manifesto."
+    },
+    {
+      "id": "delivery",
+      "name": "Delivery",
+      "role": "ship",
+      "mode": "live",
+      "work": "Owns the idea \u2192 concept \u2192 production line."
+    },
+    {
+      "id": "router",
+      "name": "Router",
+      "role": "model",
+      "mode": "resident",
+      "work": "Optional OpenRouter model bus."
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "role": "library",
+      "mode": "live",
+      "work": "Ingests sourced findings into notes."
+    },
+    {
+      "id": "explorer",
+      "name": "Explorer",
+      "role": "search",
+      "mode": "live",
+      "work": "Searches processes, ships, and notes."
+    },
+    {
+      "id": "operator",
+      "name": "Operator",
+      "role": "computer-use",
+      "mode": "resident",
+      "work": "Browser and desktop for shippers."
+    },
+    {
+      "id": "reviewer",
+      "name": "Reviewer",
+      "role": "qa",
+      "mode": "resident",
+      "work": "Reads walkthrough artifacts before a ship is done."
+    },
+    {
+      "id": "architect",
+      "name": "Architect",
+      "role": "design",
+      "mode": "resident",
+      "work": "Shapes apps and workflows before they hit the line."
+    },
+    {
+      "id": "deploy",
+      "name": "Deploy",
+      "role": "release",
+      "mode": "resident",
+      "work": "CI, preview, and production promotion."
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "role": "guard",
+      "mode": "resident",
+      "work": "Triage CVE and SAST findings."
+    },
+    {
+      "id": "memory",
+      "name": "Memory",
+      "role": "recall",
+      "mode": "live",
+      "work": "Episodic store and recall."
+    },
+    {
+      "id": "comms",
+      "name": "Comms",
+      "role": "signal",
+      "mode": "live",
+      "work": "Outbound only after a human confirm."
+    },
+    {
+      "id": "planner",
+      "name": "Planner",
+      "role": "backlog",
+      "mode": "live",
+      "work": "Turns a goal into idea-stage ships."
+    },
+    {
+      "id": "investigator",
+      "name": "Investigator",
+      "role": "incident",
+      "mode": "resident",
+      "work": "Traces a failing check to blast radius."
+    }
+  ],
+  "cloudAgents": [
+    {
+      "id": "security-review-orchestrator",
+      "name": "Security review orchestrator",
+      "kind": "cloud",
+      "source": "automations",
+      "runs": 12,
+      "statuses": {
+        "IDLE": 12
+      },
+      "sources": {
+        "automations": 12
+      },
+      "branches": [
+        "cursor/security-review-orchestrator-07c5",
+        "cursor/security-review-orchestrator-0feb",
+        "cursor/security-review-orchestrator-138b",
+        "cursor/security-review-orchestrator-1a56",
+        "cursor/security-review-orchestrator-272c",
+        "cursor/security-review-orchestrator-49f2",
+        "cursor/security-review-orchestrator-5153",
+        "cursor/security-review-orchestrator-6bec",
+        "cursor/security-review-orchestrator-c887",
+        "cursor/security-review-orchestrator-e169",
+        "cursor/security-review-orchestrator-f856",
+        "cursor/security-review-orchestrator-f95e"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-e37ac55c-395c-43e1-ba3d-92b4c6001564",
+        "bc-4ead46dd-471b-4a83-a796-3bcaaae80db3",
+        "bc-b4ce71ce-5814-4bb4-84fb-c5a8fccb950c",
+        "bc-36d5a4e7-b0bf-404f-9511-5c56f0933518",
+        "bc-9656407d-8d23-40e1-b5c3-a5c4293f9c0c",
+        "bc-808cc6b7-e11f-4ad3-baa7-094da2249c54",
+        "bc-8a5497e5-eb79-4a79-b45c-6a2fddd39ebd",
+        "bc-865d92f2-9e99-490e-8da5-5bf6e2f5530e",
+        "bc-27c7add4-3e00-4be0-81af-da713c2dd2aa",
+        "bc-de9a9887-7c65-4e6f-871c-8fc2a5e464ec",
+        "bc-b5b50eb4-142a-4c2d-8ea9-089fd196f6e7",
+        "bc-65081308-099c-4b21-9f56-7931daf709d3"
+      ],
+      "url": "https://cursor.com/agents/bc-e37ac55c-395c-43e1-ba3d-92b4c6001564"
+    },
+    {
+      "id": "pr-approval-agent",
+      "name": "Pr approval agent",
+      "kind": "cloud",
+      "source": "automations",
+      "runs": 10,
+      "statuses": {
+        "IDLE": 10
+      },
+      "sources": {
+        "automations": 10
+      },
+      "branches": [
+        "cursor/pr-approval-agent-01c1",
+        "cursor/pr-approval-agent-04a3",
+        "cursor/pr-approval-agent-0fe9",
+        "cursor/pr-approval-agent-289f",
+        "cursor/pr-approval-agent-2a9b",
+        "cursor/pr-approval-agent-3185",
+        "cursor/pr-approval-agent-3e0e",
+        "cursor/pr-approval-agent-a24a",
+        "cursor/pr-approval-agent-b5c6",
+        "cursor/pr-approval-agent-d4d0"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-864f2820-75a6-46ef-9a6a-d1442eb06930",
+        "bc-b8a5687f-8e2f-4eb2-a9e1-0035242594cf",
+        "bc-1c91602f-e46f-4449-b164-9544d884869b",
+        "bc-4d461e57-e40d-4c7c-845f-37e1ab6091c5",
+        "bc-4ad3a480-dd53-48ba-b45a-bb44a8e22aad",
+        "bc-5b4de051-8c07-4ca8-a0f4-6b2a960a72d6",
+        "bc-2bead5d9-d967-46cf-9957-3a09c2c93d2d",
+        "bc-ac6ed8a8-7d8b-42f1-9d0b-4701a33a7056",
+        "bc-32fafdb8-b227-4e61-b0d4-1d3ef292f243",
+        "bc-27dc5b5e-6424-46d2-b844-0523c8fb4b1e"
+      ],
+      "url": "https://cursor.com/agents/bc-864f2820-75a6-46ef-9a6a-d1442eb06930"
+    },
+    {
+      "id": "api-rpc-privilege-review",
+      "name": "API RPC privilege review",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 9,
+      "statuses": {
+        "IDLE": 9
+      },
+      "sources": {
+        "internal": 9
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-eb9c91a8-1d92-57de-8f93-f8dbfc72d3fd",
+        "bc-4ab234ee-dc96-56db-b2c0-3c2b9a3f799f",
+        "bc-21265488-6c28-55bd-9b50-c03fb64f47a7",
+        "bc-e1311357-b6ec-5a37-aad7-28145a03c3b4",
+        "bc-7ec4675b-fd5d-5b03-a58a-d1fbe5fe8121",
+        "bc-5c662115-97b3-51ca-b717-2537c5ee7464",
+        "bc-cf9ddb5a-0e71-5243-be40-8b75f9f91da1",
+        "bc-e762e0ff-3b5d-5db7-9c69-18e710765269",
+        "bc-00edad21-7f0c-5ef0-9402-49b4f7d9e522"
+      ],
+      "url": "https://cursor.com/agents/bc-eb9c91a8-1d92-57de-8f93-f8dbfc72d3fd"
+    },
+    {
+      "id": "config-template-injection-review",
+      "name": "Config template injection review",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 9,
+      "statuses": {
+        "IDLE": 9
+      },
+      "sources": {
+        "internal": 9
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-d5c2c8da-b600-519d-aefd-2bf3129a0905",
+        "bc-bf89f833-f668-5630-9225-b98b85f77498",
+        "bc-cf7be82d-5b5d-597f-a795-b1cd63e50bc3",
+        "bc-bf5e74b2-fdbd-5f62-8860-cd006df9803c",
+        "bc-11976837-3697-5b96-b9df-a890bc500dc2",
+        "bc-88a43e97-dfa2-53da-9d2d-e2134445d180",
+        "bc-c30660c8-1186-5843-bed6-97775b1f71a6",
+        "bc-c6d22605-4391-5af6-b6b0-78df4767bf5f",
+        "bc-f7291285-cdcd-5d90-9ed7-026982dd3505"
+      ],
+      "url": "https://cursor.com/agents/bc-d5c2c8da-b600-519d-aefd-2bf3129a0905"
+    },
+    {
+      "id": "privacy-guard-review-a",
+      "name": "Privacy guard review A",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 7,
+      "statuses": {
+        "IDLE": 7
+      },
+      "sources": {
+        "internal": 7
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-64535d14-ac06-5a62-86cf-3be93b1fadb0",
+        "bc-a24ca678-3c4b-5a2f-995f-2288a1025b08",
+        "bc-9a283622-8ca8-50d3-b821-02ed4173437f",
+        "bc-a0fa72b1-8cf3-5c91-8e87-648529421a14",
+        "bc-a9c06ed8-ee31-5a3d-bf1f-71fff9b29985",
+        "bc-a3b07fb3-d3f5-59d4-962e-35df162c55b4",
+        "bc-08f589f0-2268-5d70-b1cf-3fea19b4c423"
+      ],
+      "url": "https://cursor.com/agents/bc-64535d14-ac06-5a62-86cf-3be93b1fadb0"
+    },
+    {
+      "id": "privacy-guard-review-b",
+      "name": "Privacy guard review B",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 7,
+      "statuses": {
+        "IDLE": 7
+      },
+      "sources": {
+        "internal": 7
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-cd890f25-715c-5f9f-95d2-70a7567d40b1",
+        "bc-a2892866-4001-5e99-8bcf-605d14877eb1",
+        "bc-5e6d29ab-47d5-5d39-bd6e-1ea27dbc6641",
+        "bc-e42997e5-950f-5d28-8d24-0c7ca3126592",
+        "bc-ef0070d0-46c4-5b0b-9ba3-3cf7e0e8f4e9",
+        "bc-e590a04d-d24e-5dec-bceb-5ecbc460c093",
+        "bc-32dd5355-bbbe-5a8e-868c-8437f4c3f429"
+      ],
+      "url": "https://cursor.com/agents/bc-cd890f25-715c-5f9f-95d2-70a7567d40b1"
+    },
+    {
+      "id": "agent-tooling-trust-review",
+      "name": "Agent tooling trust review",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 6,
+      "statuses": {
+        "IDLE": 6
+      },
+      "sources": {
+        "internal": 6
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-9a5b418c-92b2-58c1-bccf-d6e89a713eb0",
+        "bc-56301202-6fcc-5f7b-9e69-8a4ecaab599d",
+        "bc-f5961a71-1063-51d2-a6d0-030657bce8e3",
+        "bc-091a6362-4472-58c2-8b98-2aa3d4cdc9b6",
+        "bc-bf162f89-49ea-594a-be6f-354854db8fab",
+        "bc-38de94ed-120b-5d18-ac10-951872e9629d"
+      ],
+      "url": "https://cursor.com/agents/bc-9a5b418c-92b2-58c1-bccf-d6e89a713eb0"
+    },
+    {
+      "id": "filesystem-workspace-boundary",
+      "name": "Filesystem workspace boundary",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 6,
+      "statuses": {
+        "IDLE": 6
+      },
+      "sources": {
+        "internal": 6
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-630006ae-cf25-5696-8777-4fbeb7229be1",
+        "bc-18d3dbdf-200c-55ed-bd49-40f37e0ec38b",
+        "bc-38c2a828-b9ae-50fd-89bd-1dbacd1600f8",
+        "bc-dd8bdddf-f84d-5e42-876c-b5b6880e2c35",
+        "bc-3d95a7fe-6def-580a-923a-201488692ffd",
+        "bc-ade650a7-43ea-5a7c-a1d5-b35a1c00ac30"
+      ],
+      "url": "https://cursor.com/agents/bc-630006ae-cf25-5696-8777-4fbeb7229be1"
+    },
+    {
+      "id": "general-security-review-a",
+      "name": "General security review A",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 6,
+      "statuses": {
+        "IDLE": 6
+      },
+      "sources": {
+        "internal": 6
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-566db9dd-a3b4-5328-9d28-3cdb33269ade",
+        "bc-2341f2a0-719e-54a4-8bae-aec5715b7d01",
+        "bc-ba319300-3b63-548b-84dc-79729d2ae54d",
+        "bc-9fd9c32c-0bc5-510e-abcf-18c49bf85e3e",
+        "bc-20f5f1d8-4dc6-5ea6-a2d8-fa133348ef1c",
+        "bc-4ab0d3ba-a0e4-58e9-9918-defca7f71d0b"
+      ],
+      "url": "https://cursor.com/agents/bc-566db9dd-a3b4-5328-9d28-3cdb33269ade"
+    },
+    {
+      "id": "general-security-review-b",
+      "name": "General security review B",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 6,
+      "statuses": {
+        "IDLE": 5,
+        "RUNNING": 1
+      },
+      "sources": {
+        "internal": 6
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-108f1d23-ddc6-5c6b-ae2e-ad0430b84be5",
+        "bc-8afa10af-1ee9-55aa-b970-03a4d6486cf1",
+        "bc-9309269f-551d-535e-ae7d-7d8775cc4bc8",
+        "bc-41a3f8b4-f120-5708-a2a1-95de3e144076",
+        "bc-65cefc14-404e-596e-9852-588f89ef0bf5",
+        "bc-8d7f3ccb-40f2-528c-8f84-0b87a608b7e0"
+      ],
+      "url": "https://cursor.com/agents/bc-108f1d23-ddc6-5c6b-ae2e-ad0430b84be5"
+    },
+    {
+      "id": "agent-tooling-trust-boundary",
+      "name": "Agent tooling trust boundary",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 4,
+      "statuses": {
+        "IDLE": 4
+      },
+      "sources": {
+        "internal": 4
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-930a7df3-aa01-576a-944d-bbd8e30e73ff",
+        "bc-9ddc8219-dde2-5116-be85-70b1f249a116",
+        "bc-acc9d5c7-f611-5b05-ac15-2ce1edf6e09e",
+        "bc-dbd99b4d-dcb6-58b2-b338-984e8e7ee5db"
+      ],
+      "url": "https://cursor.com/agents/bc-930a7df3-aa01-576a-944d-bbd8e30e73ff"
+    },
+    {
+      "id": "filesystem-workspace-boundary-review",
+      "name": "Filesystem workspace boundary review",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 4,
+      "statuses": {
+        "IDLE": 4
+      },
+      "sources": {
+        "internal": 4
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-680fe1c4-b6a8-51a7-b50e-4e1b9420b8c1",
+        "bc-17167c72-b965-5b6d-ab7d-03194233aeb4",
+        "bc-bae7892d-254b-557d-a4f6-3d6322f3ec88",
+        "bc-019303b3-cf7d-516b-9f77-2d8cdd0abcb8"
+      ],
+      "url": "https://cursor.com/agents/bc-680fe1c4-b6a8-51a7-b50e-4e1b9420b8c1"
+    },
+    {
+      "id": "platform-pattern-review-a",
+      "name": "Platform pattern review A",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 4,
+      "statuses": {
+        "IDLE": 4
+      },
+      "sources": {
+        "internal": 4
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-40a76960-527b-555e-90e2-abeabf2f91e1",
+        "bc-3919fc81-62dc-5c48-98d1-40e69138f6d3",
+        "bc-5ca4e60c-d3bf-5a1c-8e79-6c5c26e8806c",
+        "bc-f04895c2-8530-59b4-80ac-d44b4a237b40"
+      ],
+      "url": "https://cursor.com/agents/bc-40a76960-527b-555e-90e2-abeabf2f91e1"
+    },
+    {
+      "id": "platform-pattern-review-b",
+      "name": "Platform pattern review B",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 4,
+      "statuses": {
+        "IDLE": 4
+      },
+      "sources": {
+        "internal": 4
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-29780f9d-52c6-5804-b1f0-772d62084a3f",
+        "bc-f56ba503-2a60-5e7a-88ad-ded556257da9",
+        "bc-24641ff8-70ec-59b1-9392-f5648c4e8c8b",
+        "bc-361f4640-dd48-52fd-a446-8b56a2f0702d"
+      ],
+      "url": "https://cursor.com/agents/bc-29780f9d-52c6-5804-b1f0-772d62084a3f"
+    },
+    {
+      "id": "general-security-review-run-1",
+      "name": "General security review run 1",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-85665bab-c522-5ac6-84fc-f92c5af5a065",
+        "bc-a4f86728-9dff-5697-9367-1b5bb88bbf14",
+        "bc-584bf78d-c4b9-56f0-b843-a7c64eed8ef3"
+      ],
+      "url": "https://cursor.com/agents/bc-85665bab-c522-5ac6-84fc-f92c5af5a065"
+    },
+    {
+      "id": "general-security-review-run-2",
+      "name": "General security review run 2",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-4ddd8aa2-ba68-5faf-9c59-be278171b0d0",
+        "bc-e990cd54-88c6-54e6-99fb-0c89ed1ac4a4",
+        "bc-b3a83b7a-4594-5282-b1de-6d8ce5a4a1c0"
+      ],
+      "url": "https://cursor.com/agents/bc-4ddd8aa2-ba68-5faf-9c59-be278171b0d0"
+    },
+    {
+      "id": "platform-pattern-review-run-1",
+      "name": "Platform pattern review run 1",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-17af62fb-0be3-552a-a9cf-05dcd101f37a",
+        "bc-667bfb0a-915a-5353-9d93-835ccdfe16a3",
+        "bc-bcf06f1e-0175-5bd6-a20a-d98309f5bf95"
+      ],
+      "url": "https://cursor.com/agents/bc-17af62fb-0be3-552a-a9cf-05dcd101f37a"
+    },
+    {
+      "id": "platform-pattern-review-run-2",
+      "name": "Platform pattern review run 2",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-95f669e5-b6e8-56da-bfe3-d3c2fa3235ff",
+        "bc-77c9d71a-a65f-501c-aa93-d2c1fad1f449",
+        "bc-21611b7d-6869-55b4-b92b-71dce553292a"
+      ],
+      "url": "https://cursor.com/agents/bc-95f669e5-b6e8-56da-bfe3-d3c2fa3235ff"
+    },
+    {
+      "id": "platform-patterns-review-a",
+      "name": "Platform patterns review A",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-00de3c2c-4f17-5dfd-a601-c0c7f6d71648",
+        "bc-62379bdf-d34e-5021-9413-a886ebdf05af",
+        "bc-0d2883c2-8d32-5e2a-a979-daf26c93e6f8"
+      ],
+      "url": "https://cursor.com/agents/bc-00de3c2c-4f17-5dfd-a601-c0c7f6d71648"
+    },
+    {
+      "id": "platform-patterns-review-b",
+      "name": "Platform patterns review B",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-d61f418b-3d1b-5cb2-9f83-1c77c4b96385",
+        "bc-ab344cae-ee53-53c8-8f15-266e11030b3f",
+        "bc-001cd2ed-5139-589d-82dc-8bc8b59c8ebe"
+      ],
+      "url": "https://cursor.com/agents/bc-d61f418b-3d1b-5cb2-9f83-1c77c4b96385"
+    },
+    {
+      "id": "privacy-guard-review-run-1",
+      "name": "Privacy guard review run 1",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-3cfdced1-b817-544d-b876-368388956822",
+        "bc-00dbc4b7-0bad-55a0-8eb9-c17ec3b73889",
+        "bc-317b5e0f-8992-5077-8363-383fb5d68a26"
+      ],
+      "url": "https://cursor.com/agents/bc-3cfdced1-b817-544d-b876-368388956822"
+    },
+    {
+      "id": "privacy-guard-review-run-2",
+      "name": "Privacy guard review run 2",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 3,
+      "statuses": {
+        "IDLE": 3
+      },
+      "sources": {
+        "internal": 3
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-13cd48b7-50ad-595f-8c32-c9c57afe3482",
+        "bc-a0983222-dd11-52be-b163-2e9f5d782048",
+        "bc-e2c9f354-79ba-52b5-98d2-355b8f70c2df"
+      ],
+      "url": "https://cursor.com/agents/bc-13cd48b7-50ad-595f-8c32-c9c57afe3482"
+    },
+    {
+      "id": "90-day-wealth-playbook",
+      "name": "90-day wealth playbook",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "wealth"
+      ],
+      "bcIds": [
+        "bc-3133e263-88f7-59ed-89ca-69612d0fa1a0"
+      ],
+      "url": "https://cursor.com/agents/bc-3133e263-88f7-59ed-89ca-69612d0fa1a0"
+    },
+    {
+      "id": "agent-loop-architectures",
+      "name": "Agent loop architectures",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-52ea68d3-52aa-521d-a95a-35dd5118a601"
+      ],
+      "url": "https://cursor.com/agents/bc-52ea68d3-52aa-521d-a95a-35dd5118a601"
+    },
+    {
+      "id": "ai-os-dashboard",
+      "name": "Ai os dashboard",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/ai-os-chooser-dashboard-83a4"
+      ],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-08d40624-5ffd-4d41-ba0d-afe3480c83a4"
+      ],
+      "url": "https://cursor.com/agents/bc-08d40624-5ffd-4d41-ba0d-afe3480c83a4"
+    },
+    {
+      "id": "api-rpc-privilege-reviewer",
+      "name": "API RPC privilege reviewer",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-d8c0a06e-ae9d-547d-a5ba-f01e2581ac65"
+      ],
+      "url": "https://cursor.com/agents/bc-d8c0a06e-ae9d-547d-a5ba-f01e2581ac65"
+    },
+    {
+      "id": "assistant-capabilities-definition",
+      "name": "Assistant capabilities definition",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/desk-assistant-plan-fd22"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-15190563-e973-4e5c-b9c5-18fd07fffd22"
+      ],
+      "url": "https://cursor.com/agents/bc-15190563-e973-4e5c-b9c5-18fd07fffd22"
+    },
+    {
+      "id": "autonomous-wealth-agents",
+      "name": "Autonomous wealth agents",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/wealth-agents-mcp-research-24d1"
+      ],
+      "projects": [
+        "cashtro",
+        "wealth"
+      ],
+      "bcIds": [
+        "bc-b5862cb9-2e21-4da6-9637-b789607124d1"
+      ],
+      "url": "https://cursor.com/agents/bc-b5862cb9-2e21-4da6-9637-b789607124d1"
+    },
+    {
+      "id": "autonomy-gaps-in-kernel",
+      "name": "Autonomy gaps in kernel",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-10edda1c-0a8f-5e7f-bd87-6ff5fb7ab818"
+      ],
+      "url": "https://cursor.com/agents/bc-10edda1c-0a8f-5e7f-bd87-6ff5fb7ab818"
+    },
+    {
+      "id": "axel-brand-ai-bot",
+      "name": "Axel brand ai bot",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "axel"
+      ],
+      "bcIds": [
+        "bc-b70feced-d217-4e22-9900-f2a5553032b4"
+      ],
+      "url": "https://cursor.com/agents/bc-b70feced-d217-4e22-9900-f2a5553032b4"
+    },
+    {
+      "id": "browser-test-owned-n8n-desk",
+      "name": "Browser-test owned n8n desk",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "n8n-desk",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-907e0ffc-d0f9-5aab-9bdc-819e3f57d1c5"
+      ],
+      "url": "https://cursor.com/agents/bc-907e0ffc-d0f9-5aab-9bdc-819e3f57d1c5"
+    },
+    {
+      "id": "cashtro-kernel-extension-map",
+      "name": "Cashtro kernel extension map",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-275b8899-cf6d-5067-be03-a03378b61f8a"
+      ],
+      "url": "https://cursor.com/agents/bc-275b8899-cf6d-5067-be03-a03378b61f8a"
+    },
+    {
+      "id": "claude-code-setup-in-cursor",
+      "name": "Claude code setup in cursor",
+      "kind": "cloud",
+      "source": "desktop",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "desktop": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-84c9a246-72d0-4650-80f6-3f463d901452"
+      ],
+      "url": "https://cursor.com/agents/bc-84c9a246-72d0-4650-80f6-3f463d901452"
+    },
+    {
+      "id": "close-desk-pulse-confirm-flow",
+      "name": "Close desk, pulse, confirm flow",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-592595a9-2e21-5cd2-be80-bc8781aa876c"
+      ],
+      "url": "https://cursor.com/agents/bc-592595a9-2e21-5cd2-be80-bc8781aa876c"
+    },
+    {
+      "id": "coding-agent-productization",
+      "name": "Coding agent productization",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-0fb8606b-df65-5a41-a819-ee570fc3c2a1"
+      ],
+      "url": "https://cursor.com/agents/bc-0fb8606b-df65-5a41-a819-ee570fc3c2a1"
+    },
+    {
+      "id": "compare-nicer-desk-uis",
+      "name": "Compare nicer desk UIs",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-bbf6c1fa-7311-57cb-9ce4-d7bb96bdf5d1"
+      ],
+      "url": "https://cursor.com/agents/bc-bbf6c1fa-7311-57cb-9ce4-d7bb96bdf5d1"
+    },
+    {
+      "id": "computer-usage-feedback",
+      "name": "Computer usage feedback",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-2c5213fc-c919-41a3-86a3-200221fed469"
+      ],
+      "url": "https://cursor.com/agents/bc-2c5213fc-c919-41a3-86a3-200221fed469"
+    },
+    {
+      "id": "config-template-injection-reviewer",
+      "name": "Config template injection reviewer",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-94481dd0-50d1-5d0e-885b-760c3ff08db8"
+      ],
+      "url": "https://cursor.com/agents/bc-94481dd0-50d1-5d0e-885b-760c3ff08db8"
+    },
+    {
+      "id": "content-seo-wealth-agents",
+      "name": "Content SEO wealth agents",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "wealth"
+      ],
+      "bcIds": [
+        "bc-ef838955-be06-5b92-af9e-d26ccaa70aca"
+      ],
+      "url": "https://cursor.com/agents/bc-ef838955-be06-5b92-af9e-d26ccaa70aca"
+    },
+    {
+      "id": "demo-delivery-board-ui",
+      "name": "Demo delivery board UI",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-5adf6f9a-2fd8-5a87-8ea8-fc4d3cc7d1fd"
+      ],
+      "url": "https://cursor.com/agents/bc-5adf6f9a-2fd8-5a87-8ea8-fc4d3cc7d1fd"
+    },
+    {
+      "id": "design-cha-nes-agentiques",
+      "name": "Design cha\u00eenes agentiques",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/agentic-desk-union-42ad"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-5c0df3a6-ba63-422b-924a-7916464942ad"
+      ],
+      "url": "https://cursor.com/agents/bc-5c0df3a6-ba63-422b-924a-7916464942ad"
+    },
+    {
+      "id": "desk-pulse-walkthrough",
+      "name": "Desk pulse walkthrough",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-e7627187-475b-56f7-bd78-0f6ff610ca86"
+      ],
+      "url": "https://cursor.com/agents/bc-e7627187-475b-56f7-bd78-0f6ff610ca86"
+    },
+    {
+      "id": "durable-cloud-runtimes",
+      "name": "Durable cloud runtimes",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-4e72fe51-d158-5e12-ad77-21ce7a846043"
+      ],
+      "url": "https://cursor.com/agents/bc-4e72fe51-d158-5e12-ad77-21ce7a846043"
+    },
+    {
+      "id": "e-commerce-ops-agents",
+      "name": "E-commerce ops agents",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-debf8604-33e1-5e37-abd6-e1ddf5ec88ec"
+      ],
+      "url": "https://cursor.com/agents/bc-debf8604-33e1-5e37-abd6-e1ddf5ec88ec"
+    },
+    {
+      "id": "exercise-symbols-ide-end-to-end",
+      "name": "Exercise Symbols IDE end-to-end",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-1bb4f5a1-4935-5120-9b55-3c90dc9ebd54"
+      ],
+      "url": "https://cursor.com/agents/bc-1bb4f5a1-4935-5120-9b55-3c90dc9ebd54"
+    },
+    {
+      "id": "exercise-teams-bottom-dock",
+      "name": "Exercise Teams bottom dock",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-7d83fba6-95a5-511f-a176-7cd3c5225aae"
+      ],
+      "url": "https://cursor.com/agents/bc-7d83fba6-95a5-511f-a176-7cd3c5225aae"
+    },
+    {
+      "id": "exercise-unified-cashtro-desk",
+      "name": "Exercise unified Cashtro desk",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-832727ae-5b84-5779-8fac-b9a3c16826eb"
+      ],
+      "url": "https://cursor.com/agents/bc-832727ae-5b84-5779-8fac-b9a3c16826eb"
+    },
+    {
+      "id": "find-azure-keys-in-transcripts",
+      "name": "Find Azure keys in transcripts",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-2cb0573d-30e6-5742-8bbe-53ce11fd2593"
+      ],
+      "url": "https://cursor.com/agents/bc-2cb0573d-30e6-5742-8bbe-53ce11fd2593"
+    },
+    {
+      "id": "general-security-reviewer-a",
+      "name": "General security reviewer A",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-55b27155-527e-5bbe-a6fe-b747df7f7cbf"
+      ],
+      "url": "https://cursor.com/agents/bc-55b27155-527e-5bbe-a6fe-b747df7f7cbf"
+    },
+    {
+      "id": "general-security-reviewer-b",
+      "name": "General security reviewer B",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-3540f291-1299-56b6-a95f-2c1a80b7cbd0"
+      ],
+      "url": "https://cursor.com/agents/bc-3540f291-1299-56b6-a95f-2c1a80b7cbd0"
+    },
+    {
+      "id": "generalpurpose",
+      "name": "generalPurpose",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-75c0cc8d-545c-5d81-a1eb-fed3161a3cd2"
+      ],
+      "url": "https://cursor.com/agents/bc-75c0cc8d-545c-5d81-a1eb-fed3161a3cd2"
+    },
+    {
+      "id": "go-language-task",
+      "name": "Go language task",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/go-language-task-0b85"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-e94909ec-42bc-40b9-83d0-9c1835c20b85"
+      ],
+      "url": "https://cursor.com/agents/bc-e94909ec-42bc-40b9-83d0-9c1835c20b85"
+    },
+    {
+      "id": "grapiphy-agent-project-scope",
+      "name": "Grapiphy agent project scope",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "RUNNING": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "btk-avocats",
+        "md-clinic",
+        "solution-hypotheque-qc",
+        "educonnexion",
+        "proximity",
+        "scanapp",
+        "cashtro-catalog",
+        "evolu-jeunes",
+        "axel",
+        "happier",
+        "wealth",
+        "n8n-desk"
+      ],
+      "bcIds": [
+        "bc-58fe8ff8-5d6f-4687-8ae9-00fe87a5f8a8"
+      ],
+      "url": "https://cursor.com/agents/bc-58fe8ff8-5d6f-4687-8ae9-00fe87a5f8a8"
+    },
+    {
+      "id": "happier-non-profit-program-info",
+      "name": "Happier non-profit program info",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "happier"
+      ],
+      "bcIds": [
+        "bc-f56c9ea6-e57c-45de-9bb5-36af4c8ee675"
+      ],
+      "url": "https://cursor.com/agents/bc-f56c9ea6-e57c-45de-9bb5-36af4c8ee675"
+    },
+    {
+      "id": "internal-n8n-workflow",
+      "name": "Internal n8n workflow",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/internal-n8n-workflow-4b5b"
+      ],
+      "projects": [
+        "cashtro",
+        "n8n-desk"
+      ],
+      "bcIds": [
+        "bc-cc71e34e-e36a-483b-8cf0-19bde4474b5b"
+      ],
+      "url": "https://cursor.com/agents/bc-cc71e34e-e36a-483b-8cf0-19bde4474b5b"
+    },
+    {
+      "id": "kimmy-k3-glm-wealth",
+      "name": "Kimmy k3 glm wealth",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "ERROR": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/kimi-glm-wealth-loop-34f1"
+      ],
+      "projects": [
+        "cashtro",
+        "wealth"
+      ],
+      "bcIds": [
+        "bc-6cd2dba4-d977-4171-960a-136cd02d34f1"
+      ],
+      "url": "https://cursor.com/agents/bc-6cd2dba4-d977-4171-960a-136cd02d34f1"
+    },
+    {
+      "id": "lead-gen-sales-agents",
+      "name": "Lead gen sales agents",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-7b161d3a-331f-523b-b06e-b8c0cb066815"
+      ],
+      "url": "https://cursor.com/agents/bc-7b161d3a-331f-523b-b06e-b8c0cb066815"
+    },
+    {
+      "id": "link-for-usage",
+      "name": "Link for usage",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/azure-webapp-link-5d51"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-b8f3fcdc-3636-4142-b4e2-d415d0f45d51"
+      ],
+      "url": "https://cursor.com/agents/bc-b8f3fcdc-3636-4142-b4e2-d415d0f45d51"
+    },
+    {
+      "id": "map-cashtro-os-code",
+      "name": "Map Cashtro OS code",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-7ae0a26b-bcbb-5588-9718-a2e44a5d574c"
+      ],
+      "url": "https://cursor.com/agents/bc-7ae0a26b-bcbb-5588-9718-a2e44a5d574c"
+    },
+    {
+      "id": "mcp-marketplaces-distribution",
+      "name": "MCP marketplaces distribution",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-e4998cd8-3f31-513b-9bb7-17914fb46872"
+      ],
+      "url": "https://cursor.com/agents/bc-e4998cd8-3f31-513b-9bb7-17914fb46872"
+    },
+    {
+      "id": "mcp-protocol-design",
+      "name": "MCP protocol design",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-7459bb7d-c70a-55b1-8815-a846d4b93fd7"
+      ],
+      "url": "https://cursor.com/agents/bc-7459bb7d-c70a-55b1-8815-a846d4b93fd7"
+    },
+    {
+      "id": "memory-and-learning-loops",
+      "name": "Memory and learning loops",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-5261df0c-da87-54db-9676-d49e3219c514"
+      ],
+      "url": "https://cursor.com/agents/bc-5261df0c-da87-54db-9676-d49e3219c514"
+    },
+    {
+      "id": "multi-agent-swarm-delivery",
+      "name": "Multi-agent swarm delivery",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-448dca13-ce0e-5d60-b659-3f10909eee63"
+      ],
+      "url": "https://cursor.com/agents/bc-448dca13-ce0e-5d60-b659-3f10909eee63"
+    },
+    {
+      "id": "naming-scheme-revision",
+      "name": "Naming scheme revision",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/thinker-process-names-05b9"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-5f2b5d7f-930f-42d6-b482-15deb67d05b9"
+      ],
+      "url": "https://cursor.com/agents/bc-5f2b5d7f-930f-42d6-b482-15deb67d05b9"
+    },
+    {
+      "id": "open-source-agent-stacks",
+      "name": "Open source agent stacks",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-ef6b1ce5-9c9e-5f56-b9b6-e56b5e76c5a2"
+      ],
+      "url": "https://cursor.com/agents/bc-ef6b1ce5-9c9e-5f56-b9b6-e56b5e76c5a2"
+    },
+    {
+      "id": "payment-and-billing-rails",
+      "name": "Payment and billing rails",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-0920fd09-635f-52df-b655-b3c4c5185556"
+      ],
+      "url": "https://cursor.com/agents/bc-0920fd09-635f-52df-b655-b3c4c5185556"
+    },
+    {
+      "id": "privacy-guard-review-retry",
+      "name": "Privacy guard review retry",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-bc94862c-f266-5b8b-8073-94c0483cdaa3"
+      ],
+      "url": "https://cursor.com/agents/bc-bc94862c-f266-5b8b-8073-94c0483cdaa3"
+    },
+    {
+      "id": "research-ai-os-patterns",
+      "name": "Research AI OS patterns",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-26481ae1-dda8-5dfa-ad45-a460f67cb9e0"
+      ],
+      "url": "https://cursor.com/agents/bc-26481ae1-dda8-5dfa-ad45-a460f67cb9e0"
+    },
+    {
+      "id": "research-arbitrage-agents",
+      "name": "Research arbitrage agents",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-bd73dc57-2250-5ab3-b8d5-106357a3c302"
+      ],
+      "url": "https://cursor.com/agents/bc-bd73dc57-2250-5ab3-b8d5-106357a3c302"
+    },
+    {
+      "id": "review-chooser-walkthrough-video",
+      "name": "Review chooser walkthrough video",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-4d5010d6-2314-57ba-b10d-fe054c3d5541"
+      ],
+      "url": "https://cursor.com/agents/bc-4d5010d6-2314-57ba-b10d-fe054c3d5541"
+    },
+    {
+      "id": "review-closed-hours-demo-video",
+      "name": "Review closed-hours demo video",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-1fa29e56-4721-5e8f-a43c-fe4ce7d897c6"
+      ],
+      "url": "https://cursor.com/agents/bc-1fa29e56-4721-5e8f-a43c-fe4ce7d897c6"
+    },
+    {
+      "id": "review-compressed-night-shift-demo",
+      "name": "Review compressed night-shift demo",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-693107f5-f9e0-58dd-b770-38df1c3a03d0"
+      ],
+      "url": "https://cursor.com/agents/bc-693107f5-f9e0-58dd-b770-38df1c3a03d0"
+    },
+    {
+      "id": "review-giant-desk-video",
+      "name": "Review Giant desk video",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-f66c4b74-91d9-5f13-a39c-5fc215239848"
+      ],
+      "url": "https://cursor.com/agents/bc-f66c4b74-91d9-5f13-a39c-5fc215239848"
+    },
+    {
+      "id": "review-lautaro-desk-video",
+      "name": "Review Lautaro desk video",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-2d962d7d-9927-545b-a118-13178b5fa654"
+      ],
+      "url": "https://cursor.com/agents/bc-2d962d7d-9927-545b-a118-13178b5fa654"
+    },
+    {
+      "id": "review-naming-desk-walkthrough-video",
+      "name": "Review naming desk walkthrough video",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-94952652-a070-56c2-b9be-afeb6d94212e"
+      ],
+      "url": "https://cursor.com/agents/bc-94952652-a070-56c2-b9be-afeb6d94212e"
+    },
+    {
+      "id": "review-symbols-ide-walkthrough-video",
+      "name": "Review Symbols IDE walkthrough video",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-04dded5c-c8d3-57f6-8e54-62d4d32f0110"
+      ],
+      "url": "https://cursor.com/agents/bc-04dded5c-c8d3-57f6-8e54-62d4d32f0110"
+    },
+    {
+      "id": "review-teams-dock-demo-video",
+      "name": "Review Teams dock demo video",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-46538171-be5e-550a-b6dd-332430f044ba"
+      ],
+      "url": "https://cursor.com/agents/bc-46538171-be5e-550a-b6dd-332430f044ba"
+    },
+    {
+      "id": "review-voltron-desk-demo",
+      "name": "Review Voltron desk demo",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-3f81f6ab-66a6-5410-817c-725f48530278"
+      ],
+      "url": "https://cursor.com/agents/bc-3f81f6ab-66a6-5410-817c-725f48530278"
+    },
+    {
+      "id": "saas-ai-os-dashboard",
+      "name": "Saas ai os dashboard",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/symbols-internal-zapier-d5fc"
+      ],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-7c9f852e-7320-4757-8063-2ed424b2d5fc"
+      ],
+      "url": "https://cursor.com/agents/bc-7c9f852e-7320-4757-8063-2ed424b2d5fc"
+    },
+    {
+      "id": "saas-productized-agents",
+      "name": "SaaS productized agents",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-213879b0-56d5-5043-97b4-d0c810e4d8dd"
+      ],
+      "url": "https://cursor.com/agents/bc-213879b0-56d5-5043-97b4-d0c810e4d8dd"
+    },
+    {
+      "id": "safety-governance-autonomy",
+      "name": "Safety governance autonomy",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-07f81af8-2e02-5534-99cb-e36ad41ba9b8"
+      ],
+      "url": "https://cursor.com/agents/bc-07f81af8-2e02-5534-99cb-e36ad41ba9b8"
+    },
+    {
+      "id": "scan-app-readiness",
+      "name": "Scan app readiness",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "ERROR": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "scanapp"
+      ],
+      "bcIds": [
+        "bc-2a232cf9-4817-4231-bbe5-a061f97369b6"
+      ],
+      "url": "https://cursor.com/agents/bc-2a232cf9-4817-4231-bbe5-a061f97369b6"
+    },
+    {
+      "id": "skill-files-as-products",
+      "name": "Skill files as products",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-043506d4-8cf3-5c2b-b390-e48c12fe3e1a"
+      ],
+      "url": "https://cursor.com/agents/bc-043506d4-8cf3-5c2b-b390-e48c12fe3e1a"
+    },
+    {
+      "id": "summarize-closed-hours-agent",
+      "name": "Summarize closed-hours agent",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-aeb0c230-bed5-56f1-be76-f04ae58d1c42"
+      ],
+      "url": "https://cursor.com/agents/bc-aeb0c230-bed5-56f1-be76-f04ae58d1c42"
+    },
+    {
+      "id": "summarize-kernel-os-transcripts",
+      "name": "Summarize kernel+OS transcripts",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-0a42af70-bb18-58ea-8ab8-9a9ac974e009"
+      ],
+      "url": "https://cursor.com/agents/bc-0a42af70-bb18-58ea-8ab8-9a9ac974e009"
+    },
+    {
+      "id": "summarize-prior-cashtro-agent",
+      "name": "Summarize prior Cashtro agent",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-8acef60a-4977-5d37-8cf1-488ecbe374c6"
+      ],
+      "url": "https://cursor.com/agents/bc-8acef60a-4977-5d37-8cf1-488ecbe374c6"
+    },
+    {
+      "id": "summarize-swarm-design-notes",
+      "name": "Summarize swarm design notes",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-7201319c-625a-5b37-8102-551b756827e3"
+      ],
+      "url": "https://cursor.com/agents/bc-7201319c-625a-5b37-8102-551b756827e3"
+    },
+    {
+      "id": "summarize-video-review-agent",
+      "name": "Summarize video review agent",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-1c7a0fc4-181f-57fa-8bdf-72c3306e0a04"
+      ],
+      "url": "https://cursor.com/agents/bc-1c7a0fc4-181f-57fa-8bdf-72c3306e0a04"
+    },
+    {
+      "id": "summarize-wealth-dashboard-transcripts",
+      "name": "Summarize wealth+dashboard transcripts",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "wealth"
+      ],
+      "bcIds": [
+        "bc-88e612f3-bc08-53ee-ac35-67a2376b7db8"
+      ],
+      "url": "https://cursor.com/agents/bc-88e612f3-bc08-53ee-ac35-67a2376b7db8"
+    },
+    {
+      "id": "super-memory-problem-solving",
+      "name": "Super memory problem solving",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "ERROR": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-df52d755-7869-44ff-9fdd-4ae9081cf904"
+      ],
+      "url": "https://cursor.com/agents/bc-df52d755-7869-44ff-9fdd-4ae9081cf904"
+    },
+    {
+      "id": "teams-conversation-ai-proximity",
+      "name": "Teams conversation ai proximity",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/teams-proximity-conversation-7fd8"
+      ],
+      "projects": [
+        "cashtro",
+        "proximity"
+      ],
+      "bcIds": [
+        "bc-0eac1e4a-7220-453f-8ad2-d6e45a947fd8"
+      ],
+      "url": "https://cursor.com/agents/bc-0eac1e4a-7220-453f-8ad2-d6e45a947fd8"
+    },
+    {
+      "id": "test-ai-os-chooser-desk",
+      "name": "Test AI OS chooser desk",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-7f3d64d6-b8a2-5f60-9bb9-ad4a0ec8574c"
+      ],
+      "url": "https://cursor.com/agents/bc-7f3d64d6-b8a2-5f60-9bb9-ad4a0ec8574c"
+    },
+    {
+      "id": "trading-ai-money-generation",
+      "name": "Trading ai money generation",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "ERROR": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "wealth"
+      ],
+      "bcIds": [
+        "bc-6512f460-9313-4996-9fbb-ff47bb89933d"
+      ],
+      "url": "https://cursor.com/agents/bc-6512f460-9313-4996-9fbb-ff47bb89933d"
+    },
+    {
+      "id": "unclear-task-subject",
+      "name": "Unclear task subject",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/closed-hours-flow-cab2"
+      ],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-592e9093-6f18-4c83-99a9-989855f1cab2"
+      ],
+      "url": "https://cursor.com/agents/bc-592e9093-6f18-4c83-99a9-989855f1cab2"
+    },
+    {
+      "id": "verify-closed-hours-night-shift",
+      "name": "Verify closed-hours night shift",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-7d0c0888-3fa3-5751-9b8b-5e523313042e"
+      ],
+      "url": "https://cursor.com/agents/bc-7d0c0888-3fa3-5751-9b8b-5e523313042e"
+    },
+    {
+      "id": "verify-lautaro-builder-creator-desk",
+      "name": "Verify Lautaro Builder Creator desk",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-78c06c8b-1a6b-5755-a294-03837c348da0"
+      ],
+      "url": "https://cursor.com/agents/bc-78c06c8b-1a6b-5755-a294-03837c348da0"
+    },
+    {
+      "id": "verify-voltron-desk-desktop-mobile",
+      "name": "Verify Voltron desk desktop+mobile",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-f1a2a894-075a-5d40-98f0-830f9f259536"
+      ],
+      "url": "https://cursor.com/agents/bc-f1a2a894-075a-5d40-98f0-830f9f259536"
+    },
+    {
+      "id": "voltron-continuous-operation",
+      "name": "Voltron continuous operation",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [
+        "cursor/voltron-overnight-b1d0"
+      ],
+      "projects": [
+        "cashtro",
+        "cashtro-catalog"
+      ],
+      "bcIds": [
+        "bc-5f7e9632-1188-40a5-af19-b7dc5fb1b1d0"
+      ],
+      "url": "https://cursor.com/agents/bc-5f7e9632-1188-40a5-af19-b7dc5fb1b1d0"
+    },
+    {
+      "id": "wordpress-client-factory",
+      "name": "WordPress client factory",
+      "kind": "cloud",
+      "source": "internal",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "internal": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-d25215ec-d23f-5e5d-b15c-7e2a2702710b"
+      ],
+      "url": "https://cursor.com/agents/bc-d25215ec-d23f-5e5d-b15c-7e2a2702710b"
+    },
+    {
+      "id": "zappier-integration",
+      "name": "Zappier integration",
+      "kind": "cloud",
+      "source": "web",
+      "runs": 1,
+      "statuses": {
+        "IDLE": 1
+      },
+      "sources": {
+        "web": 1
+      },
+      "branches": [],
+      "projects": [
+        "cashtro"
+      ],
+      "bcIds": [
+        "bc-92294bfc-60e3-498c-b0f2-7b3e4d8cd850"
+      ],
+      "url": "https://cursor.com/agents/bc-92294bfc-60e3-498c-b0f2-7b3e4d8cd850"
+    }
+  ],
+  "worked": [
+    {
+      "agent": "init",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Boots the OS and publishes the manifesto.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "cashtro-catalog",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "btk-avocats",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "md-clinic",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "solution-hypotheque-qc",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "educonnexion",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "proximity",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "scanapp",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "delivery",
+      "agentKind": "kernel",
+      "project": "cashtro-catalog",
+      "work": "Owns the idea \u2192 concept \u2192 production line.",
+      "runs": 1
+    },
+    {
+      "agent": "router",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Optional OpenRouter model bus.",
+      "runs": 1
+    },
+    {
+      "agent": "research",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Ingests sourced findings into notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "btk-avocats",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "md-clinic",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "solution-hypotheque-qc",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "educonnexion",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "proximity",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "scanapp",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "explorer",
+      "agentKind": "kernel",
+      "project": "cashtro-catalog",
+      "work": "Searches processes, ships, and notes.",
+      "runs": 1
+    },
+    {
+      "agent": "operator",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Browser and desktop for shippers.",
+      "runs": 1
+    },
+    {
+      "agent": "reviewer",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Reads walkthrough artifacts before a ship is done.",
+      "runs": 1
+    },
+    {
+      "agent": "architect",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Shapes apps and workflows before they hit the line.",
+      "runs": 1
+    },
+    {
+      "agent": "deploy",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "CI, preview, and production promotion.",
+      "runs": 1
+    },
+    {
+      "agent": "security",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Triage CVE and SAST findings.",
+      "runs": 1
+    },
+    {
+      "agent": "memory",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Episodic store and recall.",
+      "runs": 1
+    },
+    {
+      "agent": "comms",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Outbound only after a human confirm.",
+      "runs": 1
+    },
+    {
+      "agent": "planner",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Turns a goal into idea-stage ships.",
+      "runs": 1
+    },
+    {
+      "agent": "planner",
+      "agentKind": "kernel",
+      "project": "cashtro-catalog",
+      "work": "Turns a goal into idea-stage ships.",
+      "runs": 1
+    },
+    {
+      "agent": "investigator",
+      "agentKind": "kernel",
+      "project": "cashtro",
+      "work": "Traces a failing check to blast radius.",
+      "runs": 1
+    },
+    {
+      "agent": "security-review-orchestrator",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Security review orchestrator",
+      "runs": 12
+    },
+    {
+      "agent": "pr-approval-agent",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Pr approval agent",
+      "runs": 10
+    },
+    {
+      "agent": "api-rpc-privilege-review",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "API RPC privilege review",
+      "runs": 9
+    },
+    {
+      "agent": "config-template-injection-review",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Config template injection review",
+      "runs": 9
+    },
+    {
+      "agent": "privacy-guard-review-a",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Privacy guard review A",
+      "runs": 7
+    },
+    {
+      "agent": "privacy-guard-review-b",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Privacy guard review B",
+      "runs": 7
+    },
+    {
+      "agent": "agent-tooling-trust-review",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Agent tooling trust review",
+      "runs": 6
+    },
+    {
+      "agent": "filesystem-workspace-boundary",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Filesystem workspace boundary",
+      "runs": 6
+    },
+    {
+      "agent": "general-security-review-a",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "General security review A",
+      "runs": 6
+    },
+    {
+      "agent": "general-security-review-b",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "General security review B",
+      "runs": 6
+    },
+    {
+      "agent": "agent-tooling-trust-boundary",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Agent tooling trust boundary",
+      "runs": 4
+    },
+    {
+      "agent": "filesystem-workspace-boundary-review",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Filesystem workspace boundary review",
+      "runs": 4
+    },
+    {
+      "agent": "platform-pattern-review-a",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Platform pattern review A",
+      "runs": 4
+    },
+    {
+      "agent": "platform-pattern-review-b",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Platform pattern review B",
+      "runs": 4
+    },
+    {
+      "agent": "general-security-review-run-1",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "General security review run 1",
+      "runs": 3
+    },
+    {
+      "agent": "general-security-review-run-2",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "General security review run 2",
+      "runs": 3
+    },
+    {
+      "agent": "platform-pattern-review-run-1",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Platform pattern review run 1",
+      "runs": 3
+    },
+    {
+      "agent": "platform-pattern-review-run-2",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Platform pattern review run 2",
+      "runs": 3
+    },
+    {
+      "agent": "platform-patterns-review-a",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Platform patterns review A",
+      "runs": 3
+    },
+    {
+      "agent": "platform-patterns-review-b",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Platform patterns review B",
+      "runs": 3
+    },
+    {
+      "agent": "privacy-guard-review-run-1",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Privacy guard review run 1",
+      "runs": 3
+    },
+    {
+      "agent": "privacy-guard-review-run-2",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Privacy guard review run 2",
+      "runs": 3
+    },
+    {
+      "agent": "90-day-wealth-playbook",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "90-day wealth playbook",
+      "runs": 1
+    },
+    {
+      "agent": "90-day-wealth-playbook",
+      "agentKind": "cloud",
+      "project": "wealth",
+      "work": "90-day wealth playbook",
+      "runs": 1
+    },
+    {
+      "agent": "agent-loop-architectures",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Agent loop architectures",
+      "runs": 1
+    },
+    {
+      "agent": "ai-os-dashboard",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Ai os dashboard",
+      "runs": 1
+    },
+    {
+      "agent": "ai-os-dashboard",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Ai os dashboard",
+      "runs": 1
+    },
+    {
+      "agent": "api-rpc-privilege-reviewer",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "API RPC privilege reviewer",
+      "runs": 1
+    },
+    {
+      "agent": "assistant-capabilities-definition",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Assistant capabilities definition",
+      "runs": 1
+    },
+    {
+      "agent": "autonomous-wealth-agents",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Autonomous wealth agents",
+      "runs": 1
+    },
+    {
+      "agent": "autonomous-wealth-agents",
+      "agentKind": "cloud",
+      "project": "wealth",
+      "work": "Autonomous wealth agents",
+      "runs": 1
+    },
+    {
+      "agent": "autonomy-gaps-in-kernel",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Autonomy gaps in kernel",
+      "runs": 1
+    },
+    {
+      "agent": "axel-brand-ai-bot",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Axel brand ai bot",
+      "runs": 1
+    },
+    {
+      "agent": "axel-brand-ai-bot",
+      "agentKind": "cloud",
+      "project": "axel",
+      "work": "Axel brand ai bot",
+      "runs": 1
+    },
+    {
+      "agent": "browser-test-owned-n8n-desk",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Browser-test owned n8n desk",
+      "runs": 1
+    },
+    {
+      "agent": "browser-test-owned-n8n-desk",
+      "agentKind": "cloud",
+      "project": "n8n-desk",
+      "work": "Browser-test owned n8n desk",
+      "runs": 1
+    },
+    {
+      "agent": "browser-test-owned-n8n-desk",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Browser-test owned n8n desk",
+      "runs": 1
+    },
+    {
+      "agent": "cashtro-kernel-extension-map",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Cashtro kernel extension map",
+      "runs": 1
+    },
+    {
+      "agent": "claude-code-setup-in-cursor",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Claude code setup in cursor",
+      "runs": 1
+    },
+    {
+      "agent": "close-desk-pulse-confirm-flow",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Close desk, pulse, confirm flow",
+      "runs": 1
+    },
+    {
+      "agent": "close-desk-pulse-confirm-flow",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Close desk, pulse, confirm flow",
+      "runs": 1
+    },
+    {
+      "agent": "coding-agent-productization",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Coding agent productization",
+      "runs": 1
+    },
+    {
+      "agent": "compare-nicer-desk-uis",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Compare nicer desk UIs",
+      "runs": 1
+    },
+    {
+      "agent": "compare-nicer-desk-uis",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Compare nicer desk UIs",
+      "runs": 1
+    },
+    {
+      "agent": "computer-usage-feedback",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Computer usage feedback",
+      "runs": 1
+    },
+    {
+      "agent": "config-template-injection-reviewer",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Config template injection reviewer",
+      "runs": 1
+    },
+    {
+      "agent": "content-seo-wealth-agents",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Content SEO wealth agents",
+      "runs": 1
+    },
+    {
+      "agent": "content-seo-wealth-agents",
+      "agentKind": "cloud",
+      "project": "wealth",
+      "work": "Content SEO wealth agents",
+      "runs": 1
+    },
+    {
+      "agent": "demo-delivery-board-ui",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Demo delivery board UI",
+      "runs": 1
+    },
+    {
+      "agent": "design-cha-nes-agentiques",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Design cha\u00eenes agentiques",
+      "runs": 1
+    },
+    {
+      "agent": "desk-pulse-walkthrough",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Desk pulse walkthrough",
+      "runs": 1
+    },
+    {
+      "agent": "desk-pulse-walkthrough",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Desk pulse walkthrough",
+      "runs": 1
+    },
+    {
+      "agent": "durable-cloud-runtimes",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Durable cloud runtimes",
+      "runs": 1
+    },
+    {
+      "agent": "e-commerce-ops-agents",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "E-commerce ops agents",
+      "runs": 1
+    },
+    {
+      "agent": "exercise-symbols-ide-end-to-end",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Exercise Symbols IDE end-to-end",
+      "runs": 1
+    },
+    {
+      "agent": "exercise-teams-bottom-dock",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Exercise Teams bottom dock",
+      "runs": 1
+    },
+    {
+      "agent": "exercise-unified-cashtro-desk",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Exercise unified Cashtro desk",
+      "runs": 1
+    },
+    {
+      "agent": "exercise-unified-cashtro-desk",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Exercise unified Cashtro desk",
+      "runs": 1
+    },
+    {
+      "agent": "find-azure-keys-in-transcripts",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Find Azure keys in transcripts",
+      "runs": 1
+    },
+    {
+      "agent": "general-security-reviewer-a",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "General security reviewer A",
+      "runs": 1
+    },
+    {
+      "agent": "general-security-reviewer-b",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "General security reviewer B",
+      "runs": 1
+    },
+    {
+      "agent": "generalpurpose",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "generalPurpose",
+      "runs": 1
+    },
+    {
+      "agent": "go-language-task",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Go language task",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "btk-avocats",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "md-clinic",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "solution-hypotheque-qc",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "educonnexion",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "proximity",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "scanapp",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "evolu-jeunes",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "axel",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "happier",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "wealth",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "grapiphy-agent-project-scope",
+      "agentKind": "cloud",
+      "project": "n8n-desk",
+      "work": "Grapiphy agent project scope",
+      "runs": 1
+    },
+    {
+      "agent": "happier-non-profit-program-info",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Happier non-profit program info",
+      "runs": 1
+    },
+    {
+      "agent": "happier-non-profit-program-info",
+      "agentKind": "cloud",
+      "project": "happier",
+      "work": "Happier non-profit program info",
+      "runs": 1
+    },
+    {
+      "agent": "internal-n8n-workflow",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Internal n8n workflow",
+      "runs": 1
+    },
+    {
+      "agent": "internal-n8n-workflow",
+      "agentKind": "cloud",
+      "project": "n8n-desk",
+      "work": "Internal n8n workflow",
+      "runs": 1
+    },
+    {
+      "agent": "kimmy-k3-glm-wealth",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Kimmy k3 glm wealth",
+      "runs": 1
+    },
+    {
+      "agent": "kimmy-k3-glm-wealth",
+      "agentKind": "cloud",
+      "project": "wealth",
+      "work": "Kimmy k3 glm wealth",
+      "runs": 1
+    },
+    {
+      "agent": "lead-gen-sales-agents",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Lead gen sales agents",
+      "runs": 1
+    },
+    {
+      "agent": "link-for-usage",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Link for usage",
+      "runs": 1
+    },
+    {
+      "agent": "map-cashtro-os-code",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Map Cashtro OS code",
+      "runs": 1
+    },
+    {
+      "agent": "mcp-marketplaces-distribution",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "MCP marketplaces distribution",
+      "runs": 1
+    },
+    {
+      "agent": "mcp-protocol-design",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "MCP protocol design",
+      "runs": 1
+    },
+    {
+      "agent": "memory-and-learning-loops",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Memory and learning loops",
+      "runs": 1
+    },
+    {
+      "agent": "multi-agent-swarm-delivery",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Multi-agent swarm delivery",
+      "runs": 1
+    },
+    {
+      "agent": "naming-scheme-revision",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Naming scheme revision",
+      "runs": 1
+    },
+    {
+      "agent": "open-source-agent-stacks",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Open source agent stacks",
+      "runs": 1
+    },
+    {
+      "agent": "payment-and-billing-rails",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Payment and billing rails",
+      "runs": 1
+    },
+    {
+      "agent": "privacy-guard-review-retry",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Privacy guard review retry",
+      "runs": 1
+    },
+    {
+      "agent": "research-ai-os-patterns",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Research AI OS patterns",
+      "runs": 1
+    },
+    {
+      "agent": "research-ai-os-patterns",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Research AI OS patterns",
+      "runs": 1
+    },
+    {
+      "agent": "research-arbitrage-agents",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Research arbitrage agents",
+      "runs": 1
+    },
+    {
+      "agent": "review-chooser-walkthrough-video",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review chooser walkthrough video",
+      "runs": 1
+    },
+    {
+      "agent": "review-closed-hours-demo-video",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review closed-hours demo video",
+      "runs": 1
+    },
+    {
+      "agent": "review-compressed-night-shift-demo",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review compressed night-shift demo",
+      "runs": 1
+    },
+    {
+      "agent": "review-giant-desk-video",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review Giant desk video",
+      "runs": 1
+    },
+    {
+      "agent": "review-giant-desk-video",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Review Giant desk video",
+      "runs": 1
+    },
+    {
+      "agent": "review-lautaro-desk-video",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review Lautaro desk video",
+      "runs": 1
+    },
+    {
+      "agent": "review-lautaro-desk-video",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Review Lautaro desk video",
+      "runs": 1
+    },
+    {
+      "agent": "review-naming-desk-walkthrough-video",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review naming desk walkthrough video",
+      "runs": 1
+    },
+    {
+      "agent": "review-naming-desk-walkthrough-video",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Review naming desk walkthrough video",
+      "runs": 1
+    },
+    {
+      "agent": "review-symbols-ide-walkthrough-video",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review Symbols IDE walkthrough video",
+      "runs": 1
+    },
+    {
+      "agent": "review-teams-dock-demo-video",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review Teams dock demo video",
+      "runs": 1
+    },
+    {
+      "agent": "review-voltron-desk-demo",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Review Voltron desk demo",
+      "runs": 1
+    },
+    {
+      "agent": "review-voltron-desk-demo",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Review Voltron desk demo",
+      "runs": 1
+    },
+    {
+      "agent": "saas-ai-os-dashboard",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Saas ai os dashboard",
+      "runs": 1
+    },
+    {
+      "agent": "saas-ai-os-dashboard",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Saas ai os dashboard",
+      "runs": 1
+    },
+    {
+      "agent": "saas-productized-agents",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "SaaS productized agents",
+      "runs": 1
+    },
+    {
+      "agent": "safety-governance-autonomy",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Safety governance autonomy",
+      "runs": 1
+    },
+    {
+      "agent": "scan-app-readiness",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Scan app readiness",
+      "runs": 1
+    },
+    {
+      "agent": "scan-app-readiness",
+      "agentKind": "cloud",
+      "project": "scanapp",
+      "work": "Scan app readiness",
+      "runs": 1
+    },
+    {
+      "agent": "skill-files-as-products",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Skill files as products",
+      "runs": 1
+    },
+    {
+      "agent": "summarize-closed-hours-agent",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Summarize closed-hours agent",
+      "runs": 1
+    },
+    {
+      "agent": "summarize-kernel-os-transcripts",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Summarize kernel+OS transcripts",
+      "runs": 1
+    },
+    {
+      "agent": "summarize-prior-cashtro-agent",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Summarize prior Cashtro agent",
+      "runs": 1
+    },
+    {
+      "agent": "summarize-swarm-design-notes",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Summarize swarm design notes",
+      "runs": 1
+    },
+    {
+      "agent": "summarize-video-review-agent",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Summarize video review agent",
+      "runs": 1
+    },
+    {
+      "agent": "summarize-wealth-dashboard-transcripts",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Summarize wealth+dashboard transcripts",
+      "runs": 1
+    },
+    {
+      "agent": "summarize-wealth-dashboard-transcripts",
+      "agentKind": "cloud",
+      "project": "wealth",
+      "work": "Summarize wealth+dashboard transcripts",
+      "runs": 1
+    },
+    {
+      "agent": "super-memory-problem-solving",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Super memory problem solving",
+      "runs": 1
+    },
+    {
+      "agent": "teams-conversation-ai-proximity",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Teams conversation ai proximity",
+      "runs": 1
+    },
+    {
+      "agent": "teams-conversation-ai-proximity",
+      "agentKind": "cloud",
+      "project": "proximity",
+      "work": "Teams conversation ai proximity",
+      "runs": 1
+    },
+    {
+      "agent": "test-ai-os-chooser-desk",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Test AI OS chooser desk",
+      "runs": 1
+    },
+    {
+      "agent": "test-ai-os-chooser-desk",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Test AI OS chooser desk",
+      "runs": 1
+    },
+    {
+      "agent": "trading-ai-money-generation",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Trading ai money generation",
+      "runs": 1
+    },
+    {
+      "agent": "trading-ai-money-generation",
+      "agentKind": "cloud",
+      "project": "wealth",
+      "work": "Trading ai money generation",
+      "runs": 1
+    },
+    {
+      "agent": "unclear-task-subject",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Unclear task subject",
+      "runs": 1
+    },
+    {
+      "agent": "verify-closed-hours-night-shift",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Verify closed-hours night shift",
+      "runs": 1
+    },
+    {
+      "agent": "verify-lautaro-builder-creator-desk",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Verify Lautaro Builder Creator desk",
+      "runs": 1
+    },
+    {
+      "agent": "verify-lautaro-builder-creator-desk",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Verify Lautaro Builder Creator desk",
+      "runs": 1
+    },
+    {
+      "agent": "verify-voltron-desk-desktop-mobile",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Verify Voltron desk desktop+mobile",
+      "runs": 1
+    },
+    {
+      "agent": "verify-voltron-desk-desktop-mobile",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Verify Voltron desk desktop+mobile",
+      "runs": 1
+    },
+    {
+      "agent": "voltron-continuous-operation",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Voltron continuous operation",
+      "runs": 1
+    },
+    {
+      "agent": "voltron-continuous-operation",
+      "agentKind": "cloud",
+      "project": "cashtro-catalog",
+      "work": "Voltron continuous operation",
+      "runs": 1
+    },
+    {
+      "agent": "wordpress-client-factory",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "WordPress client factory",
+      "runs": 1
+    },
+    {
+      "agent": "zappier-integration",
+      "agentKind": "cloud",
+      "project": "cashtro",
+      "work": "Zappier integration",
+      "runs": 1
+    }
+  ]
+}

@@ -96,3 +96,15 @@ pnpm api              # http://127.0.0.1:8787/docs
 ```
 
 See `docs/MISSION.md`, `inventory/REPORT.md`, `docs/ACCESS_REQUIRED.md`.
+
+### Graphify (every agent × every project)
+
+The fleet map is `internal/fleet` plus `inventory/fleet/`. Graphify extracts
+it locally — no model key.
+
+```bash
+make graphify
+graphify query "which agents worked which projects"
+graphify explain Delivery
+graphify path Scanapp Cashtro
+```
