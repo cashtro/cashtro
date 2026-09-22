@@ -1,7 +1,8 @@
 package agents
 
-// Organization is the cooperative. Four chiefs, eight departments,
+// Organization is the cooperative. Three chiefs, seven departments,
 // the 15 real agentics as specialized employees. No extra processes.
+// The central agency is another repo and another prompt. It is not here.
 type Organization struct {
 	Seats       []Seat       `json:"seats"`
 	Departments []Department `json:"departments"`
@@ -52,7 +53,6 @@ func Chart() Organization {
 			{ID: "ceo", Title: "CEO", Agent: "manager", Mandate: "Arbitrage, rentabilité, assignation. Stratège : une question et la position avant d'arbitrer. Rien ne sort sans son accord via comms."},
 			{ID: "cto", Title: "CTO", Agent: "architect", Mandate: "Technique, chaînes, modèles. Stratège : deux façons, le coût, et la réponse adverse avant de construire."},
 			{ID: "cmp", Title: "CMP", Agent: "comms", Mandate: "Marché. Vente, campagnes, porte de sortie. Stratège : une offre, la mesure, puis comms.allow."},
-			{ID: "maire", Title: "Maire de l'intelligence", Agent: "memory", Mandate: "Stratège de tous les cerveaux. Une question avant chaque coup. Il lit la position, nomme le coup de pouvoir et la réponse adverse, et tient le savoir du tableau."},
 		},
 		Departments: []Department{
 			{
@@ -114,15 +114,6 @@ func Chart() Organization {
 					{Agent: "explorer", Title: "employé spécialisé option plus courte", Skills: []string{"Graphify", "chemin existant", "moindre coût"}},
 				},
 			},
-			{
-				ID: "agence", Name: "Agence centrale", ReportsTo: "maire", Chief: "memory",
-				Mandate: "Rassemble ce qui est su, relit le tableau à chaque boot, régule les départements, propose un contre-projet, protège le cerveau et notre infrastructure. Pas d'outil d'attaque, pas de système qui n'est pas le nôtre.",
-				Members: []Member{
-					{Agent: "memory", Title: "maire de l'intelligence", Skills: []string{"savoir", "position", "coup"}},
-					{Agent: "security", Title: "exécutant des lois", Skills: []string{"portes", "protection", "incident"}},
-					{Agent: "investigator", Title: "exécutant des écarts", Skills: []string{"trou", "contre-projet", "stabilité"}},
-				},
-			},
 		},
 		Divisions: []Division{
 			{ID: "proximity", Name: "Proximity Agency", Chief: "operator", Department: "azure", Revenue: "Sites clients WordPress / PHP / ACF Pro, branchés sur Azure.", Guard: "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow. L'équipe Azure gère ça en parallèle."},
@@ -147,7 +138,6 @@ func Chart() Organization {
 			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Revenue: "Gestion marketing des business corporate.", Guard: "Une campagne à la fois. Mesurer avant d'élargir."},
 			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Revenue: "Live sell du stock Scan App, sur toutes les plateformes live.", Guard: "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."},
 			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
-			{ID: "agence", Name: "Agence centrale", Chief: "memory", Department: "agence", Revenue: "Le savoir du tableau, et le plan d'économie déjà décidé. Pas un nouveau pourcentage, pas un bot.", Guard: "Une question avant le coup. On protège notre infrastructure. On n'écrit pas d'exploit."},
 		},
 	}
 	for i := range org.Departments {

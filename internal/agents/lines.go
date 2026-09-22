@@ -116,17 +116,6 @@ func Lines() []Line {
 				"Evolu-Jeunes/sigma", "Evolu-Jeunes/sigmaNew", "Evolu-Jeunes/Giant",
 			},
 		},
-		{
-			ID: "agence", Name: "Agence centrale", Brain: "Cartographe",
-			Mandate: "Rassemble l'intelligence sur le tableau, à chaque boot. " +
-				"Planifie l'économie déjà décidée : prix 20 % à 40 % au-dessus, rabais qui comparent les prix en ligne, " +
-				"Stripe sur les projets propres, pas Proximity sauf demande. " +
-				"Chaque ligne est un nœud. Un repo hors ligne est un trou. " +
-				"L'équipe de protection régule, propose un contre-projet, et protège le cerveau et l'infrastructure à nous. " +
-				"Elle n'attaque pas un système extérieur et n'écrit pas d'exploit.",
-			Controls: "Le maire pose la question. security et investigator exécutent les lois. Chaque coup s'ajoute à la chaîne. Le savoir reste dans epicenter, sur la ligne du cerveau principal.",
-			Repos:    []string{},
-		},
 	}
 }
 

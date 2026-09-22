@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	maxMail  = 256
+	maxMail  = 64
 	maxNotes = 200
 	maxFacts = 200
 )

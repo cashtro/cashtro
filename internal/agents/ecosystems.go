@@ -10,12 +10,7 @@ type Link struct {
 }
 
 // Links is the automation graph. Every kernel agentic appears at least once.
-// The agency watch is appended, one node per line.
 func Links() []Link {
-	return append(baseLinks(), WatchLinks()...)
-}
-
-func baseLinks() []Link {
 	return []Link{
 		{
 			From: "epicenter", To: "proximity",
@@ -78,24 +73,6 @@ func baseLinks() []Link {
 			Agents: []string{"reviewer", "explorer", "manager"},
 		},
 	}
-}
-
-// WatchLinks ties the agency to every other line, so a project cannot sit
-// off the board. The link is a node in the chain, not a new process.
-func WatchLinks() []Link {
-	out := make([]Link, 0, len(Lines()))
-	for _, ln := range Lines() {
-		if ln.ID == "agence" {
-			continue
-		}
-		out = append(out, Link{
-			From:   "agence",
-			To:     ln.ID,
-			Via:    "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
-			Agents: []string{"memory", "security", "investigator"},
-		})
-	}
-	return out
 }
 
 // AgentIDs returns every kernel agentic used by the links.

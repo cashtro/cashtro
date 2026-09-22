@@ -25,22 +25,8 @@ func TestBuildBoardSyncsFiches(t *testing.T) {
 	if board.Fiches != 58 {
 		t.Fatalf("fiches = %d, want 58", board.Fiches)
 	}
-	if len(board.Lines) != 12 || len(board.Agents) != 15 || len(board.Links) != len(baseLinks())+len(WatchLinks()) {
+	if len(board.Lines) != 11 || len(board.Agents) != 15 || len(board.Links) != 12 {
 		t.Fatalf("lines %d agents %d links %d", len(board.Lines), len(board.Agents), len(board.Links))
-	}
-	watched := map[string]bool{}
-	for _, ln := range board.Links {
-		if ln.From == "agence" {
-			watched[ln.To] = true
-		}
-	}
-	for _, ln := range board.Lines {
-		if ln.ID == "agence" {
-			continue
-		}
-		if !watched[ln.ID] {
-			t.Fatalf("line %s is off the board", ln.ID)
-		}
 	}
 	if len(board.Gaps) != 0 {
 		t.Fatalf("gaps = %v, want none", board.Gaps)

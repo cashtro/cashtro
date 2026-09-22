@@ -123,10 +123,10 @@ func boardFromLines() Board {
 		Org:        org,
 		Compliance: Loi(),
 		Rules: []string{
-			"Coopérative : CEO, CTO, CMP, maire de l'intelligence. Huit départements. Quinze employés spécialisés.",
+			"Coopérative : CEO, CTO, CMP. Sept départements. Quinze employés spécialisés.",
 			"Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
-			"L'agence relit chaque ligne à chaque boot. Un repo hors ligne est un trou. La chaîne des coups ne se réécrit pas.",
-			"La protection regarde notre infrastructure. Elle n'écrit pas d'exploit.",
+			"La chaîne des coups ne se réécrit pas.",
+			"L'agence centrale est un autre dépôt et un autre prompt. Elle n'est pas dans ce tableau.",
 			"Le roster de 1001 n'est pas des processus.",
 			"Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
 			"Les sites clients déjà en production se lisent, ils ne se déploient pas.",
