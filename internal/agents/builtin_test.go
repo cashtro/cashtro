@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/cashtro/cashtro/internal/graphify"
 	"github.com/cashtro/cashtro/internal/kernel"
 )
 
@@ -151,5 +152,15 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.graphify: %+v %v", res, err)
+	}
+
+	before := len(k.Events())
+	snap := Snapshot(k, "giant")
+	if len(k.Events()) != before {
+		t.Fatal("snapshot wrote journal")
+	}
+	g := snap["graph"].(graphify.Graph)
+	if g.Counts["token"] < 1 || g.Score.GiantOnline == false {
+		t.Fatalf("snapshot graph = %+v", g.Counts)
 	}
 }

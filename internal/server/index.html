@@ -129,7 +129,7 @@
     .arena-tools button { cursor: pointer; padding: 6px 8px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
     .arena-tools button.on, .arena-tools button:hover { border-color: var(--gold); color: var(--gold); }
     .arena-tools input { padding: 6px 8px; min-width: 160px; flex: 1; }
-    svg.graph { width: 100%; height: 460px; display: block; background: #07080e; border: 1px solid var(--line); }
+    svg.graph { width: 100%; height: 540px; display: block; background: #07080e; border: 1px solid var(--line); }
     .flow {
       display: grid;
       grid-auto-flow: column;
@@ -253,15 +253,15 @@
         <div class="panel arena">
           <h2>Graphify live · comment le code se déroule</h2>
           <div class="arena-tools">
-            <button type="button" data-layer="all" class="on">All</button>
-            <button type="button" data-layer="eco">Écosystème</button>
+            <button type="button" data-layer="all">All</button>
+            <button type="button" data-layer="eco" class="on">Écosystème</button>
             <button type="button" data-layer="code">Code</button>
             <button type="button" data-layer="crew">Crew</button>
             <button type="button" data-layer="giant">Giant</button>
             <input id="q" placeholder="query graphify · giant, invoke, hustler">
             <button type="button" id="ask">Query</button>
           </div>
-          <svg class="graph" id="graph" viewBox="0 0 900 460" role="img" aria-label="Graphify live map"></svg>
+          <svg class="graph" id="graph" viewBox="0 0 900 540" role="img" aria-label="Graphify live map"></svg>
           <div class="flow" id="flow"></div>
         </div>
         <div class="panel">
@@ -333,9 +333,10 @@
     const svgNS = "http://www.w3.org/2000/svg";
     let selected = "manager";
     let lastInvoke = "";
-    let layer = "all";
+    let layer = "eco";
     let query = "";
     let sim = { nodes: [], edges: [] };
+    let modelCard = null;
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
       const body = await res.json();
@@ -433,7 +434,7 @@
       return layerOf(node) === layer;
     }
     function layout(nodes, edges) {
-      const W = 900, H = 460;
+      const W = 900, H = 540;
       const byId = {};
       nodes.forEach((n, i) => {
         const angle = (i / Math.max(nodes.length, 1)) * Math.PI * 2;
@@ -506,14 +507,18 @@
         c.setAttribute("stroke", n.kind === "token" ? "#fff3c4" : n.color || "#8b93a7");
         c.setAttribute("stroke-width", n.kind === "token" ? "2.4" : "1");
         if ((n.heat || 0) > 0.5 || n.kind === "token") c.setAttribute("class", "pulse");
-        const t = document.createElementNS(svgNS, "text");
-        t.setAttribute("x", n.x); t.setAttribute("y", n.y + r + 11);
-        t.setAttribute("text-anchor", "middle");
-        t.setAttribute("fill", n.kind === "token" ? "#f0c14b" : "#eef1f7");
-        t.setAttribute("font-size", n.kind === "token" ? "13" : "9");
-        t.setAttribute("font-family", "IBM Plex Mono, monospace");
-        t.textContent = n.label;
-        g.appendChild(c); g.appendChild(t);
+        const showLabel = n.kind === "token" || n.kind === "brain" || n.kind === "os" || n.kind === "line" || n.kind === "module" || (n.size || 0) >= 20;
+        g.appendChild(c);
+        if (showLabel) {
+          const t = document.createElementNS(svgNS, "text");
+          t.setAttribute("x", n.x); t.setAttribute("y", n.y + r + 12);
+          t.setAttribute("text-anchor", "middle");
+          t.setAttribute("fill", n.kind === "token" ? "#f0c14b" : "#eef1f7");
+          t.setAttribute("font-size", n.kind === "token" ? "14" : "10");
+          t.setAttribute("font-family", "IBM Plex Mono, monospace");
+          t.textContent = n.label;
+          g.appendChild(t);
+        }
         g.addEventListener("click", () => {
           lastInvoke = n.kind + " · " + n.label + " — " + (n.detail || "");
           if (n.kind === "agent") selected = n.id.replace("agent:", "");
@@ -536,8 +541,11 @@
     }
     async function render() {
       const live = await j("/api/live" + (query ? ("?q=" + encodeURIComponent(query)) : ""));
+      if (!modelCard) {
+        try { modelCard = await j("/api/model"); } catch (e) { modelCard = {}; }
+      }
       const os = live.os, agents = live.agents, ships = live.ships, events = live.events;
-      const model = live.model, profile = live.profile, notes = live.notes, confirms = live.confirms;
+      const model = live.model || modelCard, profile = live.profile, notes = live.notes, confirms = live.confirms;
       const graph = live.graph || {};
       const score = graph.score || {};
       document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";

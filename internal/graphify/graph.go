@@ -161,15 +161,6 @@ func Build(in Input) Graph {
 			Detail: b.Verb, Meta: map[string]any{"subs": b.Subs},
 		})
 		link(osID, bid, "steers", "cerveau")
-		for i, sub := range b.Subs {
-			sid := bid + ":sub:" + slug(sub)
-			put(Node{
-				ID: sid, Kind: "subbrain", Label: sub, Group: "brain", Color: b.Color, Size: 10,
-				Detail: b.Name + " · sous-cerveau",
-				Meta:   map[string]any{"index": i},
-			})
-			link(bid, sid, "contains", "sous-cerveau")
-		}
 	}
 
 	for _, ln := range in.Lines {
@@ -218,14 +209,6 @@ func Build(in Input) Graph {
 			},
 		})
 		link(osID, aid, "process", string(p.Spec.Kind))
-		for _, cap := range p.Spec.Capabilities {
-			cid := "cap:" + cap
-			put(Node{
-				ID: cid, Kind: "capability", Label: cap, Group: "code", Color: "#6ea8ff", Size: 11,
-				Detail: "verbe · " + p.Spec.Name,
-			})
-			link(aid, cid, "exposes", "capability")
-		}
 	}
 
 	for _, s := range in.Ships {
@@ -490,25 +473,6 @@ func brainID(brains []Brain, name string) (string, bool) {
 		}
 	}
 	return "", false
-}
-
-func slug(s string) string {
-	s = strings.ToLower(strings.TrimSpace(s))
-	var b strings.Builder
-	dash := false
-	for _, r := range s {
-		switch {
-		case r >= 'a' && r <= 'z' || r >= '0' && r <= '9':
-			b.WriteRune(r)
-			dash = false
-		default:
-			if b.Len() > 0 && !dash {
-				b.WriteByte('-')
-				dash = true
-			}
-		}
-	}
-	return strings.Trim(b.String(), "-")
 }
 
 func max(a, b float64) float64 {
