@@ -120,10 +120,10 @@ func (a *managerAgent) Spec() kernel.Spec {
 
 func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 	a.k = k
-	k.Publish("manager", "epicenter", "Epicenter online · 57 repos · 5 brains · 1000+ agentics", map[string]any{
+	k.Publish("manager", "epicenter", "Epicenter online · 57 repos · 5 brains · 1001 agentics", map[string]any{
 		"repos":   57,
 		"brains":  5,
-		"agents":  1000,
+		"agents":  1001,
 	})
 	return nil
 }
@@ -136,10 +136,10 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"evolu":      52,
 			"cashtro":    5,
 			"brains":     5,
-			"agents":     1000,
+			"agents":     1001,
 			"fiches":     58,
 			"graphify":   "39593 nodes · 99285 edges",
-			"brains_list": []string{"Architecte", "Bâtisseur", "Sentinelle", "Mémoire", "Voix"},
+			"brains_list": []string{"Architecte", "Cartographe", "Forgeron", "Orfèvre", "Hustler"},
 		}}, nil
 
 	case "manager.projects":
