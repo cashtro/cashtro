@@ -88,8 +88,14 @@ The kernel still boots with neither daemon nor key. The `router` stays
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
-| `GET` | `/api/teal` | Corporate Teal brain (Teams only) |
-| `GET` | `/api/vapi` | Vapi (Vappy) voice bind + share link |
+| `GET` | `/api/teal` | Corporate Teal brain (Teams ingest + intern desk) |
+| `GET` | `/api/vapi` | Vapi voice lane status (talk, calls, bridges) |
+| `GET` | `/api/vapi/voices` | Voice catalog (Rachel, Denise FR, Nova, …) |
+| `POST` | `/api/vapi/voice` | Switch TTS (`{"id":"denise"}`) |
+| `POST` | `/api/vapi/talk` | Talk with Castro (local if no key, live `/chat` if bound) |
+| `POST` | `/api/vapi/call` | Park outbound call (human gate) |
+| `POST` | `/api/vapi/bridge` | Bind talk/call context to a business line |
+| `GET` | `/api/vapi/web` | Dashboard Talk / public-key card |
 | `POST` | `/api/vapi/webhook` | Vapi end-of-call / transcript → Teal listen |
 | `POST` | `/api/teal/scrape` | Graph scrape of Teams AI Teal (needs `TEAMS_TOKEN`) |
 | `POST` | `/api/teal/ingest` | Ingest a Teams message (refuses Slack/mail) |
@@ -98,17 +104,23 @@ The kernel still boots with neither daemon nor key. The `router` stays
 | `POST` | `/api/teal/cursor` | Park a Cursor Cloud Agent launch (human gate) |
 | `GET` | `/api/teal/card` | Teams Adaptive Card (Vapi + Cursor) |
 
-### Teal · Vapi · Teams only
+### Teal · Vapi · every bridge
 
-Corporate **AI Teal** lives on Microsoft Teams. Voice is **Vapi** (`https://vapi.ai/`, dashboard `https://dashboard.vapi.ai/`). The Cursor app launches from the Teams card (`https://cursor.com/agents`). New intel agentics spawn back into this kernel.
+**Vapi** is a live kernel agentic (`vapi.*`), not a Teams-only widget. Talk, outbound calls, and voice switching run on Cashtro infrastructure and ride every ecosystem hop (Proximity, Scan App, Panda, NFT/Giant, école, marketing, Empire, trading, Pandora). Teams scrape stays on Teal. Outbound calls always park a human confirm. Free Vapi numbers cannot outbound.
+
+Change voice: desk picker, `POST /api/vapi/voice`, dashboard Assistants → Voice, env `VAPI_VOICE_ID`, or per-call `assistantOverrides.voice`.
 
 ```bash
 export VAPI_SHARE_URL=https://dashboard.vapi.ai/assistants/YOUR_ASSISTANT_ID
 export VAPI_ASSISTANT_ID=YOUR_ASSISTANT_ID
-# optional: export VAPI_API_KEY=...
+export VAPI_VOICE_ID=rachel
+# optional live chat/call: export VAPI_API_KEY=...
+# optional outbound: export VAPI_PHONE_NUMBER_ID=...
 # optional Graph scrape: export TEAMS_TOKEN=...
 go run ./cmd/cashtro
 # Point the Vapi assistant server URL at /api/vapi/webhook
+# Talk: POST /api/vapi/talk {"text":"hi Castro","line":"proximity"}
+# Call: POST /api/vapi/call {"to":"+1..."} then Allow on the human gate
 ```
 
 ## Control plane

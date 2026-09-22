@@ -21,6 +21,7 @@ const KERNEL_AGENTS = [
   { name: "investigator", role: "incident", runtime: "http" },
   { name: "manager", role: "epicenter", runtime: "http" },
   { name: "teal", role: "corporate-brain", runtime: "http" },
+  { name: "vapi", role: "voice", runtime: "http" },
 ];
 
 async function readJSON<T>(rel: string, fallback: T): Promise<T> {

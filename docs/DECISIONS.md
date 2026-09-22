@@ -1,11 +1,29 @@
 # DECISIONS
 
+## 2026-09-22 — Vapi is a kernel voice lane across every bridge
+
+- **Choice:** Absorb a live `vapi` agentic into Cashtro OS. Talk
+  (`POST /api/vapi/talk`), outbound (`POST /api/vapi/call` then human
+  allow → `vapi.fire`), voice switch (`POST /api/vapi/voice`), and
+  line context (`POST /api/vapi/bridge`) run on the kernel. Vapi is
+  listed on **every** ecosystem `Links()` hop so Proximity, Scan App,
+  Panda, NFT/Giant, école, marketing, Empire, trading, and Pandora
+  share the same voice script. Teams scrape stays on `teal`.
+- **Why:** Castro asked to put Vappy in function with the agentic
+  project: automate calls, talk with him, change voice, build it in
+  the repo, connect it to infrastructure not just Teams, and run it
+  across bridge projects.
+- **Stop:** Do not buy Vapi numbers or fire live paid calls until
+  Castro confirms. `$2/run` still applies. Local talk works without
+  `VAPI_API_KEY`. Free Vapi numbers cannot outbound.
+
 ## 2026-09-22 — Teal brain is Teams-only, voice is Vapi, Cursor is a card
 
-- **Choice:** Absorb a live `teal` agentic into Cashtro OS. Surface is Microsoft
-  Teams only. Voice is Vapi (the "Vappy" assistant). Cursor Cloud Agents launch
-  from a Teams Adaptive Card after a human confirm. New intel registers back
-  into this kernel.
+- **Choice:** Absorb a live `teal` agentic into Cashtro OS. Ingest
+  surface is Microsoft Teams only. Voice is Vapi (the "Vappy"
+  assistant), now also a dedicated kernel lane. Cursor Cloud Agents
+  launch from a Teams Adaptive Card after a human confirm. New intel
+  registers back into this kernel.
 - **Why:** Castro asked to connect the Teams AI Teal voice AI (Vapi) to the
   Pandora brainstorming brain, scrape Teams, manage interns, listen to calls,
   and keep getting smarter. Teams MCP and Zapier Teams have no tenant bind

@@ -1,55 +1,70 @@
 /**
- * Visual plan — Teal corporate brain on Cashtro OS.
- * Teams only. Vapi voice. Cursor cards. Pandora memory.
+ * Visual plan — Vapi voice lane on Cashtro OS.
+ * Talk, outbound, voice picker. Every business-line bridge.
  */
-export const title = "Agentic OS · Teal × Vapi × Cursor";
+export const title = "Agentic OS · Vapi across bridges";
 
 export const mermaid = `
 flowchart TB
-  subgraph teams["Microsoft Teams · AI Teal only"]
-    scrape["Teams scraper<br/>Graph or ingest"]
-    card["Adaptive Card"]
-    intern["Intern desk"]
-    questions["Questions"]
-  end
-  subgraph voice["Vapi / Vappy"]
-    share["vapi.ai · dashboard.vapi.ai"]
-    webhook["/api/vapi/webhook"]
-    calls["Listen to calls"]
-  end
-  subgraph brain["Teal brain · Cashtro OS"]
-    memory["Pandora brainstorming"]
-    ideas["Generate ideas"]
-    spawn["Spawn intel agentics"]
-    smarter["Always get smarter"]
-  end
-  subgraph cursor["Cursor app"]
-    agents["cursor.com/agents"]
+  subgraph kernel["Cashtro OS kernel"]
+    teal["Teal<br/>Teams ingest · intern desk"]
+    vapi["Vapi live agentic<br/>talk · call · voice"]
+    manager["Manager<br/>ecosystem Links"]
     gate["Human confirm"]
   end
-  scrape --> memory
-  webhook --> calls
-  calls --> memory
-  memory --> ideas
-  memory --> questions
-  intern --> questions
-  questions --> spawn
-  ideas --> spawn
-  smarter --> spawn
-  card --> agents
-  agents --> gate
-  share --> webhook
-  spawn --> brain
+  subgraph voice["Where to change voice"]
+    desk["Desk picker"]
+    api["POST /api/vapi/voice"]
+    dash["dashboard.vapi.ai Assistants"]
+    env["VAPI_VOICE_ID"]
+    override["per-call assistantOverrides"]
+  end
+  subgraph lines["Bridge projects"]
+    proximity["Proximity"]
+    scanapp["Scan App"]
+    panda["Panda"]
+    nft["NFT + Giant"]
+    ecole["École"]
+    marketing["Marketing"]
+    empire["Empire"]
+    trading["Trading"]
+    pandora["Pandora / PBTM"]
+  end
+  subgraph teams["Microsoft Teams · AI Teal"]
+    scrape["Graph scrape / ingest"]
+    card["Adaptive Card"]
+  end
+  manager --> vapi
+  manager --> teal
+  teal --> scrape
+  teal --> card
+  desk --> vapi
+  api --> vapi
+  dash --> vapi
+  env --> vapi
+  override --> vapi
+  vapi --> proximity
+  vapi --> scanapp
+  vapi --> panda
+  vapi --> nft
+  vapi --> ecole
+  vapi --> marketing
+  vapi --> empire
+  vapi --> trading
+  vapi --> pandora
+  vapi -->|"POST /call"| gate
+  gate -->|"allow → fire"| vapi
 `;
 
 export default function AgenticOSPlan() {
   return (
     <section data-canvas="agentic-os-plan">
-      <h1>Teal corporate brain</h1>
+      <h1>Vapi across every bridge</h1>
       <p>
-        Microsoft Teams AI Teal is the only conversation surface. Vapi is the
-        voice. Cursor launches from the Teams card. Pandora memory stays in
-        this kernel.
+        Vapi is a kernel voice lane: talk with Castro, park outbound
+        calls behind the human gate, switch voices on the desk. Teal
+        still ingests Teams. The same script rides Proximity, Scan App,
+        Panda, NFT/Giant, école, marketing, Empire, trading, and Pandora.
       </p>
       <pre>{mermaid}</pre>
     </section>

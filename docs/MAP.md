@@ -133,18 +133,29 @@ flowchart TB
     Evolu_Jeunes_TradingBotCodex["TradingBotCodex<br/>Evolu"]
   end
   hustler --> cashtro_Pandora
-  manager --> teal["Teal<br/>corporate brain · Teams only"]
+  manager --> teal["Teal<br/>corporate brain · Teams ingest"]
+  manager --> vapi["Vapi<br/>voice lane · all bridges"]
   subgraph sub_teal["Teal · voix et stagiaires"]
-    vapi["Vapi / Vappy<br/>vapi.ai"]
+    vapi_desk["talk · call · voice picker"]
     teams_ai["Teams AI Teal<br/>scrape + cards"]
     cursor_app["Cursor app<br/>cursor.com/agents"]
     intern_desk["Intern desk"]
   end
   teal --> vapi
+  vapi --> vapi_desk
   teal --> teams_ai
   teal --> cursor_app
   teal --> intern_desk
   teal --> cashtro_Pandora
+  vapi --> Evolu_Jeunes_Proximity
+  vapi --> Evolu_Jeunes_ScanApp
+  vapi --> Evolu_Jeunes_Panda
+  vapi --> Evolu_Jeunes_Nft
+  vapi --> Evolu_Jeunes_educonnexion
+  vapi --> Evolu_Jeunes_CRM
+  vapi --> Evolu_Jeunes_EmpireMedia
+  vapi --> Evolu_Jeunes_AI_BOT
+  vapi --> cashtro_Pandora
   Evolu_Jeunes_Proximity -.-> Evolu_Jeunes_ProximityApp
   Evolu_Jeunes_Proximity -.-> Evolu_Jeunes_Proximity_Agentic
   Evolu_Jeunes_h20 -.-> Evolu_Jeunes_H2oH2o

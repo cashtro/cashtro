@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -60,7 +61,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 16 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 17 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +71,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 16 {
+	if len(procs) != 17 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -123,6 +124,9 @@ func TestIndexHTML(t *testing.T) {
 	}
 	if !strings.Contains(body, "VOLTR") || !strings.Contains(body, "Crew") {
 		t.Fatalf("index missing Voltron desk")
+	}
+	if !strings.Contains(body, "Voice lane") || !strings.Contains(body, "/api/vapi/talk") {
+		t.Fatalf("index missing Vapi lane")
 	}
 }
 
@@ -237,6 +241,58 @@ func TestTealAndVapiHTTP(t *testing.T) {
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusBadRequest {
 		t.Fatalf("slack ingest = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/vapi/voices", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "denise") {
+		t.Fatalf("voices = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/vapi/voice", strings.NewReader(`{"id":"nova"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "Nova") {
+		t.Fatalf("voice = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/vapi/bridge", strings.NewReader(`{"line":"trading"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "trading") {
+		t.Fatalf("bridge = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/vapi/talk", strings.NewReader(`{"text":"bridge this to proximity"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "Local Teal/Vapi") && !strings.Contains(res.Body.String(), "Bridges") && !strings.Contains(res.Body.String(), "reply") {
+		t.Fatalf("talk = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/vapi/call", strings.NewReader(`{"to":"+15555550199","prompt":"hi Castro"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "confirm") {
+		t.Fatalf("call = %d %s", res.Code, res.Body.String())
+	}
+	var parked map[string]any
+	if err := json.Unmarshal(res.Body.Bytes(), &parked); err != nil {
+		t.Fatal(err)
+	}
+	confirm, _ := parked["confirm"].(map[string]any)
+	id := int(confirm["id"].(float64))
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodPost, "/api/confirms/"+strconv.Itoa(id)+"/allow", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "queued") && !strings.Contains(res.Body.String(), "bind") && !strings.Contains(res.Body.String(), "fire") {
+		t.Fatalf("allow fire = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/vapi/web", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "dashboard.vapi.ai") {
+		t.Fatalf("web = %d %s", res.Code, res.Body.String())
 	}
 }
 

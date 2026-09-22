@@ -44,7 +44,14 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/ships/{id}", s.getShip)
 	mux.HandleFunc("POST /api/ships/{id}/advance", s.advanceShip)
 	mux.HandleFunc("GET /api/teal", s.tealStatus)
-	mux.HandleFunc("GET /api/vapi", s.vapiCard)
+	mux.HandleFunc("GET /api/vapi", s.vapiStatus)
+	mux.HandleFunc("GET /api/vapi/voices", s.vapiInvoke("vapi.voices"))
+	mux.HandleFunc("POST /api/vapi/voice", s.vapiInvoke("vapi.voice"))
+	mux.HandleFunc("POST /api/vapi/talk", s.vapiInvoke("vapi.talk"))
+	mux.HandleFunc("POST /api/vapi/call", s.vapiInvoke("vapi.call"))
+	mux.HandleFunc("POST /api/vapi/fire", s.vapiInvoke("vapi.fire"))
+	mux.HandleFunc("GET /api/vapi/web", s.vapiInvoke("vapi.web"))
+	mux.HandleFunc("POST /api/vapi/bridge", s.vapiInvoke("vapi.bridge"))
 	mux.HandleFunc("POST /api/vapi/webhook", s.vapiWebhook)
 	mux.HandleFunc("POST /api/teal/scrape", s.tealInvoke("teal.scrape"))
 	mux.HandleFunc("POST /api/teal/ingest", s.tealInvoke("teal.ingest"))
@@ -205,6 +212,14 @@ func (s *api) decideConfirm(w http.ResponseWriter, r *http.Request, allow bool) 
 		writeJSON(w, http.StatusNotFound, map[string]string{"error": err.Error()})
 		return
 	}
+	if allow && c.Agent == "vapi" && c.Cap == "vapi.call" {
+		raw, _ := json.Marshal(map[string]int{"id": c.ID, "confirmId": c.ID})
+		res, ferr := s.k.Invoke(r.Context(), "vapi", kernel.Call{Capability: "vapi.fire", Payload: raw})
+		if ferr == nil {
+			writeJSON(w, http.StatusOK, map[string]any{"confirm": c, "fire": res})
+			return
+		}
+	}
 	writeJSON(w, http.StatusOK, c)
 }
 
@@ -253,13 +268,36 @@ func (s *api) tealStatus(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, res.Data)
 }
 
-func (s *api) vapiCard(w http.ResponseWriter, r *http.Request) {
-	res, err := s.k.Invoke(r.Context(), "teal", kernel.Call{Capability: "teal.vapi"})
+func (s *api) vapiStatus(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "vapi", kernel.Call{Capability: "vapi.status"})
 	if err != nil {
 		writeError(w, err)
 		return
 	}
 	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) vapiInvoke(cap string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+		if err != nil {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+			return
+		}
+		if len(bytes.TrimSpace(raw)) == 0 {
+			raw = []byte(`{}`)
+		}
+		res, err := s.k.Invoke(r.Context(), "vapi", kernel.Call{Capability: cap, Payload: raw})
+		if err != nil {
+			writeError(w, err)
+			return
+		}
+		if !res.OK {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+			return
+		}
+		writeJSON(w, http.StatusOK, res.Data)
+	}
 }
 
 func (s *api) tealCard(w http.ResponseWriter, r *http.Request) {

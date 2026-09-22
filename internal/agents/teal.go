@@ -115,7 +115,7 @@ func (a *tealAgent) Spec() kernel.Spec {
 	return kernel.Spec{
 		ID: "teal", Name: "Teal", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 		Role:    "corporate-brain",
-		Summary: "Corporate Teal brain on Microsoft Teams only. Vapi voice, intern desk, Pandora memory, self-spawned intel, Cursor cards.",
+		Summary: "Corporate Teal brain. Teams scrape + intern desk. Voice is the live vapi agent across every business line.",
 		Capabilities: []string{
 			"teal.status",
 			"teal.vapi",
@@ -145,14 +145,14 @@ func (a *tealAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 	}
 	seedPandoraBrain(k)
 	card := vapiCard()
-	k.Publish("teal", "boot", "AI Teal online · Teams only · Vapi voice · Cursor cards", map[string]any{
+	k.Publish("teal", "boot", "AI Teal online · Teams desk · Vapi voice on every bridge", map[string]any{
 		"team":     tealTeamName,
 		"vapi":     card.ShareURL,
 		"cursor":   cursorAgentsURL,
 		"interns":  len(a.interns),
 		"keyBound": card.KeyBound,
 	})
-	k.Remember("teal", "corporate brain owns Microsoft Teams AI Teal. Voice is Vapi. Cursor launches from Teams cards.")
+	k.Remember("teal", "corporate brain owns Teams AI Teal ingest. Voice is the vapi kernel lane across every bridge project.")
 	return nil
 }
 
@@ -201,6 +201,7 @@ func (a *tealAgent) status() kernel.Result {
 		"team":         tealTeamName,
 		"surface":      "microsoft-teams",
 		"voice":        "vapi",
+		"voiceLane":    "infrastructure",
 		"vapi":         card,
 		"cursor":       cursorAgentsURL,
 		"interns":      append([]Intern(nil), a.interns...),
@@ -526,8 +527,8 @@ func seedPandoraBrain(k *kernel.Kernel) {
 		{Agent: "teal", Source: "pandora", URL: "https://github.com/cashtro/Pandora", Claim: "Pandora is PBTM — Pandora Business Technology and Marketing — under Le Hustler.", Quote: "cashtro/Pandora + Evolu-Jeunes/Pandora. Empire line. Stripe on PBTM."},
 		{Agent: "teal", Source: "pandora", URL: "https://github.com/Evolu-Jeunes/Pandora", Claim: "Pandora Brains is the product concept: a map of brains, not a second OS.", Quote: "Castro's Pandora Brains profile fits the brain concept."},
 		{Agent: "teal", Source: "pandora", URL: "https://github.com/Evolu-Jeunes/Panda", Claim: "Panda white-glove and Pandora share the Hustler lane.", Quote: "Hustler sells. Architecte designs. Forgeron installs."},
-		{Agent: "teal", Source: "teal", URL: cursorAgentsURL, Claim: "Corporate Teal manages interns and the brain from Microsoft Teams only.", Quote: "Ideas, intern seats, call listen, project help, self-spawned intel, Cursor cards."},
-		{Agent: "teal", Source: "vapi", URL: vapiProductURL, Claim: "Vapi (Vappy) is the voice AI created in Teams AI Teal.", Quote: "dashboard.vapi.ai · docs.vapi.ai · github.com/VapiAI"},
+		{Agent: "teal", Source: "teal", URL: cursorAgentsURL, Claim: "Corporate Teal manages interns from Teams. Vapi voice runs on Cashtro infrastructure across every bridge project.", Quote: "Ideas, intern seats, call listen, project help, self-spawned intel, Cursor cards."},
+		{Agent: "teal", Source: "vapi", URL: vapiProductURL, Claim: "Vapi (Vappy) is the in-repo voice lane: talk, outbound calls, changeable voices, every business line.", Quote: "dashboard.vapi.ai · POST /api/vapi/talk · POST /api/vapi/call"},
 	}
 	for _, n := range notes {
 		k.WriteNote(n)
@@ -553,7 +554,7 @@ func helpIntern(ask string, facts []kernel.Fact) string {
 	lower := strings.ToLower(ask)
 	switch {
 	case strings.Contains(lower, "vapi") || strings.Contains(lower, "voice") || strings.Contains(lower, "call"):
-		return "Voice is Vapi. Open " + vapiCard().ShareURL + " or drop the end-of-call-report on /api/vapi/webhook. Teal listens and files the transcript."
+		return "Voice is Vapi on Cashtro infrastructure: POST /api/vapi/talk, change voice POST /api/vapi/voice, outbound POST /api/vapi/call (human gate). Webhook /api/vapi/webhook still files transcripts into Teal. Dashboard " + vapiCard().ShareURL
 	case strings.Contains(lower, "cursor"):
 		return "Open the Cursor app from the Teams card: " + cursorAgentsURL + ". Park a launch with teal.cursor so a human confirms."
 	case strings.Contains(lower, "intern") || strings.Contains(lower, "stage"):

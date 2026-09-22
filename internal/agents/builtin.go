@@ -96,6 +96,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 		}, nil),
 		&managerAgent{},
 		&tealAgent{},
+		&vapiAgent{},
 	}
 }
 

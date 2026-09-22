@@ -75,9 +75,9 @@ func Lines() []Line {
 		},
 		{
 			ID: "pandora", Name: "Pandora / PBTM", Brain: "Hustler",
-			Mandate: "Pandora Business Technology and Marketing. Brainstorm, intern stages, Vapi voice on Teams AI Teal. " +
-				"Le cerveau Teal écoute les appels, aide les stagiaires, et spawn de nouvelles intel.",
-			Controls: "Teal gère Teams only. Vapi parle. Hustler vend. Cursor lance les agentics depuis la carte Teams.",
+			Mandate: "Pandora Business Technology and Marketing. Brainstorm, intern stages, Vapi voice across every bridge project. " +
+				"Teal tient Teams + le desk stagiaires. Vapi parle et compose (confirm humain) sur l'infra, pas seulement Teams.",
+			Controls: "Teal scrape Teams. Vapi is the kernel voice lane on every line. Hustler vend. Cursor lance depuis le desk et la carte Teams.",
 			Repos:    []string{"cashtro/Pandora", "Evolu-Jeunes/Pandora", "Evolu-Jeunes/Panda"},
 		},
 		{
