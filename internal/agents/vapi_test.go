@@ -2,6 +2,8 @@ package agents
 
 import (
 	"context"
+	"net/http"
+	"net/http/httptest"
 	"strconv"
 	"strings"
 	"testing"
@@ -122,5 +124,47 @@ func TestVapiLaneTalkVoiceCallAndBridges(t *testing.T) {
 		if !has {
 			t.Fatalf("link %s→%s missing vapi", ln.From, ln.To)
 		}
+	}
+}
+
+func TestVapiLiveTalkWithoutAssistantID(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("Authorization") != "Bearer secret" {
+			http.Error(w, "auth", http.StatusUnauthorized)
+			return
+		}
+		switch {
+		case r.Method == "GET" && r.URL.Path == "/assistant":
+			_, _ = w.Write([]byte(`[]`))
+		case r.Method == "POST" && r.URL.Path == "/assistant":
+			_, _ = w.Write([]byte(`{"id":"asst_live","name":"Cashtro Teal"}`))
+		case r.Method == "POST" && r.URL.Path == "/chat":
+			_, _ = w.Write([]byte(`{"id":"chat-9","output":[{"role":"assistant","content":"hey Castro from Vapi"}]}`))
+		default:
+			http.Error(w, r.URL.Path, http.StatusNotFound)
+		}
+	}))
+	t.Cleanup(srv.Close)
+	t.Setenv("VAPI_API_KEY", "secret")
+	t.Setenv("VAPI_BASE_URL", srv.URL)
+	t.Setenv("VAPI_ASSISTANT_ID", "")
+
+	k, err := Boot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := k.Invoke(context.Background(), "vapi", kernel.Call{
+		Capability: "vapi.talk",
+		Payload:    []byte(`{"text":"hello Castro"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("talk: %+v %v", res, err)
+	}
+	turn := res.Data.(TalkTurn)
+	if !turn.Live {
+		t.Fatalf("expected live Vapi talk, got %+v", turn)
+	}
+	if turn.Reply != "hey Castro from Vapi" {
+		t.Fatalf("reply = %q", turn.Reply)
 	}
 }

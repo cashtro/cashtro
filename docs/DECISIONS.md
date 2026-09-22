@@ -1,5 +1,16 @@
 # DECISIONS
 
+## 2026-09-22 — Vapi talk works without a pre-created assistant
+
+- **Choice:** `POST /api/vapi/talk` hits live Vapi whenever `VAPI_API_KEY`
+  is set. The kernel creates the Cashtro Teal assistant on boot if none
+  exists, or sends a transient assistant on `/chat`. `Start voice` on the
+  desk uses the mic locally and loads the Vapi HTML widget when
+  `VAPI_PUBLIC_KEY` is set. `.env` is loaded at process start.
+- **Why:** Castro asked to integrate Vapi and make it work. The old path
+  stayed local unless both a key and an assistant ID were already set.
+- **Stop:** Do not buy Vapi numbers or fire paid outbound without allow.
+
 ## 2026-09-22 — L'Inquisiteur contradicts, blocks, and steps up every department
 
 - **Choice:** Live kernel agentic `inquisitor`. Ten lines + five brains +

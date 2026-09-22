@@ -229,7 +229,7 @@
         </div>
         <div class="panel">
           <h2>Voice lane</h2>
-          <p class="lede" id="vapi-hint">Vapi talks on every bridge project. Change voice here, on the dashboard, or with VAPI_VOICE_ID.</p>
+          <p class="lede" id="vapi-hint">Vapi talks on every bridge. Start voice here. Talk works now — live when a Vapi key is bound.</p>
           <div class="voices" id="voices"></div>
           <form id="vapi-talk">
             <label>Talk with Castro
@@ -244,6 +244,8 @@
               </label>
             </div>
             <button class="primary" type="submit">Talk</button>
+            <button type="button" id="vapi-start">Start voice</button>
+            <button type="button" id="vapi-stop" hidden>Stop voice</button>
             <button type="button" id="vapi-call">Park outbound call</button>
             <div class="ok" id="vapi-ok"></div>
             <div class="err" id="vapi-err"></div>
@@ -375,6 +377,8 @@
     let lastInvoke = "";
     let talkTurns = [];
     let currentVoice = "rachel";
+    let vapiWidgetLoaded = false;
+    let voiceRec = null;
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
       box.replaceChildren();
@@ -550,7 +554,9 @@
       log.replaceChildren();
       if (!talkTurns.length) {
         const empty = document.createElement("div");
-        empty.textContent = "Local talk works without a key. Outbound calls wait on the human gate.";
+        empty.textContent = status.keyBound
+          ? "Live Vapi chat is on. Start voice for mic. Outbound still waits on the human gate."
+          : "Talk works now. Start voice uses the mic. Bind VAPI_API_KEY for live Vapi; VAPI_PUBLIC_KEY for the widget.";
         log.appendChild(empty);
       }
       talkTurns.slice(-8).reverse().forEach((t) => {
@@ -562,6 +568,46 @@
         log.appendChild(me);
         log.appendChild(them);
       });
+      loadVapiWidget(status);
+    }
+    function speakReply(text) {
+      if (!window.speechSynthesis || !text) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = currentVoice === "denise" || currentVoice === "henri" ? "fr-FR" : "en-US";
+      window.speechSynthesis.speak(u);
+    }
+    function loadVapiWidget(status) {
+      if (vapiWidgetLoaded || !status.publicKey) return;
+      const boot = async () => {
+        let web = status;
+        if (!web.assistant && !web.assistantId) {
+          try { web = await j("/api/vapi/web"); } catch (e) { return; }
+        }
+        if (!window.vapiSDK || typeof window.vapiSDK.run !== "function") return;
+        window.vapiSDK.run({
+          apiKey: web.publicKey,
+          assistant: web.assistantId || web.assistant,
+          config: { position: "bottom-right" }
+        });
+        vapiWidgetLoaded = true;
+      };
+      if (window.vapiSDK) { boot(); return; }
+      const s = document.createElement("script");
+      s.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+      s.async = true;
+      s.onload = () => { boot(); };
+      document.head.appendChild(s);
+    }
+    async function sendTalk(text, line) {
+      const turn = await j("/api/vapi/talk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ text: text, line: line })
+      });
+      talkTurns.push(turn);
+      speakReply(turn.reply);
+      return turn;
     }
     function paintInquisitor(status, asks) {
       const hint = document.getElementById("inq-hint");
@@ -653,13 +699,8 @@
       ok.textContent = "";
       const data = new FormData(event.target);
       try {
-        const turn = await j("/api/vapi/talk", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify({ text: data.get("text"), line: data.get("line") })
-        });
-        talkTurns.push(turn);
-        ok.textContent = turn.live ? "live chat" : "local brain";
+        const turn = await sendTalk(data.get("text"), data.get("line"));
+        ok.textContent = turn.live ? "live Vapi" : "desk voice";
         event.target.querySelector("[name=text]").value = "";
         await render();
       } catch (e) {
@@ -688,6 +729,57 @@
       } catch (e) {
         err.textContent = e.message;
       }
+    });
+    document.getElementById("vapi-start").addEventListener("click", async () => {
+      const err = document.getElementById("vapi-err");
+      const ok = document.getElementById("vapi-ok");
+      err.textContent = "";
+      ok.textContent = "";
+      try {
+        const web = await j("/api/vapi/web");
+        if (web.publicKey && window.vapiSDK) {
+          loadVapiWidget(web);
+          ok.textContent = "Vapi widget live";
+          document.getElementById("vapi-stop").hidden = false;
+          return;
+        }
+        const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!Rec) {
+          err.textContent = "No mic API in this browser. Type in Talk — replies still speak back.";
+          return;
+        }
+        voiceRec = new Rec();
+        voiceRec.lang = currentVoice === "denise" || currentVoice === "henri" ? "fr-FR" : "en-US";
+        voiceRec.continuous = false;
+        voiceRec.interimResults = false;
+        voiceRec.onresult = async (event) => {
+          const said = event.results[0][0].transcript;
+          document.querySelector("#vapi-talk [name=text]").value = said;
+          try {
+            const line = document.getElementById("vapi-line").value;
+            const turn = await sendTalk(said, line);
+            ok.textContent = (turn.live ? "live Vapi · " : "desk voice · ") + said;
+            await render();
+          } catch (e) {
+            err.textContent = e.message;
+          }
+        };
+        voiceRec.onerror = (event) => { err.textContent = event.error || "mic error"; };
+        voiceRec.start();
+        document.getElementById("vapi-stop").hidden = false;
+        ok.textContent = "Listening…";
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    document.getElementById("vapi-stop").addEventListener("click", () => {
+      if (voiceRec) {
+        try { voiceRec.stop(); } catch (e) {}
+        voiceRec = null;
+      }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      document.getElementById("vapi-stop").hidden = true;
+      document.getElementById("vapi-ok").textContent = "voice stopped";
     });
     document.getElementById("vapi-line").addEventListener("change", async (event) => {
       try {

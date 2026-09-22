@@ -108,9 +108,13 @@ type Client struct {
 
 // FromEnv builds a client. Empty key is valid — talk stays local.
 func FromEnv() *Client {
+	base := APIBase
+	if u := strings.TrimSpace(os.Getenv("VAPI_BASE_URL")); u != "" {
+		base = u
+	}
 	return &Client{
 		Key:     strings.TrimSpace(os.Getenv("VAPI_API_KEY")),
-		BaseURL: APIBase,
+		BaseURL: base,
 		HTTP:    &http.Client{Timeout: 20 * time.Second},
 	}
 }
@@ -123,6 +127,7 @@ func (c *Client) Bound() bool {
 // ChatRequest is POST /chat.
 type ChatRequest struct {
 	AssistantID       string         `json:"assistantId,omitempty"`
+	Assistant         map[string]any `json:"assistant,omitempty"`
 	PreviousChatID    string         `json:"previousChatId,omitempty"`
 	Input             string         `json:"input"`
 	AssistantOverride map[string]any `json:"assistantOverrides,omitempty"`
@@ -137,9 +142,10 @@ type ChatResponse struct {
 	} `json:"output"`
 }
 
-// CallRequest is POST /call (phone outbound).
+// CallRequest is POST /call (phone outbound or web session).
 type CallRequest struct {
 	AssistantID       string         `json:"assistantId,omitempty"`
+	Assistant         map[string]any `json:"assistant,omitempty"`
 	PhoneNumberID     string         `json:"phoneNumberId,omitempty"`
 	Customer          map[string]any `json:"customer,omitempty"`
 	AssistantOverride map[string]any `json:"assistantOverrides,omitempty"`

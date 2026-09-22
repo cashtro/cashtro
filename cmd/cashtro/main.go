@@ -14,9 +14,11 @@ import (
 
 	"github.com/cashtro/cashtro/internal/agents"
 	"github.com/cashtro/cashtro/internal/server"
+	"github.com/cashtro/cashtro/internal/vapi"
 )
 
 func main() {
+	vapi.LoadDotEnv()
 	addr := flag.String("addr", ":8080", "HTTP listen address")
 	flag.Parse()
 

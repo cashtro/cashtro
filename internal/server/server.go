@@ -62,6 +62,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/vapi/call", s.vapiInvoke("vapi.call"))
 	mux.HandleFunc("POST /api/vapi/fire", s.vapiInvoke("vapi.fire"))
 	mux.HandleFunc("GET /api/vapi/web", s.vapiInvoke("vapi.web"))
+	mux.HandleFunc("POST /api/vapi/session", s.vapiInvoke("vapi.session"))
 	mux.HandleFunc("POST /api/vapi/bridge", s.vapiInvoke("vapi.bridge"))
 	mux.HandleFunc("POST /api/vapi/webhook", s.vapiWebhook)
 	mux.HandleFunc("POST /api/teal/scrape", s.tealInvoke("teal.scrape"))

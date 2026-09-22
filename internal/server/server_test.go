@@ -128,6 +128,9 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(body, "Voice lane") || !strings.Contains(body, "/api/vapi/talk") {
 		t.Fatalf("index missing Vapi lane")
 	}
+	if !strings.Contains(body, "Start voice") {
+		t.Fatalf("index missing Start voice")
+	}
 	if !strings.Contains(body, "L'Inquisiteur") || !strings.Contains(body, "/api/inquisitor") {
 		t.Fatalf("index missing Inquisitor lane")
 	}
@@ -296,6 +299,16 @@ func TestTealAndVapiHTTP(t *testing.T) {
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/vapi/web", nil))
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "dashboard.vapi.ai") {
 		t.Fatalf("web = %d %s", res.Code, res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), `"assistant"`) {
+		t.Fatalf("web missing assistant payload: %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/vapi/session", strings.NewReader(`{}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("session = %d %s", res.Code, res.Body.String())
 	}
 }
 
