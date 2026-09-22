@@ -119,6 +119,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.ecosystems",
 			"manager.automate",
 			"manager.org",
+			"manager.loi",
 			"manager.assign",
 			"manager.graphify",
 		},
@@ -184,6 +185,9 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.org":
 		return kernel.Result{OK: true, Message: "cooperative", Data: a.board.Org}, nil
+
+	case "manager.loi":
+		return kernel.Result{OK: true, Message: "quebec and canada gates", Data: a.board.Compliance}, nil
 
 	case "manager.automate":
 		posted, err := a.runEcosystems()

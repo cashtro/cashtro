@@ -94,13 +94,13 @@ func Chart() Organization {
 		},
 		Divisions: []Division{
 			{ID: "proximity", Name: "Proximity Agency", Chief: "operator", Department: "operations", Revenue: "Sites clients WordPress / PHP / ACF Pro.", Guard: "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow."},
-			{ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche", Revenue: "Fiches vendues à partir de la donnée scan, avec de vraies photos.", Guard: "Pas de fiche publiée sans photo propre et sans allow."},
+			{ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche", Revenue: "Fiches vendues à partir de la donnée scan, avec de vraies photos.", Guard: "Photo dont on a les droits. Si la donnée identifie une personne : Loi 25, pas de vente sans base légale."},
 			{ID: "panda", Name: "Panda", Chief: "architect", Department: "ingenierie", Revenue: "White-glove : IA, installation, cours, entreprises et particuliers.", Guard: "On vend le service. On ne déploie pas chez le client sans allow."},
 			{ID: "nft-giant", Name: "NFT + Giant", Chief: "security", Department: "controle", Revenue: "Art avec utilité, token Giant, tirages de visibilité.", Guard: "Pas de mint ni de campagne sans revue risque et allow."},
 			{ID: "ecole", Name: "École", Chief: "research", Department: "marche", Revenue: "Cours tech (WordPress, Web3).", Guard: "Le cours décrit. Il ne promet pas un gain de trading."},
 			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Revenue: "Gestion marketing des business corporate.", Guard: "Une campagne à la fois. Mesurer avant d'élargir."},
 			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Revenue: "Live sell des items, podcast, UGC.", Guard: "Le live vend ce qui est déjà une fiche. Pas de stock inventé."},
-			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre live sans comms.allow. Le chef trace les pertes, il ne pousse pas le volume."},
+			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
 		},
 	}
 }

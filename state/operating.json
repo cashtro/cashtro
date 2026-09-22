@@ -969,7 +969,7 @@
         "chief": "comms",
         "department": "marche",
         "revenue": "Fiches vendues à partir de la donnée scan, avec de vraies photos.",
-        "guard": "Pas de fiche publiée sans photo propre et sans allow."
+        "guard": "Photo dont on a les droits. Si la donnée identifie une personne : Loi 25, pas de vente sans base légale."
       },
       {
         "id": "panda",
@@ -1017,7 +1017,157 @@
         "chief": "investigator",
         "department": "controle",
         "revenue": "Bots sur exchanges, Web3, liés à Giant.",
-        "guard": "Aucun ordre live sans comms.allow. Le chef trace les pertes, il ne pousse pas le volume."
+        "guard": "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."
+      }
+    ]
+  },
+  "compliance": {
+    "disclaimer": "Checklist opérable, pas un avis juridique. Avant un site live ou une vente : avocat du Québec, et au besoin CAI, OQLF, RACJ ou AMF.",
+    "officer": "manager",
+    "delegate": "security",
+    "laws": [
+      {
+        "id": "loi-25",
+        "name": "Loi 25",
+        "where": "Québec",
+        "source": "Loi sur la protection des renseignements personnels dans le secteur privé, RLRQ c. P-39.1",
+        "rules": [
+          "Le CEO est responsable par défaut (art. 3.1). La délégation à Contrôle se fait par écrit. Titre et coordonnées publiés.",
+          "Politique de confidentialité, conservation, destruction, rôles du personnel, traitement des plaintes (art. 3.2).",
+          "EFVP avant un système ou un service électronique qui touche des renseignements personnels, et avant une communication hors Québec (art. 3.3).",
+          "Consentement manifeste, libre, éclairé, spécifique, distinct des conditions d'utilisation.",
+          "Produit technologique offert au public : confidentialité au plus haut niveau par défaut (art. 9.1). Les témoins suivent le régime du consentement.",
+          "Droits : accès, rectification, cessation de diffusion, portabilité.",
+          "Incident de confidentialité : registre. Avis à la CAI et aux personnes s'il y a risque de préjudice sérieux.",
+          "Décision automatisée : la personne est informée.",
+          "Aucun renseignement personnel dans un prompt Ollama, Kimi ou GLM sans EFVP. Azure hors Québec = communication hors Québec."
+        ]
+      },
+      {
+        "id": "pipeda",
+        "name": "LPRPDE (PIPEDA)",
+        "where": "Canada, hors du champ couvert par la loi québécoise",
+        "source": "Loi sur la protection des renseignements personnels et les documents électroniques",
+        "rules": [
+          "Activité commerciale fédérale, interprovinciale ou internationale : les principes de PIPEDA s'ajoutent.",
+          "Au Québec, pour une entreprise provinciale, la Loi 25 est le régime principal. On ne choisit pas le plus faible."
+        ]
+      },
+      {
+        "id": "casl",
+        "name": "LCAP (CASL)",
+        "where": "Canada",
+        "source": "Loi canadienne anti-pourriel",
+        "rules": [
+          "Message électronique commercial : consentement, identité de l'expéditeur, et mécanisme d'abonnement fonctionnel.",
+          "Le CMP ne fait pas comms.allow sur une campagne qui rate un de ces trois points."
+        ]
+      },
+      {
+        "id": "charte",
+        "name": "Charte de la langue française",
+        "where": "Québec",
+        "source": "Charte de la langue française, RLRQ c. C-11, et loi 96",
+        "rules": [
+          "Client au Québec : informé et servi en français.",
+          "Site qui vend ou promeut au Québec : version française dans des conditions au moins aussi favorables.",
+          "Contrat d'adhésion : version française remise ou accessible avant un choix exprès d'une autre langue. Le français n'est pas facturé.",
+          "Factures, bons de commande et publications commerciales : en français."
+        ]
+      },
+      {
+        "id": "lpc",
+        "name": "Protection du consommateur",
+        "where": "Québec",
+        "source": "Loi sur la protection du consommateur",
+        "rules": [
+          "Contrat à distance : divulgations exigées avant la conclusion, copie au consommateur.",
+          "Deux versions linguistiques : l'interprétation la plus favorable au consommateur l'emporte.",
+          "Pas de pratique interdite : prix caché, urgence fausse, résultat garanti."
+        ]
+      },
+      {
+        "id": "image",
+        "name": "Image et photos",
+        "where": "Québec",
+        "source": "Code civil du Québec, art. 35 et suivants, et Loi 25",
+        "rules": [
+          "Photo d'une personne identifiable : consentement, ou une exception réelle. On ne vend pas cette image comme fiche.",
+          "Photo de fiche : droit sur l'image détenu ou licencié. Pas de photo grattée.",
+          "Donnée de scan qui identifie une personne : c'est un renseignement personnel. Pas de vente sans base légale."
+        ]
+      },
+      {
+        "id": "racj",
+        "name": "Concours publicitaires",
+        "where": "Québec",
+        "source": "Loi sur les loteries et la Régie des alcools, des courses et des jeux",
+        "rules": [
+          "Un tirage promo n'est pas une loterie. Règlement, gratuité de participation sans achat obligatoire quand la loi l'exige, et règles RACJ avant publication.",
+          "Aucun tirage en ligne tant que Contrôle n'a pas classé le dossier."
+        ]
+      },
+      {
+        "id": "amf",
+        "name": "Valeurs mobilières",
+        "where": "Québec et Canada",
+        "source": "Autorité des marchés financiers, Lois sur les valeurs mobilières",
+        "rules": [
+          "Trading, token Giant, sollicitation du public : question d'inscription ou d'exemption avant tout ordre et avant toute vente de token.",
+          "La division Trading reste fermée tant que cette question n'est pas répondue par écrit."
+        ]
+      }
+    ],
+    "gates": [
+      {
+        "id": "renseignements",
+        "question": "Ce build collecte, utilise ou communique des renseignements personnels?",
+        "owner": "security"
+      },
+      {
+        "id": "efvp",
+        "question": "Si oui : EFVP faite et vue par le responsable avant le build?",
+        "owner": "security"
+      },
+      {
+        "id": "hors-quebec",
+        "question": "Azure, analytics ou modèle (Kimi, GLM, Ollama distant) sortent-ils des renseignements du Québec?",
+        "owner": "security"
+      },
+      {
+        "id": "defaut",
+        "question": "Confidentialité au plus haut par défaut, consentement séparé des conditions?",
+        "owner": "architect"
+      },
+      {
+        "id": "francais",
+        "question": "Version française au moins aussi favorable pour un client au Québec?",
+        "owner": "reviewer"
+      },
+      {
+        "id": "casl",
+        "question": "Courriel commercial : consentement, identité, désabonnement?",
+        "owner": "comms"
+      },
+      {
+        "id": "photos",
+        "question": "Droits sur les photos réglés, aucune personne identifiable vendue sans consentement?",
+        "owner": "reviewer"
+      },
+      {
+        "id": "tirage",
+        "question": "Si tirage : concours publicitaire classé, pas une loterie?",
+        "owner": "security"
+      },
+      {
+        "id": "trading",
+        "question": "Si ordre ou token : réponse AMF écrite avant toute exécution?",
+        "owner": "investigator"
+      },
+      {
+        "id": "incident",
+        "question": "Registre d'incidents et chemin d'avis à la CAI connus?",
+        "owner": "security"
       }
     ]
   },
@@ -1035,6 +1185,7 @@
     "Le roster de 1001 n'est pas des processus.",
     "Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
     "Les sites clients déjà en production se lisent, ils ne se déploient pas.",
-    "Chaque division a un revenu et une garde. On ne pousse pas le volume sans mesure."
+    "Chaque division a un revenu et une garde. On ne pousse pas le volume sans mesure.",
+    "Un build n'est pas fini tant que les portes de manager.loi ne sont pas passées."
   ]
 }

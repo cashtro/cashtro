@@ -12,16 +12,17 @@ import (
 // Board is the one operating picture. The kernel boots from this,
 // not from hardcoded counts.
 type Board struct {
-	Version string       `json:"version"`
-	Fiches  int          `json:"fiches"`
-	Repos   []RepoCard   `json:"repos"`
-	Lines   []LineView   `json:"lines"`
-	Links   []Link       `json:"links"`
-	Agents  []string     `json:"agents"`
-	Org     Organization `json:"org"`
-	Graph   GraphView    `json:"graph"`
-	Gaps    []string     `json:"gaps"`
-	Rules   []string     `json:"rules"`
+	Version    string       `json:"version"`
+	Fiches     int          `json:"fiches"`
+	Repos      []RepoCard   `json:"repos"`
+	Lines      []LineView   `json:"lines"`
+	Links      []Link       `json:"links"`
+	Agents     []string     `json:"agents"`
+	Org        Organization `json:"org"`
+	Compliance Compliance   `json:"compliance"`
+	Graph      GraphView    `json:"graph"`
+	Gaps       []string     `json:"gaps"`
+	Rules      []string     `json:"rules"`
 }
 
 // RepoCard is one GitHub repo as the fiches describe it.
@@ -72,6 +73,7 @@ func LoadBoard() (Board, error) {
 	}
 	b.Version = "2"
 	b.Org = Chart()
+	b.Compliance = Loi()
 	b.Agents = agentNames(b.Org)
 	return b, nil
 }
@@ -114,17 +116,19 @@ func boardFromLines() Board {
 	}
 	org := Chart()
 	return Board{
-		Version: "2",
-		Lines:   views,
-		Links:   Links(),
-		Agents:  agentNames(org),
-		Org:     org,
+		Version:    "2",
+		Lines:      views,
+		Links:      Links(),
+		Agents:     agentNames(org),
+		Org:        org,
+		Compliance: Loi(),
 		Rules: []string{
 			"Coopérative : CEO, CTO, CMP. Cinq départements. Quinze employés spécialisés.",
 			"Le roster de 1001 n'est pas des processus.",
 			"Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
 			"Les sites clients déjà en production se lisent, ils ne se déploient pas.",
 			"Chaque division a un revenu et une garde. On ne pousse pas le volume sans mesure.",
+			"Un build n'est pas fini tant que les portes de manager.loi ne sont pas passées.",
 		},
 	}
 }

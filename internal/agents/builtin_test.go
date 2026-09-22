@@ -125,6 +125,23 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || !res.OK {
 		t.Fatalf("manager.org: %+v %v", res, err)
 	}
+	loi := Loi()
+	if loi.Officer != "manager" || loi.Delegate != "security" {
+		t.Fatalf("officer = %s delegate = %s", loi.Officer, loi.Delegate)
+	}
+	found := false
+	for _, law := range loi.Laws {
+		if law.ID == "loi-25" {
+			found = true
+		}
+	}
+	if !found || len(loi.Gates) < 8 {
+		t.Fatalf("loi laws=%d gates=%d", len(loi.Laws), len(loi.Gates))
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.loi"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.loi: %+v %v", res, err)
+	}
 
 	if len(AgentIDs()) != 15 {
 		t.Fatalf("agentics in ecosystems = %d, want 15 (%v)", len(AgentIDs()), AgentIDs())
