@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/cashtro/cashtro/internal/catalog"
+	"github.com/cashtro/cashtro/internal/graphify"
 	"github.com/cashtro/cashtro/internal/kernel"
 	"github.com/cashtro/cashtro/internal/model"
 )
@@ -118,6 +119,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.ecosystems",
 			"manager.automate",
 			"manager.assign",
+			"manager.brains",
 			"manager.graphify",
 		},
 		Autostart: true,
@@ -145,11 +147,14 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"cashtro":    5,
 			"brains":     5,
 			"agents":     1001,
-			"fiches":     58,
-			"graphify":   "39593 nodes · 99285 edges",
+			"fiches":      58,
+			"graphify":    a.graph("").Counts,
 			"brains_list": []string{"Architecte", "Cartographe", "Forgeron", "Orfèvre", "Hustler"},
 			"lines":       len(Lines()),
 		}}, nil
+
+	case "manager.brains":
+		return kernel.Result{OK: true, Message: "five brains", Data: Brains()}, nil
 
 	case "manager.lines":
 		return kernel.Result{OK: true, Message: "business lines under the main brain", Data: Lines()}, nil
@@ -202,13 +207,10 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		if query == "" {
 			query = payloadQuery(call, "prompt")
 		}
+		g := a.graph(query)
 		_, _ = a.k.Post("manager", "explorer", "graphify", query)
 		a.k.Remember("epicenter", "graphify query: "+query)
-		return kernel.Result{OK: true, Message: "graphify query: " + query, Data: map[string]any{
-			"query": query,
-			"nodes": 39593,
-			"edges": 99285,
-		}}, nil
+		return kernel.Result{OK: true, Message: "graphify " + itoa(g.Counts["nodes"]) + " nodes · " + itoa(g.Counts["edges"]) + " edges", Data: g}, nil
 
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)
@@ -234,6 +236,38 @@ func (a *managerAgent) runEcosystems() ([]string, error) {
 	}
 	_, _ = a.k.Post("manager", "explorer", "graphify", "ecosystem connections")
 	return posted, nil
+}
+
+func (a *managerAgent) graph(query string) graphify.Graph {
+	var ships []catalog.Ship
+	if cat := a.k.Catalog(); cat != nil {
+		ships = cat.List()
+	}
+	brains := make([]graphify.Brain, 0, len(Brains()))
+	for _, b := range Brains() {
+		brains = append(brains, graphify.Brain{ID: b.ID, Name: b.Name, Verb: b.Verb, Color: b.Color, Subs: b.Subs})
+	}
+	lines := make([]graphify.Line, 0, len(Lines()))
+	for _, ln := range Lines() {
+		lines = append(lines, graphify.Line{ID: ln.ID, Name: ln.Name, Brain: ln.Brain, Mandate: ln.Mandate, Repos: ln.Repos, Controls: ln.Controls})
+	}
+	links := make([]graphify.Link, 0, len(Links()))
+	for _, lk := range Links() {
+		links = append(links, graphify.Link{From: lk.From, To: lk.To, Via: lk.Via, Agents: lk.Agents})
+	}
+	return graphify.Build(graphify.Input{
+		Query:     query,
+		Processes: a.k.Processes(),
+		Events:    a.k.Events(),
+		Ships:     ships,
+		Brains:    brains,
+		Lines:     lines,
+		Links:     links,
+	})
+}
+
+func itoa(n int) string {
+	return fmt.Sprintf("%d", n)
 }
 
 type deliveryAgent struct {

@@ -74,8 +74,10 @@ The kernel still boots with neither daemon nor key. The `router` stays
 
 | Method | Path | What it does |
 | --- | --- | --- |
-| `GET` | `/` | OS desk |
+| `GET` | `/` | Giant HUD · live Graphify desk |
 | `GET` | `/health` | Liveness + kernel counts |
+| `GET` | `/api/live` | One-tick snapshot: crew, graph, score, brains |
+| `GET` | `/api/graph` | Graphify map (`?q=` filters a neighborhood) |
 | `GET` | `/api/os` | Manifesto and process counts |
 | `GET` | `/api/agents` | Process table |
 | `POST` | `/api/agents/{id}/invoke` | Run a capability |

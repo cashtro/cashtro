@@ -1,6 +1,6 @@
 # Epicenter — schema Mermaid
 
-Graphify reste la map vivante. Ce schema Mermaid nomme les deux voies (Ollama interne, Kimi K3 et GLM 5.3 max), les 5 cerveaux, leurs sous-cerveaux et les 58 projets.
+Graphify reste la map vivante. Le kernel expose `GET /api/graph` et `GET /api/live` — le Giant HUD les redessine chaque seconde. Ce schema Mermaid nomme les deux voies (Ollama interne, Kimi K3 et GLM 5.3 max), les 5 cerveaux, leurs sous-cerveaux et les 58 projets. Giant est le hub token (NFT, trading, Empire).
 
 ```mermaid
 %%{init: {'theme':'dark','flowchart':{'htmlLabels':true,'nodeSpacing':18,'rankSpacing':28}}}%%

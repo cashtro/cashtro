@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Voltron · Cashtro OS</title>
+  <title>Voltron · Cashtro OS · Giant HUD</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --void: #07080c;
-      --panel: #0e1118;
+      --void: #05060a;
+      --panel: rgba(10, 13, 20, 0.88);
       --lift: #151925;
       --line: #262b3a;
       --ink: #eef1f7;
@@ -25,12 +25,14 @@
       --danger: #ff6b5a;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; background: var(--void); color: var(--ink); }
+    html, body { margin: 0; background: var(--void); color: var(--ink); height: 100%; }
     body {
       font-family: Sora, system-ui, sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
       background:
-        linear-gradient(180deg, rgba(255,77,61,0.06), transparent 28%),
+        radial-gradient(900px 420px at 70% 18%, rgba(240,193,75,0.12), transparent 55%),
+        radial-gradient(700px 380px at 8% 80%, rgba(255,77,61,0.08), transparent 50%),
         var(--void);
     }
     body::before {
@@ -38,71 +40,72 @@
       pointer-events: none;
       position: fixed;
       inset: 0;
-      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(180deg, #000 0%, transparent 78%);
     }
     a { color: var(--hot); }
-    .wrap { width: min(1440px, calc(100% - 32px)); margin: 0 auto; position: relative; }
-    header.top {
-      display: flex;
-      justify-content: space-between;
-      gap: 24px;
-      align-items: flex-end;
-      padding: 28px 0 18px;
+    .shell { width: min(1680px, calc(100% - 24px)); margin: 0 auto; position: relative; padding-bottom: 28px; }
+    .hud {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 16px 0 12px;
       border-bottom: 1px solid var(--line);
     }
-    .brand { display: flex; gap: 16px; align-items: flex-end; }
-    .mark-v {
-      width: 44px; height: 44px;
-      border: 1px solid var(--hot);
-      display: grid; place-items: center;
-      flex: 0 0 44px;
-    }
-    .word { font-family: Syne, sans-serif; font-weight: 800; font-size: clamp(40px, 6vw, 72px); line-height: 0.82; letter-spacing: -0.04em; margin: 0; }
+    .brand { display: flex; gap: 14px; align-items: flex-end; }
+    .mark-v { width: 42px; height: 42px; border: 1px solid var(--hot); display: grid; place-items: center; }
+    .word { font-family: Syne, sans-serif; font-weight: 800; font-size: clamp(32px, 5vw, 56px); line-height: 0.82; letter-spacing: -0.04em; margin: 0; }
     .word em { font-style: normal; color: var(--hot); }
-    .sub { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 8px 0 0; }
-    .lede { max-width: 36rem; color: var(--muted); line-height: 1.5; margin: 10px 0 0; font-size: 14px; }
-    .stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; max-width: 420px; }
+    .sub { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 6px 0 0; }
+    .xpwrap { min-width: 0; }
+    .xprow { display: flex; justify-content: space-between; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .xpbar { height: 10px; background: #12151d; border: 1px solid rgba(240,193,75,0.35); overflow: hidden; }
+    .xpfill { height: 100%; width: 0; background: linear-gradient(90deg, #ff4d3d, #f0c14b); transition: width 0.4s ease; }
+    .lede { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+    .stats { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 460px; }
     .chip {
       border: 1px solid var(--line);
       background: var(--panel);
-      padding: 6px 10px;
+      padding: 5px 9px;
       font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
     .chip.live { color: var(--live); border-color: rgba(61,255,166,0.35); }
     .chip.unbound { color: var(--danger); border-color: rgba(255,77,61,0.4); }
+    .chip.gold { color: var(--gold); border-color: rgba(240,193,75,0.4); }
     .desk {
       display: grid;
-      grid-template-columns: 340px minmax(0, 1.2fr) 320px;
-      gap: 16px;
-      padding: 20px 0 28px;
+      grid-template-columns: 280px minmax(0, 1.4fr) 300px;
+      gap: 12px;
+      padding: 14px 0 0;
     }
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
-      padding: 16px;
+      padding: 12px;
       min-width: 0;
+      backdrop-filter: blur(8px);
     }
     .panel h2 {
-      margin: 0 0 14px;
+      margin: 0 0 10px;
       font-family: "IBM Plex Mono", ui-monospace, monospace;
       font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
     }
-    .agents { display: grid; gap: 6px; max-height: 620px; overflow: auto; padding-right: 2px; }
+    .agents { display: grid; gap: 5px; max-height: 420px; overflow: auto; padding-right: 2px; }
     .agent {
       display: grid;
       grid-template-columns: 6px 1fr;
-      gap: 10px;
+      gap: 8px;
       border: 1px solid var(--line);
-      background: var(--void);
+      background: #080a10;
       color: inherit;
       text-align: left;
       width: 100%;
@@ -110,16 +113,41 @@
       cursor: pointer;
     }
     .agent .stripe { background: var(--muted); }
-    .agent .body { padding: 10px 10px 10px 0; }
+    .agent .body { padding: 8px 8px 8px 0; }
     .agent:hover, .agent.active { border-color: #3a4158; background: var(--lift); }
     .agent.active { border-color: var(--hot); }
-    .agent b { display: block; font-family: Syne, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
-    .agent .meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
-    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+    .agent b { display: block; font-family: Syne, sans-serif; font-size: 15px; font-weight: 700; }
+    .agent .meta { color: var(--muted); font-size: 11px; margin-top: 2px; }
+    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
     .dot.live { color: var(--live); }
     .dot.resident { color: var(--gold); }
+    .arena { position: relative; min-height: 520px; }
+    .arena-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+    .arena-tools button, .arena-tools input {
+      font: inherit; color: inherit; background: #080a10; border: 1px solid var(--line);
+    }
+    .arena-tools button { cursor: pointer; padding: 6px 8px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .arena-tools button.on, .arena-tools button:hover { border-color: var(--gold); color: var(--gold); }
+    .arena-tools input { padding: 6px 8px; min-width: 160px; flex: 1; }
+    svg.graph { width: 100%; height: 460px; display: block; background: #07080e; border: 1px solid var(--line); }
+    .flow {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(92px, 1fr);
+      gap: 6px;
+      overflow: auto;
+      margin-top: 10px;
+    }
+    .step {
+      border: 1px solid var(--line);
+      background: #080a10;
+      padding: 8px;
+      min-height: 72px;
+    }
+    .step b { display: block; font-size: 12px; font-family: Syne, sans-serif; }
+    .step span { display: block; color: var(--muted); font-size: 10px; margin-top: 4px; font-family: "IBM Plex Mono", ui-monospace, monospace; }
     .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .col { background: var(--void); border: 1px solid var(--line); min-height: 280px; padding: 10px; }
+    .col { background: #080a10; border: 1px solid var(--line); min-height: 200px; padding: 10px; }
     .col h3 {
       margin: 0 0 10px;
       font-family: "IBM Plex Mono", ui-monospace, monospace;
@@ -132,38 +160,32 @@
     .col.idea h3 { color: var(--idea); }
     .col.concept h3 { color: var(--concept); }
     .col.production h3 { color: var(--production); }
-    .card { border: 1px solid var(--line); background: var(--lift); padding: 12px; margin-bottom: 8px; }
-    .card h4 { margin: 0 0 4px; font-family: Syne, sans-serif; font-size: 16px; font-weight: 700; }
-    .card p { margin: 0 0 10px; color: var(--muted); font-size: 12px; line-height: 1.4; }
-    button, input, textarea { font: inherit; color: inherit; background: var(--void); border: 1px solid var(--line); }
+    .card { border: 1px solid var(--line); background: var(--lift); padding: 10px; margin-bottom: 8px; }
+    .card h4 { margin: 0 0 4px; font-family: Syne, sans-serif; font-size: 15px; font-weight: 700; }
+    .card p { margin: 0 0 8px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+    button, input, textarea { font: inherit; color: inherit; background: #080a10; border: 1px solid var(--line); }
     button { cursor: pointer; padding: 8px 10px; }
     button:hover { border-color: var(--hot); color: #fff; }
     button:disabled { opacity: 0.35; cursor: default; color: var(--muted); border-color: var(--line); }
     .card button { width: 100%; font-size: 12px; }
     form, .inspect { display: grid; gap: 8px; }
-    .inspect { margin-top: 0; }
-    .inspect .mark {
-      font-family: Syne, sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-    }
+    .inspect .mark { font-family: Syne, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.03em; }
     label { font-size: 11px; color: var(--muted); display: grid; gap: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
-    input, textarea { padding: 9px 10px; font-size: 14px; }
-    input:focus, textarea:focus, button:focus-visible {
-      outline: 1px solid var(--hot);
-      outline-offset: 1px;
-    }
+    input, textarea { padding: 8px 10px; font-size: 14px; }
+    input:focus, textarea:focus, button:focus-visible { outline: 1px solid var(--hot); outline-offset: 1px; }
     .primary { background: var(--hot); border-color: var(--hot); color: #140404; font-weight: 600; width: 100%; }
-    .primary:hover { color: #140404; filter: brightness(1.05); }
     .cap { width: 100%; text-align: left; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; }
-    .journal { max-height: 180px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.55; color: var(--muted); }
+    .journal { max-height: 160px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.55; color: var(--muted); }
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
-    .stack { display: grid; gap: 16px; }
+    .stack { display: grid; gap: 12px; }
+    .brains { display: grid; gap: 6px; }
+    .brain { border: 1px solid var(--line); padding: 8px; background: #080a10; }
+    .brain b { display: block; font-family: Syne, sans-serif; }
+    .brain span { color: var(--muted); font-size: 11px; }
     footer {
       border-top: 1px solid var(--line);
-      padding: 16px 0 32px;
+      margin-top: 16px;
+      padding: 14px 0 8px;
       color: var(--muted);
       font-size: 12px;
       display: flex;
@@ -174,21 +196,24 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
-    @media (max-width: 1100px) {
+    .pulse { animation: pulse 1.8s ease-in-out infinite; }
+    @keyframes pulse { 50% { opacity: 0.55; } }
+    @media (max-width: 1180px) {
       .desk { grid-template-columns: 1fr; }
       .agents { max-height: none; }
-      header.top { flex-direction: column; align-items: flex-start; }
+      .hud { grid-template-columns: 1fr; }
       .stats { justify-content: flex-start; }
     }
     @media (max-width: 700px) {
       .board { display: block; }
       .col { margin-bottom: 8px; min-height: 0; }
+      svg.graph { height: 360px; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="top">
+  <div class="shell">
+    <header class="hud">
       <div>
         <div class="brand">
           <div class="mark-v" aria-hidden="true">
@@ -199,19 +224,46 @@
           </div>
           <div>
             <p class="word">VOLTR<em>O</em>N</p>
-            <p class="sub">Cashtro OS · assembled · FR/EN</p>
+            <p class="sub">Cashtro OS · Giant HUD · live graphify</p>
           </div>
         </div>
         <p class="lede" id="lede">Fourteen seats. One body. idea → concept → production.</p>
       </div>
+      <div class="xpwrap">
+        <div class="xprow">
+          <span id="level">LVL 1 · Cadet</span>
+          <span id="xpnum">0 XP</span>
+        </div>
+        <div class="xpbar" aria-label="XP"><div class="xpfill" id="xpfill"></div></div>
+      </div>
       <div class="stats" id="stats"></div>
     </header>
     <main class="desk">
-      <section class="panel">
-        <h2>Crew</h2>
-        <div class="agents" id="agents"></div>
+      <section class="stack">
+        <div class="panel">
+          <h2>Crew</h2>
+          <div class="agents" id="agents"></div>
+        </div>
+        <div class="panel">
+          <h2>Cinq cerveaux</h2>
+          <div class="brains" id="brains"></div>
+        </div>
       </section>
       <section class="stack">
+        <div class="panel arena">
+          <h2>Graphify live · comment le code se déroule</h2>
+          <div class="arena-tools">
+            <button type="button" data-layer="all" class="on">All</button>
+            <button type="button" data-layer="eco">Écosystème</button>
+            <button type="button" data-layer="code">Code</button>
+            <button type="button" data-layer="crew">Crew</button>
+            <button type="button" data-layer="giant">Giant</button>
+            <input id="q" placeholder="query graphify · giant, invoke, hustler">
+            <button type="button" id="ask">Query</button>
+          </div>
+          <svg class="graph" id="graph" viewBox="0 0 900 460" role="img" aria-label="Graphify live map"></svg>
+          <div class="flow" id="flow"></div>
+        </div>
         <div class="panel">
           <h2>Delivery line</h2>
           <div class="board" id="board" aria-label="Delivery board"></div>
@@ -256,7 +308,7 @@
     </main>
     <footer>
       <span id="contact">alejandro@proximityagency.ca</span>
-      <span>Voltron · Cashtro kernel · OpenRouter optional</span>
+      <span>Voltron · Giant deck · Graphify live · OpenRouter optional</span>
     </footer>
   </div>
   <script>
@@ -275,8 +327,15 @@
       memory: { name: "Keeper", color: "#8b93a7" },
       comms: { name: "Herald", color: "#f0c14b" },
       planner: { name: "Steward", color: "#3dffa6" },
-      investigator: { name: "Seeker", color: "#ffb020" }
+      investigator: { name: "Seeker", color: "#ffb020" },
+      manager: { name: "Epicenter", color: "#f0c14b" }
     };
+    const svgNS = "http://www.w3.org/2000/svg";
+    let selected = "manager";
+    let lastInvoke = "";
+    let layer = "all";
+    let query = "";
+    let sim = { nodes: [], edges: [] };
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
       const body = await res.json();
@@ -315,8 +374,6 @@
       el.appendChild(btn);
       return el;
     }
-    let selected = "research";
-    let lastInvoke = "";
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
       box.replaceChildren();
@@ -338,7 +395,9 @@
           try {
             const payload = cap === "model.chat"
               ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
-              : { capability: cap };
+              : cap === "manager.graphify"
+                ? { capability: cap, payload: { query: document.getElementById("q").value || "giant" } }
+                : { capability: cap };
             const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
               method: "POST",
               headers: { "Content-Type": "application/json", "Accept": "application/json" },
@@ -361,20 +420,140 @@
         box.appendChild(hint);
       }
     }
+    function layerOf(node) {
+      if (node.kind === "token" || node.group === "giant" || node.id === "token:giant") return "giant";
+      if (node.kind === "module" || node.kind === "capability" || node.kind === "os") return "code";
+      if (node.kind === "agent") return "crew";
+      if (node.kind === "brain" || node.kind === "subbrain" || node.kind === "line" || node.kind === "ship") return "eco";
+      return "all";
+    }
+    function visible(node) {
+      if (layer === "all") return true;
+      if (layer === "giant") return node.kind === "token" || node.group === "giant" || (node.meta && node.meta.brain === "Hustler") || node.id.indexOf("giant") >= 0 || node.id.indexOf("trading") >= 0 || node.id.indexOf("empire") >= 0 || node.id.indexOf("nft") >= 0 || node.kind === "brain";
+      return layerOf(node) === layer;
+    }
+    function layout(nodes, edges) {
+      const W = 900, H = 460;
+      const byId = {};
+      nodes.forEach((n, i) => {
+        const angle = (i / Math.max(nodes.length, 1)) * Math.PI * 2;
+        const r = n.kind === "token" ? 0 : 150 + (n.size || 16) * 2;
+        n.x = n.x || W / 2 + Math.cos(angle) * r;
+        n.y = n.y || H / 2 + Math.sin(angle) * r;
+        if (n.kind === "token") { n.x = W / 2; n.y = H / 2; }
+        byId[n.id] = n;
+      });
+      for (let k = 0; k < 48; k++) {
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const a = nodes[i], b = nodes[j];
+            let dx = a.x - b.x, dy = a.y - b.y;
+            let d2 = dx * dx + dy * dy || 1;
+            const force = 1400 / d2;
+            dx *= force; dy *= force;
+            a.x += dx; a.y += dy; b.x -= dx; b.y -= dy;
+          }
+        }
+        edges.forEach((e) => {
+          const a = byId[e.from], b = byId[e.to];
+          if (!a || !b) return;
+          const dx = b.x - a.x, dy = b.y - a.y;
+          a.x += dx * 0.03; a.y += dy * 0.03;
+          b.x -= dx * 0.03; b.y -= dy * 0.03;
+        });
+        nodes.forEach((n) => {
+          n.x += (W / 2 - n.x) * 0.02;
+          n.y += (H / 2 - n.y) * 0.02;
+          n.x = Math.max(24, Math.min(W - 24, n.x));
+          n.y = Math.max(24, Math.min(H - 24, n.y));
+        });
+      }
+    }
+    function drawGraph(graph) {
+      const svg = document.getElementById("graph");
+      const nodes = (graph.nodes || []).filter(visible);
+      const keep = {};
+      nodes.forEach((n) => { keep[n.id] = true; });
+      const edges = (graph.edges || []).filter((e) => keep[e.from] && keep[e.to]);
+      const prev = {};
+      sim.nodes.forEach((n) => { prev[n.id] = n; });
+      nodes.forEach((n) => {
+        if (prev[n.id]) { n.x = prev[n.id].x; n.y = prev[n.id].y; }
+      });
+      layout(nodes, edges);
+      sim = { nodes, edges };
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      edges.forEach((e) => {
+        const a = nodes.find((n) => n.id === e.from);
+        const b = nodes.find((n) => n.id === e.to);
+        if (!a || !b) return;
+        const line = document.createElementNS(svgNS, "line");
+        line.setAttribute("x1", a.x); line.setAttribute("y1", a.y);
+        line.setAttribute("x2", b.x); line.setAttribute("y2", b.y);
+        line.setAttribute("stroke", e.kind === "flow" ? "#6ea8ff" : e.kind === "token" ? "#f0c14b" : "#2a3144");
+        line.setAttribute("stroke-width", e.kind === "token" || e.kind === "flow" ? "1.6" : "1");
+        line.setAttribute("stroke-opacity", "0.7");
+        if (e.kind === "flow") line.setAttribute("stroke-dasharray", "4 4");
+        svg.appendChild(line);
+      });
+      nodes.forEach((n) => {
+        const g = document.createElementNS(svgNS, "g");
+        const c = document.createElementNS(svgNS, "circle");
+        const r = Math.max(6, (n.size || 16) * 0.42);
+        c.setAttribute("cx", n.x); c.setAttribute("cy", n.y); c.setAttribute("r", r);
+        c.setAttribute("fill", n.color || "#8b93a7");
+        c.setAttribute("fill-opacity", String(0.35 + (n.heat || 0) * 0.5));
+        c.setAttribute("stroke", n.kind === "token" ? "#fff3c4" : n.color || "#8b93a7");
+        c.setAttribute("stroke-width", n.kind === "token" ? "2.4" : "1");
+        if ((n.heat || 0) > 0.5 || n.kind === "token") c.setAttribute("class", "pulse");
+        const t = document.createElementNS(svgNS, "text");
+        t.setAttribute("x", n.x); t.setAttribute("y", n.y + r + 11);
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("fill", n.kind === "token" ? "#f0c14b" : "#eef1f7");
+        t.setAttribute("font-size", n.kind === "token" ? "13" : "9");
+        t.setAttribute("font-family", "IBM Plex Mono, monospace");
+        t.textContent = n.label;
+        g.appendChild(c); g.appendChild(t);
+        g.addEventListener("click", () => {
+          lastInvoke = n.kind + " · " + n.label + " — " + (n.detail || "");
+          if (n.kind === "agent") selected = n.id.replace("agent:", "");
+          render();
+        });
+        svg.appendChild(g);
+      });
+    }
+    function renderFlow(steps) {
+      const box = document.getElementById("flow");
+      box.replaceChildren();
+      (steps || []).forEach((step) => {
+        const el = document.createElement("div");
+        el.className = "step";
+        el.innerHTML = "<b></b><span></span>";
+        el.querySelector("b").textContent = step.label;
+        el.querySelector("span").textContent = step.verb + " · " + step.file;
+        box.appendChild(el);
+      });
+    }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
-      ]);
+      const live = await j("/api/live" + (query ? ("?q=" + encodeURIComponent(query)) : ""));
+      const os = live.os, agents = live.agents, ships = live.ships, events = live.events;
+      const model = live.model, profile = live.profile, notes = live.notes, confirms = live.confirms;
+      const graph = live.graph || {};
+      const score = graph.score || {};
       document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";
       document.getElementById("contact").textContent = profile.email;
+      document.getElementById("level").textContent = "LVL " + (score.level || 1) + " · " + (score.title || "Cadet");
+      document.getElementById("xpnum").textContent = (score.xp || 0) + " XP";
+      const pct = score.next ? Math.min(100, Math.round(((score.xp || 0) % 250) / 2.5)) : 0;
+      document.getElementById("xpfill").style.width = pct + "%";
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip("Cashtro OS " + os.version),
-        chip(os.running + " online", "live"),
-        chip(os.live + " live"),
-        chip(os.resident + " resident"),
-        chip(notes.length + " notes"),
-        chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound")
+        chip((os.running || 0) + " online", "live"),
+        chip((graph.counts && graph.counts.nodes || 0) + " graphify nodes", "gold"),
+        chip((score.production || 0) + " shipped"),
+        chip(score.giantOnline ? "Giant online" : "Giant dark", score.giantOnline ? "gold" : "unbound"),
+        chip(model && (model.bound || (model.external && model.external.bound)) ? "OpenRouter bound" : "OpenRouter unbound", model && (model.bound || (model.external && model.external.bound)) ? "live" : "unbound")
       );
       const grid = document.getElementById("agents");
       grid.replaceChildren();
@@ -391,6 +570,17 @@
         dot.textContent = agent.spec.mode + " · " + agent.status;
         btn.addEventListener("click", () => { selected = agent.spec.id; lastInvoke = ""; render(); });
         grid.appendChild(btn);
+      });
+      const brains = document.getElementById("brains");
+      brains.replaceChildren();
+      (live.brains || []).forEach((b) => {
+        const el = document.createElement("div");
+        el.className = "brain";
+        el.innerHTML = "<b></b><span></span>";
+        el.querySelector("b").textContent = b.name;
+        el.querySelector("span").textContent = b.verb + " · " + (b.subs || []).join(" · ");
+        el.style.borderColor = b.color;
+        brains.appendChild(el);
       });
       const current = agents.find((a) => a.spec.id === selected) || agents[0];
       inspect(current, model);
@@ -443,7 +633,23 @@
           gate.appendChild(allow);
         }
       });
+      drawGraph(graph);
+      renderFlow(graph.flow || []);
     }
+    document.querySelectorAll("[data-layer]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        layer = btn.getAttribute("data-layer");
+        document.querySelectorAll("[data-layer]").forEach((b) => b.classList.toggle("on", b === btn));
+        render();
+      });
+    });
+    document.getElementById("ask").addEventListener("click", () => {
+      query = document.getElementById("q").value.trim();
+      render();
+    });
+    document.getElementById("q").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); query = e.target.value.trim(); render(); }
+    });
     document.getElementById("form").addEventListener("submit", async (event) => {
       event.preventDefault();
       const err = document.getElementById("form-error");
@@ -487,6 +693,7 @@
       }
     });
     render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
+    setInterval(() => { render().catch(() => {}); }, 1200);
   </script>
 </body>
 </html>

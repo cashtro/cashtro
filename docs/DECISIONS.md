@@ -1,5 +1,14 @@
 # DECISIONS
 
+## 2026-09-22 — Graphify lives in the kernel HUD
+
+- **Choice:** `internal/graphify` builds a Graphify-shaped map from brains,
+  lines, ecosystem links, processes, ships, and the real boot→invoke path.
+  The desk is a game HUD (`/api/live` every 1.2s). Giant is the world hub.
+- **Why:** MCP Graphify is not bound in this environment. Castro asked to
+  watch the code unfold and the ecosystem progress live, Giant included.
+  Mermaid (`docs/MAP.md`) stays the readable schema next to the live map.
+
 ## 2026-09-22 — Use both lanes, and Mermaid too
 
 - **Choice:** `model.chat` route `both` calls Ollama (internal) and, on

@@ -136,4 +136,20 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || !res.OK {
 		t.Fatalf("manager.assign: %+v %v", res, err)
 	}
+
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.brains"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.brains: %+v %v", res, err)
+	}
+	if brains, ok := res.Data.([]Brain); !ok || len(brains) != 5 {
+		t.Fatalf("brains = %#v", res.Data)
+	}
+
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.graphify",
+		Payload:    []byte(`{"query":"giant"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.graphify: %+v %v", res, err)
+	}
 }

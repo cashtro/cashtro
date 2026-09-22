@@ -9,10 +9,11 @@ Stdlib **Go 1.22** process OS. One binary: `cmd/cashtro` → HTTP `:8080`.
 | Path | Role |
 | --- | --- |
 | `internal/kernel` | Process table, invoke bus, journal, mail, notes, memory, confirms |
-| `internal/agents` | 14 registered agentics. 7 live, 7 resident (contract only) |
+| `internal/agents` | 15 registered agentics. Manager owns Graphify. |
 | `internal/catalog` | Delivery line: idea → concept → production (in-memory seed) |
 | `internal/model` | Optional OpenRouter client. Boots unbound. |
-| `internal/server` | Desk HTML + REST (`/api/os`, `/api/agents`, `/api/ships`, …) |
+| `internal/graphify` | Live Graphify map: code flow, brains, ecosystems, Giant hub |
+| `internal/server` | Giant HUD + REST (`/api/os`, `/api/live`, `/api/graph`, `/api/ships`, …) |
 | `.github/workflows/go.yml` | `go test` + `go vet` on main/PR |
 | `.cursor/environment.json` | Cloud start: `go run ./cmd/cashtro` on `main` |
 

@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 15 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +70,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 15 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -123,6 +123,32 @@ func TestIndexHTML(t *testing.T) {
 	}
 	if !strings.Contains(body, "VOLTR") || !strings.Contains(body, "Crew") {
 		t.Fatalf("index missing Voltron desk")
+	}
+	if !strings.Contains(body, "Giant") || !strings.Contains(body, "graphify") || !strings.Contains(body, "HUD") {
+		t.Fatalf("index missing Giant HUD")
+	}
+}
+
+func TestGraphAndLive(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/graph?q=giant", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("graph status = %d body=%s", res.Code, res.Body.String())
+	}
+	if !strings.Contains(res.Body.String(), `"label":"GIANT"`) || !strings.Contains(res.Body.String(), "cashtro-graphify") {
+		t.Fatalf("graph body = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/live", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("live status = %d body=%s", res.Code, res.Body.String())
+	}
+	body := res.Body.String()
+	if !strings.Contains(body, `"graph"`) || !strings.Contains(body, `"brains"`) || !strings.Contains(body, "mod:cmd") {
+		t.Fatalf("live body missing map: %s", body)
 	}
 }
 

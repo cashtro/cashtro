@@ -69,6 +69,20 @@ pnpm --filter @cashtro/api test
 `GET /docs` and `GET /docs/json` render OpenAPI 3.1.
 Kill switch and $2 budget cap are enforced before dispatch.
 
+## Giant HUD — 2026-09-22
+
+Shipped on the kernel, not a second product.
+
+- `internal/graphify` builds the live map (code flow + 5 brains + Giant hub)
+- `manager.graphify` returns real nodes/edges instead of a stub count
+- `GET /api/graph` and `GET /api/live` feed the game desk
+- HUD polls every 1.2s: XP, layers, Giant, delivery line
+
+```
+go test ./...
+→ graphify + kernel + desk pass
+```
+
 ## Phase 4–7
 
 Not started. Waiting on Castro to read `inventory/REPORT.md` and

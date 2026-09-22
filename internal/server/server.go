@@ -42,6 +42,8 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/ships", s.createShip)
 	mux.HandleFunc("GET /api/ships/{id}", s.getShip)
 	mux.HandleFunc("POST /api/ships/{id}/advance", s.advanceShip)
+	mux.HandleFunc("GET /api/graph", s.graph)
+	mux.HandleFunc("GET /api/live", s.live)
 	return mux
 }
 
@@ -225,6 +227,55 @@ func (s *api) createShip(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusCreated, res.Data)
+}
+
+func (s *api) graph(w http.ResponseWriter, r *http.Request) {
+	raw, _ := json.Marshal(map[string]string{"query": r.URL.Query().Get("q")})
+	res, err := s.k.Invoke(r.Context(), "manager", kernel.Call{Capability: "manager.graphify", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) live(w http.ResponseWriter, r *http.Request) {
+	raw, _ := json.Marshal(map[string]string{"query": r.URL.Query().Get("q")})
+	graphRes, err := s.k.Invoke(r.Context(), "manager", kernel.Call{Capability: "manager.graphify", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	modelRes, err := s.k.Invoke(r.Context(), "router", kernel.Call{Capability: "model.status"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	brainRes, err := s.k.Invoke(r.Context(), "manager", kernel.Call{Capability: "manager.brains"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	lineRes, err := s.k.Invoke(r.Context(), "manager", kernel.Call{Capability: "manager.lines"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]any{
+		"os":       s.k.About(),
+		"agents":   s.k.Processes(),
+		"ships":    s.cat.List(),
+		"events":   s.k.Events(),
+		"notes":    s.k.Notes(),
+		"confirms": s.k.Confirms(),
+		"mail":     s.k.Inbox(""),
+		"memory":   s.k.Recall(""),
+		"model":    modelRes.Data,
+		"graph":    graphRes.Data,
+		"brains":   brainRes.Data,
+		"lines":    lineRes.Data,
+		"profile":  s.cat.Profile(),
+	})
 }
 
 func (s *api) advanceShip(w http.ResponseWriter, r *http.Request) {
