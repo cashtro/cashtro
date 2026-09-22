@@ -1,0 +1,67 @@
+package main
+
+import (
+	"context"
+	"errors"
+	"flag"
+	"log"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/Evolu-Jeunes/Teal/internal/agents"
+	"github.com/Evolu-Jeunes/Teal/internal/server"
+)
+
+func main() {
+	addr := flag.String("addr", ":8090", "HTTP listen address")
+	flag.Parse()
+
+	if err := run(*addr); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func run(addr string) error {
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
+	k, err := agents.Boot()
+	if err != nil {
+		return err
+	}
+	about := k.About()
+	log.Printf("%s %s · %d agentics online", about.Name, about.Version, about.Running)
+
+	httpSrv := &http.Server{
+		Addr:              addr,
+		Handler:           server.New(k),
+		ReadHeaderTimeout: 5 * time.Second,
+	}
+
+	ln, err := net.Listen("tcp", addr)
+	if err != nil {
+		return err
+	}
+	log.Printf("teal listening on http://%s", ln.Addr())
+
+	errCh := make(chan error, 1)
+	go func() {
+		errCh <- httpSrv.Serve(ln)
+	}()
+
+	select {
+	case <-ctx.Done():
+		shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		defer cancel()
+		return httpSrv.Shutdown(shutdownCtx)
+	case err := <-errCh:
+		if errors.Is(err, http.ErrServerClosed) {
+			return nil
+		}
+		return err
+	}
+}

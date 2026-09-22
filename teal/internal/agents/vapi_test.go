@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/cashtro/cashtro/internal/kernel"
-	"github.com/cashtro/cashtro/internal/vapi"
+	"github.com/Evolu-Jeunes/Teal/internal/kernel"
+	"github.com/Evolu-Jeunes/Teal/internal/vapi"
 )
 
 func TestVapiLaneTalkVoiceCallAndBridges(t *testing.T) {

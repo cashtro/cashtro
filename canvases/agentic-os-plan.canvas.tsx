@@ -29,6 +29,7 @@ flowchart TB
     empire["Empire"]
     trading["Trading"]
     pandora["Pandora / PBTM"]
+    evoluTeal["Evolu-Jeunes/Teal · :8090"]
   end
   subgraph teams["Microsoft Teams · AI Teal"]
     scrape["Graph scrape / ingest"]
@@ -52,6 +53,8 @@ flowchart TB
   vapi --> empire
   vapi --> trading
   vapi --> pandora
+  vapi --> evoluTeal
+  manager --> evoluTeal
   vapi -->|"POST /call"| gate
   gate -->|"allow → fire"| vapi
 `;
@@ -65,6 +68,8 @@ export default function AgenticOSPlan() {
         calls behind the human gate, switch voices on the desk. Teal
         still ingests Teams. The same script rides Proximity, Scan App,
         Panda, NFT/Giant, école, marketing, Empire, trading, and Pandora.
+        The Evolu-Jeunes product repo is <code>teal/</code> at
+        github.com/Evolu-Jeunes/Teal.
       </p>
       <pre>{mermaid}</pre>
     </section>

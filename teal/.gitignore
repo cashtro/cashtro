@@ -1,0 +1,8 @@
+/bin/
+/teal
+*.exe
+*.test
+*.out
+coverage.out
+.env
+node_modules/

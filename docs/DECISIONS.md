@@ -1,5 +1,17 @@
 # DECISIONS
 
+## 2026-09-22 — Evolu-Jeunes/Teal is a fresh voice repo
+
+- **Choice:** Put the Vapi/Teal voice brain in a fresh Evolu-Jeunes
+  product at `teal/` (`github.com/Evolu-Jeunes/Teal`). Cashtro OS stays
+  the manager. Teal listens on `:8090`. Publish with
+  `scripts/publish-evolu-jeunes-teal.sh` once a PAT can create org
+  repos (this Cloud Agent token returns 403 on Evolu-Jeunes writes).
+- **Why:** Castro asked to put this in another repo, a fresh one, in
+  Evolu-Jeunes.
+- **Stop:** Do not buy Vapi numbers. Do not treat Teal as a second OS
+  that replaces Cashtro.
+
 ## 2026-09-22 — Vapi is a kernel voice lane across every bridge
 
 - **Choice:** Absorb a live `vapi` agentic into Cashtro OS. Talk

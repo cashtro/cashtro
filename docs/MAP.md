@@ -156,6 +156,9 @@ flowchart TB
   vapi --> Evolu_Jeunes_EmpireMedia
   vapi --> Evolu_Jeunes_AI_BOT
   vapi --> cashtro_Pandora
+  manager --> evolu_teal["Evolu-Jeunes/Teal<br/>fresh voice repo · :8090"]
+  vapi --> evolu_teal
+  teal --> evolu_teal
   Evolu_Jeunes_Proximity -.-> Evolu_Jeunes_ProximityApp
   Evolu_Jeunes_Proximity -.-> Evolu_Jeunes_Proximity_Agentic
   Evolu_Jeunes_h20 -.-> Evolu_Jeunes_H2oH2o
