@@ -11,13 +11,13 @@ type ChainStep struct {
 // Fiche is a sales listing built from a scanned product.
 // The database image is never the public photo.
 type Fiche struct {
-	Code      string `json:"code"`
-	Name      string `json:"name"`
-	Price     string `json:"price"`
-	Stock     int    `json:"stock"`
-	Photo     string `json:"photo"` // generated, licensed, or database
-	Person    bool   `json:"person"`
-	Consent   bool   `json:"consent"`
+	Code    string `json:"code"`
+	Name    string `json:"name"`
+	Price   string `json:"price"`
+	Stock   int    `json:"stock"`
+	Photo   string `json:"photo"` // generated, licensed, or database
+	Person  bool   `json:"person"`
+	Consent bool   `json:"consent"`
 }
 
 // Ready reports whether this listing can be published or sold.
@@ -48,11 +48,11 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "scanapp", Order: 2, Agent: "operator", Do: "Écrire le stock vrai : ajout, retrait, vente, vérification."},
 			{Line: "scanapp", Order: 3, Agent: "delivery", Do: "Garder l'image de la base en interne. Elle ne va pas sur la fiche."},
 			{Line: "scanapp", Order: 4, Agent: "comms", Do: "Monter la fiche depuis le produit scanné : nom, prix, code, lieu, description."},
-			{Line: "scanapp", Order: 5, Agent: "architect", Do: "Photo de fiche : en générer une ou en trouver une dont on a les droits."},
+			{Line: "scanapp", Order: 5, Agent: "architect", Do: "Photo trouvée en ligne seulement avec les droits. Sinon une image à nous. Jamais une copie d'une photo sans droits."},
 			{Line: "scanapp", Order: 6, Agent: "reviewer", Do: "Contrôle : droits photo, et consentement si une personne est dans le cadre."},
 			{Line: "scanapp", Order: 7, Agent: "delivery", Do: "Boutique : le stock disponible devient catalogue commandable."},
 			{Line: "scanapp", Order: 8, Agent: "comms", Do: "Vendre, promouvoir, marketing et média sur la fiche prête."},
-			{Line: "scanapp", Order: 9, Agent: "operator", Do: "Proximity publie la fiche. Empire la vend en live sur Kick. Ils ne réinventent pas le stock."},
+			{Line: "scanapp", Order: 9, Agent: "operator", Do: "Boutique interne. Empire vend en live sur toutes les plateformes. Proximity n'est pas dans cette chaîne."},
 		}, true
 	default:
 		return nil, false

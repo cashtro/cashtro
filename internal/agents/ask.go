@@ -15,12 +15,7 @@ func QuestionsFor(action string) []Question {
 	switch action {
 	case "scanapp", "chain":
 		return []Question{
-			{ID: "boutique", Ask: "Quelle boutique ou quel client reçoit cette chaîne maintenant, pas tous les sites?", Improves: "on ne déploie pas la chaîne au mauvais endroit"},
-			{ID: "codes", Ask: "Quels codes on scanne dans cette action : EAN-13, QR, ou un code interne?", Improves: "le scanner est réglé sur le vrai format"},
-			{ID: "photo", Ask: "La photo de fiche est générée par nous, ou prise dans quelle banque dont on a déjà la licence?", Improves: "on ne publie pas l'image de la base ni une photo grattée"},
-			{ID: "site", Ask: "Quel repo Proximity publie la fiche, et ce site est-il déjà en ligne chez le client?", Improves: "un site live se lit, il ne se réécrit pas"},
-			{ID: "kick", Ask: "Ce produit passe-t-il dans un live Kick d'Empire dans cette action, ou seulement sur le site?", Improves: "le live ne vend pas un item qui n'est pas dans cette action"},
-			{ID: "prix", Ask: "Le prix affiché est-il en dollars canadiens, taxes incluses, pour un acheteur au Québec?", Improves: "la fiche respecte le prix qu'on a le droit d'afficher"},
+			{ID: "marge", Ask: "De combien le prix de vente dépasse le prix de référence, et ce prix de référence est lequel : le coût, ou le prix vu en ligne?", Improves: "vendre plus cher sans inventer un prix"},
 		}
 	case "fiche":
 		return []Question{

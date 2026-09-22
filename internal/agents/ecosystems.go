@@ -18,11 +18,6 @@ func Links() []Link {
 			Agents: []string{"init", "manager", "planner"},
 		},
 		{
-			From: "proximity", To: "scanapp",
-			Via:    "les sites Proximity publient la fiche déjà montée par Scan App (stock scanné, photo propre), ils ne refont pas l'inventaire",
-			Agents: []string{"operator", "deploy", "reviewer", "delivery"},
-		},
-		{
 			From: "proximity", To: "panda",
 			Via:    "Panda installe l'IA et les cours white-glove sur les sites clients",
 			Agents: []string{"architect", "operator", "planner"},
@@ -34,8 +29,8 @@ func Links() []Link {
 		},
 		{
 			From: "empire", To: "scanapp",
-			Via:    "le live Empire, diffusé sur Kick, vend un produit dont le stock et la fiche viennent du scan",
-			Agents: []string{"operator", "comms", "delivery", "reviewer"},
+			Via:    "le live Empire vend le stock Scan App sur toutes les plateformes live. Proximity n'est pas dans cette chaîne.",
+			Agents: []string{"operator", "comms", "delivery", "reviewer", "deploy"},
 		},
 		{
 			From: "marketing", To: "proximity",

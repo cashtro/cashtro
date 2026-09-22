@@ -655,17 +655,6 @@
     },
     {
       "from": "proximity",
-      "to": "scanapp",
-      "via": "les sites Proximity publient la fiche déjà montée par Scan App (stock scanné, photo propre), ils ne refont pas l'inventaire",
-      "agents": [
-        "operator",
-        "deploy",
-        "reviewer",
-        "delivery"
-      ]
-    },
-    {
-      "from": "proximity",
       "to": "panda",
       "via": "Panda installe l'IA et les cours white-glove sur les sites clients",
       "agents": [
@@ -688,12 +677,13 @@
     {
       "from": "empire",
       "to": "scanapp",
-      "via": "le live Empire, diffusé sur Kick, vend un produit dont le stock et la fiche viennent du scan",
+      "via": "le live Empire vend le stock Scan App sur toutes les plateformes live. Proximity n'est pas dans cette chaîne.",
       "agents": [
         "operator",
         "comms",
         "delivery",
-        "reviewer"
+        "reviewer",
+        "deploy"
       ]
     },
     {
@@ -1064,7 +1054,7 @@
           "Photos : en générer une ou en trouver une. Jamais l'image mal traitée de la base sur la fiche publique.",
           "Boutique : le stock disponible devient catalogue commandable. Le flux commande vendeur n'est pas fini dans le repo.",
           "Autour : vendre, promouvoir, marketing et média, automatisés sur ces fiches.",
-          "Proximity publie la fiche sur les sites. Empire la vend en live. Ils ne réinventent pas le stock."
+          "Proximity n'est pas dans cette chaîne. Empire vend le stock en live, sur toutes les plateformes live."
         ]
       },
       {
@@ -1104,8 +1094,8 @@
         "name": "Empire Media",
         "chief": "delivery",
         "department": "operations",
-        "revenue": "Live sell sur Kick : podcast, UGC, items du scan.",
-        "guard": "Le live vend une fiche déjà scannée. Pas de stock inventé. Kick diffuse, il ne remplace pas le stock."
+        "revenue": "Live sell du stock Scan App, sur toutes les plateformes live.",
+        "guard": "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."
       },
       {
         "id": "trading",

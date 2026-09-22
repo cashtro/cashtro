@@ -42,11 +42,12 @@ func Lines() []Line {
 		},
 		{
 			ID: "scanapp", Name: "Scan App Marketplace", Brain: "Hustler",
-			Mandate: "Chaîne complète : scanner interchangeable, stock vrai (code, sku, prix, quantité, lieu), " +
-				"fiche de vente montée sur ce stock, photo générée ou trouvée à la place de l'image mauvaise de la base, " +
-				"boutique commandable, puis vente, promo, marketing et média automatisés. " +
-				"Le repo aujourd'hui a le scan, les produits, l'historique et l'ébauche vendeur. La photo, la commande et le média ne sont pas finis.",
-			Controls: "CMP vend et promeut. Opérations tient le scan et la boutique. Ingénierie remplace l'image de la base. Contrôle vérifie les droits photo.",
+			Mandate: "Boutique interne, aujourd'hui sans vente et sans client. Le but est de générer des ventes " +
+				"en vendant les items plus cher, pour un profit. Scanner déjà capable : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR. " +
+				"Photo trouvée en ligne seulement avec les droits ; sinon une image à nous, pas une copie. " +
+				"Prix en dollars canadiens, taxes non incluses, campagne pour le Canada entier. Proximity n'est pas dans cette chaîne. " +
+				"La vente live passe par Empire, sur toutes les plateformes live.",
+			Controls: "CMP vend et promeut au Canada. Opérations tient le scan et la boutique interne. Contrôle vérifie les droits photo.",
 			Repos:    []string{"Evolu-Jeunes/ScanApp"},
 		},
 		{
@@ -77,8 +78,8 @@ func Lines() []Line {
 		{
 			ID: "empire", Name: "Empire Media", Brain: "Forgeron",
 			Mandate: "Studio maison : BirdDog, 5 à 6 caméras, endroit pro pour podcast, UGC et live sell. " +
-				"L'app vend les items du Scan App pendant le live. Diffusion sur Kick, pour que les streamers ne soient pas coupés comme sur les autres plateformes.",
-			Controls: "Forgeron tient le studio, l'app de vente et la sortie Kick. Hustler remplit le live. Le stock vient du scan.",
+				"L'app vend les items du Scan App pendant le live. Empire se connecte à toutes les plateformes live, pas à une seule.",
+			Controls: "Forgeron tient le studio, l'app de vente et les sorties live. Hustler remplit le live. Le stock vient du scan, pas de Proximity.",
 			Repos:    []string{"Evolu-Jeunes/Empire-", "Evolu-Jeunes/EmpireMedia"},
 		},
 		{
