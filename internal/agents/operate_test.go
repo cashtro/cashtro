@@ -25,11 +25,22 @@ func TestBuildBoardSyncsFiches(t *testing.T) {
 	if board.Fiches != 58 {
 		t.Fatalf("fiches = %d, want 58", board.Fiches)
 	}
-	if len(board.Lines) != 10 || len(board.Agents) != 15 || len(board.Links) != 12 {
+	if len(board.Lines) != 11 || len(board.Agents) != 15 || len(board.Links) != 12 {
 		t.Fatalf("lines %d agents %d links %d", len(board.Lines), len(board.Agents), len(board.Links))
 	}
-	if len(board.Gaps) != 3 {
-		t.Fatalf("gaps = %v, want the 3 unclassified repos", board.Gaps)
+	if len(board.Gaps) != 0 {
+		t.Fatalf("gaps = %v, want none", board.Gaps)
+	}
+	if UsesStripe("proximity", false) || !UsesStripe("proximity", true) || UsesStripe("scanapp", true) {
+		t.Fatal("stripe rail: proximity only when asked, scanner never")
+	}
+	for _, id := range []string{"marketplace", "propres", "marketing", "empire", "panda"} {
+		if !UsesStripe(id, false) {
+			t.Fatalf("stripe should encash %s", id)
+		}
+	}
+	if UsesStripe("trading", false) || UsesStripe("nft-giant", false) {
+		t.Fatal("crypto rails stay off the card account")
 	}
 	if board.Graph.RepoNodes < 50 || board.Graph.Bridges < 1 {
 		t.Fatalf("graph = %+v", board.Graph)

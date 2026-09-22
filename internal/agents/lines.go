@@ -42,11 +42,11 @@ func Lines() []Line {
 		},
 		{
 			ID: "scanapp", Name: "Scan App", Brain: "Forgeron",
-			Mandate: "Projet déployé : la fonction scan. https://inventory-scanner-theta.vercel.app/ " +
-				"gère les produits, scanne les codes et met le stock à jour. " +
-				"Codes lus : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR. " +
-				"Ce n'est pas le marketplace. Empire vend aussi ces produits en live.",
-			Controls: "Opérations tient le scanner déployé. Empire vend ce stock en live.",
+			Mandate: "Déjà déployé, usage interne seulement : https://inventory-scanner-theta.vercel.app/. " +
+				"Il scanne et tient le stock. Il n'a rien à voir avec le marketplace et il n'encaisse pas. " +
+				"Les items scannés sont vendus sur le marketplace. Empire les vend aussi en live. " +
+				"Codes lus : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR.",
+			Controls: "Opérations tient le scanner déployé. Pas de Stripe ici.",
 			Repos:    []string{},
 		},
 		{
@@ -55,18 +55,20 @@ func Lines() []Line {
 				"Il vend les items qu'il fetch depuis le Scan App. " +
 				"Le repo Evolu-Jeunes/ScanApp est ce marketplace, et c'est lui qui fonctionne. " +
 				"Il n'est pas en ligne. On le déploie une fois prêt, pas avant. " +
-				"Son site de vente sera connecté à MCP et à Stripe. Pas le live Empire. " +
-				"Encore sans vente et sans client. But : vendre plus cher, profit. " +
+				"Son site de vente sera connecté à MCP et à Stripe une fois déployé. " +
+				"Empire encaisse aussi avec Stripe, sur son canal, parce que ce n'est pas un client. " +
+				"Encore sans vente et sans client. Les prix dépassent de 20 % à 40 %. " +
+				"Des campagnes de rabais comparent les vrais prix en ligne, qui sont plus chers. " +
 				"Prix CAD, taxes non incluses, Canada entier. " +
 				"Photo en ligne seulement avec les droits, sinon une image à nous. " +
 				"Proximity et Azure ne sont pas dans cet écosystème.",
-			Controls: "CMP vend. Le fetch lit le Scan App. Il ne le pilote pas.",
+			Controls: "CMP vend. Stripe encaisse ce site une fois déployé. Le fetch lit le Scan App. Il ne le pilote pas.",
 			Repos:    []string{"Evolu-Jeunes/ScanApp"},
 		},
 		{
 			ID: "panda", Name: "Panda White Glove", Brain: "Hustler",
 			Mandate:  "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers.",
-			Controls: "Hustler vend. Architecte conçoit l'offre IA. Forgeron installe.",
+			Controls: "Hustler vend. Architecte conçoit l'offre IA. Forgeron installe. Stripe encaisse, ce n'est pas un client.",
 			Repos:    []string{"Evolu-Jeunes/Panda"},
 		},
 		{
@@ -84,16 +86,24 @@ func Lines() []Line {
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
-			Mandate:  "Système automatisé de gestion pour le marketing digital entier des business corporate en ligne.",
-			Controls: "Hustler pilote campagnes et gestion. Cartographe mesure.",
+			Mandate: "Système automatisé de gestion pour le marketing digital entier des business corporate en ligne. " +
+				"Les campagnes de rabais du marketplace s'appuient sur la comparaison des prix en ligne.",
+			Controls: "Hustler pilote campagnes et gestion. Stripe encaisse, ce n'est pas un client Proximity.",
 			Repos:    []string{"Evolu-Jeunes/CRM"},
 		},
 		{
 			ID: "empire", Name: "Empire Media", Brain: "Forgeron",
 			Mandate: "Studio maison : BirdDog, 5 à 6 caméras, endroit pro pour podcast, UGC et live sell. " +
 				"L'app vend les items du Scan App pendant le live. Empire se connecte à toutes les plateformes live, pas à une seule.",
-			Controls: "Forgeron tient le studio, l'app de vente et les sorties live. Hustler remplit le live. Le stock vient du scan, pas de Proximity.",
+			Controls: "Forgeron tient le studio, l'app de vente et les sorties live. Hustler remplit le live. Stripe encaisse Empire. Le stock vient du scan, pas de Proximity.",
 			Repos:    []string{"Evolu-Jeunes/Empire-", "Evolu-Jeunes/EmpireMedia"},
+		},
+		{
+			ID: "propres", Name: "Projets propres", Brain: "Hustler",
+			Mandate: "PBTM, Pandora, business, technology et marketing encaissent avec Stripe. " +
+				"Ce ne sont pas des clients. Proximity n'utilise pas ce Stripe, sauf si c'est demandé.",
+			Controls: "Stripe sur les projets propres. Jamais sur un site client Proximity sans demande.",
+			Repos:    []string{"cashtro/PBTM", "cashtro/Pandora", "Evolu-Jeunes/Pandora"},
 		},
 		{
 			ID: "trading", Name: "Crypto et AI bot", Brain: "Architecte",
@@ -117,4 +127,20 @@ func LineByID(id string) (Line, bool) {
 		}
 	}
 	return Line{}, false
+}
+
+// UsesStripe reports whether this line takes payment on the shared Stripe account.
+// Client sites stay off unless someone asks. The scanner does not encash.
+// NFT and trading keep their own rail. They are not a card checkout.
+func UsesStripe(id string, clientRequested bool) bool {
+	switch id {
+	case "proximity":
+		return clientRequested
+	case "scanapp", "control", "trading", "nft-giant", "ecole":
+		return false
+	case "marketplace", "propres", "marketing", "panda", "empire":
+		return true
+	default:
+		return false
+	}
 }

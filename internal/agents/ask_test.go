@@ -15,8 +15,11 @@ func TestQuestionsBlockUntilAnswered(t *testing.T) {
 		t.Fatalf("scan still open: %+v", filled)
 	}
 	self := AskSelf("marketplace", nil)
-	if len(self.Open) != 0 || self.Answered["url"] == "" || !strings.Contains(self.Answered["marge"], "ne pas inventer") {
+	if len(self.Open) != 0 || self.Answered["url"] == "" || !strings.Contains(self.Answered["marge"], "20 %") {
 		t.Fatalf("self = %+v", self)
+	}
+	if !strings.Contains(self.Answered["stripe"], "Pas Proximity") || !strings.Contains(self.Answered["stripe"], "PBTM") {
+		t.Fatalf("stripe = %q", self.Answered["stripe"])
 	}
 	scan := AskSelf("scanapp", nil)
 	if len(scan.Open) != 0 || scan.Answered["catalogue"] == "" {

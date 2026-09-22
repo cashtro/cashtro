@@ -92,8 +92,8 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if got := status["agents"]; got != 15 {
 		t.Fatalf("board agents = %v, want 15", got)
 	}
-	if got := status["lines"]; got != 10 {
-		t.Fatalf("board lines = %v, want 9", got)
+	if got := status["lines"]; got != 11 {
+		t.Fatalf("board lines = %v, want 11", got)
 	}
 
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.lines"})
@@ -101,7 +101,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.lines: %+v %v", res, err)
 	}
 	lines, ok := res.Data.([]Line)
-	if !ok || len(lines) != 10 {
+	if !ok || len(lines) != 11 {
 		t.Fatalf("lines = %#v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{

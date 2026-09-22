@@ -304,7 +304,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 				return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
 			}
 			_, _ = a.k.Post("manager", "comms", "fiche", fiche.Code+" prête")
-			_, _ = a.k.Post("manager", "operator", "fiche", fiche.Code+" vers Proximity et Empire")
+			_, _ = a.k.Post("manager", "operator", "fiche", fiche.Code+" vers le marketplace et Empire")
 		}
 		return kernel.Result{OK: ready, Message: why, Data: fiche}, nil
 

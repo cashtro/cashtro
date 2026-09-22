@@ -53,13 +53,13 @@ func Known(action string) map[string]string {
 	switch action {
 	case "scanapp", "chain":
 		return map[string]string{
-			"catalogue": "Empire vend les produits du Scan App qui ont une fiche prête. Pas la ligne brute de la base.",
+			"catalogue": "Le Scan App est interne et déjà déployé. Il ne vend pas. Le marketplace vend les items scannés. Empire vend aussi ces produits en live, s'ils ont une fiche prête.",
 		}
 	case "marketplace":
 		return map[string]string{
-			"marge":  "Plus cher que la référence, pour un profit. Le montant n'est pas donné : ne pas inventer de pourcentage.",
-			"url":    "Pas en ligne. Déployer une fois prêt. Le scanner n'est pas ce site.",
-			"stripe": "Stripe et MCP sur le site du marketplace seulement. Le live Empire n'est pas branché à Stripe.",
+			"marge":  "Les prix dépassent de 20 % à 40 %. Des rabais seront lancés parce que les vrais prix en ligne sont plus chers. La comparaison en ligne sert la campagne marketing.",
+			"url":    "Pas en ligne. Déployer une fois prêt. Le scanner déployé n'est pas ce site.",
+			"stripe": "Stripe encaisse les projets propres : marketplace une fois déployé, Empire, PBTM, Pandora, business, technology et marketing. Pas Proximity, sauf demande. Pas le scanner, qui est interne.",
 		}
 	default:
 		return nil

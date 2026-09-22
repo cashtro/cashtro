@@ -258,9 +258,10 @@
       "fullName": "Evolu-Jeunes/Pandora",
       "org": "Evolu-Jeunes",
       "language": "EJS",
-      "brain": "à classer",
-      "line": "",
-      "status": "inconnu"
+      "brain": "Hustler",
+      "line": "Projets propres",
+      "lineId": "propres",
+      "status": "concept"
     },
     {
       "fullName": "Evolu-Jeunes/Plugin",
@@ -482,17 +483,19 @@
       "fullName": "cashtro/PBTM",
       "org": "cashtro",
       "language": "EJS",
-      "brain": "à classer",
-      "line": "",
-      "status": "inconnu"
+      "brain": "Hustler",
+      "line": "Projets propres",
+      "lineId": "propres",
+      "status": "concept"
     },
     {
       "fullName": "cashtro/Pandora",
       "org": "cashtro",
       "language": "—",
-      "brain": "à classer",
-      "line": "",
-      "status": "inconnu"
+      "brain": "Hustler",
+      "line": "Projets propres",
+      "lineId": "propres",
+      "status": "concept"
     },
     {
       "fullName": "cashtro/cashtro",
@@ -631,6 +634,16 @@
       "repos": [
         "Evolu-Jeunes/Empire-",
         "Evolu-Jeunes/EmpireMedia"
+      ]
+    },
+    {
+      "id": "propres",
+      "name": "Projets propres",
+      "brain": "Hustler",
+      "repos": [
+        "Evolu-Jeunes/Pandora",
+        "cashtro/PBTM",
+        "cashtro/Pandora"
       ]
     },
     {
@@ -1323,11 +1336,7 @@
     "repoNodes": 57,
     "bridges": 19
   },
-  "gaps": [
-    "Evolu-Jeunes/Pandora",
-    "cashtro/PBTM",
-    "cashtro/Pandora"
-  ],
+  "gaps": null,
   "rules": [
     "Coopérative : CEO, CTO, CMP. Cinq départements. Quinze employés spécialisés.",
     "Le roster de 1001 n'est pas des processus.",
