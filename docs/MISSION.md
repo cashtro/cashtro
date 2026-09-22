@@ -7,7 +7,7 @@ left blank are recorded here and in `docs/DECISIONS.md`.
 CONTROL_PLANE_REPO   = cashtro/cashtro
 GITHUB_ORGS          = Evolu-Jeunes
 GITHUB_USERS         = cashtro
-MODEL_ROUTE          = OpenRouter (existing kernel bus; Bedrock later)
+MODEL_ROUTE          = both: Ollama internal (llama3.2) + OpenRouter external (moonshotai/kimi-k3 and z-ai/glm-5.3 reasoning max)
 HARD_BUDGET_PER_RUN  = $2.00
 DEPLOY_TARGET        = local only
 DB                   = SQLite (dev) → Postgres (prod), same Prisma schema

@@ -1,5 +1,22 @@
 # DECISIONS
 
+## 2026-09-22 — Use both lanes, and Mermaid too
+
+- **Choice:** `model.chat` route `both` calls Ollama (internal) and, on
+  OpenRouter, Kimi K3 plus GLM 5.3 at reasoning `max`. Maps stay in
+  Graphify and in Mermaid (`docs/MAP.md`, `inventory/GRAPH.md`).
+- **Why:** Internal work stays on the local daemon. The two top external
+  models still answer the same prompt. Mermaid is the readable schema
+  next to the Graphify map.
+
+## 2026-09-22 — Model route is Kimi K3 and GLM 5.3 max
+
+- **Choice:** Primary `moonshotai/kimi-k3`. Also `z-ai/glm-5.3` with
+  reasoning effort `max`. Override with `OPENROUTER_MODEL` and
+  `OPENROUTER_ALSO_MODEL`.
+- **Why:** The swarm thinks through two top models. Kimi K3 is the
+  default brain. GLM top runs at max reasoning when that route is called.
+
 ## 2026-09-21 — Fill the blank mission header
 
 - **Choice:** `CONTROL_PLANE_REPO=cashtro/cashtro`, orgs=`Evolu-Jeunes`,

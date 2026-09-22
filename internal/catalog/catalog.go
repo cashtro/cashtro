@@ -247,7 +247,7 @@ func (c *Catalog) seed() {
 			Sector: "education",
 			Stage:  StageProduction,
 			Stack:  []string{"WordPress"},
-			Notes:  "Education platform",
+			Notes:  "École tech. Enseigne tout ce qui est tech. Site WordPress de la ligne école.",
 		},
 		{
 			ID:     "proximity",
@@ -255,8 +255,8 @@ func (c *Catalog) seed() {
 			Client: "Proximity Agency",
 			Sector: "agency",
 			Stage:  StageProduction,
-			Stack:  []string{"Next.js", "TypeScript", "Azure"},
-			Notes:  "Agency platform",
+			Stack:  []string{"WordPress", "PHP", "ACF Pro", "TypeScript", "Azure"},
+			Notes:  "Usine Proximity Agency. Sites WordPress/PHP/ACF Pro déployés sur Azure, pilotés par le cerveau principal.",
 		},
 		{
 			ID:     "scanapp",
@@ -265,7 +265,7 @@ func (c *Catalog) seed() {
 			Sector: "ops",
 			Stage:  StageConcept,
 			Stack:  []string{"TypeScript", "Python"},
-			Notes:  "Scan, CRM, and AI bots",
+			Notes:  "Marketplace. Vend la donnée du scan, fiches avec vraies photos, promo et marketing automatisés.",
 		},
 		{
 			ID:     "cashtro-catalog",

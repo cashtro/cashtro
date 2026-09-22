@@ -2,7 +2,13 @@
   "controlPlaneRepo": "cashtro/cashtro",
   "orgs": ["Evolu-Jeunes"],
   "users": ["cashtro"],
-  "modelRoute": "openrouter",
+  "modelRoute": "both",
+  "models": {
+    "internal": "ollama/llama3.2",
+    "primary": "moonshotai/kimi-k3",
+    "also": "z-ai/glm-5.3",
+    "glmReasoning": "max"
+  },
   "hardBudgetPerRunUsd": 2,
   "deployTarget": "local",
   "db": {

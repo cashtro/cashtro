@@ -88,9 +88,28 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.repos = %v, want 57", got)
 	}
 
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.lines"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.lines: %+v %v", res, err)
+	}
+	lines, ok := res.Data.([]Line)
+	if !ok || len(lines) != 8 {
+		t.Fatalf("lines = %#v", res.Data)
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.line",
+		Payload:    []byte(`{"id":"proximity"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.line: %+v %v", res, err)
+	}
+	if res.Data.(Line).Brain != "Forgeron" {
+		t.Fatalf("proximity brain = %+v", res.Data)
+	}
+
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.assign",
-		Payload:    []byte(`{"brain":"Sentinelle","repo":"evolu-jeunes/btk-avocats"}`),
+		Payload:    []byte(`{"brain":"Forgeron","repo":"Evolu-Jeunes/Btkavocat"}`),
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.assign: %+v %v", res, err)

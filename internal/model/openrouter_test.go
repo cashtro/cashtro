@@ -30,8 +30,11 @@ func TestChat(t *testing.T) {
 		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			t.Fatal(err)
 		}
-		if req.Model != "openai/gpt-4o-mini" || req.Messages[0].Content != "ping" {
+		if req.Model != DefaultModel || req.Messages[0].Content != "ping" {
 			t.Fatalf("req = %+v", req)
+		}
+		if req.Reasoning != nil {
+			t.Fatalf("kimi route must not force glm reasoning: %+v", req.Reasoning)
 		}
 		_ = json.NewEncoder(w).Encode(chatAPIResponse{
 			Model: req.Model,
@@ -57,6 +60,37 @@ func TestChat(t *testing.T) {
 	}
 	if got.Content != "pong" {
 		t.Fatalf("content = %q", got.Content)
+	}
+}
+
+func TestChatGLMMax(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var req chatAPIRequest
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+			t.Fatal(err)
+		}
+		if req.Model != AlsoModel {
+			t.Fatalf("model = %s", req.Model)
+		}
+		if req.Reasoning == nil || req.Reasoning.Effort != GLMReasoningEffort {
+			t.Fatalf("reasoning = %+v", req.Reasoning)
+		}
+		_ = json.NewEncoder(w).Encode(chatAPIResponse{
+			Model: req.Model,
+			Choices: []struct {
+				Message Message `json:"message"`
+			}{{Message: Message{Role: "assistant", Content: "ok"}}},
+		})
+	}))
+	defer srv.Close()
+
+	c := &Client{BaseURL: srv.URL, APIKey: "test-key", Model: DefaultModel, Also: AlsoModel, HTTP: srv.Client()}
+	got, err := c.Chat(context.Background(), ChatRequest{
+		Model:    AlsoModel,
+		Messages: []Message{{Role: "user", Content: "plan"}},
+	})
+	if err != nil || got.Content != "ok" || got.Model != AlsoModel {
+		t.Fatalf("got %+v err %v", got, err)
 	}
 }
 

@@ -51,22 +51,26 @@ make voltron-status   # /health probe
 
 Logs and heartbeat: `/tmp/voltron/voltron.log`, `/tmp/voltron/status.json`.
 
-### Do we need OpenRouter?
+### Model route — both lanes
 
-**No, not to boot.** The kernel, process table, delivery board, and journal
-run with zero model keys.
+The router uses **both** lanes on `model.chat` with `"route":"both"` (the default).
 
-**Yes, if an agentic needs to think.** OpenRouter is the optional model bus:
-one key, many models. Bind it when you want `model.chat` to execute.
+| Lane | Provider | Models |
+| --- | --- | --- |
+| internal | Ollama | `llama3.2` (`OLLAMA_MODEL`) |
+| external | OpenRouter | `moonshotai/kimi-k3` and `z-ai/glm-5.3` at reasoning `max` |
 
 ```bash
+ollama serve
+export OLLAMA_MODEL=llama3.2
 export OPENROUTER_API_KEY=sk-or-...
-export OPENROUTER_MODEL=openai/gpt-4o-mini   # optional
+export OPENROUTER_MODEL=moonshotai/kimi-k3
+export OPENROUTER_ALSO_MODEL=z-ai/glm-5.3
 go run ./cmd/cashtro
 ```
 
-Without a key the `router` process stays **resident** and tells you it is
-unbound. The rest of the OS stays live.
+The kernel still boots with neither daemon nor key. The `router` stays
+**resident** until Ollama answers or `OPENROUTER_API_KEY` is set.
 
 | Method | Path | What it does |
 | --- | --- | --- |

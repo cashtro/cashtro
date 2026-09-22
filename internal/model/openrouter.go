@@ -20,8 +20,12 @@ import (
 const (
 	// DefaultBaseURL is the OpenRouter chat API root.
 	DefaultBaseURL = "https://openrouter.ai/api/v1"
-	// DefaultModel is a cheap, capable default until OPENROUTER_MODEL is set.
-	DefaultModel = "openai/gpt-4o-mini"
+	// DefaultModel is the primary brain: Moonshot Kimi K3.
+	DefaultModel = "moonshotai/kimi-k3"
+	// AlsoModel is the second brain: Z.ai GLM top tier.
+	AlsoModel = "z-ai/glm-5.3"
+	// GLMReasoningEffort is the max reasoning effort for the GLM route.
+	GLMReasoningEffort = "max"
 )
 
 // Message is one chat turn.
@@ -32,23 +36,27 @@ type Message struct {
 
 // ChatRequest is what agentics send to the router.
 type ChatRequest struct {
+	Route    string    `json:"route,omitempty"` // internal, external, or both
 	Model    string    `json:"model,omitempty"`
 	Messages []Message `json:"messages"`
 }
 
 // ChatResponse is the model reply we keep.
 type ChatResponse struct {
+	Route   string `json:"route,omitempty"`
 	Model   string `json:"model"`
 	Content string `json:"content"`
 }
 
 // Status is the public bind card.
 type Status struct {
-	Provider string `json:"provider"`
-	Bound    bool   `json:"bound"`
-	Model    string `json:"model"`
-	BaseURL  string `json:"baseUrl"`
-	Hint     string `json:"hint"`
+	Provider  string `json:"provider"`
+	Bound     bool   `json:"bound"`
+	Model     string `json:"model"`
+	Also      string `json:"also"`
+	Reasoning string `json:"reasoning,omitempty"`
+	BaseURL   string `json:"baseUrl"`
+	Hint      string `json:"hint"`
 }
 
 // Client talks to an OpenAI-compatible OpenRouter endpoint.
@@ -56,6 +64,7 @@ type Client struct {
 	BaseURL string
 	APIKey  string
 	Model   string
+	Also    string
 	HTTP    *http.Client
 	Referer string
 	Title   string
@@ -67,9 +76,13 @@ func FromEnv() *Client {
 	if key == "" {
 		return nil
 	}
-	model := strings.TrimSpace(os.Getenv("OPENROUTER_MODEL"))
-	if model == "" {
-		model = DefaultModel
+	modelName := strings.TrimSpace(os.Getenv("OPENROUTER_MODEL"))
+	if modelName == "" {
+		modelName = DefaultModel
+	}
+	also := strings.TrimSpace(os.Getenv("OPENROUTER_ALSO_MODEL"))
+	if also == "" {
+		also = AlsoModel
 	}
 	base := strings.TrimSpace(os.Getenv("OPENROUTER_BASE_URL"))
 	if base == "" {
@@ -78,7 +91,8 @@ func FromEnv() *Client {
 	return &Client{
 		BaseURL: strings.TrimRight(base, "/"),
 		APIKey:  key,
-		Model:   model,
+		Model:   modelName,
+		Also:    also,
 		HTTP:    &http.Client{Timeout: 45 * time.Second},
 		Referer: "https://github.com/cashtro/cashtro",
 		Title:   "Cashtro OS",
@@ -94,25 +108,38 @@ func Bound(c *Client) bool {
 func Card(c *Client) Status {
 	if !Bound(c) {
 		return Status{
-			Provider: "openrouter",
-			Bound:    false,
-			Model:    DefaultModel,
-			BaseURL:  DefaultBaseURL,
-			Hint:     "Kernel is up without a model. Set OPENROUTER_API_KEY to bind the router.",
+			Provider:  "openrouter",
+			Bound:     false,
+			Model:     DefaultModel,
+			Also:      AlsoModel,
+			Reasoning: GLMReasoningEffort,
+			BaseURL:   DefaultBaseURL,
+			Hint:      "Kernel is up without a key. Route is Kimi K3 + GLM 5.3 max. Set OPENROUTER_API_KEY to bind.",
 		}
 	}
+	also := c.Also
+	if also == "" {
+		also = AlsoModel
+	}
 	return Status{
-		Provider: "openrouter",
-		Bound:    true,
-		Model:    c.Model,
-		BaseURL:  c.BaseURL,
-		Hint:     "Router live. Agentics can think through OpenRouter.",
+		Provider:  "openrouter",
+		Bound:     true,
+		Model:     c.Model,
+		Also:      also,
+		Reasoning: GLMReasoningEffort,
+		BaseURL:   c.BaseURL,
+		Hint:      "Router live. Primary " + c.Model + ", also " + also + " (reasoning " + GLMReasoningEffort + ").",
 	}
 }
 
+type reasoningOpt struct {
+	Effort string `json:"effort,omitempty"`
+}
+
 type chatAPIRequest struct {
-	Model    string    `json:"model"`
-	Messages []Message `json:"messages"`
+	Model     string        `json:"model"`
+	Messages  []Message     `json:"messages"`
+	Reasoning *reasoningOpt `json:"reasoning,omitempty"`
 }
 
 type chatAPIResponse struct {
@@ -137,7 +164,11 @@ func (c *Client) Chat(ctx context.Context, req ChatRequest) (ChatResponse, error
 	if len(req.Messages) == 0 {
 		return ChatResponse{}, fmt.Errorf("messages required")
 	}
-	body, err := json.Marshal(chatAPIRequest{Model: model, Messages: req.Messages})
+	apiReq := chatAPIRequest{Model: model, Messages: req.Messages}
+	if glmMax(model, c) {
+		apiReq.Reasoning = &reasoningOpt{Effort: GLMReasoningEffort}
+	}
+	body, err := json.Marshal(apiReq)
 	if err != nil {
 		return ChatResponse{}, err
 	}
@@ -184,5 +215,15 @@ func (c *Client) Chat(ctx context.Context, req ChatRequest) (ChatResponse, error
 	if outModel == "" {
 		outModel = model
 	}
-	return ChatResponse{Model: outModel, Content: parsed.Choices[0].Message.Content}, nil
+	return ChatResponse{Route: "external", Model: outModel, Content: parsed.Choices[0].Message.Content}, nil
+}
+
+// glmMax reports whether this call should run the GLM route at max reasoning.
+func glmMax(modelName string, c *Client) bool {
+	also := AlsoModel
+	if c != nil && c.Also != "" {
+		also = c.Also
+	}
+	name := strings.ToLower(modelName)
+	return name == strings.ToLower(also) || strings.Contains(name, "glm")
 }

@@ -9,7 +9,9 @@ package agents
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -20,7 +22,7 @@ import (
 func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 	k := kernel.New(opts...)
 	cat := catalog.New()
-	for _, agent := range Builtins(cat, model.FromEnv()) {
+	for _, agent := range Builtins(cat, model.BusFromEnv()) {
 		k.Register(agent)
 	}
 	if err := k.Boot(context.Background()); err != nil {
@@ -30,7 +32,7 @@ func Boot(opts ...kernel.Option) (*kernel.Kernel, error) {
 }
 
 // Builtins is the process image of Cashtro OS.
-func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
+func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 	return []kernel.Agent{
 		resident(kernel.Spec{
 			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
@@ -40,7 +42,7 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
 		}),
 		&deliveryAgent{cat: cat},
-		&routerAgent{client: router},
+		&routerAgent{bus: router},
 		&researchAgent{},
 		resident(kernel.Spec{
 			ID: "explorer", Name: "Explorer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
@@ -111,6 +113,8 @@ func (a *managerAgent) Spec() kernel.Spec {
 		Capabilities: []string{
 			"manager.status",
 			"manager.projects",
+			"manager.lines",
+			"manager.line",
 			"manager.assign",
 			"manager.graphify",
 		},
@@ -140,7 +144,22 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"fiches":     58,
 			"graphify":   "39593 nodes · 99285 edges",
 			"brains_list": []string{"Architecte", "Cartographe", "Forgeron", "Orfèvre", "Hustler"},
+			"lines":       len(Lines()),
 		}}, nil
+
+	case "manager.lines":
+		return kernel.Result{OK: true, Message: "business lines under the main brain", Data: Lines()}, nil
+
+	case "manager.line":
+		id := payloadQuery(call, "id")
+		if id == "" {
+			id = payloadQuery(call, "line")
+		}
+		ln, ok := LineByID(id)
+		if !ok {
+			return kernel.Result{OK: false, Message: "unknown line: " + id}, nil
+		}
+		return kernel.Result{OK: true, Message: ln.Name, Data: ln}, nil
 
 	case "manager.projects":
 		return kernel.Result{OK: true, Message: "57 projects under management", Data: map[string]any{
@@ -248,15 +267,15 @@ func (a *deliveryAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Re
 }
 
 type routerAgent struct {
-	client *model.Client
+	bus *model.Bus
 }
 
 func (a *routerAgent) Spec() kernel.Spec {
 	mode := kernel.ModeResident
-	summary := "Optional OpenRouter model bus. Kernel boots without a key."
-	if model.Bound(a.client) {
+	summary := "Both lanes: Ollama internal, Kimi K3 + GLM 5.3 max external."
+	if a.bus.Live() {
 		mode = kernel.ModeLive
-		summary = "OpenRouter bound. Agentics can think through this router."
+		summary = "Router live on both lanes: Ollama internal, Kimi K3 + GLM 5.3 max external."
 	}
 	return kernel.Spec{
 		ID: "router", Name: "Router", Kind: kernel.KindSystem, Mode: mode,
@@ -267,22 +286,25 @@ func (a *routerAgent) Spec() kernel.Spec {
 }
 
 func (a *routerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
-	st := model.Card(a.client)
-	k.Publish("router", "bind", st.Hint, map[string]any{"bound": st.Bound, "model": st.Model})
+	st := a.bus.Card()
+	k.Publish("router", "bind", st.Hint, map[string]any{
+		"internal": st.Internal.Bound,
+		"external": st.External.Bound,
+		"ollama":   st.Internal.Model,
+		"kimi":     st.External.Model,
+		"glm":      st.External.Also,
+	})
 	return nil
 }
 
 func (a *routerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
 	switch call.Capability {
 	case "model.status":
-		st := model.Card(a.client)
+		st := a.bus.Card()
 		return kernel.Result{OK: true, Message: st.Hint, Data: st}, nil
 	case "model.chat":
-		if !model.Bound(a.client) {
-			st := model.Card(a.client)
-			return kernel.Result{OK: false, Message: st.Hint, Data: st}, nil
-		}
 		var in struct {
+			Route    string          `json:"route"`
 			Prompt   string          `json:"prompt"`
 			Model    string          `json:"model"`
 			Messages []model.Message `json:"messages"`
@@ -296,11 +318,19 @@ func (a *routerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Resu
 		if len(msgs) == 0 && in.Prompt != "" {
 			msgs = []model.Message{{Role: "user", Content: in.Prompt}}
 		}
-		out, err := a.client.Chat(ctx, model.ChatRequest{Model: in.Model, Messages: msgs})
+		out, err := a.bus.Chat(ctx, model.ChatRequest{Route: in.Route, Model: in.Model, Messages: msgs})
 		if err != nil {
+			if errors.Is(err, model.ErrUnbound) {
+				st := a.bus.Card()
+				return kernel.Result{OK: false, Message: st.Hint, Data: st}, nil
+			}
 			return kernel.Result{}, err
 		}
-		return kernel.Result{OK: true, Message: "routed " + out.Model, Data: out}, nil
+		names := make([]string, 0, len(out))
+		for _, part := range out {
+			names = append(names, part.Route+":"+part.Model)
+		}
+		return kernel.Result{OK: true, Message: "routed " + strings.Join(names, ", "), Data: out}, nil
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)
 	}
