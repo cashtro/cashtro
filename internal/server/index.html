@@ -430,7 +430,13 @@
     }
     function visible(node) {
       if (layer === "all") return true;
-      if (layer === "giant") return node.kind === "token" || node.group === "giant" || (node.meta && node.meta.brain === "Hustler") || node.id.indexOf("giant") >= 0 || node.id.indexOf("trading") >= 0 || node.id.indexOf("empire") >= 0 || node.id.indexOf("nft") >= 0 || node.kind === "brain";
+      if (layer === "giant") {
+        return node.kind === "token" || node.group === "giant" || node.kind === "brain" ||
+          (node.id && (node.id.indexOf("giant") >= 0 || node.id.indexOf("trading") >= 0 || node.id.indexOf("empire") >= 0 || node.id.indexOf("nft") >= 0));
+      }
+      if (layer === "eco") {
+        return node.kind === "token" || node.kind === "os" || node.kind === "brain" || node.kind === "line" || node.kind === "ship";
+      }
       return layerOf(node) === layer;
     }
     function layout(nodes, edges) {
