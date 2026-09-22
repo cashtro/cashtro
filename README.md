@@ -109,6 +109,7 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/memory` | Episodic recall |
 | `POST` | `/api/memory` | Store an episodic fact |
 | `GET` | `/api/confirms` | Human gate |
+| `POST` | `/api/comms` | Park outbound draft until human allow |
 | `GET` | `/api/trace?q=` | Investigator blast radius |
 | `GET` | `/api/security?q=` | Security triage |
 | `POST` | `/api/deploy` | Release dry-run gate |

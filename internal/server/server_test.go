@@ -161,6 +161,14 @@ func TestOSAndAgents(t *testing.T) {
 	}
 
 	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/comms", strings.NewReader(`{"body":"overnight outbound draft · no send until allow"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated || !strings.Contains(res.Body.String(), "parked confirm") {
+		t.Fatalf("comms = %s", res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/notes", nil))
 	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "2606.01508") {
 		t.Fatalf("notes = %s", res.Body.String())

@@ -39,6 +39,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/confirms", s.confirms)
 	mux.HandleFunc("POST /api/confirms/{id}/allow", s.allowConfirm)
 	mux.HandleFunc("POST /api/confirms/{id}/deny", s.denyConfirm)
+	mux.HandleFunc("POST /api/comms", s.comms)
 	mux.HandleFunc("GET /api/trace", s.trace)
 	mux.HandleFunc("GET /api/security", s.security)
 	mux.HandleFunc("POST /api/deploy", s.deploy)
@@ -238,6 +239,20 @@ func (s *api) decideConfirm(w http.ResponseWriter, r *http.Request, allow bool) 
 		return
 	}
 	writeJSON(w, http.StatusOK, c)
+}
+
+func (s *api) comms(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Body string `json:"body"`
+	}
+	_ = decodeJSON(r, &in)
+	raw, _ := json.Marshal(map[string]string{"body": in.Body})
+	res, err := s.k.Invoke(r.Context(), "comms", kernel.Call{Capability: "comms.send", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusCreated, res)
 }
 
 func (s *api) trace(w http.ResponseWriter, r *http.Request) {
