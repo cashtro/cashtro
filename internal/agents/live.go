@@ -183,6 +183,27 @@ func payloadQuery(call kernel.Call, key string) string {
 	return ""
 }
 
+func payloadAnswers(call kernel.Call) map[string]string {
+	out := map[string]string{}
+	if len(call.Payload) == 0 {
+		return out
+	}
+	var obj map[string]any
+	if err := json.Unmarshal(call.Payload, &obj); err != nil {
+		return out
+	}
+	raw, ok := obj["answers"].(map[string]any)
+	if !ok {
+		return out
+	}
+	for k, v := range raw {
+		if s, ok := v.(string); ok {
+			out[k] = strings.TrimSpace(s)
+		}
+	}
+	return out
+}
+
 func payloadList(call kernel.Call, key string) []string {
 	if len(call.Payload) == 0 {
 		return nil

@@ -122,6 +122,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.org",
 			"manager.loi",
 			"manager.contradict",
+			"manager.ask",
 			"manager.improve",
 			"manager.chain",
 			"manager.fiche",
@@ -213,7 +214,18 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"repos":        a.board.Repos,
 		}}, nil
 
+	case "manager.ask":
+		action := payloadQuery(call, "action")
+		if action == "" {
+			action = payloadQuery(call, "id")
+		}
+		open := OpenQuestions(action, payloadAnswers(call))
+		return kernel.Result{OK: len(open) == 0, Message: askMessage(open), Data: open}, nil
+
 	case "manager.contradict":
+		if open := OpenQuestions("contradict", payloadAnswers(call)); len(open) > 0 {
+			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+		}
 		var proposal Proposal
 		if len(call.Payload) > 0 {
 			if err := json.Unmarshal(call.Payload, &proposal); err != nil {
@@ -254,6 +266,9 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		if !ok {
 			return kernel.Result{OK: false, Message: "unknown chain: " + id}, nil
 		}
+		if open := OpenQuestions(id, payloadAnswers(call)); len(open) > 0 {
+			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+		}
 		posted := make([]string, 0, len(steps))
 		specialized := make([]Improvement, 0, len(steps))
 		for _, step := range steps {
@@ -282,12 +297,18 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		}
 		ready, why := fiche.Ready()
 		if ready {
+			if open := OpenQuestions("fiche", payloadAnswers(call)); len(open) > 0 {
+				return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+			}
 			_, _ = a.k.Post("manager", "comms", "fiche", fiche.Code+" prête")
 			_, _ = a.k.Post("manager", "operator", "fiche", fiche.Code+" vers Proximity et Empire")
 		}
 		return kernel.Result{OK: ready, Message: why, Data: fiche}, nil
 
 	case "manager.assign":
+		if open := OpenQuestions("assign", payloadAnswers(call)); len(open) > 0 {
+			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+		}
 		brain := payloadQuery(call, "brain")
 		repo := payloadQuery(call, "repo")
 		if brain == "" || repo == "" {

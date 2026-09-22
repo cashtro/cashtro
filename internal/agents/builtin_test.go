@@ -131,6 +131,16 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		Capability: "manager.chain",
 		Payload:    []byte(`{"id":"scanapp"}`),
 	})
+	if err != nil || res.OK {
+		t.Fatalf("chain without context should ask: %+v %v", res, err)
+	}
+	if qs, ok := res.Data.([]Question); !ok || len(qs) != 6 {
+		t.Fatalf("questions = %#v", res.Data)
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.chain",
+		Payload: []byte(`{"id":"scanapp","answers":{"boutique":"Noix","codes":"EAN-13","photo":"générée par nous","site":"Evolu-Jeunes/noix, pas en ligne","kick":"non","prix":"CAD taxes incluses Québec"}}`),
+	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.chain: %+v %v", res, err)
 	}
@@ -145,6 +155,13 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		Capability: "manager.fiche",
 		Payload:    []byte(`{"code":"123","name":"Noix","price":"4.00","stock":2,"photo":"generated"}`),
 	})
+	if err != nil || res.OK {
+		t.Fatalf("fiche without buyer should ask: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.fiche",
+		Payload:    []byte(`{"code":"123","name":"Noix","price":"4.00","stock":2,"photo":"generated","answers":{"acheteur":"particulier au Québec","droits":"générée par nous, pas une personne"}}`),
+	})
 	if err != nil || !res.OK {
 		t.Fatalf("generated photo should publish: %+v %v", res, err)
 	}
@@ -153,7 +170,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.contradict",
-		Payload:    []byte(`{"subject":"site","options":[{"name":"refaire","cost":8,"steps":6},{"name":"réutiliser","cost":1,"steps":2}]}`),
+		Payload:    []byte(`{"subject":"site","answers":{"situation":"le thème Noix existe déjà","intouchable":"aucun site live","mieux":"moins de temps"},"options":[{"name":"refaire","cost":8,"steps":6},{"name":"réutiliser","cost":1,"steps":2}]}`),
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.contradict: %+v %v", res, err)
@@ -208,7 +225,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.assign",
-		Payload:    []byte(`{"brain":"Forgeron","repo":"Evolu-Jeunes/Btkavocat"}`),
+		Payload:    []byte(`{"brain":"Forgeron","repo":"Evolu-Jeunes/Btkavocat","answers":{"pourquoi":"Forgeron confectionne, on écarte le Hustler","live":"oui, preview seulement"}}`),
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.assign: %+v %v", res, err)
