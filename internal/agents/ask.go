@@ -16,6 +16,9 @@ func QuestionsFor(action string) []Question {
 	case "scanapp", "chain":
 		return []Question{
 			{ID: "marge", Ask: "De combien le prix de vente dépasse le prix de référence, et ce prix de référence est lequel : le coût, ou le prix vu en ligne?", Improves: "vendre plus cher sans inventer un prix"},
+			{ID: "marketplace", Ask: "Le marketplace qui encaisse est déjà en ligne à quelle adresse, ou seul le scanner inventory-scanner-theta.vercel.app est déployé?", Improves: "Stripe se branche sur le site qui vend, pas sur le scanner"},
+			{ID: "catalogue", Ask: "Empire vend tout le stock du scanner, ou seulement les produits déjà mis en fiche sur le marketplace?", Improves: "le live ne vend pas un item qui n'a pas de fiche"},
+			{ID: "stripe", Ask: "Stripe encaisse seulement sur le site du marketplace, ou aussi pendant le live Empire?", Improves: "un seul chemin d'argent, ou deux, et on ne les mélange pas"},
 		}
 	case "fiche":
 		return []Question{

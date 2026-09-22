@@ -134,12 +134,12 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || res.OK {
 		t.Fatalf("chain without context should ask: %+v %v", res, err)
 	}
-	if qs, ok := res.Data.([]Question); !ok || len(qs) != 1 || qs[0].ID != "marge" {
+	if qs, ok := res.Data.([]Question); !ok || len(qs) != 4 || qs[0].ID != "marge" {
 		t.Fatalf("questions = %#v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.chain",
-		Payload:    []byte(`{"id":"scanapp","answers":{"marge":"pas encore chiffrée"}}`),
+		Payload:    []byte(`{"id":"scanapp","answers":{"marge":"pas encore chiffrée","marketplace":"pas déployé","catalogue":"fiches seulement","stripe":"site seulement"}}`),
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.chain: %+v %v", res, err)

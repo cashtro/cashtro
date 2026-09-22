@@ -49,7 +49,7 @@ func Lines() []Line {
 				"Codes déjà lus : EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39, QR. " +
 				"Photo en ligne seulement avec les droits, sinon une image à nous. " +
 				"Prix CAD, taxes non incluses, Canada entier. Proximity n'est pas dans cette chaîne. " +
-				"Le live passe par Empire, sur toutes les plateformes.",
+				"Le live passe par Empire, sur toutes les plateformes. Empire vend aussi les produits du Scan App.",
 			Controls: "CMP vend sur le marketplace (MCP + Stripe) et au Canada. Opérations lit le stock sur le scanner Vercel. Contrôle vérifie les droits photo.",
 			Repos:    []string{"Evolu-Jeunes/ScanApp"},
 		},
