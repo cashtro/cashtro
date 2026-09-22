@@ -59,7 +59,7 @@ func run(addr, data string) error {
 		return err
 	}
 	about := k.About()
-	log.Printf("%s %s · %d agentics online · image %s · %s", about.Name, about.Version, about.Running, data, map[bool]string{true: "desk closed · work still flowing", false: "desk open"}[about.Closed])
+	log.Printf("%s %s · %d agentics online · image %s · %s", about.Name, about.Version, about.Running, data, map[bool]string{true: "hive sealed · work still flowing", false: "hive open"}[about.Closed])
 
 	if every := pulseEvery(); every > 0 {
 		go k.RunClosedPulses(ctx, every)

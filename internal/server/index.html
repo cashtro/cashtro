@@ -7,65 +7,165 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #f4ead7;
-      --muted: #9a8f7c;
-      --line: #3a342b;
-      --paper: #1a1712;
-      --bg: #100e0b;
-      --brass: #c4a15a;
-      --idea: #7f93a1;
-      --concept: #c4a15a;
-      --production: #7ea37f;
-      --danger: #c47a5a;
+      --ink: #f8ecd0;
+      --muted: #c9a56a;
+      --line: #5a3a14;
+      --paper: #24180b;
+      --bg: #100a04;
+      --honey: #f5b942;
+      --amber: #e08a1e;
+      --wax: #ffe08a;
+      --comb: #8b5a1e;
+      --idea: #d4b48a;
+      --concept: #f5b942;
+      --production: #c6e07a;
+      --danger: #e07a4a;
+      --hive-open: 0;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; background: var(--bg); color: var(--ink); }
     body {
-      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      font-family: Nunito, system-ui, sans-serif;
       min-height: 100vh;
-      background: radial-gradient(1200px 500px at 10% -10%, #2a2214 0%, transparent 55%), var(--bg);
+      overflow-x: hidden;
+      background:
+        radial-gradient(900px 420px at 50% -8%, rgba(245, 185, 66, 0.22), transparent 60%),
+        radial-gradient(700px 500px at 90% 20%, rgba(224, 138, 30, 0.12), transparent 50%),
+        var(--bg);
     }
-    a { color: var(--brass); }
-    .bar, .desk, footer { width: min(1240px, calc(100% - 28px)); margin: 0 auto; }
-    .bar { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; padding: 22px 0 10px; }
-    .mark { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brass); }
-    h1 { font-family: "Cormorant Garamond", Georgia, serif; font-size: clamp(34px, 5vw, 58px); font-weight: 500; line-height: 0.95; margin: 8px 0 0; }
-    h1 em { font-style: italic; color: var(--brass); }
-    .lede { color: var(--muted); max-width: 40rem; line-height: 1.5; margin: 10px 0 0; }
-    .stats { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 5px 10px; font-size: 12px; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.22;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='64' viewBox='0 0 56 64'><path fill='none' stroke='%23f5b942' stroke-width='1.2' d='M28 2l24 14v28L28 58 4 44V16z'/></svg>");
+      background-size: 56px 64px;
+      mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%);
+    }
+    a { color: var(--honey); }
+    .sky {
+      position: relative;
+      z-index: 1;
+      height: min(42vh, 380px);
+      margin-bottom: -40px;
+    }
+    #hive-svg { width: 100%; height: 100%; overflow: visible; }
+    #bees {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .bar, .desk, footer { width: min(1240px, calc(100% - 28px)); margin: 0 auto; position: relative; z-index: 2; }
+    .bar { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; padding: 8px 0 10px; }
+    .mark { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--honey); }
+    h1 { font-family: Fraunces, Georgia, serif; font-size: clamp(34px, 5vw, 58px); font-weight: 500; line-height: 0.95; margin: 8px 0 0; }
+    h1 em { font-style: italic; color: var(--honey); }
+    .lede { color: var(--muted); max-width: 42rem; line-height: 1.5; margin: 10px 0 0; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; max-width: 28rem; }
+    .chip {
+      border: 1px solid var(--line);
+      background: rgba(36, 24, 11, 0.85);
+      clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%, 0 50%);
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 700;
+    }
     .chip.live { color: var(--production); }
     .chip.unbound { color: var(--danger); }
-    .chip.closed { color: var(--concept); }
-    .banner { width: min(1240px, calc(100% - 28px)); margin: 8px auto 0; border: 1px solid var(--concept); background: #1c1810; padding: 10px 14px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concept); }
+    .chip.closed { color: var(--honey); }
+    .banner {
+      width: min(1240px, calc(100% - 28px));
+      margin: 8px auto 0;
+      border: 1px solid var(--honey);
+      background: linear-gradient(90deg, #3a280c, #1c1408);
+      padding: 10px 14px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--honey);
+      position: relative;
+      z-index: 2;
+    }
     .banner[hidden] { display: none; }
     .actions { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-    .desk { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 14px; padding: 16px 0; }
-    .panel { border: 1px solid var(--line); background: rgba(26, 23, 18, 0.9); padding: 14px; }
-    .panel h2 { margin: 0 0 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brass); }
-    .agents { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .agent { border: 1px solid var(--line); background: #14110d; padding: 10px; cursor: pointer; text-align: left; color: inherit; width: 100%; }
-    .agent:hover, .agent.active { border-color: var(--brass); }
-    .agent b { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 18px; font-weight: 500; }
-    .agent span { color: var(--muted); font-size: 12px; }
-    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .desk { display: grid; grid-template-columns: 0.95fr 1.35fr; gap: 14px; padding: 16px 0; }
+    .panel {
+      border: 1px solid var(--line);
+      background: rgba(26, 16, 6, 0.88);
+      padding: 14px;
+      box-shadow: 0 0 0 1px rgba(245, 185, 66, 0.06), 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+    .panel h2 { margin: 0 0 10px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--honey); }
+    .agents {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+      gap: 12px 8px;
+      padding-bottom: 18px;
+    }
+    .agent {
+      aspect-ratio: 1 / 1.1;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      border: 0;
+      background:
+        linear-gradient(160deg, rgba(245, 185, 66, 0.28), transparent 42%),
+        linear-gradient(180deg, #3a2810, #160e06);
+      cursor: pointer;
+      text-align: center;
+      color: inherit;
+      width: 100%;
+      padding: 22px 10px 16px;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+    body.hive-open .agent { animation: cell-breathe 4.8s ease-in-out infinite; }
+    body.hive-sealed .agent { filter: saturate(0.7) brightness(0.86); }
+    .agent:nth-child(3n) { animation-delay: -1.2s; }
+    .agent:nth-child(3n+1) { animation-delay: -2.4s; }
+    .agent:hover, .agent.active {
+      filter: none;
+      transform: translateY(-4px) scale(1.04);
+      background:
+        linear-gradient(160deg, rgba(255, 224, 138, 0.45), transparent 50%),
+        linear-gradient(180deg, #5a3a12, #1c1206);
+    }
+    .agent b { display: block; font-family: Fraunces, Georgia, serif; font-size: 15px; font-weight: 500; line-height: 1.1; }
+    .agent span { color: var(--muted); font-size: 10px; line-height: 1.3; }
+    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; }
     .dot.live { color: var(--production); }
-    .dot.resident { color: var(--concept); }
+    .dot.resident { color: var(--honey); }
     .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .col { border: 1px solid var(--line); min-height: 180px; padding: 10px; }
+    .col {
+      min-height: 180px;
+      padding: 12px 10px;
+      background: linear-gradient(180deg, rgba(245, 185, 66, 0.08), transparent);
+      clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+      outline: 1px solid var(--line);
+    }
     .col h3 { margin: 0 0 8px; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; display: flex; justify-content: space-between; }
     .col.idea h3 { color: var(--idea); }
     .col.concept h3 { color: var(--concept); }
     .col.production h3 { color: var(--production); }
-    .card { border: 1px solid var(--line); background: #14110d; padding: 10px; margin-bottom: 8px; }
-    .card h4 { margin: 0 0 4px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 16px; }
+    .card {
+      background: #1a1208;
+      padding: 10px;
+      margin-bottom: 8px;
+      clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%, 0 50%);
+    }
+    .card h4 { margin: 0 0 4px; font-family: Fraunces, Georgia, serif; font-size: 16px; }
     .card p { margin: 0; color: var(--muted); font-size: 12px; }
-    button, input, textarea { font: inherit; color: inherit; background: #100e0b; border: 1px solid var(--line); }
-    button { cursor: pointer; padding: 7px 10px; width: 100%; }
-    button:hover { border-color: var(--brass); color: var(--brass); }
+    button, input, textarea { font: inherit; color: inherit; background: #160e06; border: 1px solid var(--line); }
+    button { cursor: pointer; padding: 8px 10px; width: 100%; font-weight: 700; }
+    button:hover { border-color: var(--honey); color: var(--honey); }
     button:disabled { opacity: 0.4; cursor: default; color: var(--muted); border-color: var(--line); }
     form, .inspect { display: grid; gap: 8px; margin-top: 10px; }
     label { font-size: 12px; color: var(--muted); display: grid; gap: 4px; }
@@ -73,45 +173,59 @@
     .journal { max-height: 220px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.5; color: var(--muted); }
     .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
     footer { border-top: 1px solid var(--line); padding: 14px 0 28px; color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+    @keyframes cell-breathe {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-3px) scale(1.03); }
+    }
+    body.hive-open .sky { filter: drop-shadow(0 0 28px rgba(245, 185, 66, 0.28)); }
+    body.hive-sealed .sky { filter: grayscale(0.15) brightness(0.9); }
+    @media (prefers-reduced-motion: reduce) {
+      .agent, body.hive-open .agent { animation: none; }
+    }
     @media (max-width: 900px) {
       .desk, .board, .agents { display: block; }
       .agent, .col, .panel { margin-bottom: 10px; }
+      .sky { height: 260px; }
     }
   </style>
 </head>
-<body>
+<body class="hive-open">
+  <div class="sky" id="sky" aria-hidden="true">
+    <svg id="hive-svg" viewBox="0 0 800 320" preserveAspectRatio="xMidYMid meet"></svg>
+    <canvas id="bees"></canvas>
+  </div>
   <header class="bar">
     <div>
-      <div class="mark">Cashtro OS · under construction · FR/EN</div>
-      <h1>AI OS · idea → concept → <em>production</em></h1>
-      <p class="lede" id="lede">Every agentic we build here is a process. Delivery is live. Research is live. Watch keeps the desk flowing while things are closed.</p>
+      <div class="mark">Cashtro OS · hive · under construction · FR/EN</div>
+      <h1>AI OS · idea → concept → <em>honey</em></h1>
+      <p class="lede" id="lede">Every agentic we build here is a bee. The hive opens, the comb moves, delivery still runs idea → concept → production.</p>
     </div>
     <div class="stats" id="stats"></div>
   </header>
-  <div class="banner" id="closed-banner" hidden>desk closed · work still flowing through here</div>
+  <div class="banner" id="closed-banner" hidden>hive sealed · bees still working the comb</div>
   <main class="desk">
     <section class="panel">
-      <h2>Process table</h2>
+      <h2>Colony</h2>
       <div class="agents" id="agents"></div>
       <div class="inspect" id="inspect"></div>
       <div class="panel" style="margin-top:14px">
         <h2>Closed hours</h2>
-        <p class="lede" id="watch-lede">Desk is open. Close it to keep work flowing unattended. Outbound comms still wait at the human gate.</p>
+        <p class="lede" id="watch-lede">Hive is open. Seal it to keep the colony working unattended. Outbound comms still wait at the human gate.</p>
         <div class="actions">
-          <button type="button" id="watch-close">Close desk</button>
+          <button type="button" id="watch-close">Seal hive</button>
           <button type="button" id="watch-pulse">Pulse</button>
-          <button type="button" id="watch-open">Open desk</button>
+          <button type="button" id="watch-open">Open hive</button>
         </div>
         <div class="journal" id="pulses" style="margin-top:10px"></div>
       </div>
     </section>
     <section>
       <div class="panel">
-        <h2>Delivery line</h2>
+        <h2>Comb · delivery</h2>
         <div class="board" id="board" aria-label="Delivery board"></div>
       </div>
       <div class="panel" style="margin-top:14px">
-        <h2>New mandate</h2>
+        <h2>New nectar</h2>
         <form id="form">
           <label>Name <input name="name" required placeholder="Ledger desk"></label>
           <label>Client <input name="client" placeholder="Proximity Agency"></label>
@@ -123,7 +237,7 @@
         </form>
       </div>
       <div class="panel" style="margin-top:14px">
-        <h2>Research library</h2>
+        <h2>Pollen library</h2>
         <div class="journal" id="notes"></div>
         <form id="note-form" style="margin-top:10px">
           <label>Claim <input name="claim" required placeholder="AOS is a control plane"></label>
@@ -152,10 +266,11 @@
   </main>
   <footer>
     <span id="contact">alejandro@proximityagency.ca</span>
-    <span>stdlib Go · OpenRouter optional</span>
+    <span>stdlib Go · OpenRouter optional · the hive is the kernel</span>
   </footer>
   <script>
     const stages = ["idea", "concept", "production"];
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
       const body = await res.json();
@@ -196,12 +311,160 @@
     }
     let selected = "research";
     let lastInvoke = "";
+    let hiveOpen = 1;
+    let hiveTarget = 1;
+    let colony = [];
+    const hiveCells = [];
+    const bees = [];
+
+    const axial = [
+      [0, 0], [1, 0], [0, 1], [-1, 1], [-1, 0], [0, -1], [1, -1],
+      [2, 0], [1, 1], [0, 2], [-1, 2], [-2, 1], [-2, 0], [-1, -1], [0, -2], [1, -2], [2, -1],
+      [2, 1], [-2, 2]
+    ];
+    function hexPoly(cx, cy, r) {
+      const pts = [];
+      for (let i = 0; i < 6; i++) {
+        const a = (Math.PI / 180) * (60 * i - 30);
+        pts.push((cx + r * Math.cos(a)).toFixed(1) + "," + (cy + r * Math.sin(a)).toFixed(1));
+      }
+      return pts.join(" ");
+    }
+    function buildHive() {
+      const svg = document.getElementById("hive-svg");
+      svg.replaceChildren();
+      const glow = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+      glow.innerHTML = '<filter id="honey-glow"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+      svg.appendChild(glow);
+      axial.forEach((qr, i) => {
+        const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+        poly.setAttribute("stroke", i === 0 ? "#ffe08a" : "#f5b942");
+        poly.setAttribute("stroke-width", i === 0 ? "1.8" : "1.1");
+        poly.setAttribute("fill", i === 0 ? "rgba(245,185,66,0.42)" : "rgba(245,185,66," + (0.08 + (i % 5) * 0.03) + ")");
+        poly.setAttribute("filter", "url(#honey-glow)");
+        svg.appendChild(poly);
+        hiveCells.push({ el: poly, q: qr[0], r: qr[1], phase: i * 0.47 });
+      });
+    }
+    function layoutHive(t) {
+      const size = 22 + hiveOpen * 16;
+      const spread = 38 + hiveOpen * 28;
+      const rot = Math.sin(t * 0.22) * (0.08 + hiveOpen * 0.18);
+      const cx = 400, cy = 168;
+      hiveCells.forEach((cell, i) => {
+        const q = cell.q, r = cell.r;
+        const wobble = reduceMotion ? 0 : Math.sin(t * (0.9 + hiveOpen) + cell.phase) * (2 + hiveOpen * 7);
+        const x = cx + spread * (Math.sqrt(3) * q + Math.sqrt(3) / 2 * r);
+        const y = cy + spread * (3 / 2 * r) + wobble;
+        const dx = x - cx, dy = y - cy;
+        const rx = cx + dx * Math.cos(rot) - dy * Math.sin(rot);
+        const ry = cy + dx * Math.sin(rot) + dy * Math.cos(rot);
+        const pulse = 1 + (reduceMotion ? 0 : 0.06 * hiveOpen * Math.sin(t * 1.4 + i));
+        cell.el.setAttribute("points", hexPoly(rx, ry, size * pulse));
+        cell.home = { x: rx, y: ry };
+      });
+    }
+
+    function resizeBees() {
+      const canvas = document.getElementById("bees");
+      const sky = document.getElementById("sky");
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(sky.clientWidth * dpr);
+      canvas.height = Math.floor(sky.clientHeight * dpr);
+      canvas.style.width = sky.clientWidth + "px";
+      canvas.style.height = sky.clientHeight + "px";
+      canvas.getContext("2d").setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function syncColony(agents) {
+      colony = agents;
+      agents.forEach((agent, i) => {
+        let bee = bees.find((b) => b.id === agent.spec.id);
+        if (!bee) {
+          bee = {
+            id: agent.spec.id,
+            x: 400 + Math.cos(i) * 40,
+            y: 160 + Math.sin(i) * 20,
+            vx: 0,
+            vy: 0,
+            phase: i * 1.13,
+            flap: Math.random() * Math.PI * 2
+          };
+          bees.push(bee);
+        }
+        bee.name = agent.spec.name;
+        bee.mode = agent.spec.mode;
+        bee.selected = agent.spec.id === selected;
+      });
+      for (let i = bees.length - 1; i >= 0; i--) {
+        if (!agents.some((a) => a.spec.id === bees[i].id)) bees.splice(i, 1);
+      }
+    }
+    function stepBees(t, dt) {
+      const canvas = document.getElementById("bees");
+      const ctx = canvas.getContext("2d");
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      const svg = document.getElementById("hive-svg");
+      const box = svg.viewBox.baseVal;
+      const sx = w / box.width, sy = h / box.height;
+      bees.forEach((bee, i) => {
+        const cell = hiveCells[i % hiveCells.length];
+        const home = cell && cell.home ? cell.home : { x: 400, y: 168 };
+        const wanderX = home.x + Math.cos(t * 0.7 + bee.phase) * (30 + hiveOpen * 90) + Math.sin(t * 1.3 + bee.phase) * 18;
+        const wanderY = home.y + Math.sin(t * 0.9 + bee.phase * 0.8) * (16 + hiveOpen * 46);
+        const sealedX = home.x + Math.cos(t * 0.4 + bee.phase) * 8;
+        const sealedY = home.y + Math.sin(t * 0.5 + bee.phase) * 6;
+        const tx = hiveOpen * wanderX + (1 - hiveOpen) * sealedX;
+        const ty = hiveOpen * wanderY + (1 - hiveOpen) * sealedY;
+        const ax = (tx - bee.x) * (0.035 + hiveOpen * 0.02);
+        const ay = (ty - bee.y) * (0.035 + hiveOpen * 0.02);
+        bee.vx = (bee.vx + ax) * 0.92;
+        bee.vy = (bee.vy + ay) * 0.92;
+        bee.x += bee.vx * dt * 60;
+        bee.y += bee.vy * dt * 60;
+        bee.flap += (0.4 + hiveOpen * 0.8) * dt * 60;
+        const px = bee.x * sx, py = bee.y * sy;
+        const ang = Math.atan2(bee.vy, bee.vx || 0.01);
+        drawBee(ctx, px, py, ang, bee);
+      });
+    }
+    function drawBee(ctx, x, y, ang, bee) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(ang);
+      const wing = 0.55 + 0.45 * Math.sin(bee.flap);
+      ctx.globalAlpha = 0.45;
+      ctx.fillStyle = "rgba(255,255,255,0.85)";
+      ctx.beginPath(); ctx.ellipse(-2, -7 * wing, 7, 4 * wing, -0.5, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(-2, 7 * wing, 7, 4 * wing, 0.5, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = bee.selected ? "#ffe08a" : (bee.mode === "live" ? "#f5b942" : "#c9a56a");
+      ctx.beginPath(); ctx.ellipse(0, 0, 9, 6, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#1c140c";
+      ctx.fillRect(-3, -5.5, 2.2, 11);
+      ctx.fillRect(2, -5.5, 2.2, 11);
+      ctx.beginPath(); ctx.arc(8, 0, 3.2, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+
+    let lastFrame = performance.now();
+    function tick(now) {
+      const dt = Math.min(0.05, (now - lastFrame) / 1000);
+      lastFrame = now;
+      const speed = reduceMotion ? 0.2 : 1;
+      hiveOpen += (hiveTarget - hiveOpen) * (1 - Math.pow(0.0008, dt));
+      const t = now / 1000 * speed;
+      layoutHive(t);
+      stepBees(t, dt * speed);
+      requestAnimationFrame(tick);
+    }
+
     function inspect(agent, model) {
       const box = document.getElementById("inspect");
       box.replaceChildren();
       const title = document.createElement("div");
       title.className = "mark";
-      title.textContent = agent.spec.name + " · " + agent.spec.mode;
+      title.textContent = agent.spec.name + " · " + agent.spec.mode + " bee";
       const p = document.createElement("p");
       p.className = "lede";
       p.textContent = lastInvoke || agent.spec.summary;
@@ -238,6 +501,11 @@
         box.appendChild(hint);
       }
     }
+    function setHiveState(closed) {
+      hiveTarget = closed ? 0 : 1;
+      document.body.classList.toggle("hive-sealed", closed);
+      document.body.classList.toggle("hive-open", !closed);
+    }
     async function render() {
       const [os, agents, ships, events, model, profile, notes, confirms, watch, mail, memory] = await Promise.all([
         j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/watch"), j("/api/mail"), j("/api/memory")
@@ -246,14 +514,16 @@
       document.getElementById("contact").textContent = profile.email;
       document.getElementById("closed-banner").hidden = !watch.closed;
       document.getElementById("watch-lede").textContent = watch.closed
-        ? "Desk closed. Research, delivery, memory, and planner keep moving. Comms stay gated."
-        : "Desk is open. Close it to keep work flowing unattended. Outbound comms still wait at the human gate.";
+        ? "Hive sealed. Research, delivery, memory, and planner keep the comb moving. Comms stay gated."
+        : "Hive is open. Seal it to keep the colony working unattended. Outbound comms still wait at the human gate.";
+      setHiveState(watch.closed);
+      syncColony(agents);
       const stats = document.getElementById("stats");
       stats.replaceChildren(
         chip(os.name + " " + os.version),
         chip("under construction"),
-        chip(watch.closed ? "closed hours" : "desk open", watch.closed ? "closed" : "live"),
-        chip(os.running + " running"),
+        chip(watch.closed ? "hive sealed" : "hive open", watch.closed ? "closed" : "live"),
+        chip(os.running + " bees"),
         chip(os.live + " live"),
         chip(os.resident + " resident"),
         chip(notes.length + " notes"),
@@ -272,7 +542,7 @@
         const dot = btn.querySelector(".dot");
         dot.className = "dot " + agent.spec.mode;
         dot.textContent = agent.spec.mode + " · " + agent.status;
-        btn.querySelector("span").textContent = agent.spec.role + " — " + agent.spec.summary;
+        btn.querySelector("span").textContent = agent.spec.role;
         btn.addEventListener("click", () => { selected = agent.spec.id; lastInvoke = ""; render(); });
         grid.appendChild(btn);
       });
@@ -310,7 +580,7 @@
       mailbox.replaceChildren();
       if (!mail.length) {
         const empty = document.createElement("div");
-        empty.textContent = "Empty. Watch pulses drop mail here while the desk is closed.";
+        empty.textContent = "Empty. Watch pulses drop mail here while the hive is sealed.";
         mailbox.appendChild(empty);
       }
       mail.slice(-12).reverse().forEach((m) => {
@@ -355,7 +625,7 @@
       pulses.replaceChildren();
       (watch.pulses || []).slice(0, 8).forEach((p) => {
         const line = document.createElement("div");
-        line.textContent = "#" + p.id + " " + (p.closed ? "closed" : "open") + " — " + (p.note || "pulse");
+        line.textContent = "#" + p.id + " " + (p.closed ? "sealed" : "open") + " — " + (p.note || "pulse");
         pulses.appendChild(line);
       });
     }
@@ -413,6 +683,10 @@
       await j("/api/watch/pulse", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ note: "still here" }) });
       await render();
     });
+    buildHive();
+    resizeBees();
+    window.addEventListener("resize", resizeBees);
+    requestAnimationFrame(tick);
     render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
   </script>
 </body>
