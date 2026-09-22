@@ -20,6 +20,10 @@ integration token, `ghs_…`). Not Castro's user. Not an org install.
 README says Evolu-Jeunes holds ~48 private client repos. This token
 cannot see them. Recon records the org as `access: denied` and continues.
 
+The two homes are already mapped together: `docs/FLEET_MAP.md`, desk
+`GET /map`, JSON `GET /api/map`. Private trees stay a wall on that map
+until this token can list them.
+
 ## Orgs / users affected
 
 - **Evolu-Jeunes** — all repositories (expected private client fleet)

@@ -70,7 +70,8 @@ unbound. The rest of the OS stays live.
 
 | Method | Path | What it does |
 | --- | --- | --- |
-| `GET` | `/` | OS desk |
+| `GET` | `/map` | Cashtro × Evolu-Jeunes fleet map |
+| `GET` | `/api/map` | Joint graph JSON |
 | `GET` | `/health` | Liveness + kernel counts |
 | `GET` | `/api/os` | Manifesto and process counts |
 | `GET` | `/api/agents` | Process table |
@@ -95,4 +96,5 @@ pnpm db:migrate && pnpm db:seed
 pnpm api              # http://127.0.0.1:8787/docs
 ```
 
-See `docs/MISSION.md`, `inventory/REPORT.md`, `docs/ACCESS_REQUIRED.md`.
+See `docs/MISSION.md`, `inventory/REPORT.md`, `docs/ACCESS_REQUIRED.md`,
+and the joint map: [`docs/FLEET_MAP.md`](docs/FLEET_MAP.md) · desk `http://localhost:8080/map`.

@@ -106,6 +106,39 @@ func TestFavicon(t *testing.T) {
 	}
 }
 
+func TestFleetMapTogether(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/map", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("map status = %d", res.Code)
+	}
+	body := res.Body.String()
+	if !strings.Contains(body, "Cashtro × Evolu-Jeunes") {
+		t.Fatalf("map missing title")
+	}
+	if !strings.Contains(body, "https://github.com/cashtro/cashtro") || !strings.Contains(body, "https://github.com/Evolu-Jeunes") {
+		t.Fatalf("map missing both GitHub homes")
+	}
+	if !strings.Contains(body, "id=\"cashtro\"") || !strings.Contains(body, "id=\"evolu-jeunes\"") {
+		t.Fatalf("map missing both islands")
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/map", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("api/map status = %d", res.Code)
+	}
+	if !strings.Contains(res.Header().Get("Content-Type"), "application/json") {
+		t.Fatalf("api/map type = %q", res.Header().Get("Content-Type"))
+	}
+	raw := res.Body.String()
+	if !strings.Contains(raw, `"id": "cashtro-repo"`) || !strings.Contains(raw, `"id": "evolu-org"`) {
+		t.Fatalf("api/map missing orgs: %s", raw)
+	}
+}
+
 func TestIndexHTML(t *testing.T) {
 	h := handler(t)
 	res := httptest.NewRecorder()
@@ -123,6 +156,9 @@ func TestIndexHTML(t *testing.T) {
 	}
 	if !strings.Contains(body, "VOLTR") || !strings.Contains(body, "Crew") {
 		t.Fatalf("index missing Voltron desk")
+	}
+	if !strings.Contains(body, `href="/map"`) {
+		t.Fatalf("index missing fleet map link")
 	}
 }
 

@@ -73,36 +73,50 @@ function row(r: RepoRecord): string {
 
 export function writeGraph(inv: Inventory): string {
   const ok = inv.repos.filter((r) => r.access === "ok");
-  const lines = ["# Inventory graph", "", "```mermaid", "flowchart LR", "  manager[cashtro/cashtro]"];
+  const live = CATALOG_SHIPS.filter((s) => s.liveClient);
+  const later = CATALOG_SHIPS.filter((s) => !s.liveClient);
+  const lines = [
+    "# Inventory graph",
+    "",
+    "Cashtro (control plane) and Evolu-Jeunes (delivery org) mapped together.",
+    "Live client ships are catalog-named only. Do not touch production.",
+    "Canonical desk map: `GET /map` · JSON `GET /api/map` · `docs/FLEET_MAP.md`.",
+    "",
+    "```mermaid",
+    "flowchart TB",
+    "  castro[Castro]",
+    "  subgraph cashtro_home[cashtro GitHub user]",
+  ];
   for (const r of ok) {
-    const id = r.name.replace(/[^a-zA-Z0-9]/g, "_");
-    lines.push(`  ${id}[${r.fullName}]`);
-    lines.push(`  manager --> ${id}`);
+    const id = "repo_" + r.fullName.replace(/[^a-zA-Z0-9]/g, "_");
+    lines.push(`    ${id}[${r.fullName}]`);
   }
-  for (const r of inv.repos.filter((x) => x.access !== "ok")) {
-    const id = r.org.replace(/[^a-zA-Z0-9]/g, "_") + "_dark";
-    lines.push(`  ${id}[${r.org} / denied]`);
-    lines.push(`  manager -.-> ${id}`);
+  if (!ok.length) lines.push("    cashtro_empty[no reachable repos]");
+  lines.push("  end");
+  lines.push("  subgraph evolu_home[Evolu-Jeunes GitHub org]");
+  lines.push("    evolu_member[github.com/evoluJeunes]");
+  lines.push("    evolu_site[evolujeunes.ca / LIVE do not touch]");
+  lines.push("    evolu_dark[~48 private repos / access limited]");
+  lines.push("    subgraph live[LIVE CLIENT — catalog named only]");
+  for (const s of live) {
+    lines.push(`      cat_${s.name.replace(/[^a-zA-Z0-9]/g, "_")}[${s.name} / ${s.stage}]`);
   }
-  lines.push(`  subgraph catalog[Kernel catalog — not scanned]`);
-  for (const s of CATALOG_SHIPS) {
-    const id = "cat_" + s.name.replace(/[^a-zA-Z0-9]/g, "_");
-    lines.push(`    ${id}[${s.name} / ${s.stage}]`);
+  lines.push("    end");
+  lines.push("    subgraph later[Safe to onboard later]");
+  for (const s of later) {
+    lines.push(`      cat_${s.name.replace(/[^a-zA-Z0-9]/g, "_")}[${s.name} / ${s.stage}]`);
   }
-  lines.push(`  end`);
-  lines.push(`  manager -.-> catalog`);
-  const go = ok.filter((r) => (r.framework || "").includes("Go"));
-  const ts = ok.filter((r) => /Next|React|Node/.test(r.framework || ""));
-  if (go.length > 1) {
-    lines.push(`  subgraph go_stack[Go]`);
-    for (const r of go) lines.push(`    ${r.name.replace(/[^a-zA-Z0-9]/g, "_")}`);
-    lines.push(`  end`);
+  lines.push("    end");
+  lines.push("  end");
+  lines.push("  castro -->|owns| cashtro_home");
+  lines.push("  castro -->|owns| evolu_home");
+  const manager = ok.find((r) => r.fullName === "cashtro/cashtro");
+  if (manager) {
+    lines.push("  repo_cashtro_cashtro -->|control plane / recon| evolu_home");
+    lines.push("  repo_cashtro_cashtro -->|catalog seed| live");
+    lines.push("  repo_cashtro_cashtro -->|catalog seed| later");
   }
-  if (ts.length > 1) {
-    lines.push(`  subgraph ts_stack[TypeScript]`);
-    for (const r of ts) lines.push(`    ${r.name.replace(/[^a-zA-Z0-9]/g, "_")}`);
-    lines.push(`  end`);
-  }
+  lines.push("  evolu_home -.-> evolu_dark");
   lines.push("```", "");
   return lines.join("\n");
 }

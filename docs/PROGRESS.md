@@ -1,5 +1,16 @@
 # PROGRESS
 
+## Joint map — 2026-09-22
+
+Cashtro and Evolu-Jeunes are mapped together (one fleet, two GitHub homes).
+
+- Desk: `GET /map` and `GET /api/map`
+- Markdown: `docs/FLEET_MAP.md`
+- Canvas: `canvases/agentic-os-plan.canvas.tsx`
+- Admiral: `inventory/admiral-fleet/`
+
+Evolu-Jeunes is still access-limited. Live clients stay catalog-only.
+
 ## Phase 0 — 2026-09-21
 
 Done.
