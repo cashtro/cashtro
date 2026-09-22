@@ -325,18 +325,33 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		for _, step := range steps {
 			dept, _ := DeptByAgent(step.Agent)
 			improved, _ := Improve(dept.ID, step.Do)
+			if !improved.Specialized {
+				improved, _ = Improve(dept.ID, improved.Result)
+			}
+			if !improved.Specialized {
+				return kernel.Result{OK: false, Message: "lacune non comblée: " + dept.ID, Data: improved}, nil
+			}
 			body := step.Line + " #" + strconv.Itoa(step.Order) + " · " + improved.Result
 			if _, err := a.k.Post("manager", step.Agent, "chain", body); err != nil {
 				return kernel.Result{}, err
 			}
-			if !improved.Specialized {
-				a.k.Remember(dept.ID, "lacunes: "+strings.Join(improved.Lacunes, ", "))
-			}
 			posted = append(posted, step.Agent)
 			specialized = append(specialized, improved)
 		}
+		verdict := Contradict(Proposal{
+			Subject: id,
+			Options: []Option{
+				{Name: "rallonger la chaîne", Cost: 3, Risk: 2, Steps: len(steps) + 3},
+				{Name: "garder cette chaîne", Cost: 1, Risk: 1, Steps: len(steps)},
+			},
+		})
+		_, _ = a.k.Post("manager", "reviewer", "contradict", verdict.Attack)
+		if !verdict.Ready || verdict.Best != "garder cette chaîne" {
+			return kernel.Result{OK: false, Message: verdict.Attack, Data: verdict}, nil
+		}
 		return kernel.Result{OK: true, Message: id + " chain specialized", Data: map[string]any{
 			"line": id, "steps": steps, "posted": posted, "specialized": specialized,
+			"asked": self.Asked, "verdict": verdict,
 		}}, nil
 
 	case "manager.fiche":

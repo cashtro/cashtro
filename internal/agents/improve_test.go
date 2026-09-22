@@ -14,7 +14,7 @@ func TestDepartmentFillsItsOwnGap(t *testing.T) {
 	if !ok || !second.Specialized || len(second.Lacunes) != 0 {
 		t.Fatalf("second = %+v", second)
 	}
-	if !strings.Contains(second.Result, "Deux façons") || !strings.Contains(second.Result, "Limite") {
+	if !strings.Contains(second.Result, "Deux façons") || !strings.Contains(second.Result, "Limite") || !strings.Contains(second.Result, "on fait le site") {
 		t.Fatalf("result = %s", second.Result)
 	}
 	for _, d := range Chart().Departments {

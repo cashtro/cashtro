@@ -84,6 +84,56 @@ func DeptByAgent(agent string) (Department, bool) {
 	return Department{}, false
 }
 
+func clip(draft string) string {
+	s := strings.Join(strings.Fields(draft), " ")
+	r := []rune(s)
+	if len(r) > 90 {
+		s = string(r[:90])
+	}
+	return s
+}
+
+// apply names the draft inside the missing mark, so the fill is about this
+// action and not a generic sentence.
+func (c Craft) apply(draft string) string {
+	subject := clip(draft)
+	if subject == "" {
+		subject = "ce geste"
+	}
+	switch c.Mark {
+	case "option rejetée":
+		return "Option rejetée : ne pas rallonger « " + subject + " ». On ne fait pas le geste le plus long."
+	case "responsable":
+		return "Responsable : le chef du département tranche « " + subject + " »."
+	case "deux façons":
+		return "Deux façons : faire « " + subject + " » tel quel, ou le couper. On garde la plus courte."
+	case "limite":
+		return "Limite : « " + subject + " » ne réécrit pas un site déjà en ligne et ne déploie pas ce qui n'est pas prêt."
+	case "offre":
+		return "Offre : une seule, tirée de « " + subject + " », pour le client déjà nommé."
+	case "mesure":
+		return "Mesure : on regarde le résultat de « " + subject + " » avant d'élargir."
+	case "livré":
+		return "Livré : l'artifact de « " + subject + " », pas l'intention."
+	case "pas fini":
+		return "Pas fini : ce qui reste après « " + subject + " » avant de dire que c'est en ligne."
+	case "règle":
+		return "Règle : « " + subject + " » est permis ou interdit, cité, pas un avis."
+	case "ça casse":
+		return "Ça casse : le cas où « " + subject + " » perd de l'argent ou des données."
+	case "ressource azure":
+		return "Ressource Azure : le site ou le service nommé dans « " + subject + " »."
+	case "site live":
+		return "Site live : « " + subject + " » reste en lecture, preview, puis accord. Pas de réécriture directe."
+	case "rejet":
+		return "Rejet : l'option plus lourde que « " + subject + " », avec son score."
+	case "score":
+		return "Score : coût + risque + étapes de « " + subject + " ». Le plus bas gagne."
+	default:
+		return c.Fill
+	}
+}
+
 // Improve makes the department fill whatever its specialty is missing.
 // A second pass on the returned result finds no lacune.
 func Improve(deptID, draft string) (Improvement, bool) {
@@ -102,7 +152,7 @@ func Improve(deptID, draft string) (Improvement, bool) {
 		if out != "" {
 			out += " "
 		}
-		out += c.Fill
+		out += c.apply(draft)
 		low = strings.ToLower(out)
 	}
 	return Improvement{
