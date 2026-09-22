@@ -73,3 +73,22 @@ Kill switch and $2 budget cap are enforced before dispatch.
 
 Not started. Waiting on Castro to read `inventory/REPORT.md` and
 Option A access for Evolu-Jeunes.
+
+## Graphify — 2026-09-22
+
+Done.
+
+- Installed `graphifyy` and extracted `cashtro/cashtro` with `--code-only`
+- Mapped **14 kernel agentics** and **196 cloud runs / 100 families** onto
+  every named project they worked (`inventory/agent-project-map.json`)
+- `Worked(agent, project)` edges live in `internal/fleet` so Graphify AST
+  extracts them without a model key
+- Cursor skill: `graphify install --project --platform cursor`
+
+```
+go test ./internal/fleet
+→ ok
+
+graphify extract . --code-only
+→ graphify-out/graph.json
+```
