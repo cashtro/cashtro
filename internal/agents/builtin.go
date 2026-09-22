@@ -110,7 +110,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 	return kernel.Spec{
 		ID: "manager", Name: "Manager", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 		Role:    "epicenter",
-		Summary: "Epicenter project manager. Oversees all 57 repos, reads fiches, queries Graphify, coordinates the 5 brains.",
+		Summary: "CEO of the cooperative. Loads the operating board and coordinates departments.",
 		Capabilities: []string{
 			"manager.status",
 			"manager.projects",
@@ -118,6 +118,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.line",
 			"manager.ecosystems",
 			"manager.automate",
+			"manager.org",
 			"manager.assign",
 			"manager.graphify",
 		},
@@ -180,6 +181,9 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.ecosystems":
 		return kernel.Result{OK: true, Message: "ecosystem connections", Data: Links()}, nil
+
+	case "manager.org":
+		return kernel.Result{OK: true, Message: "cooperative", Data: a.board.Org}, nil
 
 	case "manager.automate":
 		posted, err := a.runEcosystems()

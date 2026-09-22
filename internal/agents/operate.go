@@ -12,15 +12,16 @@ import (
 // Board is the one operating picture. The kernel boots from this,
 // not from hardcoded counts.
 type Board struct {
-	Version string     `json:"version"`
-	Fiches  int        `json:"fiches"`
-	Repos   []RepoCard `json:"repos"`
-	Lines   []LineView `json:"lines"`
-	Links   []Link     `json:"links"`
-	Agents  []string   `json:"agents"`
-	Graph   GraphView  `json:"graph"`
-	Gaps    []string   `json:"gaps"`
-	Rules   []string   `json:"rules"`
+	Version string       `json:"version"`
+	Fiches  int          `json:"fiches"`
+	Repos   []RepoCard   `json:"repos"`
+	Lines   []LineView   `json:"lines"`
+	Links   []Link       `json:"links"`
+	Agents  []string     `json:"agents"`
+	Org     Organization `json:"org"`
+	Graph   GraphView    `json:"graph"`
+	Gaps    []string     `json:"gaps"`
+	Rules   []string     `json:"rules"`
 }
 
 // RepoCard is one GitHub repo as the fiches describe it.
@@ -69,6 +70,9 @@ func LoadBoard() (Board, error) {
 	if err := json.Unmarshal(raw, &b); err != nil {
 		return Board{}, err
 	}
+	b.Version = "2"
+	b.Org = Chart()
+	b.Agents = agentNames(b.Org)
 	return b, nil
 }
 
@@ -108,18 +112,30 @@ func boardFromLines() Board {
 	for _, ln := range Lines() {
 		views = append(views, LineView{ID: ln.ID, Name: ln.Name, Brain: ln.Brain, Repos: append([]string(nil), ln.Repos...)})
 	}
+	org := Chart()
 	return Board{
-		Version: "1",
+		Version: "2",
 		Lines:   views,
 		Links:   Links(),
-		Agents:  AgentIDs(),
+		Agents:  agentNames(org),
+		Org:     org,
 		Rules: []string{
-			"Les 15 agentics sont le système. Le roster de 1001 n'est pas des processus.",
-			"Aucun déploiement et aucun envoi sans comms.allow.",
+			"Coopérative : CEO, CTO, CMP. Cinq départements. Quinze employés spécialisés.",
+			"Le roster de 1001 n'est pas des processus.",
+			"Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
 			"Les sites clients déjà en production se lisent, ils ne se déploient pas.",
-			"Graphify comptes = les ponts. L'extract de 40k nœuds n'est pas relu à chaque boot.",
+			"Chaque division a un revenu et une garde. On ne pousse pas le volume sans mesure.",
 		},
 	}
+}
+
+func agentNames(org Organization) []string {
+	members := org.Members()
+	out := make([]string, 0, len(members))
+	for _, m := range members {
+		out = append(out, m.Agent)
+	}
+	return out
 }
 
 func readFiches(dir string) ([]RepoCard, error) {

@@ -1,5 +1,5 @@
 {
-  "version": "1",
+  "version": "2",
   "fiches": 58,
   "repos": [
     {
@@ -746,22 +746,281 @@
     }
   ],
   "agents": [
-    "init",
     "manager",
+    "init",
+    "architect",
+    "router",
+    "explorer",
+    "memory",
+    "comms",
     "planner",
+    "research",
+    "delivery",
     "operator",
     "deploy",
     "reviewer",
-    "delivery",
-    "architect",
     "security",
-    "investigator",
-    "router",
-    "comms",
-    "explorer",
-    "research",
-    "memory"
+    "investigator"
   ],
+  "org": {
+    "seats": [
+      {
+        "id": "ceo",
+        "title": "CEO",
+        "agent": "manager",
+        "mandate": "Arbitrage, rentabilité, assignation. Rien ne sort sans son accord via comms."
+      },
+      {
+        "id": "cto",
+        "title": "CTO",
+        "agent": "architect",
+        "mandate": "Technique, chaînes, modèles. Décide comment c'est construit, pas ce qui est vendu."
+      },
+      {
+        "id": "cmp",
+        "title": "CMP",
+        "agent": "comms",
+        "mandate": "Marché. Vente, campagnes, porte de sortie. comms.allow est la caisse."
+      }
+    ],
+    "departments": [
+      {
+        "id": "direction",
+        "name": "Direction",
+        "reportsTo": "ceo",
+        "chief": "manager",
+        "members": [
+          {
+            "agent": "manager",
+            "title": "CEO",
+            "skills": [
+              "arbitrage",
+              "rentabilité",
+              "assignation"
+            ]
+          },
+          {
+            "agent": "init",
+            "title": "secrétaire général",
+            "skills": [
+              "boot",
+              "état du système"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ingenierie",
+        "name": "Ingénierie",
+        "reportsTo": "cto",
+        "chief": "architect",
+        "members": [
+          {
+            "agent": "architect",
+            "title": "CTO",
+            "skills": [
+              "conception",
+              "chaînes",
+              "offres"
+            ]
+          },
+          {
+            "agent": "router",
+            "title": "employé spécialisé modèles",
+            "skills": [
+              "coût des modèles",
+              "Ollama",
+              "Kimi K3",
+              "GLM max"
+            ]
+          },
+          {
+            "agent": "explorer",
+            "title": "employé spécialisé carte",
+            "skills": [
+              "Graphify",
+              "recherche interne"
+            ]
+          },
+          {
+            "agent": "memory",
+            "title": "employé spécialisé dossier",
+            "skills": [
+              "mémoire",
+              "fiches"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "marche",
+        "name": "Marché",
+        "reportsTo": "cmp",
+        "chief": "comms",
+        "members": [
+          {
+            "agent": "comms",
+            "title": "CMP",
+            "skills": [
+              "vente",
+              "campagnes",
+              "comms.allow"
+            ]
+          },
+          {
+            "agent": "planner",
+            "title": "chef de département planification",
+            "skills": [
+              "backlog",
+              "priorité rentable"
+            ]
+          },
+          {
+            "agent": "research",
+            "title": "employé spécialisé veille",
+            "skills": [
+              "école",
+              "offre",
+              "veille"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "operations",
+        "name": "Opérations",
+        "reportsTo": "cto",
+        "chief": "delivery",
+        "members": [
+          {
+            "agent": "delivery",
+            "title": "chef de département livraison",
+            "skills": [
+              "idée",
+              "concept",
+              "production"
+            ]
+          },
+          {
+            "agent": "operator",
+            "title": "employé spécialisé exécution",
+            "skills": [
+              "confection",
+              "browser"
+            ]
+          },
+          {
+            "agent": "deploy",
+            "title": "employé spécialisé release",
+            "skills": [
+              "preview",
+              "release"
+            ]
+          },
+          {
+            "agent": "reviewer",
+            "title": "employé spécialisé qualité",
+            "skills": [
+              "revue",
+              "artifacts"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "controle",
+        "name": "Contrôle",
+        "reportsTo": "ceo",
+        "chief": "security",
+        "members": [
+          {
+            "agent": "security",
+            "title": "chef de département risque",
+            "skills": [
+              "CVE",
+              "secrets",
+              "triage"
+            ]
+          },
+          {
+            "agent": "investigator",
+            "title": "employé spécialisé incidents",
+            "skills": [
+              "trace",
+              "perte",
+              "blast radius"
+            ]
+          }
+        ]
+      }
+    ],
+    "divisions": [
+      {
+        "id": "proximity",
+        "name": "Proximity Agency",
+        "chief": "operator",
+        "department": "operations",
+        "revenue": "Sites clients WordPress / PHP / ACF Pro.",
+        "guard": "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow."
+      },
+      {
+        "id": "scanapp",
+        "name": "Scan App",
+        "chief": "comms",
+        "department": "marche",
+        "revenue": "Fiches vendues à partir de la donnée scan, avec de vraies photos.",
+        "guard": "Pas de fiche publiée sans photo propre et sans allow."
+      },
+      {
+        "id": "panda",
+        "name": "Panda",
+        "chief": "architect",
+        "department": "ingenierie",
+        "revenue": "White-glove : IA, installation, cours, entreprises et particuliers.",
+        "guard": "On vend le service. On ne déploie pas chez le client sans allow."
+      },
+      {
+        "id": "nft-giant",
+        "name": "NFT + Giant",
+        "chief": "security",
+        "department": "controle",
+        "revenue": "Art avec utilité, token Giant, tirages de visibilité.",
+        "guard": "Pas de mint ni de campagne sans revue risque et allow."
+      },
+      {
+        "id": "ecole",
+        "name": "École",
+        "chief": "research",
+        "department": "marche",
+        "revenue": "Cours tech (WordPress, Web3).",
+        "guard": "Le cours décrit. Il ne promet pas un gain de trading."
+      },
+      {
+        "id": "marketing",
+        "name": "Marketing",
+        "chief": "planner",
+        "department": "marche",
+        "revenue": "Gestion marketing des business corporate.",
+        "guard": "Une campagne à la fois. Mesurer avant d'élargir."
+      },
+      {
+        "id": "empire",
+        "name": "Empire Media",
+        "chief": "delivery",
+        "department": "operations",
+        "revenue": "Live sell des items, podcast, UGC.",
+        "guard": "Le live vend ce qui est déjà une fiche. Pas de stock inventé."
+      },
+      {
+        "id": "trading",
+        "name": "Trading",
+        "chief": "investigator",
+        "department": "controle",
+        "revenue": "Bots sur exchanges, Web3, liés à Giant.",
+        "guard": "Aucun ordre live sans comms.allow. Le chef trace les pertes, il ne pousse pas le volume."
+      }
+    ]
+  },
   "graph": {
     "repoNodes": 57,
     "bridges": 19
@@ -772,9 +1031,10 @@
     "cashtro/Pandora"
   ],
   "rules": [
-    "Les 15 agentics sont le système. Le roster de 1001 n'est pas des processus.",
-    "Aucun déploiement et aucun envoi sans comms.allow.",
+    "Coopérative : CEO, CTO, CMP. Cinq départements. Quinze employés spécialisés.",
+    "Le roster de 1001 n'est pas des processus.",
+    "Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
     "Les sites clients déjà en production se lisent, ils ne se déploient pas.",
-    "Graphify comptes = les ponts. L'extract de 40k nœuds n'est pas relu à chaque boot."
+    "Chaque division a un revenu et une garde. On ne pousse pas le volume sans mesure."
   ]
 }

@@ -85,7 +85,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.status: %+v %v", res, err)
 	}
 	status := res.Data.(map[string]any)
-	if status["version"] != "1" {
+	if status["version"] != "2" {
 		t.Fatalf("board version = %v", status["version"])
 	}
 	if got := status["agents"]; got != 15 {
@@ -112,6 +112,18 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 	if res.Data.(Line).Brain != "Forgeron" {
 		t.Fatalf("proximity brain = %+v", res.Data)
+	}
+
+	org := Chart()
+	if len(org.Seats) != 3 || len(org.Departments) != 5 || len(org.Divisions) != 8 {
+		t.Fatalf("org seats/depts/divs = %d %d %d", len(org.Seats), len(org.Departments), len(org.Divisions))
+	}
+	if len(org.Members()) != 15 {
+		t.Fatalf("employees = %d, want 15", len(org.Members()))
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.org"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.org: %+v %v", res, err)
 	}
 
 	if len(AgentIDs()) != 15 {
