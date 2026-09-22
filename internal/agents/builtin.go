@@ -115,6 +115,8 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.projects",
 			"manager.lines",
 			"manager.line",
+			"manager.ecosystems",
+			"manager.automate",
 			"manager.assign",
 			"manager.graphify",
 		},
@@ -128,7 +130,9 @@ func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 		"repos":   57,
 		"brains":  5,
 		"agents":  1001,
+		"links":   len(Links()),
 	})
+	_, _ = a.runEcosystems()
 	return nil
 }
 
@@ -160,6 +164,19 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			return kernel.Result{OK: false, Message: "unknown line: " + id}, nil
 		}
 		return kernel.Result{OK: true, Message: ln.Name, Data: ln}, nil
+
+	case "manager.ecosystems":
+		return kernel.Result{OK: true, Message: "ecosystem connections", Data: Links()}, nil
+
+	case "manager.automate":
+		posted, err := a.runEcosystems()
+		if err != nil {
+			return kernel.Result{}, err
+		}
+		return kernel.Result{OK: true, Message: "ecosystems connected", Data: map[string]any{
+			"links":  Links(),
+			"agents": posted,
+		}}, nil
 
 	case "manager.projects":
 		return kernel.Result{OK: true, Message: "57 projects under management", Data: map[string]any{
@@ -196,6 +213,27 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)
 	}
+}
+
+// runEcosystems posts every ecosystem link to the agentics that carry it.
+func (a *managerAgent) runEcosystems() ([]string, error) {
+	seen := map[string]bool{}
+	var posted []string
+	for _, ln := range Links() {
+		body := ln.From + " → " + ln.To + " · " + ln.Via
+		for _, id := range ln.Agents {
+			if _, err := a.k.Post("manager", id, "ecosystem", body); err != nil {
+				return nil, err
+			}
+			if !seen[id] {
+				seen[id] = true
+				posted = append(posted, id)
+			}
+		}
+		a.k.Remember("ecosystem", body)
+	}
+	_, _ = a.k.Post("manager", "explorer", "graphify", "ecosystem connections")
+	return posted, nil
 }
 
 type deliveryAgent struct {

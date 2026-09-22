@@ -107,6 +107,28 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("proximity brain = %+v", res.Data)
 	}
 
+	if len(AgentIDs()) != 15 {
+		t.Fatalf("agentics in ecosystems = %d, want 15 (%v)", len(AgentIDs()), AgentIDs())
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.ecosystems"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.ecosystems: %+v %v", res, err)
+	}
+	if links, ok := res.Data.([]Link); !ok || len(links) < 8 {
+		t.Fatalf("links = %#v", res.Data)
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.automate"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.automate: %+v %v", res, err)
+	}
+	gotAgents := res.Data.(map[string]any)["agents"].([]string)
+	if len(gotAgents) != 15 {
+		t.Fatalf("automate agents = %v", gotAgents)
+	}
+	if len(k.Inbox("operator")) == 0 || len(k.Inbox("security")) == 0 || len(k.Inbox("init")) == 0 {
+		t.Fatal("ecosystem mail did not reach the agentics")
+	}
+
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.assign",
 		Payload:    []byte(`{"brain":"Forgeron","repo":"Evolu-Jeunes/Btkavocat"}`),
