@@ -10,8 +10,8 @@ type Link struct {
 }
 
 func withVoice(agents ...string) []string {
-	out := make([]string, 0, len(agents)+1)
-	out = append(out, "vapi")
+	out := make([]string, 0, len(agents)+2)
+	out = append(out, "vapi", "inquisitor")
 	out = append(out, agents...)
 	return out
 }

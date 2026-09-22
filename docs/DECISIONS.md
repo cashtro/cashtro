@@ -1,5 +1,32 @@
 # DECISIONS
 
+## 2026-09-22 — Vapi talk works without a pre-created assistant
+
+- **Choice:** `POST /api/vapi/talk` hits live Vapi whenever `VAPI_API_KEY`
+  is set. The kernel creates the Cashtro Teal assistant on boot if none
+  exists, or sends a transient assistant on `/chat`. `Start voice` on the
+  desk uses the mic locally and loads the Vapi HTML widget when
+  `VAPI_PUBLIC_KEY` is set. `.env` is loaded at process start.
+- **Why:** Castro asked to integrate Vapi and make it work. The old path
+  stayed local unless both a key and an assistant ID were already set.
+- **Stop:** Do not buy Vapi numbers or fire paid outbound without allow.
+
+## 2026-09-22 — L'Inquisiteur contradicts, blocks, and steps up every department
+
+- **Choice:** Live kernel agentic `inquisitor`. Ten lines + five brains +
+  the corporation are departments. Each has a `smarter` loop that fills
+  its own gaps. `Spec.Rules` divorces every agentic. Mutating inquisitor
+  verbs park specific questions on the ask-gate before they act. Dissent
+  can `block` a department; `vapi.call` refuses a blocked line until that
+  department self-improves. Boot ticks every department once and does
+  **not** freeze the desk.
+- **Why:** Castro said the chain was not specialized enough. Push every
+  department to the maximum so it can close its own lacunes. Always
+  understand before targeting an action. Always contradict and test
+  toward the most optimized option.
+- **Stop:** Do not auto-block the whole corporation at boot. Do not buy
+  Vapi numbers or fire paid calls.
+
 ## 2026-09-22 — Evolu-Jeunes/Teal is a fresh voice repo
 
 - **Choice:** Put the Vapi/Teal voice brain in a fresh Evolu-Jeunes

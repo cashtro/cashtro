@@ -69,6 +69,11 @@ pnpm --filter @cashtro/api test
 `GET /docs` and `GET /docs/json` render OpenAPI 3.1.
 Kill switch and $2 budget cap are enforced before dispatch.
 
+## Kernel 0.5.0 — 2026-09-22
+
+L'Inquisiteur is live. 18 agentics, 11 live. Divorced `Spec.Rules`,
+ask-gate, per-department smarter, block until self-improve.
+
 ## Phase 4–7
 
 Not started. Waiting on Castro to read `inventory/REPORT.md` and

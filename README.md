@@ -26,10 +26,10 @@ e-commerce. Client code stays private. The results are live:
 ## Cashtro OS
 
 This repo is **under construction**. It is the control plane for every
-agentic we build here. Agents are processes. Capabilities are verbs.
-Mail, notes, memory, and human confirms are first-class. Delivery and
-research are live. New agentics register into this kernel — they do not
-become a second product.
+agentic we build here. Agents are processes with divorced rules. Capabilities are verbs.
+Mail, notes, memory, human confirms, and asks are first-class. Delivery,
+research, and L'Inquisiteur are live. New agentics register into this
+kernel — they do not become a second product.
 
 ```bash
 go test ./...
@@ -107,7 +107,8 @@ The kernel still boots with neither daemon nor key. The `router` stays
 | `POST` | `/api/vapi/talk` | Talk with Castro (local if no key, live `/chat` if bound) |
 | `POST` | `/api/vapi/call` | Park outbound call (human gate) |
 | `POST` | `/api/vapi/bridge` | Bind talk/call context to a business line |
-| `GET` | `/api/vapi/web` | Dashboard Talk / public-key card |
+| `GET` | `/api/vapi/web` | Widget config + transient assistant |
+| `POST` | `/api/vapi/session` | Start a Vapi web session when a key is bound |
 | `POST` | `/api/vapi/webhook` | Vapi end-of-call / transcript → Teal listen |
 | `POST` | `/api/teal/scrape` | Graph scrape of Teams AI Teal (needs `TEAMS_TOKEN`) |
 | `POST` | `/api/teal/ingest` | Ingest a Teams message (refuses Slack/mail) |
@@ -118,19 +119,19 @@ The kernel still boots with neither daemon nor key. The `router` stays
 
 ### Teal · Vapi · every bridge
 
-**Vapi** is a live kernel agentic (`vapi.*`), not a Teams-only widget. Talk, outbound calls, and voice switching run on Cashtro infrastructure and ride every ecosystem hop (Proximity, Scan App, Panda, NFT/Giant, école, marketing, Empire, trading, Pandora). Teams scrape stays on Teal. Outbound calls always park a human confirm. Free Vapi numbers cannot outbound.
-
-Change voice: desk picker, `POST /api/vapi/voice`, dashboard Assistants → Voice, env `VAPI_VOICE_ID`, or per-call `assistantOverrides.voice`.
+**Vapi** is a live kernel agentic (`vapi.*`). Talk works on the desk now
+(`POST /api/vapi/talk` and **Start voice**). A private key makes talk
+hit live Vapi even without a dashboard assistant — Cashtro creates one.
+A public key launches the in-page widget. Outbound still parks a human
+confirm. Free Vapi numbers cannot outbound.
 
 ```bash
-export VAPI_SHARE_URL=https://dashboard.vapi.ai/assistants/YOUR_ASSISTANT_ID
-export VAPI_ASSISTANT_ID=YOUR_ASSISTANT_ID
-export VAPI_VOICE_ID=rachel
-# optional live chat/call: export VAPI_API_KEY=...
+export VAPI_API_KEY=...                 # live chat
+export VAPI_PUBLIC_KEY=...              # desk Start voice widget
+export VAPI_VOICE_ID=rachel             # or denise (FR)
+# optional: export VAPI_ASSISTANT_ID=...  # skip auto-create
 # optional outbound: export VAPI_PHONE_NUMBER_ID=...
-# optional Graph scrape: export TEAMS_TOKEN=...
 go run ./cmd/cashtro
-# Point the Vapi assistant server URL at /api/vapi/webhook
 # Talk: POST /api/vapi/talk {"text":"hi Castro","line":"proximity"}
 # Call: POST /api/vapi/call {"to":"+1..."} then Allow on the human gate
 ```

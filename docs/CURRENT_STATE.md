@@ -8,8 +8,8 @@ Stdlib **Go 1.22** process OS. One binary: `cmd/cashtro` → HTTP `:8080`.
 
 | Path | Role |
 | --- | --- |
-| `internal/kernel` | Process table, invoke bus, journal, mail, notes, memory, confirms |
-| `internal/agents` | 17 registered agentics. 10 live (incl. Teal + Vapi), 7 resident |
+| `internal/kernel` | Process table, invoke bus, journal, mail, notes, memory, confirms, asks |
+| `internal/agents` | 18 registered agentics. 11 live (incl. Teal, Vapi, L'Inquisiteur), 7 resident |
 | `internal/vapi` | Voice catalog + Chat/Call client. Talk local without a key. |
 | `internal/catalog` | Delivery line: idea → concept → production (in-memory seed) |
 | `internal/model` | Optional OpenRouter client. Boots unbound. |
@@ -26,7 +26,8 @@ memory store/recall, comms confirm gate, planner backlog, research ingest,
 `model.status` / `model.chat` (chat no-ops without a key), Teal corporate
 brain (`teal.*`) — Teams scrape/ingest, intern desk, idea, self-spawn,
 Cursor card. Vapi voice lane (`vapi.*`) — talk, voice switch, human-gated
-outbound, bridges across every business line.
+outbound, bridges across every business line. L'Inquisiteur (`inquisitor.*`)
+— audit, dissent, block until smarter, optimize, ask-gate.
 
 ## What is dead or missing
 
@@ -46,7 +47,7 @@ outbound, bridges across every business line.
 | --- | --- |
 | Go kernel + desk | **Absorb.** Keep as the local Voltron runtime / process OS |
 | Delivery catalog seed | **Absorb** into registry Projects (kind=product) |
-| 17 agentics (incl. Manager, Teal, Vapi) | **Absorb** into registry Agents (runtime=http → kernel invoke) |
+| 18 agentics (incl. Manager, Teal, Vapi, Inquisitor) | **Absorb** into registry Agents (runtime=http → kernel invoke) |
 | OpenRouter bind | **Absorb** as MODEL_ROUTE |
 | New control plane API | **Add.** Does not fork a second OS |
 | Per-island agents in client repos | **Replace** with registry + manifest handshake (Phase 5) |

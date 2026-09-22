@@ -232,17 +232,50 @@ func payloadInt(call kernel.Call, key string) int {
 	return 0
 }
 
+func payloadStringMap(call kernel.Call, key string) map[string]string {
+	if len(call.Payload) == 0 {
+		return nil
+	}
+	var obj map[string]any
+	if err := json.Unmarshal(call.Payload, &obj); err != nil {
+		return nil
+	}
+	raw, ok := obj[key]
+	if !ok {
+		return nil
+	}
+	out := map[string]string{}
+	switch v := raw.(type) {
+	case map[string]any:
+		for k, item := range v {
+			if s, ok := item.(string); ok && strings.TrimSpace(s) != "" {
+				out[k] = strings.TrimSpace(s)
+			}
+		}
+	case []any:
+		for i, item := range v {
+			if s, ok := item.(string); ok && strings.TrimSpace(s) != "" {
+				out[strconv.Itoa(i)] = strings.TrimSpace(s)
+			}
+		}
+	}
+	if len(out) == 0 {
+		return nil
+	}
+	return out
+}
+
 type researchAgent struct {
 	k *kernel.Kernel
 }
 
 func (a *researchAgent) Spec() kernel.Spec {
-	return kernel.Spec{
+	return stamp(kernel.Spec{
 		ID: "research", Name: "Research", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 		Role: "library", Summary: "First-class notes. Gathers AOS papers and desk findings while the OS is under construction.",
 		Capabilities: []string{"research.list", "research.ingest", "note.write"},
 		Autostart:    true,
-	}
+	})
 }
 
 func (a *researchAgent) Boot(ctx context.Context, k *kernel.Kernel) error {

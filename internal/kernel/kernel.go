@@ -22,7 +22,7 @@ const (
 	// Name is the public OS name.
 	Name = "Cashtro OS"
 	// Version is the kernel release.
-	Version = "0.4.0"
+	Version = "0.5.0"
 )
 
 // Status is a process lifecycle state.
@@ -60,6 +60,7 @@ type Spec struct {
 	Role         string   `json:"role"`
 	Summary      string   `json:"summary"`
 	Capabilities []string `json:"capabilities"`
+	Rules        []string `json:"rules,omitempty"`
 	Autostart    bool     `json:"autostart"`
 }
 
@@ -155,6 +156,8 @@ type Kernel struct {
 	factSeq  int
 	confirms []Confirm
 	confSeq  int
+	asks     []Ask
+	askSeq   int
 }
 
 // Option configures the kernel.
@@ -294,9 +297,7 @@ func (k *Kernel) Processes() []Process {
 	defer k.mu.RUnlock()
 	out := make([]Process, 0, len(k.procs))
 	for _, p := range k.procs {
-		cp := *p
-		cp.Spec.Capabilities = append([]string(nil), p.Spec.Capabilities...)
-		out = append(out, cp)
+		out = append(out, cloneProcess(p))
 	}
 	sort.Slice(out, func(i, j int) bool {
 		if out[i].Spec.Kind != out[j].Spec.Kind {
@@ -315,9 +316,14 @@ func (k *Kernel) Process(id string) (Process, error) {
 	if !ok {
 		return Process{}, fmt.Errorf("%w: %s", ErrUnknownAgent, id)
 	}
+	return cloneProcess(p), nil
+}
+
+func cloneProcess(p *Process) Process {
 	cp := *p
 	cp.Spec.Capabilities = append([]string(nil), p.Spec.Capabilities...)
-	return cp, nil
+	cp.Spec.Rules = append([]string(nil), p.Spec.Rules...)
+	return cp
 }
 
 // Capabilities returns every registered verb.
@@ -386,9 +392,9 @@ func (k *Kernel) About() About {
 		Resident: resident,
 		Events:   len(k.events),
 		Manifesto: "Cashtro OS is under construction — the control plane for every agentic we build here. " +
-			"Agents are processes. Capabilities are verbs. Mail, notes, memory, and confirms are first-class. " +
-			"Delivery is live. Research is live. OpenRouter stays optional. " +
-			"New agentics register into this kernel — they do not fork a second product.",
+			"Agents are processes with divorced rules. Capabilities are verbs. Mail, notes, memory, confirms, and asks are first-class. " +
+			"Delivery is live. Research is live. L'Inquisiteur contradicts and blocks until a department self-improves. " +
+			"OpenRouter stays optional. New agentics register into this kernel — they do not fork a second product.",
 	}
 }
 
