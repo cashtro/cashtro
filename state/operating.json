@@ -659,6 +659,12 @@
         "Evolu-Jeunes/sigmaNew",
         "cashtro/trading_bot-main"
       ]
+    },
+    {
+      "id": "agence",
+      "name": "Agence centrale",
+      "brain": "Cartographe",
+      "repos": null
     }
   ],
   "links": [
@@ -780,6 +786,116 @@
         "explorer",
         "manager"
       ]
+    },
+    {
+      "from": "agence",
+      "to": "control",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "proximity",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "scanapp",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "marketplace",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "panda",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "nft-giant",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "ecole",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "marketing",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "empire",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "propres",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
+    },
+    {
+      "from": "agence",
+      "to": "trading",
+      "via": "l'agence lit cette ligne à chaque boot. Rien ne sort du tableau.",
+      "agents": [
+        "memory",
+        "security",
+        "investigator"
+      ]
     }
   ],
   "agents": [
@@ -805,19 +921,25 @@
         "id": "ceo",
         "title": "CEO",
         "agent": "manager",
-        "mandate": "Arbitrage, rentabilité, assignation. Rien ne sort sans son accord via comms."
+        "mandate": "Arbitrage, rentabilité, assignation. Stratège : une question et la position avant d'arbitrer. Rien ne sort sans son accord via comms."
       },
       {
         "id": "cto",
         "title": "CTO",
         "agent": "architect",
-        "mandate": "Technique, chaînes, modèles. Décide comment c'est construit, pas ce qui est vendu."
+        "mandate": "Technique, chaînes, modèles. Stratège : deux façons, le coût, et la réponse adverse avant de construire."
       },
       {
         "id": "cmp",
         "title": "CMP",
         "agent": "comms",
-        "mandate": "Marché. Vente, campagnes, porte de sortie. comms.allow est la caisse."
+        "mandate": "Marché. Vente, campagnes, porte de sortie. Stratège : une offre, la mesure, puis comms.allow."
+      },
+      {
+        "id": "maire",
+        "title": "Maire de l'intelligence",
+        "agent": "memory",
+        "mandate": "Stratège de tous les cerveaux. Une question avant chaque coup. Il lit la position, nomme le coup de pouvoir et la réponse adverse, et tient le savoir du tableau."
       }
     ],
     "departments": [
@@ -1102,6 +1224,52 @@
             ]
           }
         ]
+      },
+      {
+        "id": "agence",
+        "name": "Agence centrale",
+        "reportsTo": "maire",
+        "chief": "memory",
+        "mandate": "Rassemble ce qui est su, relit le tableau à chaque boot, régule les départements, propose un contre-projet, protège le cerveau et notre infrastructure. Pas d'outil d'attaque, pas de système qui n'est pas le nôtre.",
+        "craft": [
+          {
+            "mark": "question",
+            "fill": "Question : celle posée avant le coup, et la position lue."
+          },
+          {
+            "mark": "coup",
+            "fill": "Coup : le coup de pouvoir, et la réponse adverse qu'il ouvre."
+          }
+        ],
+        "members": [
+          {
+            "agent": "memory",
+            "title": "maire de l'intelligence",
+            "skills": [
+              "savoir",
+              "position",
+              "coup"
+            ]
+          },
+          {
+            "agent": "security",
+            "title": "exécutant des lois",
+            "skills": [
+              "portes",
+              "protection",
+              "incident"
+            ]
+          },
+          {
+            "agent": "investigator",
+            "title": "exécutant des écarts",
+            "skills": [
+              "trou",
+              "contre-projet",
+              "stabilité"
+            ]
+          }
+        ]
       }
     ],
     "divisions": [
@@ -1178,6 +1346,14 @@
         "department": "controle",
         "revenue": "Bots sur exchanges, Web3, liés à Giant.",
         "guard": "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."
+      },
+      {
+        "id": "agence",
+        "name": "Agence centrale",
+        "chief": "memory",
+        "department": "agence",
+        "revenue": "Le savoir du tableau, et le plan d'économie déjà décidé. Pas un nouveau pourcentage, pas un bot.",
+        "guard": "Une question avant le coup. On protège notre infrastructure. On n'écrit pas d'exploit."
       }
     ]
   },
@@ -1277,6 +1453,22 @@
           "Trading, token Giant, sollicitation du public : question d'inscription ou d'exemption avant tout ordre et avant toute vente de token.",
           "La division Trading reste fermée tant que cette question n'est pas répondue par écrit."
         ]
+      },
+      {
+        "id": "charte",
+        "name": "Charte de l'écosystème",
+        "where": "Tous les projets du tableau",
+        "source": "Agence centrale. Ce n'est pas une loi de l'État. Les lois du Québec et du Canada restent au-dessus.",
+        "rules": [
+          "Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
+          "Tous les cerveaux sont stratèges. Une seule option n'est pas un coup.",
+          "Ce qui n'est pas écrit sur le tableau n'est pas su. Un repo hors ligne est un trou.",
+          "Les exécutants sont memory pour le savoir, security pour les portes, investigator pour l'écart.",
+          "Stabilité : un site client déjà en ligne ne se réécrit pas. Le marketplace ne se déploie pas avant d'être prêt.",
+          "Protection : on regarde notre infrastructure pour la durcir. On n'écrit pas d'exploit et on n'entre pas dans un système qui n'est pas le nôtre.",
+          "Un changement d'infrastructure a un contre-projet, plus court ou plus sûr, avant d'être joué.",
+          "Économie : les prix dépassent de 20 % à 40 %. Les rabais comparent les prix en ligne. Stripe sur les projets propres seulement."
+        ]
       }
     ],
     "gates": [
@@ -1329,6 +1521,21 @@
         "id": "incident",
         "question": "Registre d'incidents et chemin d'avis à la CAI connus?",
         "owner": "security"
+      },
+      {
+        "id": "question",
+        "question": "Une question est posée, et la position est lue, avant ce coup?",
+        "owner": "memory"
+      },
+      {
+        "id": "coup",
+        "question": "Le coup de pouvoir nomme la réponse adverse?",
+        "owner": "reviewer"
+      },
+      {
+        "id": "protection",
+        "question": "Ça protège notre infrastructure, sans outil d'attaque et sans système extérieur?",
+        "owner": "security"
       }
     ]
   },
@@ -1338,7 +1545,10 @@
   },
   "gaps": null,
   "rules": [
-    "Coopérative : CEO, CTO, CMP. Cinq départements. Quinze employés spécialisés.",
+    "Coopérative : CEO, CTO, CMP, maire de l'intelligence. Huit départements. Quinze employés spécialisés.",
+    "Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
+    "L'agence relit chaque ligne à chaque boot. Un repo hors ligne est un trou. La chaîne des coups ne se réécrit pas.",
+    "La protection regarde notre infrastructure. Elle n'écrit pas d'exploit.",
     "Le roster de 1001 n'est pas des processus.",
     "Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
     "Les sites clients déjà en production se lisent, ils ne se déploient pas.",

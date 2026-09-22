@@ -111,6 +111,20 @@ func Loi() Compliance {
 					"La division Trading reste fermée tant que cette question n'est pas répondue par écrit.",
 				},
 			},
+			{
+				ID: "charte", Name: "Charte de l'écosystème", Where: "Tous les projets du tableau",
+				Source: "Agence centrale. Ce n'est pas une loi de l'État. Les lois du Québec et du Canada restent au-dessus.",
+				Rules: []string{
+					"Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
+					"Tous les cerveaux sont stratèges. Une seule option n'est pas un coup.",
+					"Ce qui n'est pas écrit sur le tableau n'est pas su. Un repo hors ligne est un trou.",
+					"Les exécutants sont memory pour le savoir, security pour les portes, investigator pour l'écart.",
+					"Stabilité : un site client déjà en ligne ne se réécrit pas. Le marketplace ne se déploie pas avant d'être prêt.",
+					"Protection : on regarde notre infrastructure pour la durcir. On n'écrit pas d'exploit et on n'entre pas dans un système qui n'est pas le nôtre.",
+					"Un changement d'infrastructure a un contre-projet, plus court ou plus sûr, avant d'être joué.",
+					"Économie : les prix dépassent de 20 % à 40 %. Les rabais comparent les prix en ligne. Stripe sur les projets propres seulement.",
+				},
+			},
 		},
 		Gates: []Gate{
 			{ID: "renseignements", Question: "Ce build collecte, utilise ou communique des renseignements personnels?", Owner: "security"},
@@ -123,6 +137,9 @@ func Loi() Compliance {
 			{ID: "tirage", Question: "Si tirage : concours publicitaire classé, pas une loterie?", Owner: "security"},
 			{ID: "trading", Question: "Si ordre ou token : réponse AMF écrite avant toute exécution?", Owner: "investigator"},
 			{ID: "incident", Question: "Registre d'incidents et chemin d'avis à la CAI connus?", Owner: "security"},
+			{ID: "question", Question: "Une question est posée, et la position est lue, avant ce coup?", Owner: "memory"},
+			{ID: "coup", Question: "Le coup de pouvoir nomme la réponse adverse?", Owner: "reviewer"},
+			{ID: "protection", Question: "Ça protège notre infrastructure, sans outil d'attaque et sans système extérieur?", Owner: "security"},
 		},
 	}
 }

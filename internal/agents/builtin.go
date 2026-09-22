@@ -105,6 +105,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 type managerAgent struct {
 	k     *kernel.Kernel
 	board Board
+	moves []Move
 }
 
 func (a *managerAgent) Spec() kernel.Spec {
@@ -128,6 +129,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.fiche",
 			"manager.assign",
 			"manager.graphify",
+			"manager.ledger",
 		},
 		Autostart: true,
 	}
@@ -151,7 +153,24 @@ func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 		"gaps":    board.Gaps,
 	})
 	_, _ = a.runEcosystems()
+	a.moves = AppendMove(nil, "boot", StrategyQuestions()[0].Ask, "Le tableau est relu. Chaque ligne est un nœud. Les trous sont publiés.")
+	k.Publish("manager", "epicenter", "move chain extended", map[string]any{
+		"index": a.moves[0].Index,
+		"hash":  a.moves[0].Hash,
+	})
 	return nil
+}
+
+func (a *managerAgent) note(action string, self SelfCheck) {
+	q := StrategyQuestions()[0].Ask
+	if len(self.Asked) > 0 {
+		q = self.Asked[0].Ask
+	}
+	coup := self.Answered["coup"]
+	if coup == "" {
+		coup = "coup non joué"
+	}
+	a.moves = AppendMove(a.moves, action, q, coup)
 }
 
 func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
@@ -220,14 +239,20 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			action = payloadQuery(call, "id")
 		}
 		check := AskSelf(action, payloadAnswers(call))
+		a.note("ask:"+action, check)
 		for id, ans := range check.Answered {
 			a.k.Remember(action, id+": "+ans)
 		}
 		return kernel.Result{OK: len(check.Open) == 0, Message: askMessage(check.Open), Data: check}, nil
 
+	case "manager.ledger":
+		return kernel.Result{OK: ChainIntact(a.moves), Message: "chaîne des coups", Data: a.moves}, nil
+
 	case "manager.contradict":
-		if open := AskSelf("contradict", payloadAnswers(call)).Open; len(open) > 0 {
-			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+		self := AskSelf("contradict", payloadAnswers(call))
+		a.note("contradict", self)
+		if len(self.Open) > 0 {
+			return kernel.Result{OK: false, Message: askMessage(self.Open), Data: self.Open}, nil
 		}
 		var proposal Proposal
 		if len(call.Payload) > 0 {
@@ -269,8 +294,10 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		if !ok {
 			return kernel.Result{OK: false, Message: "unknown chain: " + id}, nil
 		}
-		if open := AskSelf(id, payloadAnswers(call)).Open; len(open) > 0 {
-			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+		self := AskSelf(id, payloadAnswers(call))
+		a.note("chain:"+id, self)
+		if len(self.Open) > 0 {
+			return kernel.Result{OK: false, Message: askMessage(self.Open), Data: self.Open}, nil
 		}
 		posted := make([]string, 0, len(steps))
 		specialized := make([]Improvement, 0, len(steps))
@@ -299,9 +326,11 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			}
 		}
 		ready, why := fiche.Ready()
+		self := AskSelf("fiche", payloadAnswers(call))
+		a.note("fiche", self)
 		if ready {
-			if open := AskSelf("fiche", payloadAnswers(call)).Open; len(open) > 0 {
-				return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+			if len(self.Open) > 0 {
+				return kernel.Result{OK: false, Message: askMessage(self.Open), Data: self.Open}, nil
 			}
 			_, _ = a.k.Post("manager", "comms", "fiche", fiche.Code+" prête")
 			_, _ = a.k.Post("manager", "operator", "fiche", fiche.Code+" vers le marketplace et Empire")
@@ -309,8 +338,10 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		return kernel.Result{OK: ready, Message: why, Data: fiche}, nil
 
 	case "manager.assign":
-		if open := AskSelf("assign", payloadAnswers(call)).Open; len(open) > 0 {
-			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
+		self := AskSelf("assign", payloadAnswers(call))
+		a.note("assign", self)
+		if len(self.Open) > 0 {
+			return kernel.Result{OK: false, Message: askMessage(self.Open), Data: self.Open}, nil
 		}
 		brain := payloadQuery(call, "brain")
 		repo := payloadQuery(call, "repo")

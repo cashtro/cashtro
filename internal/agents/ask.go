@@ -9,9 +9,30 @@ type Question struct {
 	Improves string `json:"improves"`
 }
 
+// StrategyQuestions are asked before every move. One question, the position,
+// the power move, and the reply it opens. Like a chess clock.
+func StrategyQuestions() []Question {
+	return []Question{
+		{ID: "position", Ask: "Quelle est la position sur le tableau, avant ce coup?", Improves: "on ne joue pas sans voir la pièce"},
+		{ID: "coup", Ask: "Quel est le coup de pouvoir, et quelle réponse adverse il ouvre?", Improves: "un coup sans réponse adverse n'est pas un coup"},
+	}
+}
+
+func strategyKnown() map[string]string {
+	return map[string]string{
+		"position": "Le tableau est lu avant le coup. Les sites clients déjà en ligne ne bougent pas. Le marketplace n'est pas déployé. Le scanner reste interne.",
+		"coup":     "Le coup de pouvoir est le plus court : moins d'étapes, moins de coût, moins de risque. La réponse adverse est nommée avant de jouer. Une seule option n'est pas un coup.",
+	}
+}
+
 // QuestionsFor returns the specific questions that must be answered
-// before this action can take a position.
+// before this action can take a position. The two strategy questions
+// come first, on every action.
 func QuestionsFor(action string) []Question {
+	return append(StrategyQuestions(), questionsFor(action)...)
+}
+
+func questionsFor(action string) []Question {
 	switch action {
 	case "scanapp", "chain":
 		return []Question{
@@ -75,8 +96,13 @@ type SelfCheck struct {
 }
 
 // AskSelf poses the questions and answers them from what is already known.
+// The strategy answers are always filled, so the chess question is asked
+// and the move can still proceed.
 func AskSelf(action string, extra map[string]string) SelfCheck {
 	answered := map[string]string{}
+	for k, v := range strategyKnown() {
+		answered[k] = v
+	}
 	for k, v := range Known(action) {
 		answered[k] = v
 	}
