@@ -19,6 +19,7 @@ func Handler(p *Plane) http.Handler {
 	mux.HandleFunc("GET /api/about", s.about)
 	mux.HandleFunc("POST /api/auth/login", s.login)
 	mux.HandleFunc("POST /api/auth/logout", s.logout)
+	mux.HandleFunc("POST /api/auth/password", s.changePassword)
 	mux.HandleFunc("GET /api/me", s.me)
 	mux.HandleFunc("GET /api/companies", s.companies)
 	mux.HandleFunc("GET /api/companies/{id}", s.company)
@@ -84,6 +85,27 @@ func (s *api) login(w http.ResponseWriter, r *http.Request) {
 func (s *api) logout(w http.ResponseWriter, r *http.Request) {
 	s.p.Logout(bearer(r))
 	writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
+}
+
+func (s *api) changePassword(w http.ResponseWriter, r *http.Request) {
+	u, ok := s.p.UserForToken(bearer(r))
+	if !ok {
+		writeJSON(w, http.StatusUnauthorized, map[string]string{"error": "unauthorized"})
+		return
+	}
+	var in struct {
+		Current string `json:"current"`
+		Next    string `json:"next"`
+	}
+	if err := decodeJSON(r, &in); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	if err := s.p.ChangePassword(u, in.Current, in.Next); err != nil {
+		writeErr(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, map[string]string{"status": "password rotated · re-login"})
 }
 
 func (s *api) me(w http.ResponseWriter, r *http.Request) {

@@ -28,7 +28,7 @@ func testPlane(t *testing.T) *Plane {
 func TestBootRBACAndCompanies(t *testing.T) {
 	p := testPlane(t)
 	about := p.About(false)
-	if about.Companies < 6 || about.Agents < 8 || about.Users != 1 {
+	if about.Companies < 6 || about.Agents < 8 || about.Users < 2 {
 		t.Fatalf("about = %+v", about)
 	}
 	sess, user, err := p.Login("alejandro@proximityagency.ca", "ultron-change-me")
@@ -49,11 +49,32 @@ func TestBootRBACAndCompanies(t *testing.T) {
 		}
 	}
 
-	client, err := p.CreateUser(user, "client@giant.test", "Giant Client", RoleClient, []string{"giant"}, "client-pass-1")
+	gs, gu, err := p.Login("client@giant.local", "giant-client-1")
+	if err != nil || gu.Role != RoleClient || gs.Token == "" {
+		t.Fatalf("giant client login: %+v %v", gu, err)
+	}
+	visible := p.ListCompanies(gu)
+	if len(visible) != 1 || visible[0].ID != "giant" {
+		t.Fatalf("giant client tenancy = %+v", visible)
+	}
+	if AllowsCompany(gu, "proximity") {
+		t.Fatal("client must not see proximity")
+	}
+	if err := p.ChangePassword(gu, "giant-client-1", "giant-client-2"); err != nil {
+		t.Fatal(err)
+	}
+	if _, _, err := p.Login("client@giant.local", "giant-client-1"); err == nil {
+		t.Fatal("old password should fail")
+	}
+	if _, _, err := p.Login("client@giant.local", "giant-client-2"); err != nil {
+		t.Fatal(err)
+	}
+
+	client, err := p.CreateUser(user, "client@scanapp.test", "Scan Client", RoleClient, []string{"scanapp"}, "client-pass-1")
 	if err != nil {
 		t.Fatal(err)
 	}
-	cs, _, err := p.Login("client@giant.test", "client-pass-1")
+	cs, _, err := p.Login("client@scanapp.test", "client-pass-1")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -61,12 +82,9 @@ func TestBootRBACAndCompanies(t *testing.T) {
 	if !ok || cu.ID != client.ID {
 		t.Fatal("client session")
 	}
-	visible := p.ListCompanies(cu)
-	if len(visible) != 1 || visible[0].ID != "giant" {
-		t.Fatalf("client tenancy = %+v", visible)
-	}
-	if AllowsCompany(cu, "proximity") {
-		t.Fatal("client must not see proximity")
+	scanVisible := p.ListCompanies(cu)
+	if len(scanVisible) != 1 || scanVisible[0].ID != "scanapp" {
+		t.Fatalf("scan client tenancy = %+v", scanVisible)
 	}
 }
 
@@ -143,7 +161,7 @@ func TestPersistRoundTrip(t *testing.T) {
 	if err := LoadFile(path, p2); err != nil {
 		t.Fatal(err)
 	}
-	if len(p2.ListUsers()) != 1 {
+	if len(p2.ListUsers()) < 2 {
 		t.Fatalf("users = %d", len(p2.ListUsers()))
 	}
 	_, _, err := p2.Login("alejandro@proximityagency.ca", "ultron-change-me")

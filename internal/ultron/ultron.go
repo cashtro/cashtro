@@ -15,7 +15,7 @@ const (
 	// Name is the public control-plane brand.
 	Name = "Ultron"
 	// Version is the Ultron release.
-	Version = "0.1.0"
+	Version = "0.1.1"
 	// Motto is the operator line.
 	Motto = "One IDE. Every company. Authority with RBAC."
 )

@@ -521,6 +521,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "memory-api", URL: "https://github.com/cashtro/cashtro", Claim: "Memory is desk-writable: POST /api/memory stores episodic facts; GET /api/memory recalls them.", Quote: "Working memory survives always-on restarts via data/cashtro.json."},
 		{Agent: "research", Source: "search-api", URL: "https://github.com/cashtro/cashtro", Claim: "Explorer is desk-reachable: GET /api/search?q= hits agents, ships, and research notes.", Quote: "Ultron and keep-alives can find work without OpenRouter."},
 		{Agent: "research", Source: "comms-api", URL: "https://github.com/cashtro/cashtro", Claim: "Comms is desk-reachable: POST /api/comms parks an outbound draft behind a human confirm.", Quote: "No send until allow — Ultron clients inherit the gate."},
+		{Agent: "research", Source: "ultron-rbac", URL: "https://github.com/cashtro/cashtro", Claim: "Ultron seeds a Giant client principal with company-scoped RBAC and password rotation on the IDE.", Quote: "client@giant.local sees Giant only; POST /api/auth/password rotates without Cursor."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)

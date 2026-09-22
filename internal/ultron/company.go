@@ -25,6 +25,9 @@ func (p *Plane) Boot() error {
 			return err
 		}
 	}
+	if err := p.seedGiantClient(); err != nil {
+		return err
+	}
 	p.Audit("ultron", "boot", Version, true, Name+" "+Version)
 	p.persist()
 	return nil
@@ -51,6 +54,35 @@ func (p *Plane) seedOwner() error {
 	p.users[u.ID] = u
 	p.bootSecret = ""
 	p.mu.Unlock()
+	return nil
+}
+
+func (p *Plane) seedGiantClient() error {
+	const email = "client@giant.local"
+	p.mu.RLock()
+	for _, u := range p.users {
+		if strings.EqualFold(u.Email, email) {
+			p.mu.RUnlock()
+			return nil
+		}
+	}
+	p.mu.RUnlock()
+	u := &User{
+		ID:         "giant-client",
+		Email:      email,
+		Name:       "Giant Client",
+		Role:       RoleClient,
+		CompanyIDs: []string{"giant"},
+		Active:     true,
+		CreatedAt:  p.now(),
+	}
+	if err := p.SetPassword(u, "giant-client-1"); err != nil {
+		return err
+	}
+	p.mu.Lock()
+	p.users[u.ID] = u
+	p.mu.Unlock()
+	p.Audit("ultron", "user.seed", u.ID, true, "giant client tenancy")
 	return nil
 }
 

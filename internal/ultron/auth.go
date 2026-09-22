@@ -210,6 +210,38 @@ func (p *Plane) CreateUser(actor User, email, name string, role Role, companyIDs
 	return out, nil
 }
 
+// ChangePassword updates the caller's password after verifying the current one.
+func (p *Plane) ChangePassword(actor User, current, next string) error {
+	if len(next) < 8 {
+		return fmt.Errorf("%w: password too short", ErrInvalid)
+	}
+	p.mu.Lock()
+	u, ok := p.users[actor.ID]
+	if !ok || !u.Active {
+		p.mu.Unlock()
+		return ErrUnauthorized
+	}
+	if !p.checkPassword(u, current) {
+		p.mu.Unlock()
+		p.Audit(actor.Email, "password.change", actor.ID, false, "bad current")
+		return ErrBadLogin
+	}
+	if err := p.SetPassword(u, next); err != nil {
+		p.mu.Unlock()
+		return err
+	}
+	// Drop other sessions for this user.
+	for tok, s := range p.sessions {
+		if s.UserID == actor.ID {
+			delete(p.sessions, tok)
+		}
+	}
+	p.mu.Unlock()
+	p.Audit(actor.Email, "password.change", actor.ID, true, "rotated")
+	p.persist()
+	return nil
+}
+
 // ListUsers returns public users.
 func (p *Plane) ListUsers() []User {
 	p.mu.RLock()

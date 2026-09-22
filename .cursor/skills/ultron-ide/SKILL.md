@@ -21,7 +21,8 @@ Ultron is a **separated** control plane. Cashtro OS stays the agentic kernel on 
 ```
 
 Default owner (first boot): `alejandro@proximityagency.ca` / `ultron-change-me`  
-Override with `ULTRON_OWNER_PASSWORD`. Change after first login in production.
+Giant client (seeded): `client@giant.local` / `giant-client-1` (Giant only)  
+Override owner with `ULTRON_OWNER_PASSWORD`. Rotate via `POST /api/auth/password`. Change after first login in production.
 
 Disk: `data/ultron.json` (mode 0600).
 

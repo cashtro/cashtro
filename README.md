@@ -69,6 +69,12 @@ Default owner (first boot only):
 - email: `alejandro@proximityagency.ca`
 - password: `ultron-change-me` (override with `ULTRON_OWNER_PASSWORD`)
 
+Seeded Giant client (RBAC tenancy demo):
+
+- email: `client@giant.local`
+- password: `giant-client-1`
+- sees **Giant** only · `POST /api/auth/password` to rotate
+
 | Layer | Port | Role |
 | --- | --- | --- |
 | **Ultron** | `:9090` | IDE · companies · fleet · RBAC · bridges Cashtro |
