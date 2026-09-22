@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teal · Evolu-Jeunes</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;500;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --void: #07080c;
+      --panel: #0e1118;
+      --lift: #151925;
+      --line: #262b3a;
+      --ink: #eef1f7;
+      --muted: #8b93a7;
+      --hot: #ff4d3d;
+      --gold: #f0c14b;
+      --live: #3dffa6;
+      --idea: #6ea8ff;
+      --concept: #f0c14b;
+      --production: #3dffa6;
+      --danger: #ff6b5a;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--void); color: var(--ink); }
+    body {
+      font-family: Sora, system-ui, sans-serif;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255,77,61,0.06), transparent 28%),
+        var(--void);
+    }
+    body::before {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, #000 0%, transparent 70%);
+    }
+    a { color: var(--hot); }
+    .wrap { width: min(1440px, calc(100% - 32px)); margin: 0 auto; position: relative; }
+    header.top {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-end;
+      padding: 28px 0 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand { display: flex; gap: 16px; align-items: flex-end; }
+    .mark-v {
+      width: 44px; height: 44px;
+      border: 1px solid var(--hot);
+      display: grid; place-items: center;
+      flex: 0 0 44px;
+    }
+    .word { font-family: Syne, sans-serif; font-weight: 800; font-size: clamp(40px, 6vw, 72px); line-height: 0.82; letter-spacing: -0.04em; margin: 0; }
+    .word em { font-style: normal; color: var(--hot); }
+    .sub { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 8px 0 0; }
+    .lede { max-width: 36rem; color: var(--muted); line-height: 1.5; margin: 10px 0 0; font-size: 14px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; max-width: 420px; }
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 6px 10px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .chip.live { color: var(--live); border-color: rgba(61,255,166,0.35); }
+    .chip.unbound { color: var(--danger); border-color: rgba(255,77,61,0.4); }
+    .desk {
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1.2fr) 320px;
+      gap: 16px;
+      padding: 20px 0 28px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 16px;
+      min-width: 0;
+    }
+    .panel h2 {
+      margin: 0 0 14px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .agents { display: grid; gap: 6px; max-height: 620px; overflow: auto; padding-right: 2px; }
+    .agent {
+      display: grid;
+      grid-template-columns: 6px 1fr;
+      gap: 10px;
+      border: 1px solid var(--line);
+      background: var(--void);
+      color: inherit;
+      text-align: left;
+      width: 100%;
+      padding: 0;
+      cursor: pointer;
+    }
+    .agent .stripe { background: var(--muted); }
+    .agent .body { padding: 10px 10px 10px 0; }
+    .agent:hover, .agent.active { border-color: #3a4158; background: var(--lift); }
+    .agent.active { border-color: var(--hot); }
+    .agent b { display: block; font-family: Syne, sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
+    .agent .meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .dot { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+    .dot.live { color: var(--live); }
+    .dot.resident { color: var(--gold); }
+    .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .col { background: var(--void); border: 1px solid var(--line); min-height: 280px; padding: 10px; }
+    .col h3 {
+      margin: 0 0 10px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+    }
+    .col.idea h3 { color: var(--idea); }
+    .col.concept h3 { color: var(--concept); }
+    .col.production h3 { color: var(--production); }
+    .card { border: 1px solid var(--line); background: var(--lift); padding: 12px; margin-bottom: 8px; }
+    .card h4 { margin: 0 0 4px; font-family: Syne, sans-serif; font-size: 16px; font-weight: 700; }
+    .card p { margin: 0 0 10px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+    button, input, textarea, select { font: inherit; color: inherit; background: var(--void); border: 1px solid var(--line); }
+    button { cursor: pointer; padding: 8px 10px; }
+    button:hover { border-color: var(--hot); color: #fff; }
+    button:disabled { opacity: 0.35; cursor: default; color: var(--muted); border-color: var(--line); }
+    .card button { width: 100%; font-size: 12px; }
+    form, .inspect { display: grid; gap: 8px; }
+    .inspect { margin-top: 0; }
+    .inspect .mark {
+      font-family: Syne, sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+    }
+    label { font-size: 11px; color: var(--muted); display: grid; gap: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+    input, textarea, select { padding: 9px 10px; font-size: 14px; }
+    input:focus, textarea:focus, button:focus-visible, select:focus {
+      outline: 1px solid var(--hot);
+      outline-offset: 1px;
+    }
+    .primary { background: var(--hot); border-color: var(--hot); color: #140404; font-weight: 600; width: 100%; }
+    .primary:hover { color: #140404; filter: brightness(1.05); }
+    .cap { width: 100%; text-align: left; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; }
+    .journal { max-height: 180px; overflow: auto; font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11px; line-height: 1.55; color: var(--muted); }
+    .err { color: var(--danger); font-size: 13px; min-height: 1.1em; }
+    .ok { color: var(--live); font-size: 12px; min-height: 1.1em; }
+    .stack { display: grid; gap: 16px; }
+    .voices { display: flex; flex-wrap: wrap; gap: 6px; }
+    .voices button { font-size: 11px; padding: 6px 8px; }
+    .voices button.active { border-color: var(--live); color: var(--live); }
+    .talk-log { max-height: 140px; overflow: auto; font-size: 12px; color: var(--muted); line-height: 1.45; }
+    .talk-log .me { color: var(--ink); }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 16px 0 32px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 1100px) {
+      .desk { grid-template-columns: 1fr; }
+      .agents { max-height: none; }
+      header.top { flex-direction: column; align-items: flex-start; }
+      .stats { justify-content: flex-start; }
+    }
+    @media (max-width: 700px) {
+      .board { display: block; }
+      .col { margin-bottom: 8px; min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <div class="brand">
+          <div class="mark-v" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+              <path d="M16 4 L28 28 H4 Z" stroke="#ff4d3d" stroke-width="2"/>
+              <path d="M16 10 L23 24 H9 Z" fill="#ff4d3d"/>
+            </svg>
+          </div>
+          <div>
+            <p class="word">TE<em>A</em>L</p>
+            <p class="sub">Evolu-Jeunes · voice across every bridge · FR/EN</p>
+          </div>
+        </div>
+        <p class="lede" id="lede">Fourteen seats. One body. idea → concept → production.</p>
+      </div>
+      <div class="stats" id="stats"></div>
+    </header>
+    <main class="desk">
+      <section class="panel">
+        <h2>Crew</h2>
+        <div class="agents" id="agents"></div>
+      </section>
+      <section class="stack">
+        <div class="panel">
+          <h2>Delivery line</h2>
+          <div class="board" id="board" aria-label="Delivery board"></div>
+        </div>
+        <div class="panel">
+          <h2>Voice lane</h2>
+          <p class="lede" id="vapi-hint">Vapi talks on every bridge project. Change voice here, on the dashboard, or with VAPI_VOICE_ID.</p>
+          <div class="voices" id="voices"></div>
+          <form id="vapi-talk">
+            <label>Talk with Castro
+              <textarea name="text" rows="2" required placeholder="Ask Vapi about Pandora, Proximity, interns…"></textarea>
+            </label>
+            <div class="row2">
+              <label>Line
+                <select name="line" id="vapi-line"></select>
+              </label>
+              <label>Call (human gate)
+                <input name="to" placeholder="+1…" inputmode="tel">
+              </label>
+            </div>
+            <button class="primary" type="submit">Talk</button>
+            <button type="button" id="vapi-call">Park outbound call</button>
+            <div class="ok" id="vapi-ok"></div>
+            <div class="err" id="vapi-err"></div>
+          </form>
+          <div class="talk-log" id="talk-log"></div>
+        </div>
+        <div class="panel">
+          <h2>Journal</h2>
+          <div class="journal" id="journal"></div>
+        </div>
+      </section>
+      <aside class="stack">
+        <div class="panel">
+          <h2>Bay</h2>
+          <div class="inspect" id="inspect"></div>
+        </div>
+        <div class="panel">
+          <h2>New mandate</h2>
+          <form id="form">
+            <label>Name <input name="name" required placeholder="Ledger desk"></label>
+            <label>Client <input name="client" placeholder="Proximity Agency"></label>
+            <label>Sector <input name="sector" placeholder="finance"></label>
+            <label>Stack <input name="stack" placeholder="Go, Azure"></label>
+            <label>Notes <textarea name="notes" rows="2" placeholder="What has to ship"></textarea></label>
+            <button class="primary" type="submit">Park it in idea</button>
+            <div class="err" id="form-error"></div>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Research library</h2>
+          <div class="journal" id="notes"></div>
+          <form id="note-form">
+            <label>Claim <input name="claim" required placeholder="AOS is a control plane"></label>
+            <label>Source <input name="source" placeholder="arxiv:2606.01508"></label>
+            <label>URL <input name="url" placeholder="https://arxiv.org/abs/2606.01508"></label>
+            <button type="submit">Ingest note</button>
+          </form>
+        </div>
+        <div class="panel">
+          <h2>Human gate</h2>
+          <div class="journal" id="confirms"></div>
+        </div>
+      </aside>
+    </main>
+    <footer>
+      <span id="contact">alejandro@proximityagency.ca</span>
+      <span>Voltron · Cashtro kernel · OpenRouter optional</span>
+    </footer>
+  </div>
+  <script>
+    const stages = ["idea", "concept", "production"];
+    const crew = {
+      init: { name: "Lautaro", color: "#d7dde8" },
+      delivery: { name: "Maker", color: "#ff4d3d" },
+      router: { name: "Spark", color: "#c084fc" },
+      research: { name: "Scribe", color: "#3dffa6" },
+      explorer: { name: "Pathfinder", color: "#6ea8ff" },
+      operator: { name: "Builder", color: "#ff4d3d" },
+      reviewer: { name: "Witness", color: "#f0c14b" },
+      architect: { name: "Creator", color: "#f0c14b" },
+      deploy: { name: "Forger", color: "#6ea8ff" },
+      security: { name: "Sentinel", color: "#ff6b5a" },
+      memory: { name: "Keeper", color: "#8b93a7" },
+      comms: { name: "Herald", color: "#f0c14b" },
+      planner: { name: "Steward", color: "#3dffa6" },
+      investigator: { name: "Seeker", color: "#ffb020" },
+      manager: { name: "Epicenter", color: "#6ea8ff" },
+      teal: { name: "Teal", color: "#2dd4bf" },
+      vapi: { name: "Vapi", color: "#c084fc" }
+    };
+    async function j(url, opts) {
+      const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || res.statusText);
+      return body;
+    }
+    function chip(text, cls) {
+      const el = document.createElement("span");
+      el.className = "chip" + (cls ? " " + cls : "");
+      el.textContent = text;
+      return el;
+    }
+    function card(ship) {
+      const el = document.createElement("article");
+      el.className = "card";
+      el.innerHTML = "<h4></h4><p></p>";
+      el.querySelector("h4").textContent = ship.name;
+      el.querySelector("p").textContent = [ship.client, ship.notes].filter(Boolean).join(" — ");
+      const btn = document.createElement("button");
+      if (ship.stage === "production") {
+        btn.textContent = "Shipped";
+        btn.disabled = true;
+      } else {
+        btn.textContent = ship.stage === "idea" ? "Move to concept" : "Move to production";
+        btn.addEventListener("click", async () => {
+          btn.disabled = true;
+          try {
+            await j("/api/ships/" + encodeURIComponent(ship.id) + "/advance", { method: "POST" });
+            await render();
+          } catch (err) {
+            btn.disabled = false;
+            btn.textContent = err.message;
+          }
+        });
+      }
+      el.appendChild(btn);
+      return el;
+    }
+    let selected = "vapi";
+    let lastInvoke = "";
+    let talkTurns = [];
+    let currentVoice = "rachel";
+    function inspect(agent, model) {
+      const box = document.getElementById("inspect");
+      box.replaceChildren();
+      const seat = crew[agent.spec.id] || { name: agent.spec.name };
+      const title = document.createElement("div");
+      title.className = "mark";
+      title.textContent = seat.name;
+      const p = document.createElement("p");
+      p.className = "lede";
+      p.textContent = lastInvoke || agent.spec.summary;
+      box.appendChild(title);
+      box.appendChild(p);
+      (agent.spec.capabilities || []).forEach((cap) => {
+        const b = document.createElement("button");
+        b.className = "cap";
+        b.textContent = "Invoke " + cap;
+        b.addEventListener("click", async () => {
+          b.disabled = true;
+          try {
+            const payload = cap === "model.chat"
+              ? { capability: cap, payload: { prompt: "Say one line: Cashtro OS does not require OpenRouter to boot." } }
+              : { capability: cap };
+            const res = await j("/api/agents/" + encodeURIComponent(agent.spec.id) + "/invoke", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+              body: JSON.stringify(payload)
+            });
+            lastInvoke = res.message + (res.data && res.data.content ? " — " + res.data.content : "");
+            await render();
+          } catch (err) {
+            p.textContent = err.message;
+          } finally {
+            b.disabled = false;
+          }
+        });
+        box.appendChild(b);
+      });
+      if (agent.spec.id === "router" && model && !model.bound) {
+        const hint = document.createElement("p");
+        hint.className = "err";
+        hint.textContent = "No OPENROUTER_API_KEY in this environment. OS is up. Bind a key when an agentic needs to think.";
+        box.appendChild(hint);
+      }
+    }
+    async function render() {
+      const [os, agents, ships, events, model, profile, notes, confirms, vapi] = await Promise.all([
+        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms"), j("/api/vapi")
+      ]);
+      document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";
+      document.getElementById("contact").textContent = profile.email;
+      const stats = document.getElementById("stats");
+      stats.replaceChildren(
+        chip("Teal " + os.version),
+        chip(os.running + " online", "live"),
+        chip(os.live + " live"),
+        chip(os.resident + " resident"),
+        chip(notes.length + " notes"),
+        chip(model.bound ? "OpenRouter · " + model.model : "OpenRouter unbound", model.bound ? "live" : "unbound"),
+        chip(vapi.keyBound ? "Vapi live" : "Vapi local", vapi.keyBound ? "live" : "unbound")
+      );
+      const grid = document.getElementById("agents");
+      grid.replaceChildren();
+      agents.forEach((agent) => {
+        const seat = crew[agent.spec.id] || { name: agent.spec.name, color: "#8b93a7" };
+        const btn = document.createElement("button");
+        btn.className = "agent" + (agent.spec.id === selected ? " active" : "");
+        btn.innerHTML = "<span class='stripe'></span><span class='body'><b></b><div class='meta'></div><div class='dot'></div></span>";
+        btn.querySelector(".stripe").style.background = seat.color;
+        btn.querySelector("b").textContent = seat.name;
+        btn.querySelector(".meta").textContent = agent.spec.role + " · " + agent.spec.id;
+        const dot = btn.querySelector(".dot");
+        dot.className = "dot " + agent.spec.mode;
+        dot.textContent = agent.spec.mode + " · " + agent.status;
+        btn.addEventListener("click", () => { selected = agent.spec.id; lastInvoke = ""; render(); });
+        grid.appendChild(btn);
+      });
+      const current = agents.find((a) => a.spec.id === selected) || agents[0];
+      inspect(current, model);
+      const board = document.getElementById("board");
+      board.replaceChildren();
+      stages.forEach((stage) => {
+        const col = document.createElement("section");
+        col.className = "col " + stage;
+        const items = ships.filter((s) => s.stage === stage);
+        const title = document.createElement("h3");
+        title.innerHTML = "<span></span><span></span>";
+        title.children[0].textContent = stage;
+        title.children[1].textContent = String(items.length);
+        col.appendChild(title);
+        items.forEach((ship) => col.appendChild(card(ship)));
+        board.appendChild(col);
+      });
+      const journal = document.getElementById("journal");
+      journal.replaceChildren();
+      events.slice(-16).reverse().forEach((ev) => {
+        const line = document.createElement("div");
+        line.textContent = ev.seq + "  " + ev.source + "/" + ev.kind + "  " + ev.message;
+        journal.appendChild(line);
+      });
+      const lib = document.getElementById("notes");
+      lib.replaceChildren();
+      notes.slice(0, 8).forEach((n) => {
+        const line = document.createElement("div");
+        line.textContent = n.source + " — " + n.claim;
+        lib.appendChild(line);
+      });
+      const gate = document.getElementById("confirms");
+      gate.replaceChildren();
+      if (!confirms.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "No outbound drafts. comms.send parks a confirm here.";
+        gate.appendChild(empty);
+      }
+      confirms.forEach((c) => {
+        const line = document.createElement("div");
+        line.textContent = "#" + c.id + " " + c.status + " — " + c.body;
+        gate.appendChild(line);
+        if (c.status === "pending") {
+          const allow = document.createElement("button");
+          allow.textContent = "Allow #" + c.id;
+          allow.addEventListener("click", async () => {
+            await j("/api/confirms/" + c.id + "/allow", { method: "POST" });
+            await render();
+          });
+          gate.appendChild(allow);
+        }
+      });
+      paintVapi(vapi);
+    }
+    async function paintVapi(status) {
+      const hint = document.getElementById("vapi-hint");
+      const voice = (status.currentVoice && status.currentVoice.name) || (status.voice && status.voice.name) || "Rachel";
+      currentVoice = (status.currentVoice && status.currentVoice.id) || (status.voice && status.voice.id) || currentVoice;
+      hint.textContent = (status.hint || "Vapi lane") + " · " + voice + " · line " + (status.line || "pandora") + " · POST /api/vapi/talk";
+      const lineSel = document.getElementById("vapi-line");
+      const lines = status.bridges || [];
+      const prev = lineSel.value || status.line || "pandora";
+      lineSel.replaceChildren();
+      lines.forEach((id) => {
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = id;
+        if (id === prev) opt.selected = true;
+        lineSel.appendChild(opt);
+      });
+      const catalog = await j("/api/vapi/voices");
+      const box = document.getElementById("voices");
+      box.replaceChildren();
+      (catalog.voices || []).forEach((v) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = v.name + " · " + v.lang;
+        if (v.id === currentVoice) b.className = "active";
+        b.addEventListener("click", async () => {
+          await j("/api/vapi/voice", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({ id: v.id })
+          });
+          await render();
+        });
+        box.appendChild(b);
+      });
+      const log = document.getElementById("talk-log");
+      log.replaceChildren();
+      if (!talkTurns.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "Local talk works without a key. Outbound calls wait on the human gate.";
+        log.appendChild(empty);
+      }
+      talkTurns.slice(-8).reverse().forEach((t) => {
+        const me = document.createElement("div");
+        me.className = "me";
+        me.textContent = "You · " + t.user;
+        const them = document.createElement("div");
+        them.textContent = (t.voice || "vapi") + " · " + t.reply;
+        log.appendChild(me);
+        log.appendChild(them);
+      });
+    }
+    document.getElementById("form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("form-error");
+      err.textContent = "";
+      const data = new FormData(event.target);
+      try {
+        await j("/api/ships", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            name: data.get("name"),
+            client: data.get("client"),
+            sector: data.get("sector"),
+            notes: data.get("notes"),
+            stack: String(data.get("stack") || "").split(",").map((s) => s.trim()).filter(Boolean)
+          })
+        });
+        event.target.reset();
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    document.getElementById("note-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      try {
+        await j("/api/notes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            claim: data.get("claim"),
+            source: data.get("source"),
+            url: data.get("url")
+          })
+        });
+        event.target.reset();
+        await render();
+      } catch (e) {
+        document.getElementById("form-error").textContent = e.message;
+      }
+    });
+    document.getElementById("vapi-talk").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("vapi-err");
+      const ok = document.getElementById("vapi-ok");
+      err.textContent = "";
+      ok.textContent = "";
+      const data = new FormData(event.target);
+      try {
+        const turn = await j("/api/vapi/talk", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ text: data.get("text"), line: data.get("line") })
+        });
+        talkTurns.push(turn);
+        ok.textContent = turn.live ? "live chat" : "local brain";
+        event.target.querySelector("[name=text]").value = "";
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    document.getElementById("vapi-call").addEventListener("click", async () => {
+      const form = document.getElementById("vapi-talk");
+      const data = new FormData(form);
+      const err = document.getElementById("vapi-err");
+      const ok = document.getElementById("vapi-ok");
+      err.textContent = "";
+      ok.textContent = "";
+      try {
+        const parked = await j("/api/vapi/call", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            to: data.get("to"),
+            prompt: data.get("text") || "automated call from Cashtro",
+            line: data.get("line")
+          })
+        });
+        ok.textContent = "Parked confirm #" + (parked.confirm && parked.confirm.id) + " — allow at the human gate";
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
+    document.getElementById("vapi-line").addEventListener("change", async (event) => {
+      try {
+        await j("/api/vapi/bridge", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ line: event.target.value })
+        });
+      } catch (e) {
+        document.getElementById("vapi-err").textContent = e.message;
+      }
+    });
+    render().catch((e) => { document.getElementById("form-error").textContent = e.message; });
+  </script>
+</body>
+</html>

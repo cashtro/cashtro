@@ -15,7 +15,7 @@ Stdlib **Go 1.22** process OS. One binary: `cmd/cashtro` → HTTP `:8080`.
 | `internal/model` | Optional OpenRouter client. Boots unbound. |
 | `internal/server` | Desk HTML + REST (`/api/os`, `/api/agents`, `/api/ships`, …) |
 | `.github/workflows/go.yml` | `go test` + `go vet` on main/PR |
-| `.cursor/environment.json` | Cloud start: `go run ./cmd/cashtro` on `main` |
+| `teal/` | Fresh Evolu-Jeunes Teal product (`github.com/Evolu-Jeunes/Teal`) on `:8090` |
 
 Seeded ships (products, not processes): BTK Avocats, MD Clinic,
 Solution Hypothèque QC, Éduconnexion, Proximity (production);

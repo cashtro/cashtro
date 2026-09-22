@@ -38,6 +38,18 @@ go run ./cmd/cashtro
 
 Open `http://localhost:8080`.
 
+### Evolu-Jeunes / Teal
+
+The voice product is a fresh module: `teal/` → `github.com/Evolu-Jeunes/Teal`.
+Cashtro remains the manager. Teal runs on `:8090`.
+
+```bash
+go test ./...
+cd teal && go test ./... && go run ./cmd/teal
+# publish when an Evolu-Jeunes PAT can create org repos:
+./scripts/publish-evolu-jeunes-teal.sh
+```
+
 ### Voltron (overnight, non-stop)
 
 Voltron is this kernel assembled: every registered agentic under one

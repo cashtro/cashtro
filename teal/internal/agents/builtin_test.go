@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/cashtro/cashtro/internal/kernel"
+	"github.com/Evolu-Jeunes/Teal/internal/kernel"
 )
 
 func TestBootLoadsAllAgentics(t *testing.T) {
