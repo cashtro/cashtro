@@ -14,3 +14,12 @@ data/
 *.db
 .turbo
 .pnpm-store/
+
+# Client vault — keep structure, never commit the files
+/raw/papers/**
+/raw/images/**
+/raw/videos/**
+/raw/paperwork/**
+/raw/notes/**
+/raw/inbox/**
+!/raw/**/.gitkeep
