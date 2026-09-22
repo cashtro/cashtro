@@ -1,6 +1,7 @@
 package server
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"io"
@@ -42,6 +43,21 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("POST /api/ships", s.createShip)
 	mux.HandleFunc("GET /api/ships/{id}", s.getShip)
 	mux.HandleFunc("POST /api/ships/{id}/advance", s.advanceShip)
+	mux.HandleFunc("GET /api/teal", s.tealStatus)
+	mux.HandleFunc("GET /api/vapi", s.vapiCard)
+	mux.HandleFunc("POST /api/vapi/webhook", s.vapiWebhook)
+	mux.HandleFunc("POST /api/teal/scrape", s.tealInvoke("teal.scrape"))
+	mux.HandleFunc("POST /api/teal/ingest", s.tealInvoke("teal.ingest"))
+	mux.HandleFunc("POST /api/teal/idea", s.tealInvoke("teal.idea"))
+	mux.HandleFunc("GET /api/teal/interns", s.tealInterns)
+	mux.HandleFunc("POST /api/teal/interns", s.tealInvoke("teal.assign"))
+	mux.HandleFunc("POST /api/teal/question", s.tealInvoke("teal.question"))
+	mux.HandleFunc("POST /api/teal/help", s.tealInvoke("teal.help"))
+	mux.HandleFunc("POST /api/teal/listen", s.tealInvoke("teal.listen"))
+	mux.HandleFunc("POST /api/teal/spawn", s.tealInvoke("teal.spawn"))
+	mux.HandleFunc("POST /api/teal/smarter", s.tealInvoke("teal.smarter"))
+	mux.HandleFunc("POST /api/teal/cursor", s.tealInvoke("teal.cursor"))
+	mux.HandleFunc("GET /api/teal/card", s.tealCard)
 	return mux
 }
 
@@ -225,6 +241,83 @@ func (s *api) createShip(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusCreated, res.Data)
+}
+
+func (s *api) tealStatus(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "teal", kernel.Call{Capability: "teal.status"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) vapiCard(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "teal", kernel.Call{Capability: "teal.vapi"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) tealCard(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "teal", kernel.Call{Capability: "teal.card"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) tealInterns(w http.ResponseWriter, r *http.Request) {
+	res, err := s.k.Invoke(r.Context(), "teal", kernel.Call{Capability: "teal.interns"})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) vapiWebhook(w http.ResponseWriter, r *http.Request) {
+	raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	res, err := s.k.Invoke(r.Context(), "teal", kernel.Call{Capability: "teal.listen", Payload: raw})
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	if !res.OK {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+		return
+	}
+	writeJSON(w, http.StatusOK, res.Data)
+}
+
+func (s *api) tealInvoke(cap string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		raw, err := io.ReadAll(io.LimitReader(r.Body, maxBody))
+		if err != nil {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+			return
+		}
+		if len(bytes.TrimSpace(raw)) == 0 {
+			raw = []byte(`{}`)
+		}
+		res, err := s.k.Invoke(r.Context(), "teal", kernel.Call{Capability: cap, Payload: raw})
+		if err != nil {
+			writeError(w, err)
+			return
+		}
+		if !res.OK {
+			writeJSON(w, http.StatusBadRequest, map[string]string{"error": res.Message})
+			return
+		}
+		writeJSON(w, http.StatusOK, res.Data)
+	}
 }
 
 func (s *api) advanceShip(w http.ResponseWriter, r *http.Request) {

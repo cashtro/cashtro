@@ -43,7 +43,7 @@ func Lines() []Line {
 		},
 		{
 			ID: "panda", Name: "Panda White Glove", Brain: "Hustler",
-			Mandate: "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers.",
+			Mandate:  "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers.",
 			Controls: "Hustler vend. Architecte conçoit l'offre IA. Forgeron installe.",
 			Repos:    []string{"Evolu-Jeunes/Panda"},
 		},
@@ -56,13 +56,13 @@ func Lines() []Line {
 		},
 		{
 			ID: "ecole", Name: "École tech", Brain: "Cartographe",
-			Mandate: "Enseigner tout ce qui est tech. Éduconnexion est le côté école.",
+			Mandate:  "Enseigner tout ce qui est tech. Éduconnexion est le côté école.",
 			Controls: "Cartographe tient le programme. Forgeron tient le site WordPress.",
 			Repos:    []string{"Evolu-Jeunes/educonnexion"},
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
-			Mandate: "Système automatisé de gestion pour le marketing digital entier des business corporate en ligne.",
+			Mandate:  "Système automatisé de gestion pour le marketing digital entier des business corporate en ligne.",
 			Controls: "Hustler pilote campagnes et gestion. Cartographe mesure.",
 			Repos:    []string{"Evolu-Jeunes/CRM"},
 		},
@@ -72,6 +72,13 @@ func Lines() []Line {
 				"Branché sur une app pour vendre les items pendant le live. Diffusion maison, les streamers ne dépendent pas d'une plateforme externe.",
 			Controls: "Forgeron tient le studio et l'app de vente. Hustler remplit le live.",
 			Repos:    []string{"Evolu-Jeunes/Empire-", "Evolu-Jeunes/EmpireMedia"},
+		},
+		{
+			ID: "pandora", Name: "Pandora / PBTM", Brain: "Hustler",
+			Mandate: "Pandora Business Technology and Marketing. Brainstorm, intern stages, Vapi voice on Teams AI Teal. " +
+				"Le cerveau Teal écoute les appels, aide les stagiaires, et spawn de nouvelles intel.",
+			Controls: "Teal gère Teams only. Vapi parle. Hustler vend. Cursor lance les agentics depuis la carte Teams.",
+			Repos:    []string{"cashtro/Pandora", "Evolu-Jeunes/Pandora", "Evolu-Jeunes/Panda"},
 		},
 		{
 			ID: "trading", Name: "Crypto et AI bot", Brain: "Architecte",

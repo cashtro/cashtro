@@ -9,7 +9,7 @@ Stdlib **Go 1.22** process OS. One binary: `cmd/cashtro` → HTTP `:8080`.
 | Path | Role |
 | --- | --- |
 | `internal/kernel` | Process table, invoke bus, journal, mail, notes, memory, confirms |
-| `internal/agents` | 14 registered agentics. 7 live, 7 resident (contract only) |
+| `internal/agents` | 16 registered agentics. 9 live (incl. Teal), 7 resident |
 | `internal/catalog` | Delivery line: idea → concept → production (in-memory seed) |
 | `internal/model` | Optional OpenRouter client. Boots unbound. |
 | `internal/server` | Desk HTML + REST (`/api/os`, `/api/agents`, `/api/ships`, …) |
@@ -22,7 +22,9 @@ ScanApp (concept); Cashtro delivery catalog (idea).
 
 Live verbs today: `os.about`, delivery CRUD/advance, explorer search,
 memory store/recall, comms confirm gate, planner backlog, research ingest,
-`model.status` / `model.chat` (chat no-ops without a key).
+`model.status` / `model.chat` (chat no-ops without a key), Teal corporate
+brain (`teal.*`) — Teams scrape/ingest, Vapi listen, intern desk, idea,
+self-spawn, Cursor card.
 
 ## What is dead or missing
 

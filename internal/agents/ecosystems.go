@@ -62,6 +62,11 @@ func Links() []Link {
 			Via:    "l'école enseigne le Web3 que les bots exécutent",
 			Agents: []string{"research", "memory", "architect"},
 		},
+		{
+			From: "pandora", To: "ecole",
+			Via:    "Teal sur Teams AI Teal: Vapi écoute, les stagiaires posent, le cerveau spawn de l'intel",
+			Agents: []string{"teal", "memory", "comms", "planner"},
+		},
 	}
 }
 

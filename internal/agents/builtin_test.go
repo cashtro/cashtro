@@ -14,11 +14,11 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 15 {
-		t.Fatalf("processes = %d, want 15", len(procs))
+	if len(procs) != 16 {
+		t.Fatalf("processes = %d, want 16", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 8 {
+	if about.Running != 16 || about.Live != 9 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -93,7 +93,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.lines: %+v %v", res, err)
 	}
 	lines, ok := res.Data.([]Line)
-	if !ok || len(lines) != 8 {
+	if !ok || len(lines) != 9 {
 		t.Fatalf("lines = %#v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
@@ -107,8 +107,8 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("proximity brain = %+v", res.Data)
 	}
 
-	if len(AgentIDs()) != 15 {
-		t.Fatalf("agentics in ecosystems = %d, want 15 (%v)", len(AgentIDs()), AgentIDs())
+	if len(AgentIDs()) != 16 {
+		t.Fatalf("agentics in ecosystems = %d, want 16 (%v)", len(AgentIDs()), AgentIDs())
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.ecosystems"})
 	if err != nil || !res.OK {
@@ -122,7 +122,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.automate: %+v %v", res, err)
 	}
 	gotAgents := res.Data.(map[string]any)["agents"].([]string)
-	if len(gotAgents) != 15 {
+	if len(gotAgents) != 16 {
 		t.Fatalf("automate agents = %v", gotAgents)
 	}
 	if len(k.Inbox("operator")) == 0 || len(k.Inbox("security")) == 0 || len(k.Inbox("init")) == 0 {

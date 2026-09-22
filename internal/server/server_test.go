@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 14 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 16 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +70,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 14 {
+	if len(procs) != 16 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 
@@ -187,6 +187,49 @@ func TestCreateRejectsUnknownField(t *testing.T) {
 	h.ServeHTTP(res, req)
 	if res.Code != http.StatusBadRequest {
 		t.Fatalf("status = %d body=%s", res.Code, res.Body.String())
+	}
+}
+
+func TestTealAndVapiHTTP(t *testing.T) {
+	h := handler(t)
+
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/vapi", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "vapi.ai") {
+		t.Fatalf("vapi = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/teal", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "microsoft-teams") {
+		t.Fatalf("teal = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/teal/ingest", strings.NewReader(`{"channel":"microsoft-teams","text":"stand-up on Pandora"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK {
+		t.Fatalf("ingest = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/vapi/webhook", strings.NewReader(`{"message":{"call":{"id":"hook1"},"analysis":{"summary":"Call about intern onboarding"}}}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "hook1") {
+		t.Fatalf("webhook = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/teal/card", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "AdaptiveCard") {
+		t.Fatalf("card = %d %s", res.Code, res.Body.String())
+	}
+
+	res = httptest.NewRecorder()
+	req = httptest.NewRequest(http.MethodPost, "/api/teal/ingest", strings.NewReader(`{"channel":"slack","text":"x"}`))
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusBadRequest {
+		t.Fatalf("slack ingest = %d %s", res.Code, res.Body.String())
 	}
 }
 

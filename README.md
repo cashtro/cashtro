@@ -88,6 +88,28 @@ The kernel still boots with neither daemon nor key. The `router` stays
 | `GET` | `/api/ships` | Delivery line |
 | `POST` | `/api/ships` | Park a mandate in idea |
 | `POST` | `/api/ships/{id}/advance` | Move one stage right |
+| `GET` | `/api/teal` | Corporate Teal brain (Teams only) |
+| `GET` | `/api/vapi` | Vapi (Vappy) voice bind + share link |
+| `POST` | `/api/vapi/webhook` | Vapi end-of-call / transcript → Teal listen |
+| `POST` | `/api/teal/scrape` | Graph scrape of Teams AI Teal (needs `TEAMS_TOKEN`) |
+| `POST` | `/api/teal/ingest` | Ingest a Teams message (refuses Slack/mail) |
+| `GET` | `/api/teal/interns` | Intern desk |
+| `POST` | `/api/teal/question` | Answer intern / project questions |
+| `POST` | `/api/teal/cursor` | Park a Cursor Cloud Agent launch (human gate) |
+| `GET` | `/api/teal/card` | Teams Adaptive Card (Vapi + Cursor) |
+
+### Teal · Vapi · Teams only
+
+Corporate **AI Teal** lives on Microsoft Teams. Voice is **Vapi** (`https://vapi.ai/`, dashboard `https://dashboard.vapi.ai/`). The Cursor app launches from the Teams card (`https://cursor.com/agents`). New intel agentics spawn back into this kernel.
+
+```bash
+export VAPI_SHARE_URL=https://dashboard.vapi.ai/assistants/YOUR_ASSISTANT_ID
+export VAPI_ASSISTANT_ID=YOUR_ASSISTANT_ID
+# optional: export VAPI_API_KEY=...
+# optional Graph scrape: export TEAMS_TOKEN=...
+go run ./cmd/cashtro
+# Point the Vapi assistant server URL at /api/vapi/webhook
+```
 
 ## Control plane
 

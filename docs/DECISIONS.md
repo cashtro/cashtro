@@ -1,5 +1,21 @@
 # DECISIONS
 
+## 2026-09-22 — Teal brain is Teams-only, voice is Vapi, Cursor is a card
+
+- **Choice:** Absorb a live `teal` agentic into Cashtro OS. Surface is Microsoft
+  Teams only. Voice is Vapi (the "Vappy" assistant). Cursor Cloud Agents launch
+  from a Teams Adaptive Card after a human confirm. New intel registers back
+  into this kernel.
+- **Why:** Castro asked to connect the Teams AI Teal voice AI (Vapi) to the
+  Pandora brainstorming brain, scrape Teams, manage interns, listen to calls,
+  and keep getting smarter. Teams MCP and Zapier Teams have no tenant bind
+  here, so Graph scrape waits on `TEAMS_TOKEN`. The public Vapi link we can
+  stand up without that bind is https://vapi.ai/ (dashboard
+  https://dashboard.vapi.ai/). Lock the exact assistant with `VAPI_SHARE_URL`.
+- **Alternatives:** A second web dock; Slack; paid Vapi signup from this agent.
+- **Stop:** Do not buy Vapi numbers or post to a live Teams webhook until Castro
+  confirms. Outbound stays on the human gate.
+
 ## 2026-09-22 — Use both lanes, and Mermaid too
 
 - **Choice:** `model.chat` route `both` calls Ollama (internal) and, on
