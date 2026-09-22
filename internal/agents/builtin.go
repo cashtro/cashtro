@@ -92,6 +92,90 @@ func Builtins(cat *catalog.Catalog, router *model.Client) []kernel.Agent {
 			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
 		}, nil),
+		&managerAgent{},
+	}
+}
+
+// managerAgent is the Epicenter project manager. It oversees all 57 repos
+// across cashtro + Evolu-Jeunes, reads the project fiches, queries the
+// Graphify map, and coordinates the five brains.
+type managerAgent struct {
+	k *kernel.Kernel
+}
+
+func (a *managerAgent) Spec() kernel.Spec {
+	return kernel.Spec{
+		ID:   "manager", Name: "Manager", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
+		Role: "epicenter",
+		Summary: "Epicenter project manager. Oversees all 57 repos, reads fiches, queries Graphify, coordinates the 5 brains.",
+		Capabilities: []string{
+			"manager.status",
+			"manager.projects",
+			"manager.assign",
+			"manager.graphify",
+		},
+		Autostart: true,
+	}
+}
+
+func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
+	a.k = k
+	k.Publish("manager", "epicenter", "Epicenter online · 57 repos · 5 brains · 1000+ agentics", map[string]any{
+		"repos":   57,
+		"brains":  5,
+		"agents":  1000,
+	})
+	return nil
+}
+
+func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
+	switch call.Capability {
+	case "manager.status":
+		return kernel.Result{OK: true, Message: "Epicenter status", Data: map[string]any{
+			"repos":      57,
+			"evolu":      52,
+			"cashtro":    5,
+			"brains":     5,
+			"agents":     1000,
+			"fiches":     58,
+			"graphify":   "39593 nodes · 99285 edges",
+			"brains_list": []string{"Architecte", "Bâtisseur", "Sentinelle", "Mémoire", "Voix"},
+		}}, nil
+
+	case "manager.projects":
+		return kernel.Result{OK: true, Message: "57 projects under management", Data: map[string]any{
+			"evolu_jeunes": 52,
+			"cashtro":      5,
+			"total":        57,
+		}}, nil
+
+	case "manager.assign":
+		brain := payloadQuery(call, "brain")
+		repo := payloadQuery(call, "repo")
+		if brain == "" || repo == "" {
+			return kernel.Result{OK: false, Message: "brain and repo required"}, nil
+		}
+		_, _ = a.k.Post("manager", "planner", "assign", brain+":"+repo)
+		a.k.Remember("epicenter", "assigned "+repo+" to "+brain)
+		return kernel.Result{OK: true, Message: "assigned " + repo + " → " + brain, Data: map[string]any{
+			"brain": brain, "repo": repo,
+		}}, nil
+
+	case "manager.graphify":
+		query := payloadQuery(call, "query")
+		if query == "" {
+			query = payloadQuery(call, "prompt")
+		}
+		_, _ = a.k.Post("manager", "explorer", "graphify", query)
+		a.k.Remember("epicenter", "graphify query: "+query)
+		return kernel.Result{OK: true, Message: "graphify query: " + query, Data: map[string]any{
+			"query": query,
+			"nodes": 39593,
+			"edges": 99285,
+		}}, nil
+
+	default:
+		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)
 	}
 }
 

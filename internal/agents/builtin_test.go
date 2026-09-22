@@ -14,11 +14,11 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 14 {
-		t.Fatalf("processes = %d, want 14", len(procs))
+	if len(procs) != 15 {
+		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 14 || about.Live != 7 {
+	if about.Running != 15 || about.Live != 8 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -78,5 +78,21 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	res, err = k.Invoke(context.Background(), "research", kernel.Call{Capability: "research.list"})
 	if err != nil || !res.OK {
 		t.Fatalf("research: %+v %v", res, err)
+	}
+
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.status"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.status: %+v %v", res, err)
+	}
+	if got := res.Data.(map[string]any)["repos"]; got != 57 {
+		t.Fatalf("manager.repos = %v, want 57", got)
+	}
+
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.assign",
+		Payload:    []byte(`{"brain":"Sentinelle","repo":"evolu-jeunes/btk-avocats"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.assign: %+v %v", res, err)
 	}
 }
