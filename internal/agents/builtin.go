@@ -130,6 +130,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.assign",
 			"manager.graphify",
 			"manager.ledger",
+			"manager.watch",
 		},
 		Autostart: true,
 	}
@@ -213,6 +214,26 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.loi":
 		return kernel.Result{OK: true, Message: "quebec and canada gates", Data: a.board.Compliance}, nil
+
+	case "manager.watch":
+		self := AskSelf("watch", nil)
+		a.note("watch", self)
+		if len(self.Open) > 0 {
+			return kernel.Result{OK: false, Message: askMessage(self.Open), Data: self.Open}, nil
+		}
+		covered := 0
+		for _, ln := range Lines() {
+			if _, ok := Chain(ln.ID); ok {
+				covered++
+			}
+		}
+		_, _ = a.k.Post("manager", "memory", "watch", "tableau relu, aucun déploiement")
+		return kernel.Result{OK: len(a.board.Gaps) == 0 && covered == len(Lines()), Message: "veille", Data: map[string]any{
+			"gaps":   a.board.Gaps,
+			"hors":   []string{"cashtro/agence"},
+			"chains": covered,
+			"lines":  len(Lines()),
+		}}, nil
 
 	case "manager.automate":
 		posted, err := a.runEcosystems()

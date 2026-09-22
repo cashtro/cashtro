@@ -54,6 +54,56 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "scanapp", Order: 8, Agent: "comms", Do: "Vendre, promouvoir, marketing et média sur la fiche prête. Campagnes de rabais qui comparent les prix en ligne, plus chers."},
 			{Line: "scanapp", Order: 9, Agent: "operator", Do: "Vente sur le marketplace (MCP, Stripe) et en live via Empire. Proximity n'est pas dans cette chaîne."},
 		}, true
+	case "control":
+		return []ChainStep{
+			{Line: "control", Order: 1, Agent: "manager", Do: "Lire le tableau et nommer les trous. Ne pas trancher à la place d'Epicenter."},
+			{Line: "control", Order: 2, Agent: "memory", Do: "Garder le coup. Ne pas réécrire un site client. Ne pas mélanger le dépôt de l'agence."},
+		}, true
+	case "proximity":
+		return []ChainStep{
+			{Line: "proximity", Order: 1, Agent: "operator", Do: "Lire le site client WordPress, PHP, ACF Pro. Ne pas le réécrire."},
+			{Line: "proximity", Order: 2, Agent: "deploy", Do: "Preview sur Azure, puis accord. Pas de mise en ligne directe."},
+		}, true
+	case "marketplace":
+		return []ChainStep{
+			{Line: "marketplace", Order: 1, Agent: "delivery", Do: "Fetch les items du scanner. Ne pas scanner. Ne pas déployer le site."},
+			{Line: "marketplace", Order: 2, Agent: "comms", Do: "Préparer la fiche. Prix 20 % à 40 % au-dessus. Rabais contre les prix en ligne, plus chers. Le site reste hors ligne tant qu'il n'est pas prêt."},
+		}, true
+	case "panda":
+		return []ChainStep{
+			{Line: "panda", Order: 1, Agent: "architect", Do: "Décrire l'offre white-glove : IA, installation, cours."},
+			{Line: "panda", Order: 2, Agent: "comms", Do: "Vendre le service. Ne pas installer chez le client sans accord."},
+		}, true
+	case "nft-giant":
+		return []ChainStep{
+			{Line: "nft-giant", Order: 1, Agent: "security", Do: "Revue avant un mint ou une campagne. Pas de mint sans cette revue."},
+			{Line: "nft-giant", Order: 2, Agent: "investigator", Do: "Un tirage reste classé avant publication. Pas une loterie lancée d'ici."},
+		}, true
+	case "ecole":
+		return []ChainStep{
+			{Line: "ecole", Order: 1, Agent: "research", Do: "Décrire le cours tech. Ne pas promettre un gain."},
+			{Line: "ecole", Order: 2, Agent: "planner", Do: "Ranger le programme. Le cours n'exécute pas un ordre."},
+		}, true
+	case "marketing":
+		return []ChainStep{
+			{Line: "marketing", Order: 1, Agent: "planner", Do: "Une campagne. Mesurer avant d'élargir."},
+			{Line: "marketing", Order: 2, Agent: "comms", Do: "Les rabais comparent les prix en ligne. Stripe ici n'est pas un site client Proximity."},
+		}, true
+	case "empire":
+		return []ChainStep{
+			{Line: "empire", Order: 1, Agent: "delivery", Do: "Live seulement avec une fiche déjà prête. Pas de stock inventé."},
+			{Line: "empire", Order: 2, Agent: "comms", Do: "Toutes les plateformes live. Proximity ne publie pas ces fiches."},
+		}, true
+	case "propres":
+		return []ChainStep{
+			{Line: "propres", Order: 1, Agent: "comms", Do: "Stripe sur PBTM, Pandora et le marketing. Ce ne sont pas des clients."},
+			{Line: "propres", Order: 2, Agent: "security", Do: "Refuser ce Stripe sur un site Proximity sans demande explicite."},
+		}, true
+	case "trading":
+		return []ChainStep{
+			{Line: "trading", Order: 1, Agent: "investigator", Do: "Aucun ordre live sans réponse AMF écrite."},
+			{Line: "trading", Order: 2, Agent: "architect", Do: "Le modèle reste un modèle. Giant n'est pas un ordre."},
+		}, true
 	default:
 		return nil, false
 	}

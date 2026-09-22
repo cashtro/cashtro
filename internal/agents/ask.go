@@ -49,6 +49,10 @@ func questionsFor(action string) []Question {
 			{ID: "acheteur", Ask: "Qui achète cette fiche : un particulier, un détaillant, ou le live?", Improves: "le texte et le prix visent le bon acheteur"},
 			{ID: "droits", Ask: "Qui détient les droits de la photo, et où est la preuve?", Improves: "la photo peut sortir"},
 		}
+	case "watch":
+		return []Question{
+			{ID: "trou", Ask: "Quel trou reste sur le tableau avant d'automatiser?", Improves: "on n'automatise pas un dépôt sans fiche ni décision"},
+		}
 	case "assign":
 		return []Question{
 			{ID: "pourquoi", Ask: "Pourquoi ce cerveau pour ce repo, et quel cerveau on écarte?", Improves: "l'assignation n'est pas un réflexe"},
@@ -81,6 +85,74 @@ func Known(action string) map[string]string {
 			"marge":  "Les prix dépassent de 20 % à 40 %. Des rabais seront lancés parce que les vrais prix en ligne sont plus chers. La comparaison en ligne sert la campagne marketing.",
 			"url":    "Pas en ligne. Déployer une fois prêt. Le scanner déployé n'est pas ce site.",
 			"stripe": "Stripe encaisse les projets propres : marketplace une fois déployé, Empire, PBTM, Pandora, business, technology et marketing. Pas Proximity, sauf demande. Pas le scanner, qui est interne.",
+		}
+	case "watch":
+		return map[string]string{
+			"trou": "Les fiches ont une ligne. cashtro/agence est hors tableau et rapporte. Cette veille ne déploie rien.",
+		}
+	default:
+		if _, ok := LineByID(action); ok {
+			return lineKnown(action)
+		}
+		return nil
+	}
+}
+
+func lineKnown(id string) map[string]string {
+	switch id {
+	case "control":
+		return map[string]string{
+			"situation":   "Le tableau est chargé. Epicenter tranche.",
+			"manque":      "Rien à inventer. Un trou de fiche arrête le coup.",
+			"intouchable": "Les sites clients déjà en ligne, et le dépôt de l'agence.",
+		}
+	case "proximity":
+		return map[string]string{
+			"situation":   "Sites WordPress, PHP et ACF Pro sur Azure, pour des clients.",
+			"manque":      "La preview. Pas une réécriture.",
+			"intouchable": "Un site client déjà en production.",
+		}
+	case "panda":
+		return map[string]string{
+			"situation":   "Offre white-glove : IA, installation, cours.",
+			"manque":      "L'accord avant d'installer chez quelqu'un.",
+			"intouchable": "Le site du client.",
+		}
+	case "nft-giant":
+		return map[string]string{
+			"situation":   "Art utile, token Giant, tirages de visibilité.",
+			"manque":      "La revue avant un mint ou un tirage.",
+			"intouchable": "Aucun mint et aucun tirage sans classement.",
+		}
+	case "ecole":
+		return map[string]string{
+			"situation":   "Cours tech. Éduconnexion.",
+			"manque":      "Le cours décrit, sans promesse de gain.",
+			"intouchable": "La promesse d'un gain de trading.",
+		}
+	case "marketing":
+		return map[string]string{
+			"situation":   "Gestion marketing. Une campagne à la fois.",
+			"manque":      "La mesure avant d'élargir.",
+			"intouchable": "Le compte Stripe d'un site client Proximity.",
+		}
+	case "empire":
+		return map[string]string{
+			"situation":   "Live sur toutes les plateformes, à partir d'une fiche prête.",
+			"manque":      "La fiche. Pas un stock inventé.",
+			"intouchable": "Proximity ne publie pas ces fiches.",
+		}
+	case "propres":
+		return map[string]string{
+			"situation":   "PBTM, Pandora et le marketing encaissent avec Stripe.",
+			"manque":      "La demande explicite, si jamais Proximity devait encaisser.",
+			"intouchable": "Un site client sans demande.",
+		}
+	case "trading":
+		return map[string]string{
+			"situation":   "Modèles et bots. Pas d'ordre live.",
+			"manque":      "La réponse AMF écrite.",
+			"intouchable": "Un ordre ou une vente de token sans cette réponse.",
 		}
 	default:
 		return nil

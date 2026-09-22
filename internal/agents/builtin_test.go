@@ -239,4 +239,15 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if !ok || len(moves) < 2 || !ChainIntact(moves) || moves[1].Prev != moves[0].Hash {
 		t.Fatalf("moves = %#v", res.Data)
 	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.watch"})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.watch: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.chain",
+		Payload:    []byte(`{"id":"proximity"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("proximity chain: %+v %v", res, err)
+	}
 }

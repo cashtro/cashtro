@@ -31,3 +31,18 @@ func TestScanChainAndFicheGate(t *testing.T) {
 		t.Fatal("unknown chain")
 	}
 }
+
+func TestEveryLineRunsAClosedChain(t *testing.T) {
+	for _, ln := range Lines() {
+		steps, ok := Chain(ln.ID)
+		if !ok || len(steps) < 2 {
+			t.Fatalf("%s steps = %d ok %v", ln.ID, len(steps), ok)
+		}
+		if open := AskSelf(ln.ID, nil).Open; len(open) != 0 {
+			t.Fatalf("%s still open: %+v", ln.ID, open)
+		}
+	}
+	if open := AskSelf("watch", nil).Open; len(open) != 0 {
+		t.Fatalf("watch open: %+v", open)
+	}
+}
