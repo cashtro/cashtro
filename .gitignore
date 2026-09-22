@@ -23,3 +23,4 @@ data/
 /raw/notes/**
 /raw/inbox/**
 !/raw/**/.gitkeep
+/graphify-out/
