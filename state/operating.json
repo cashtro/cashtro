@@ -1,0 +1,780 @@
+{
+  "version": "1",
+  "fiches": 58,
+  "repos": [
+    {
+      "fullName": "Evolu-Jeunes/AI-BOT",
+      "org": "Evolu-Jeunes",
+      "language": "Python",
+      "brain": "Architecte",
+      "line": "Crypto et AI bot",
+      "lineId": "trading",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Al-Soudani",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Alaska",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Api-Proximity",
+      "org": "Evolu-Jeunes",
+      "language": "TypeScript",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/AsselinCPA",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/AstroPoulet",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Blockchain-Trading-",
+      "org": "Evolu-Jeunes",
+      "language": "Python",
+      "brain": "Architecte",
+      "line": "Crypto et AI bot",
+      "lineId": "trading",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Btkavocat",
+      "org": "Evolu-Jeunes",
+      "language": "—",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/CPA",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/CRM",
+      "org": "Evolu-Jeunes",
+      "language": "TypeScript",
+      "brain": "Hustler",
+      "line": "Marketing digital corporate",
+      "lineId": "marketing",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Corps-Art",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Decoland",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Empire-",
+      "org": "Evolu-Jeunes",
+      "language": "JavaScript",
+      "brain": "Forgeron",
+      "line": "Empire Media",
+      "lineId": "empire",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/EmpireMedia",
+      "org": "Evolu-Jeunes",
+      "language": "TypeScript",
+      "brain": "Forgeron",
+      "line": "Empire Media",
+      "lineId": "empire",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Expertise",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Giant",
+      "org": "Evolu-Jeunes",
+      "language": "TypeScript",
+      "brain": "Hustler",
+      "line": "NFT + token Giant",
+      "lineId": "nft-giant",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/GroulxGroulx",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/H2oH2o",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Hypotheque.ca",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/MB-Health",
+      "org": "Evolu-Jeunes",
+      "language": "TypeScript",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/MD-clinic",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/MtlEvolution",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Neuro-equilibre",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Newnordique",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Nft",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Hustler",
+      "line": "NFT + token Giant",
+      "lineId": "nft-giant",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Nhl",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Noix_landing",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Panda",
+      "org": "Evolu-Jeunes",
+      "language": "EJS",
+      "brain": "Hustler",
+      "line": "Panda White Glove",
+      "lineId": "panda",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Pandora",
+      "org": "Evolu-Jeunes",
+      "language": "EJS",
+      "brain": "à classer",
+      "line": "",
+      "status": "inconnu"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Plugin",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Pollo",
+      "org": "Evolu-Jeunes",
+      "language": "CSS",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Proximity",
+      "org": "Evolu-Jeunes",
+      "language": "TypeScript",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Proximity-Agentic",
+      "org": "Evolu-Jeunes",
+      "language": "—",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/ProximityApp",
+      "org": "Evolu-Jeunes",
+      "language": "CSS",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/Proxy",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/ScanApp",
+      "org": "Evolu-Jeunes",
+      "language": "TypeScript",
+      "brain": "Hustler",
+      "line": "Scan App Marketplace",
+      "lineId": "scanapp",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/TradingBotCodex",
+      "org": "Evolu-Jeunes",
+      "language": "Python",
+      "brain": "Architecte",
+      "line": "Crypto et AI bot",
+      "lineId": "trading",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/bot",
+      "org": "Evolu-Jeunes",
+      "language": "Python",
+      "brain": "Architecte",
+      "line": "Crypto et AI bot",
+      "lineId": "trading",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/bubbles",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/clic",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/demo-repository",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/educonnexion",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Cartographe",
+      "line": "École tech",
+      "lineId": "ecole",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/h20",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/h20landing",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/hypotheque",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/immobilier",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/lanordique",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/multiservices",
+      "org": "Evolu-Jeunes",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/noix",
+      "org": "Evolu-Jeunes",
+      "language": "HTML",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/nordiqueweb",
+      "org": "Evolu-Jeunes",
+      "language": "Hack",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "Evolu-Jeunes/sigma",
+      "org": "Evolu-Jeunes",
+      "language": "CSS",
+      "brain": "Architecte",
+      "line": "Crypto et AI bot",
+      "lineId": "trading",
+      "status": "concept"
+    },
+    {
+      "fullName": "Evolu-Jeunes/sigmaNew",
+      "org": "Evolu-Jeunes",
+      "language": "CSS",
+      "brain": "Architecte",
+      "line": "Crypto et AI bot",
+      "lineId": "trading",
+      "status": "concept"
+    },
+    {
+      "fullName": "cashtro/H2OriginTest",
+      "org": "cashtro",
+      "language": "PHP",
+      "brain": "Forgeron",
+      "line": "Proximity Agency",
+      "lineId": "proximity",
+      "status": "production"
+    },
+    {
+      "fullName": "cashtro/PBTM",
+      "org": "cashtro",
+      "language": "EJS",
+      "brain": "à classer",
+      "line": "",
+      "status": "inconnu"
+    },
+    {
+      "fullName": "cashtro/Pandora",
+      "org": "cashtro",
+      "language": "—",
+      "brain": "à classer",
+      "line": "",
+      "status": "inconnu"
+    },
+    {
+      "fullName": "cashtro/cashtro",
+      "org": "cashtro",
+      "language": "Go",
+      "brain": "Manager",
+      "line": "Cerveau principal",
+      "lineId": "control",
+      "status": "production"
+    },
+    {
+      "fullName": "cashtro/epicenter",
+      "org": "cashtro",
+      "language": "—",
+      "brain": "Manager",
+      "line": "Cerveau principal",
+      "lineId": "control",
+      "status": "production"
+    },
+    {
+      "fullName": "cashtro/trading_bot-main",
+      "org": "cashtro",
+      "language": "Python",
+      "brain": "Architecte",
+      "line": "Crypto et AI bot",
+      "lineId": "trading",
+      "status": "concept"
+    }
+  ],
+  "lines": [
+    {
+      "id": "control",
+      "name": "Cerveau principal",
+      "brain": "Manager",
+      "repos": [
+        "cashtro/cashtro",
+        "cashtro/epicenter"
+      ]
+    },
+    {
+      "id": "proximity",
+      "name": "Proximity Agency",
+      "brain": "Forgeron",
+      "repos": [
+        "Evolu-Jeunes/Al-Soudani",
+        "Evolu-Jeunes/Alaska",
+        "Evolu-Jeunes/Api-Proximity",
+        "Evolu-Jeunes/AsselinCPA",
+        "Evolu-Jeunes/AstroPoulet",
+        "Evolu-Jeunes/Btkavocat",
+        "Evolu-Jeunes/CPA",
+        "Evolu-Jeunes/Corps-Art",
+        "Evolu-Jeunes/Decoland",
+        "Evolu-Jeunes/Expertise",
+        "Evolu-Jeunes/GroulxGroulx",
+        "Evolu-Jeunes/H2oH2o",
+        "Evolu-Jeunes/Hypotheque.ca",
+        "Evolu-Jeunes/MB-Health",
+        "Evolu-Jeunes/MD-clinic",
+        "Evolu-Jeunes/MtlEvolution",
+        "Evolu-Jeunes/Neuro-equilibre",
+        "Evolu-Jeunes/Newnordique",
+        "Evolu-Jeunes/Nhl",
+        "Evolu-Jeunes/Noix_landing",
+        "Evolu-Jeunes/Plugin",
+        "Evolu-Jeunes/Pollo",
+        "Evolu-Jeunes/Proximity",
+        "Evolu-Jeunes/Proximity-Agentic",
+        "Evolu-Jeunes/ProximityApp",
+        "Evolu-Jeunes/Proxy",
+        "Evolu-Jeunes/bubbles",
+        "Evolu-Jeunes/clic",
+        "Evolu-Jeunes/demo-repository",
+        "Evolu-Jeunes/h20",
+        "Evolu-Jeunes/h20landing",
+        "Evolu-Jeunes/hypotheque",
+        "Evolu-Jeunes/immobilier",
+        "Evolu-Jeunes/lanordique",
+        "Evolu-Jeunes/multiservices",
+        "Evolu-Jeunes/noix",
+        "Evolu-Jeunes/nordiqueweb",
+        "cashtro/H2OriginTest"
+      ]
+    },
+    {
+      "id": "scanapp",
+      "name": "Scan App Marketplace",
+      "brain": "Hustler",
+      "repos": [
+        "Evolu-Jeunes/ScanApp"
+      ]
+    },
+    {
+      "id": "panda",
+      "name": "Panda White Glove",
+      "brain": "Hustler",
+      "repos": [
+        "Evolu-Jeunes/Panda"
+      ]
+    },
+    {
+      "id": "nft-giant",
+      "name": "NFT + token Giant",
+      "brain": "Hustler",
+      "repos": [
+        "Evolu-Jeunes/Giant",
+        "Evolu-Jeunes/Nft"
+      ]
+    },
+    {
+      "id": "ecole",
+      "name": "École tech",
+      "brain": "Cartographe",
+      "repos": [
+        "Evolu-Jeunes/educonnexion"
+      ]
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing digital corporate",
+      "brain": "Hustler",
+      "repos": [
+        "Evolu-Jeunes/CRM"
+      ]
+    },
+    {
+      "id": "empire",
+      "name": "Empire Media",
+      "brain": "Forgeron",
+      "repos": [
+        "Evolu-Jeunes/Empire-",
+        "Evolu-Jeunes/EmpireMedia"
+      ]
+    },
+    {
+      "id": "trading",
+      "name": "Crypto et AI bot",
+      "brain": "Architecte",
+      "repos": [
+        "Evolu-Jeunes/AI-BOT",
+        "Evolu-Jeunes/Blockchain-Trading-",
+        "Evolu-Jeunes/TradingBotCodex",
+        "Evolu-Jeunes/bot",
+        "Evolu-Jeunes/sigma",
+        "Evolu-Jeunes/sigmaNew",
+        "cashtro/trading_bot-main"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": "epicenter",
+      "to": "proximity",
+      "via": "le cerveau principal ouvre le cycle et tient l'usine de sites",
+      "agents": [
+        "init",
+        "manager",
+        "planner"
+      ]
+    },
+    {
+      "from": "proximity",
+      "to": "scanapp",
+      "via": "les sites Proximity publient les fiches du Scan App, photos propres comprises",
+      "agents": [
+        "operator",
+        "deploy",
+        "reviewer",
+        "delivery"
+      ]
+    },
+    {
+      "from": "proximity",
+      "to": "panda",
+      "via": "Panda installe l'IA et les cours white-glove sur les sites clients",
+      "agents": [
+        "architect",
+        "operator",
+        "planner"
+      ]
+    },
+    {
+      "from": "nft-giant",
+      "to": "trading",
+      "via": "le token Giant relie l'art NFT aux bots qui tradent",
+      "agents": [
+        "architect",
+        "security",
+        "investigator",
+        "router"
+      ]
+    },
+    {
+      "from": "empire",
+      "to": "scanapp",
+      "via": "le live sell d'Empire vend les items du Scan App",
+      "agents": [
+        "operator",
+        "comms",
+        "delivery",
+        "reviewer"
+      ]
+    },
+    {
+      "from": "marketing",
+      "to": "proximity",
+      "via": "le marketing corporate promeut les sites et mesure via Graphify",
+      "agents": [
+        "comms",
+        "planner",
+        "explorer"
+      ]
+    },
+    {
+      "from": "marketing",
+      "to": "empire",
+      "via": "le média du live part dans la gestion marketing",
+      "agents": [
+        "comms",
+        "explorer"
+      ]
+    },
+    {
+      "from": "marketing",
+      "to": "panda",
+      "via": "les campagnes vendent le service white-glove",
+      "agents": [
+        "comms",
+        "research"
+      ]
+    },
+    {
+      "from": "ecole",
+      "to": "proximity",
+      "via": "Éduconnexion enseigne WordPress, PHP et ACF Pro",
+      "agents": [
+        "research",
+        "memory",
+        "planner"
+      ]
+    },
+    {
+      "from": "ecole",
+      "to": "trading",
+      "via": "l'école enseigne le Web3 que les bots exécutent",
+      "agents": [
+        "research",
+        "memory",
+        "architect"
+      ]
+    }
+  ],
+  "agents": [
+    "init",
+    "manager",
+    "planner",
+    "operator",
+    "deploy",
+    "reviewer",
+    "delivery",
+    "architect",
+    "security",
+    "investigator",
+    "router",
+    "comms",
+    "explorer",
+    "research",
+    "memory"
+  ],
+  "graph": {
+    "repoNodes": 57,
+    "bridges": 19
+  },
+  "gaps": [
+    "Evolu-Jeunes/Pandora",
+    "cashtro/PBTM",
+    "cashtro/Pandora"
+  ],
+  "rules": [
+    "Les 15 agentics sont le système. Le roster de 1001 n'est pas des processus.",
+    "Aucun déploiement et aucun envoi sans comms.allow.",
+    "Les sites clients déjà en production se lisent, ils ne se déploient pas.",
+    "Graphify comptes = les ponts. L'extract de 40k nœuds n'est pas relu à chaque boot."
+  ]
+}

@@ -84,8 +84,15 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || !res.OK {
 		t.Fatalf("manager.status: %+v %v", res, err)
 	}
-	if got := res.Data.(map[string]any)["repos"]; got != 57 {
-		t.Fatalf("manager.repos = %v, want 57", got)
+	status := res.Data.(map[string]any)
+	if status["version"] != "1" {
+		t.Fatalf("board version = %v", status["version"])
+	}
+	if got := status["agents"]; got != 15 {
+		t.Fatalf("board agents = %v, want 15", got)
+	}
+	if got := status["lines"]; got != 9 {
+		t.Fatalf("board lines = %v, want 9", got)
 	}
 
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.lines"})
@@ -93,7 +100,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.lines: %+v %v", res, err)
 	}
 	lines, ok := res.Data.([]Line)
-	if !ok || len(lines) != 8 {
+	if !ok || len(lines) != 9 {
 		t.Fatalf("lines = %#v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{

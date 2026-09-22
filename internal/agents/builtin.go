@@ -102,13 +102,14 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 // across cashtro + Evolu-Jeunes, reads the project fiches, queries the
 // Graphify map, and coordinates the five brains.
 type managerAgent struct {
-	k *kernel.Kernel
+	k     *kernel.Kernel
+	board Board
 }
 
 func (a *managerAgent) Spec() kernel.Spec {
 	return kernel.Spec{
-		ID:   "manager", Name: "Manager", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
-		Role: "epicenter",
+		ID: "manager", Name: "Manager", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
+		Role:    "epicenter",
 		Summary: "Epicenter project manager. Oversees all 57 repos, reads fiches, queries Graphify, coordinates the 5 brains.",
 		Capabilities: []string{
 			"manager.status",
@@ -126,11 +127,20 @@ func (a *managerAgent) Spec() kernel.Spec {
 
 func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 	a.k = k
-	k.Publish("manager", "epicenter", "Epicenter online · 57 repos · 5 brains · 1001 agentics", map[string]any{
-		"repos":   57,
-		"brains":  5,
-		"agents":  1001,
-		"links":   len(Links()),
+	board, err := LoadBoard()
+	if err != nil {
+		return err
+	}
+	a.board = board
+	evolu, cashtro := board.counts()
+	k.Publish("manager", "epicenter", "operating board loaded", map[string]any{
+		"fiches":  board.Fiches,
+		"evolu":   evolu,
+		"cashtro": cashtro,
+		"lines":   len(board.Lines),
+		"links":   len(board.Links),
+		"agents":  len(board.Agents),
+		"gaps":    board.Gaps,
 	})
 	_, _ = a.runEcosystems()
 	return nil
@@ -139,16 +149,19 @@ func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Result, error) {
 	switch call.Capability {
 	case "manager.status":
-		return kernel.Result{OK: true, Message: "Epicenter status", Data: map[string]any{
-			"repos":      57,
-			"evolu":      52,
-			"cashtro":    5,
-			"brains":     5,
-			"agents":     1001,
-			"fiches":     58,
-			"graphify":   "39593 nodes · 99285 edges",
-			"brains_list": []string{"Architecte", "Cartographe", "Forgeron", "Orfèvre", "Hustler"},
-			"lines":       len(Lines()),
+		evolu, cashtro := a.board.counts()
+		return kernel.Result{OK: true, Message: "operating board", Data: map[string]any{
+			"version": a.board.Version,
+			"fiches":  a.board.Fiches,
+			"repos":   len(a.board.Repos),
+			"evolu":   evolu,
+			"cashtro": cashtro,
+			"lines":   len(a.board.Lines),
+			"links":   len(a.board.Links),
+			"agents":  len(a.board.Agents),
+			"gaps":    a.board.Gaps,
+			"graph":   a.board.Graph,
+			"rules":   a.board.Rules,
 		}}, nil
 
 	case "manager.lines":
@@ -179,10 +192,12 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		}}, nil
 
 	case "manager.projects":
-		return kernel.Result{OK: true, Message: "57 projects under management", Data: map[string]any{
-			"evolu_jeunes": 52,
-			"cashtro":      5,
-			"total":        57,
+		evolu, cashtro := a.board.counts()
+		return kernel.Result{OK: true, Message: "projects on the operating board", Data: map[string]any{
+			"evolu_jeunes": evolu,
+			"cashtro":      cashtro,
+			"total":        len(a.board.Repos),
+			"repos":        a.board.Repos,
 		}}, nil
 
 	case "manager.assign":

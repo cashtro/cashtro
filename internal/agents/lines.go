@@ -14,6 +14,12 @@ type Line struct {
 func Lines() []Line {
 	return []Line{
 		{
+			ID: "control", Name: "Cerveau principal", Brain: "Manager",
+			Mandate:  "Synchronise les deux GitHub, les fiches, les lignes et les liens. C'est le tableau opérable, pas un neuvième produit.",
+			Controls: "Manager lit state/operating.json au boot.",
+			Repos:    []string{"cashtro/cashtro", "cashtro/epicenter"},
+		},
+		{
 			ID: "proximity", Name: "Proximity Agency", Brain: "Forgeron",
 			Mandate: "Usine de sites WordPress, PHP et ACF Pro pour Proximity Agency. " +
 				"Couche de déploiement Azure pilotée par le cerveau principal : confection optimisée, programmation, mise en ligne.",
@@ -43,7 +49,7 @@ func Lines() []Line {
 		},
 		{
 			ID: "panda", Name: "Panda White Glove", Brain: "Hustler",
-			Mandate: "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers.",
+			Mandate:  "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers.",
 			Controls: "Hustler vend. Architecte conçoit l'offre IA. Forgeron installe.",
 			Repos:    []string{"Evolu-Jeunes/Panda"},
 		},
@@ -56,13 +62,13 @@ func Lines() []Line {
 		},
 		{
 			ID: "ecole", Name: "École tech", Brain: "Cartographe",
-			Mandate: "Enseigner tout ce qui est tech. Éduconnexion est le côté école.",
+			Mandate:  "Enseigner tout ce qui est tech. Éduconnexion est le côté école.",
 			Controls: "Cartographe tient le programme. Forgeron tient le site WordPress.",
 			Repos:    []string{"Evolu-Jeunes/educonnexion"},
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
-			Mandate: "Système automatisé de gestion pour le marketing digital entier des business corporate en ligne.",
+			Mandate:  "Système automatisé de gestion pour le marketing digital entier des business corporate en ligne.",
 			Controls: "Hustler pilote campagnes et gestion. Cartographe mesure.",
 			Repos:    []string{"Evolu-Jeunes/CRM"},
 		},
