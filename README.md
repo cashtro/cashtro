@@ -112,6 +112,7 @@ unbound. The rest of the OS stays live.
 | `GET` | `/api/notes` | Research library |
 | `POST` | `/api/notes` | Ingest a sourced finding |
 | `GET` | `/api/mail` | Agent mailbox |
+| `POST` | `/api/mail` | Drop mail on an agent desk |
 | `GET` | `/api/memory` | Episodic recall |
 | `POST` | `/api/memory` | Store an episodic fact |
 | `GET` | `/api/confirms` | Human gate |

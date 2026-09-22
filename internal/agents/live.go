@@ -522,6 +522,7 @@ func seedResearch(k *kernel.Kernel) {
 		{Agent: "research", Source: "search-api", URL: "https://github.com/cashtro/cashtro", Claim: "Explorer is desk-reachable: GET /api/search?q= hits agents, ships, and research notes.", Quote: "Ultron and keep-alives can find work without OpenRouter."},
 		{Agent: "research", Source: "comms-api", URL: "https://github.com/cashtro/cashtro", Claim: "Comms is desk-reachable: POST /api/comms parks an outbound draft behind a human confirm.", Quote: "No send until allow — Ultron clients inherit the gate."},
 		{Agent: "research", Source: "ultron-rbac", URL: "https://github.com/cashtro/cashtro", Claim: "Ultron seeds a Giant client principal with company-scoped RBAC and password rotation on the IDE.", Quote: "client@giant.local sees Giant only; POST /api/auth/password rotates without Cursor."},
+		{Agent: "research", Source: "mail-api", URL: "https://github.com/cashtro/cashtro", Claim: "Mail is desk-writable: POST /api/mail drops durable IPC on an agent inbox.", Quote: "Pairs with GET /api/mail · survives always-on via data/cashtro.json."},
 	}
 	for _, n := range seeds {
 		k.WriteNote(n)

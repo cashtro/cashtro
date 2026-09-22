@@ -34,6 +34,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/notes", s.notes)
 	mux.HandleFunc("POST /api/notes", s.writeNote)
 	mux.HandleFunc("GET /api/mail", s.mail)
+	mux.HandleFunc("POST /api/mail", s.writeMail)
 	mux.HandleFunc("GET /api/memory", s.memory)
 	mux.HandleFunc("POST /api/memory", s.writeMemory)
 	mux.HandleFunc("GET /api/confirms", s.confirms)
@@ -187,6 +188,31 @@ func (s *api) writeNote(w http.ResponseWriter, r *http.Request) {
 
 func (s *api) mail(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, s.k.Inbox(r.URL.Query().Get("to")))
+}
+
+func (s *api) writeMail(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		From string `json:"from"`
+		To   string `json:"to"`
+		Kind string `json:"kind"`
+		Body string `json:"body"`
+	}
+	if err := decodeJSON(r, &in); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	if in.From == "" {
+		in.From = "init"
+	}
+	if in.Kind == "" {
+		in.Kind = "note"
+	}
+	m, err := s.k.Post(in.From, in.To, in.Kind, in.Body)
+	if err != nil {
+		writeError(w, err)
+		return
+	}
+	writeJSON(w, http.StatusCreated, m)
 }
 
 func (s *api) memory(w http.ResponseWriter, r *http.Request) {
