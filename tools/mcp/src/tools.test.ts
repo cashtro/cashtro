@@ -14,6 +14,10 @@ test("MCP tools read inventory and refuse to invent Evolu-Jeunes repos", async (
   const backlog = (await callTool(root, "list_backlog", { status: "blocked" })) as { tasks: Array<{ id: string }> };
   assert.ok(backlog.tasks.some((t) => t.id === "evolu-access" || t.id === "scanapp-find-repo"));
   const n8n = (await callTool(root, "list_n8n_fleet")) as { specialists: Array<{ id: string; seat: string }> };
-  assert.equal(n8n.specialists.length, 40);
-  assert.equal(new Set(n8n.specialists.map((s) => s.seat)).size, 14);
+  assert.equal(n8n.specialists.length, 58);
+  assert.equal(new Set(n8n.specialists.map((s) => s.seat)).size, 15);
+  const corp = (await callTool(root, "list_corporation")) as { seats: Array<{ id: string; crew: string }>; kernelSeats: number };
+  assert.equal(corp.kernelSeats, 14);
+  assert.equal(corp.seats.length, 15);
+  assert.ok(corp.seats.some((s) => s.crew === "Steel"));
 });

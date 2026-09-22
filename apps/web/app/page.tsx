@@ -3,6 +3,7 @@ import { api } from "./lib";
 type Project = { slug: string; status: string; org: string; kind: string };
 type Fleet = {
   seats: number;
+  kernelSeats?: number;
   specialists: number;
   depthLimit: number;
   n8n: string;
@@ -21,8 +22,8 @@ export default async function FleetPage() {
     <section>
       <h1>Fleet</h1>
       <p>
-        Cost this window: ${costs.totalUsd.toFixed(4)} · {fleet.specialists} n8n specialists on {fleet.seats} seats ·
-        depth ≤ {fleet.depthLimit} · {fleet.n8n}
+        Cost this window: ${costs.totalUsd.toFixed(4)} · {fleet.specialists} n8n specialists · {fleet.kernelSeats ?? 14} kernel
+        + Steel · depth ≤ {fleet.depthLimit} · {fleet.n8n}
       </p>
       <ul style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 8, padding: 0, listStyle: "none" }}>
         {specialists.map((s) => (

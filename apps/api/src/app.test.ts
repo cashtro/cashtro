@@ -90,11 +90,33 @@ test("registry seed + every mutating route writes an event", async (t) => {
 
   const fabric = await ctx.app.inject({ method: "GET", url: "/fleet", ...auth() });
   assert.equal(fabric.statusCode, 200);
-  assert.equal(fabric.json().specialists, 40);
-  assert.equal(fabric.json().seats, 14);
-  assert.equal(fabric.json().depthLimit, 3);
+  assert.equal(fabric.json().specialists, 58);
+  assert.equal(fabric.json().kernelSeats, 14);
+  assert.equal(fabric.json().departments, 15);
+  assert.equal(fabric.json().selfImprove, true);
+  assert.equal(fabric.json().contrarian, "steel-local");
   assert.equal(fabric.json().architecture, "wide-not-deep");
   assert.match(String(fabric.json().n8n), /unbound/);
+
+  const corp = await ctx.app.inject({ method: "GET", url: "/corp", ...auth() });
+  assert.equal(corp.statusCode, 200);
+  assert.equal(corp.json().seats.length, 15);
+  assert.ok(corp.json().seats.some((s: { crew: string }) => s.crew === "Steel"));
+
+  const steelTask = await ctx.app.inject({
+    method: "POST",
+    url: "/tasks",
+    ...auth({ title: "steel contradict the cheaper option", idempotencyKey: "idem-steel-0001" }),
+  });
+  const steelRun = await ctx.app.inject({
+    method: "POST",
+    url: `/tasks/${steelTask.json().id}/dispatch`,
+    ...auth(),
+  });
+  assert.equal(steelRun.statusCode, 200);
+  assert.equal(steelRun.json().status, "succeeded");
+  assert.equal(steelRun.json().exitReason, "steel:contradict");
+  assert.equal(steelRun.json().costUsd, 0);
 
   const created = await ctx.app.inject({
     method: "POST",
@@ -219,22 +241,52 @@ test("depth 4 is refused and /ui + /costs render", async (t) => {
   const fleet = await ctx.app.inject({ method: "GET", url: "/ui/fleet" });
   assert.equal(fleet.statusCode, 200);
   assert.match(fleet.body, /scanapp/i);
-  assert.match(fleet.body, /n8n specialists 40/);
+  assert.match(fleet.body, /n8n specialists 58/);
   assert.match(fleet.body, /n8n-40/);
+  assert.match(fleet.body, /Steel/);
+  const corpUi = await ctx.app.inject({ method: "GET", url: "/ui/corp" });
+  assert.equal(corpUi.statusCode, 200);
+  assert.match(corpUi.body, /Steel/);
+  assert.match(corpUi.body, /Lacune/);
   const costs = await ctx.app.inject({ method: "GET", url: "/costs", ...auth() });
   assert.equal(costs.statusCode, 200);
   assert.equal(typeof costs.json().totalUsd, "number");
+
+  const queue = await ctx.app.inject({ method: "GET", url: "/ui/queue" });
+  assert.equal(queue.statusCode, 200);
+  assert.match(queue.body, /Coup/);
+  assert.doesNotMatch(queue.body, />Dispatch</);
 
   const ready = await ctx.app.inject({
     method: "POST",
     url: "/tasks",
     ...auth({ title: "pane dispatch", idempotencyKey: "idem-pane-0001" }),
   });
-  const pane = await ctx.app.inject({
+  const coupPage = await ctx.app.inject({ method: "GET", url: `/ui/coup/${ready.json().id}` });
+  assert.equal(coupPage.statusCode, 200);
+  assert.match(coupPage.body, /Questions spécifiques/);
+  assert.match(coupPage.body, /Position/);
+  assert.match(coupPage.body, /Coup le plus court/);
+  assert.match(coupPage.body, /Réponse adverse \(Steel\)/);
+  assert.match(coupPage.body, /Jouer/);
+
+  const blocked = await ctx.app.inject({
     method: "POST",
     url: `/ui/act/dispatch/${ready.json().id}`,
     headers: { "content-type": "application/x-www-form-urlencoded" },
     payload: "",
   });
+  assert.equal(blocked.statusCode, 302);
+  assert.equal(blocked.headers.location, `/ui/coup/${ready.json().id}?missing=1`);
+
+  const pane = await ctx.app.inject({
+    method: "POST",
+    url: `/ui/act/dispatch/${ready.json().id}`,
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    payload:
+      "question=faut-il+jouer+%3F&position=queue+ouverte&shortest=quatre+champs&opponent=un+clic+de+moins",
+  });
   assert.ok(pane.statusCode === 302 || pane.statusCode === 200, `pane ${pane.statusCode} ${pane.body}`);
+  const coupEvents = await ctx.prisma.event.findMany({ where: { type: "coup.before" } });
+  assert.ok(coupEvents.some((e) => e.payload.includes(ready.json().id)));
 });

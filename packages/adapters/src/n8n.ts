@@ -21,7 +21,7 @@ export type N8nOpts = {
   fleet?: N8nSpecialist[];
 };
 
-/** Width 40 on the same 14 seats. Used when state/n8n-fleet.json is not on disk. */
+/** Width 58: 40 verbs + 14 self-improve + 4 Steel. Used when state/n8n-fleet.json is not on disk. */
 export const EMBEDDED_N8N_FLEET: N8nSpecialist[] = [
   { id: "n8n-01", seat: "init", name: "os.pulse", capability: "os.about", webhook: "os-pulse" },
   { id: "n8n-02", seat: "init", name: "os.manifest", capability: "os.about", webhook: "os-manifest" },
@@ -63,6 +63,24 @@ export const EMBEDDED_N8N_FLEET: N8nSpecialist[] = [
   { id: "n8n-38", seat: "planner", name: "backlog.evolu", capability: "planner.backlog", webhook: "backlog-evolu" },
   { id: "n8n-39", seat: "investigator", name: "trace.events", capability: "investigator.trace", webhook: "trace-events" },
   { id: "n8n-40", seat: "investigator", name: "trace.health", capability: "investigator.trace", webhook: "trace-health" },
+  { id: "n8n-41", seat: "init", name: "init.self-improve", capability: "init.improve", webhook: "improve-init" },
+  { id: "n8n-42", seat: "delivery", name: "delivery.self-improve", capability: "delivery.improve", webhook: "improve-delivery" },
+  { id: "n8n-43", seat: "router", name: "router.self-improve", capability: "router.improve", webhook: "improve-router" },
+  { id: "n8n-44", seat: "research", name: "research.self-improve", capability: "research.improve", webhook: "improve-research" },
+  { id: "n8n-45", seat: "explorer", name: "explorer.self-improve", capability: "explorer.improve", webhook: "improve-explorer" },
+  { id: "n8n-46", seat: "operator", name: "operator.self-improve", capability: "operator.improve", webhook: "improve-operator" },
+  { id: "n8n-47", seat: "reviewer", name: "reviewer.self-improve", capability: "reviewer.improve", webhook: "improve-reviewer" },
+  { id: "n8n-48", seat: "architect", name: "architect.self-improve", capability: "architect.improve", webhook: "improve-architect" },
+  { id: "n8n-49", seat: "deploy", name: "deploy.self-improve", capability: "deploy.improve", webhook: "improve-deploy" },
+  { id: "n8n-50", seat: "security", name: "security.self-improve", capability: "security.improve", webhook: "improve-security" },
+  { id: "n8n-51", seat: "memory", name: "memory.self-improve", capability: "memory.improve", webhook: "improve-memory" },
+  { id: "n8n-52", seat: "comms", name: "comms.self-improve", capability: "comms.improve", webhook: "improve-comms" },
+  { id: "n8n-53", seat: "planner", name: "planner.self-improve", capability: "planner.improve", webhook: "improve-planner" },
+  { id: "n8n-54", seat: "investigator", name: "investigator.self-improve", capability: "investigator.improve", webhook: "improve-investigator" },
+  { id: "n8n-55", seat: "contrarian", name: "steel.contradict", capability: "contrarian.contradict", webhook: "steel-contradict" },
+  { id: "n8n-56", seat: "contrarian", name: "steel.test", capability: "contrarian.test", webhook: "steel-test" },
+  { id: "n8n-57", seat: "contrarian", name: "steel.optimize", capability: "contrarian.optimize", webhook: "steel-optimize" },
+  { id: "n8n-58", seat: "contrarian", name: "steel.challenge", capability: "contrarian.challenge", webhook: "steel-challenge" },
 ];
 
 export function loadN8nFleet(start = process.cwd()): N8nSpecialist[] {
@@ -74,7 +92,7 @@ export function loadN8nFleet(start = process.cwd()): N8nSpecialist[] {
   for (const file of paths) {
     try {
       const raw = JSON.parse(readFileSync(file, "utf8")) as { specialists?: N8nSpecialist[] };
-      if (raw.specialists?.length === 40) return raw.specialists;
+      if (raw.specialists?.length >= 40) return raw.specialists;
     } catch {
       // try next
     }

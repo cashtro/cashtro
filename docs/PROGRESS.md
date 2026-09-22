@@ -130,6 +130,28 @@ Graphify guide in `docs/ROADMAP.md`. Visual: Castro → control plane →
 40 specialists → Voltron. Gate is Evolu-Jeunes Cursor App. Next is
 ScanApp recon. Live clients stay untouched.
 
+## Corporation + Steel — 2026-09-22
+
+Castro: comprendre avant de positionner. Pousser chaque département
+jusqu’à ce qu’il s’auto-améliore. Créer un département qui contredit
+toujours vers l’option plus courte.
+
+- `state/corporation.json` — 15 sièges, lacune, questions, max-push
+- Steel (`contrarian`) runtime local. Voltron stays 14 overnight.
+- n8n-41..54 self-improve · n8n-55..58 Steel
+- `/ui/corp` · `GET /corp` · MCP `list_corporation`
+- Coup: questions spécifiques (un `?`) puis Steel
+
+## Coup protocol — 2026-09-22
+
+Castro: avant chaque coup, quatre temps, ensuite seulement on joue.
+
+- `GET /ui/coup/:id` — question, position, coup le plus court, réponse adverse
+- Queue lien **Coup**, plus de Dispatch d’un clic
+- `POST /ui/act/dispatch/:id` refuse un formulaire incomplet
+- Événement `coup.before` avant orchestrate
+- `/tasks/:id/dispatch` JSON inchangé (tests / CI)
+
 ## n8n fabric — 2026-09-21 23:40Z
 
 Castro: n8n.io inside the same agents, 40× stronger, bigger architecture.

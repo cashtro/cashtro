@@ -3,5 +3,6 @@ export * from "./http.js";
 export * from "./openrouter.js";
 export * from "./cli.js";
 export * from "./local.js";
+export * from "./contrarian.js";
 export * from "./n8n.js";
 export * from "./registry.js";

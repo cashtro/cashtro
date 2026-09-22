@@ -93,6 +93,28 @@
 - **Why:** Castro: same agents, 40× stronger, bigger agentic
   architecture. Width, not a fork. Self-host compose is optional.
 
+## 2026-09-22 — Steel department, self-improve per seat
+
+- **Choice:** 15th department `contrarian` (Steel) on the control
+  plane, runtime local. 14 kernel seats each get an `improve-*`
+  specialist. Do not restart Voltron overnight.
+- **Alternatives:** 15th Go process now; replace Witness; 40 new
+  kernel processes.
+- **Why:** Castro asked for a department that always contradicts
+  toward the optimized option, and for each department to close its
+  own gap. A 15th kernel process would kill `:8080`. Witness watches
+  after. Steel fights before.
+
+## 2026-09-22 — Coup before play
+
+- **Choice:** Pane requires four beats (question, position, shortest,
+  opponent) before `orchestrate`. JSON `/tasks/:id/dispatch` stays
+  ungated. Event `coup.before`.
+- **Alternatives:** Gate the JSON API too; keep one-click Dispatch;
+  store beats on the Task row.
+- **Why:** Castro: avant chaque coup, ensuite seulement on joue. The
+  human pane is the desk. Tests and CI still need a one-shot dispatch.
+
 ## 2026-09-21 — MCP reads files, not a second API
 
 - **Choice:** `tools/mcp` reads inventory/backlog/catalog off disk.

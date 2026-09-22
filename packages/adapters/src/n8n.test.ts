@@ -16,10 +16,12 @@ const task: Task = {
   idempotencyKey: "idem-n8n",
 };
 
-test("fleet is exactly 40 specialists on 14 seats", () => {
-  assert.equal(EMBEDDED_N8N_FLEET.length, 40);
-  assert.equal(new Set(EMBEDDED_N8N_FLEET.map((s) => s.seat)).size, 14);
-  assert.equal(new Set(EMBEDDED_N8N_FLEET.map((s) => s.id)).size, 40);
+test("fleet is 58 specialists on 14 kernel seats plus Steel", () => {
+  assert.equal(EMBEDDED_N8N_FLEET.length, 58);
+  assert.equal(new Set(EMBEDDED_N8N_FLEET.map((s) => s.seat)).size, 15);
+  assert.equal(new Set(EMBEDDED_N8N_FLEET.map((s) => s.id)).size, 58);
+  assert.ok(EMBEDDED_N8N_FLEET.some((s) => s.seat === "contrarian"));
+  assert.ok(EMBEDDED_N8N_FLEET.some((s) => s.webhook === "improve-init"));
 });
 
 test("resolveSpecialist is wide: webhook, id, then longest name", () => {
@@ -27,6 +29,8 @@ test("resolveSpecialist is wide: webhook, id, then longest name", () => {
   assert.equal(resolveSpecialist({ title: "webhook:ship-list", body: "" })?.id, "n8n-03");
   assert.equal(resolveSpecialist({ title: "ping n8n-07", body: "" })?.webhook, "model-status");
   assert.equal(resolveSpecialist({ title: "backlog scanapp", body: "" })?.webhook, "backlog-scanapp");
+  assert.equal(resolveSpecialist({ title: "webhook:improve-delivery", body: "" })?.id, "n8n-42");
+  assert.equal(resolveSpecialist({ title: "steel contradict", body: "" })?.seat, "contrarian");
   assert.notEqual(webhookFromTask({ title: "control plane", body: "" }), "plan-control-plane");
 });
 

@@ -19,7 +19,12 @@ export const TOOLS = [
   },
   {
     name: "list_n8n_fleet",
-    description: "40 n8n specialists on the same 14 Voltron seats. Wide, not deep.",
+    description: "n8n specialists on 14 kernel seats plus Steel. Wide, not deep. Each seat self-improves.",
+    inputSchema: { type: "object", properties: {} },
+  },
+  {
+    name: "list_corporation",
+    description: "Cashtro corporation: 14 kernel departments + Steel. Gaps, asks, self-improve.",
     inputSchema: { type: "object", properties: {} },
   },
   {
@@ -59,6 +64,9 @@ export async function callTool(root: string, name: string, args: Record<string, 
   }
   if (name === "list_n8n_fleet") {
     return JSON.parse(await readFile(path.join(root, "state/n8n-fleet.json"), "utf8"));
+  }
+  if (name === "list_corporation") {
+    return JSON.parse(await readFile(path.join(root, "state/corporation.json"), "utf8"));
   }
   if (name === "get_access") {
     const inv = JSON.parse(await readFile(path.join(root, "inventory/repos.json"), "utf8")) as {

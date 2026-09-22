@@ -83,5 +83,6 @@ pnpm api              # http://127.0.0.1:8787/docs
 ```
 
 See `docs/MISSION.md`, `inventory/REPORT.md`, `docs/ACCESS_REQUIRED.md`,
-`docs/N8N.md`. Forty n8n specialists sit on the same 14 kernel seats
-(`GET /fleet`). Depth stays 3. Empty `N8N_BASE_URL` falls back to Voltron.
+`docs/N8N.md`, `docs/CORPORATION.md`, `docs/COUP.md`. Fifty-eight n8n
+specialists on 14 kernel seats plus Steel (`GET /fleet`, `GET /corp`).
+Depth stays 3. Empty `N8N_BASE_URL` falls back to Voltron. Steel is local.

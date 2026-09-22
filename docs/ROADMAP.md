@@ -4,9 +4,11 @@ One OS. Width, not a second product. Depth hard-stop 3.
 
 ```mermaid
 flowchart TB
-  Castro[Castro] -->|directs| CP[Control plane :8787]
-  CP -->|resolve specialist| FAB[40 n8n specialists]
+  Castro[Castro] -->|questions then Steel| COUP[Coup]
+  COUP -->|Jouer| CP[Control plane :8787]
+  CP -->|resolve specialist| FAB[58 n8n specialists]
   FAB -->|unbound or 5xx| V[Voltron :8080 · 14 seats]
+  FAB --> ST[Steel local · contradict]
   Castro -->|Option A| GATE[Cursor App on Evolu-Jeunes]
   GATE -->|pnpm recon| SCAN[ScanApp real repo]
   SCAN --> ON[onboard handshake]
@@ -19,7 +21,7 @@ flowchart TB
 - Phase 4–7: adapters, onboard cashtro, costs, `/ui`
 - Six seats bound locally. Router resident until a key
 - Overnight Voltron watch
-- n8n fabric: 40 specialists on the same 14 seats
+- n8n fabric: 58 specialists on 14 kernel seats + Steel
 
 ## Gate — Castro
 

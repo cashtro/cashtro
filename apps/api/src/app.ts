@@ -6,7 +6,9 @@ import { CreateTask } from "@cashtro/sdk";
 import type { AgentAdapter } from "@cashtro/adapters";
 import { drainQueue, orchestrate } from "./orchestrate.js";
 import { ingestGithubWebhook } from "./githubWebhook.js";
-import { renderPane } from "./pane.js";
+import { coupComplete, parseCoup, parseUrlEncoded } from "./coup.js";
+import { loadCorporation } from "./corporation.js";
+import { renderCoup, renderPane } from "./pane.js";
 
 export type AppOpts = {
   prisma: PrismaClient;
@@ -43,8 +45,8 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
   const budgetCap = opts.budgetCap ?? Number(process.env.HARD_BUDGET_PER_RUN_USD || 2);
 
   const app = Fastify({ logger: false });
-  app.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_req, _body, done) => {
-    done(null, {});
+  app.addContentTypeParser("application/x-www-form-urlencoded", { parseAs: "string" }, (_req, body, done) => {
+    done(null, parseUrlEncoded(typeof body === "string" ? body : ""));
   });
   await app.register(swagger, {
     openapi: {
@@ -89,6 +91,14 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
     reply.header("content-type", "text/html; charset=utf-8");
     return renderPane(prisma, "fleet");
   });
+  app.get("/ui/coup/:id", async (req, reply) => {
+    const { id } = req.params as { id: string };
+    const missing = (req.query as { missing?: string }).missing === "1";
+    const page = await renderCoup(prisma, id, missing);
+    reply.header("content-type", "text/html; charset=utf-8");
+    return reply.code(page.status).send(page.html);
+  });
+
   app.get("/ui/:screen", async (req, reply) => {
     const { screen } = req.params as { screen: string };
     reply.header("content-type", "text/html; charset=utf-8");
@@ -97,6 +107,11 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
 
   app.post("/ui/act/dispatch/:id", async (req, reply) => {
     const { id } = req.params as { id: string };
+    const coup = parseCoup(req.body);
+    if (!coupComplete(coup)) {
+      return reply.redirect(`/ui/coup/${id}?missing=1`);
+    }
+    await emit(req.actor || "pane", "coup.before", { taskId: id, ...coup });
     const result = await orchestrate({
       prisma,
       taskId: id,
@@ -148,6 +163,8 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
 
   app.get("/agents", async () => prisma.agent.findMany({ include: { workers: true } }));
 
+  app.get("/corp", async () => loadCorporation());
+
   app.get("/fleet", async () => {
     const agents = await prisma.agent.findMany({ include: { workers: true } });
     const specialists = agents.flatMap((a) =>
@@ -161,9 +178,13 @@ export async function buildApp(opts: AppOpts): Promise<FastifyInstance> {
     return {
       architecture: "wide-not-deep",
       fabric: "n8n-inside-voltron",
+      kernelSeats: 14,
+      departments: agents.length,
       seats: agents.length,
       specialists: specialists.length,
       depthLimit: 3,
+      selfImprove: true,
+      contrarian: agents.some((a) => a.name === "contrarian") ? "steel-local" : "missing",
       n8n: process.env.N8N_BASE_URL ? "bound" : "unbound-fallback-voltron",
       bySeat,
       agents: agents.map((a) => ({

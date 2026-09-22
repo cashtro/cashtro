@@ -10,6 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <strong>Cashtro</strong>
           <nav style={{ display: "flex", gap: 12, marginTop: 8 }}>
             <a href="/" style={{ color: "inherit" }}>Fleet</a>
+            <a href="/corp" style={{ color: "inherit" }}>Corp</a>
             <a href="/queue" style={{ color: "inherit" }}>Queue</a>
             <a href="/run" style={{ color: "inherit" }}>Run</a>
             <a href="/recon" style={{ color: "inherit" }}>Recon</a>

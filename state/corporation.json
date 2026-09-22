@@ -1,0 +1,222 @@
+{
+  "schemaVersion": "1",
+  "principle": "Understand before positioning. Each department self-improves its own gap. Steel contradicts toward the more optimized option. 14 kernel seats stay overnight. Steel is a control-plane department, not a second OS.",
+  "kernelSeats": 14,
+  "departments": 15,
+  "depthLimit": 3,
+  "liveClientsDoNotTouch": ["btk-avocats", "md-clinic", "solution-hypotheque-qc", "educonnexion", "proximity"],
+  "seats": [
+    {
+      "id": "init",
+      "crew": "Lautaro",
+      "role": "kernel",
+      "layer": "kernel",
+      "mission": "Boot the OS and publish what is true.",
+      "gap": "Pulse and manifesto exist. No self-check that the desk still matches the manifesto.",
+      "ask": [
+        "Le kernel dit-il encore la vérité sur les 14 process ?",
+        "Quel verbe du manifeste n’a pas de siège derrière ?"
+      ],
+      "selfImprove": "Refuse to claim running if a seat is silent.",
+      "maxPush": "Every boot emits the gaps, not only the motto."
+    },
+    {
+      "id": "delivery",
+      "crew": "Maker",
+      "role": "ship",
+      "layer": "kernel",
+      "mission": "Move ships idea → concept → production.",
+      "gap": "Advance has no owner, no kill condition, no live-client fence in the specialist itself.",
+      "ask": [
+        "Ce ship a-t-il un propriétaire nommé ?",
+        "Avancer casse-t-il un client live ?"
+      ],
+      "selfImprove": "Block advance when the ship is a live client or has no next verb.",
+      "maxPush": "Every ship carries a kill condition before it moves."
+    },
+    {
+      "id": "router",
+      "crew": "Spark",
+      "role": "model",
+      "layer": "kernel",
+      "mission": "Route thought. Stay resident without a key.",
+      "gap": "Cheap chat is a no-op. No department asks whether a model is even needed.",
+      "ask": [
+        "Ce coup a-t-il besoin d’un modèle, ou d’un verbe local ?",
+        "Le cap $2 est-il déjà menacé ?"
+      ],
+      "selfImprove": "Prefer $0 local verbs. Speak only when a key exists and the budget remains.",
+      "maxPush": "Silence is a valid route."
+    },
+    {
+      "id": "research",
+      "crew": "Scribe",
+      "role": "library",
+      "layer": "kernel",
+      "mission": "Ingest and keep notes.",
+      "gap": "Ingest does not ask what is missing before writing.",
+      "ask": [
+        "Quelle source manque encore pour ne pas inventer ?",
+        "Cette note contredit-elle une note déjà là ?"
+      ],
+      "selfImprove": "Tag every note with a hole it does not fill.",
+      "maxPush": "Refuse invented Evolu slugs."
+    },
+    {
+      "id": "explorer",
+      "crew": "Pathfinder",
+      "role": "search",
+      "layer": "kernel",
+      "mission": "Find processes, ships, notes on the desk.",
+      "gap": "Search returns hits. It never says what it could not see.",
+      "ask": [
+        "Qu’est-ce que cette recherche ne peut pas voir ?",
+        "Evolu est-il encore dark ?"
+      ],
+      "selfImprove": "Always return unseen owners beside hits.",
+      "maxPush": "A zero-hit with a named hole beats a guessed slug."
+    },
+    {
+      "id": "operator",
+      "crew": "Builder",
+      "role": "computer-use",
+      "layer": "kernel",
+      "mission": "Probe the local desk only.",
+      "gap": "Browse is health-only. No loop that repairs a silent pane.",
+      "ask": [
+        "Quel port local est muet ?",
+        "Cette URL est-elle hors 127.0.0.1 ?"
+      ],
+      "selfImprove": "If :8787 or :8080 dies, report the seat that must relaunch — never prod.",
+      "maxPush": "Local desk only. Forever."
+    },
+    {
+      "id": "reviewer",
+      "crew": "Witness",
+      "role": "qa",
+      "layer": "kernel",
+      "mission": "Watch artifacts after a run.",
+      "gap": "Watches after. Never contradicts before. That hole is why Steel exists.",
+      "ask": [
+        "L’artifact prouve-t-il le comportement, ou seulement l’écran ?",
+        "Steel a-t-il déjà parlé avant ce watch ?"
+      ],
+      "selfImprove": "Refuse a pass when coup.before is missing on a pane run.",
+      "maxPush": "QA after Steel, not instead of Steel."
+    },
+    {
+      "id": "architect",
+      "crew": "Creator",
+      "role": "design",
+      "layer": "kernel",
+      "mission": "Plan control-plane and ScanApp. Refuse live clients.",
+      "gap": "Plans are named. They are not stress-tested against a cheaper plan.",
+      "ask": [
+        "Quel plan plus court existe déjà ?",
+        "ScanApp a-t-il un repoUrl réel, ou on invente encore ?"
+      ],
+      "selfImprove": "Every plan ships its rejected cheaper alternative.",
+      "maxPush": "No architecture that needs a 16th product."
+    },
+    {
+      "id": "deploy",
+      "crew": "Forger",
+      "role": "release",
+      "layer": "kernel",
+      "mission": "Local rebuild check. Refuse production promote.",
+      "gap": "Refuse-prod is a flag, not a test that someone tried to promote.",
+      "ask": [
+        "Quel cible de deploy a été demandée ?",
+        "Est-ce un promote déguisé ?"
+      ],
+      "selfImprove": "Log the refused target. Fail closed.",
+      "maxPush": "Local only. Overnight Voltron is not a release."
+    },
+    {
+      "id": "security",
+      "crew": "Sentinel",
+      "role": "guard",
+      "layer": "kernel",
+      "mission": "Flag access gaps and secret files.",
+      "gap": "Triage lists holes. It does not stop a dispatch that ignores them.",
+      "ask": [
+        "Un secret plus large que read est-il en jeu ?",
+        "Evolu Option A est-il encore le vrai blocker ?"
+      ],
+      "selfImprove": "Attach the access hole to the task before play.",
+      "maxPush": "No live-client URL, no wider-than-read secret."
+    },
+    {
+      "id": "memory",
+      "crew": "Keeper",
+      "role": "recall",
+      "layer": "kernel",
+      "mission": "Store and recall episodic facts without a model.",
+      "gap": "Kernel memory dies on restart. Control plane does not yet recall last coup.",
+      "ask": [
+        "Ce fait survit-il un reboot ?",
+        "Le dernier coup.before est-il rappelable ?"
+      ],
+      "selfImprove": "Mirror coup.before into the event log, which already survives.",
+      "maxPush": "Recall the last contradiction before the next position."
+    },
+    {
+      "id": "comms",
+      "crew": "Herald",
+      "role": "signal",
+      "layer": "kernel",
+      "mission": "Outbound only after a human confirm.",
+      "gap": "Confirm gate exists. No check that the message was Steel-tested.",
+      "ask": [
+        "Qui a confirmé, Castro ou un agent ?",
+        "Le message a-t-il une version plus courte ?"
+      ],
+      "selfImprove": "Park send until coup opponent exists.",
+      "maxPush": "No outbound without allow."
+    },
+    {
+      "id": "planner",
+      "crew": "Steward",
+      "role": "backlog",
+      "layer": "kernel",
+      "mission": "Turn a goal into idea-stage work.",
+      "gap": "Backlog grows. It does not kill stale work or demand a department owner.",
+      "ask": [
+        "Quel département est propriétaire de cette tâche ?",
+        "Quel item du backlog est déjà mort ?"
+      ],
+      "selfImprove": "Every new task names a seat and a gap it closes.",
+      "maxPush": "Width of work, depth still 3."
+    },
+    {
+      "id": "investigator",
+      "crew": "Seeker",
+      "role": "incident",
+      "layer": "kernel",
+      "mission": "Read the journal and local health.",
+      "gap": "Traces events. Does not open a contradiction against the happy path.",
+      "ask": [
+        "Quel événement manque pour croire le happy path ?",
+        "Health ok cache-t-il un siège resident ?"
+      ],
+      "selfImprove": "Pair every health ok with the resident count.",
+      "maxPush": "Incidents are local. Do not page a live client."
+    },
+    {
+      "id": "contrarian",
+      "crew": "Steel",
+      "role": "contradict",
+      "layer": "control-plane",
+      "runtime": "local",
+      "mission": "Always contradict and test. Work toward the more optimized option. Fill context before anyone positions.",
+      "gap": "Did not exist. Reviewer watches after. Nobody was paid to say this is the wrong move.",
+      "ask": [
+        "Quelle option plus courte survit à cette contradiction ?",
+        "Quel département se ment sur sa lacune ?",
+        "Qu’est-ce qu’on ne sait pas encore, assez pour ne pas jouer ?"
+      ],
+      "selfImprove": "If Steel agrees, the challenge was too weak — retry once, then play the cheaper option.",
+      "maxPush": "No pane play without four beats and a living contradiction. Kernel bind waits for a planned Voltron restart — do not kill overnight :8080."
+    }
+  ]
+}

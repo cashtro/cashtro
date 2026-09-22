@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
 import type { AgentAdapter, RunContext } from "@cashtro/adapters";
-import { DepthError, MAX_DEPTH, assertDepth, createHttpAdapter, createN8nAdapter, defaultAdapters, pickAdapter, resolveSpecialist } from "@cashtro/adapters";
+import { DepthError, MAX_DEPTH, assertDepth, createContrarianAdapter, createHttpAdapter, createN8nAdapter, defaultAdapters, pickAdapter, resolveSpecialist } from "@cashtro/adapters";
 import { Task as TaskSchema, type Task } from "@cashtro/sdk";
 
 export type OrchestrateOpts = {
@@ -68,7 +68,13 @@ export async function orchestrate(opts: OrchestrateOpts) {
     adapters.http = createHttpAdapter({ kernelUrl: opts.kernelUrl, fetchImpl: opts.fetchImpl });
     adapters.n8n = createN8nAdapter({ fallback: adapters.http, fetchImpl: opts.fetchImpl });
   }
-  let adapter = specialist && adapters.n8n ? adapters.n8n : pickAdapter(agent.runtime, adapters);
+  if (!adapters.contrarian) adapters.contrarian = createContrarianAdapter();
+  const steelSeat = agent.name === "contrarian" || agent.runtime === "contrarian" || specialist?.seat === "contrarian";
+  let adapter = steelSeat
+    ? adapters.contrarian
+    : specialist && adapters.n8n
+      ? adapters.n8n
+      : pickAdapter(agent.runtime, adapters);
   if (adapter.id === "http") {
     const health = await adapter.healthcheck();
     if (!health.ok && adapters.local) adapter = adapters.local;
