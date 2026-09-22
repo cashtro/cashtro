@@ -23,6 +23,7 @@ type Department struct {
 	ReportsTo string   `json:"reportsTo"`
 	Chief     string   `json:"chief"`
 	Mandate   string   `json:"mandate"`
+	Craft     []Craft  `json:"craft"`
 	Members   []Member `json:"members"`
 }
 
@@ -35,10 +36,10 @@ type Member struct {
 
 // Division is a profit or activity center. One chief, one revenue, one guard.
 type Division struct {
-	ID         string `json:"id"`
-	Name       string `json:"name"`
-	Chief      string `json:"chief"`
-	Department string `json:"department"`
+	ID         string   `json:"id"`
+	Name       string   `json:"name"`
+	Chief      string   `json:"chief"`
+	Department string   `json:"department"`
 	Revenue    string   `json:"revenue"`
 	Guard      string   `json:"guard"`
 	Work       []string `json:"work,omitempty"`
@@ -46,7 +47,7 @@ type Division struct {
 
 // Chart returns the operating chart.
 func Chart() Organization {
-	return Organization{
+	org := Organization{
 		Seats: []Seat{
 			{ID: "ceo", Title: "CEO", Agent: "manager", Mandate: "Arbitrage, rentabilité, assignation. Rien ne sort sans son accord via comms."},
 			{ID: "cto", Title: "CTO", Agent: "architect", Mandate: "Technique, chaînes, modèles. Décide comment c'est construit, pas ce qui est vendu."},
@@ -130,6 +131,10 @@ func Chart() Organization {
 			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
 		},
 	}
+	for i := range org.Departments {
+		org.Departments[i].Craft = craftFor(org.Departments[i].ID)
+	}
+	return org
 }
 
 // Members returns each agentic once, in department order.

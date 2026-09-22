@@ -800,6 +800,16 @@
         "reportsTo": "ceo",
         "chief": "manager",
         "mandate": "Arbitre seulement après qu'Optimisation a contredit le choix. Une décision sans option rejetée n'est pas une décision.",
+        "craft": [
+          {
+            "mark": "option rejetée",
+            "fill": "Option rejetée : nommer celle qu'on ne fait pas, et pourquoi."
+          },
+          {
+            "mark": "responsable",
+            "fill": "Responsable : le chef qui tranche."
+          }
+        ],
         "members": [
           {
             "agent": "manager",
@@ -826,6 +836,16 @@
         "reportsTo": "cto",
         "chief": "architect",
         "mandate": "Construit. Pose au moins deux façons de faire, avec le coût. Ne se note pas elle-même.",
+        "craft": [
+          {
+            "mark": "deux façons",
+            "fill": "Deux façons : la construction choisie et l'autre, avec le coût de chacune."
+          },
+          {
+            "mark": "limite",
+            "fill": "Limite : ce qu'on ne construit pas dans ce changement."
+          }
+        ],
         "members": [
           {
             "agent": "architect",
@@ -862,6 +882,16 @@
         "reportsTo": "cmp",
         "chief": "comms",
         "mandate": "Vend une offre à la fois. Chaque campagne a une variante plus courte. On mesure avant d'élargir.",
+        "craft": [
+          {
+            "mark": "offre",
+            "fill": "Offre : une seule, nommée, et pour qui."
+          },
+          {
+            "mark": "mesure",
+            "fill": "Mesure : le chiffre qu'on regarde avant d'élargir."
+          }
+        ],
         "members": [
           {
             "agent": "comms",
@@ -897,6 +927,16 @@
         "reportsTo": "cto",
         "chief": "delivery",
         "mandate": "Livre. Ne déclare pas le travail fini. Optimisation teste le résultat contre un chemin plus court.",
+        "craft": [
+          {
+            "mark": "livré",
+            "fill": "Livré : l'artifact concret, pas l'intention."
+          },
+          {
+            "mark": "pas fini",
+            "fill": "Pas fini : ce qui reste avant de dire que c'est en ligne."
+          }
+        ],
         "members": [
           {
             "agent": "delivery",
@@ -931,6 +971,16 @@
         "reportsTo": "ceo",
         "chief": "security",
         "mandate": "Dit si c'est permis et si ça peut casser. Ne choisit pas la meilleure option : c'est le métier d'Optimisation.",
+        "craft": [
+          {
+            "mark": "règle",
+            "fill": "Règle : permis ou interdit, citée, pas un avis."
+          },
+          {
+            "mark": "ça casse",
+            "fill": "Ça casse : le cas qui fait perdre de l'argent ou des données."
+          }
+        ],
         "members": [
           {
             "agent": "security",
@@ -958,6 +1008,16 @@
         "reportsTo": "ceo",
         "chief": "reviewer",
         "mandate": "Contredit et teste tout ce que les autres départements proposent. Ne s'arrête que sur l'option la plus optimisée : moins d'étapes, moins de coût, moins de risque.",
+        "craft": [
+          {
+            "mark": "rejet",
+            "fill": "Rejet : l'option plus lourde, avec son score."
+          },
+          {
+            "mark": "score",
+            "fill": "Score : coût + risque + étapes. Le plus bas gagne."
+          }
+        ],
         "members": [
           {
             "agent": "reviewer",

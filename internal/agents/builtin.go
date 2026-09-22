@@ -122,6 +122,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.org",
 			"manager.loi",
 			"manager.contradict",
+			"manager.improve",
 			"manager.chain",
 			"manager.fiche",
 			"manager.assign",
@@ -227,6 +228,23 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		}
 		return kernel.Result{OK: verdict.Ready, Message: verdict.Attack, Data: verdict}, nil
 
+	case "manager.improve":
+		deptID := payloadQuery(call, "department")
+		if deptID == "" {
+			deptID = payloadQuery(call, "id")
+		}
+		draft := payloadQuery(call, "draft")
+		improved, ok := Improve(deptID, draft)
+		if !ok {
+			return kernel.Result{OK: false, Message: "unknown department: " + deptID}, nil
+		}
+		dept, _ := DeptByID(deptID)
+		_, _ = a.k.Post("manager", dept.Chief, "improve", improved.Result)
+		if !improved.Specialized {
+			a.k.Remember(deptID, "lacunes comblées: "+strings.Join(improved.Lacunes, ", "))
+		}
+		return kernel.Result{OK: true, Message: improved.Result, Data: improved}, nil
+
 	case "manager.chain":
 		id := payloadQuery(call, "id")
 		if id == "" {
@@ -237,15 +255,22 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			return kernel.Result{OK: false, Message: "unknown chain: " + id}, nil
 		}
 		posted := make([]string, 0, len(steps))
+		specialized := make([]Improvement, 0, len(steps))
 		for _, step := range steps {
-			body := step.Line + " #" + strconv.Itoa(step.Order) + " · " + step.Do
+			dept, _ := DeptByAgent(step.Agent)
+			improved, _ := Improve(dept.ID, step.Do)
+			body := step.Line + " #" + strconv.Itoa(step.Order) + " · " + improved.Result
 			if _, err := a.k.Post("manager", step.Agent, "chain", body); err != nil {
 				return kernel.Result{}, err
 			}
+			if !improved.Specialized {
+				a.k.Remember(dept.ID, "lacunes: "+strings.Join(improved.Lacunes, ", "))
+			}
 			posted = append(posted, step.Agent)
+			specialized = append(specialized, improved)
 		}
-		return kernel.Result{OK: true, Message: id + " chain posted", Data: map[string]any{
-			"line": id, "steps": steps, "posted": posted,
+		return kernel.Result{OK: true, Message: id + " chain specialized", Data: map[string]any{
+			"line": id, "steps": steps, "posted": posted, "specialized": specialized,
 		}}, nil
 
 	case "manager.fiche":
