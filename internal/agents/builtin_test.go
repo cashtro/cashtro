@@ -127,6 +127,27 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if scanWork < 8 {
 		t.Fatalf("scanapp chain = %d steps", scanWork)
 	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.chain",
+		Payload:    []byte(`{"id":"scanapp"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.chain: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.fiche",
+		Payload:    []byte(`{"code":"123","name":"Noix","price":"4.00","stock":2,"photo":"database"}`),
+	})
+	if err != nil || res.OK {
+		t.Fatalf("database photo must not publish: %+v %v", res, err)
+	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.fiche",
+		Payload:    []byte(`{"code":"123","name":"Noix","price":"4.00","stock":2,"photo":"generated"}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("generated photo should publish: %+v %v", res, err)
+	}
 	if len(org.Members()) != 15 {
 		t.Fatalf("employees = %d, want 15", len(org.Members()))
 	}

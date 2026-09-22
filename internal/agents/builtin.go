@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/cashtro/cashtro/internal/catalog"
@@ -120,6 +121,8 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.automate",
 			"manager.org",
 			"manager.loi",
+			"manager.chain",
+			"manager.fiche",
 			"manager.assign",
 			"manager.graphify",
 		},
@@ -207,6 +210,41 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"total":        len(a.board.Repos),
 			"repos":        a.board.Repos,
 		}}, nil
+
+	case "manager.chain":
+		id := payloadQuery(call, "id")
+		if id == "" {
+			id = payloadQuery(call, "line")
+		}
+		steps, ok := Chain(id)
+		if !ok {
+			return kernel.Result{OK: false, Message: "unknown chain: " + id}, nil
+		}
+		posted := make([]string, 0, len(steps))
+		for _, step := range steps {
+			body := step.Line + " #" + strconv.Itoa(step.Order) + " · " + step.Do
+			if _, err := a.k.Post("manager", step.Agent, "chain", body); err != nil {
+				return kernel.Result{}, err
+			}
+			posted = append(posted, step.Agent)
+		}
+		return kernel.Result{OK: true, Message: id + " chain posted", Data: map[string]any{
+			"line": id, "steps": steps, "posted": posted,
+		}}, nil
+
+	case "manager.fiche":
+		var fiche Fiche
+		if len(call.Payload) > 0 {
+			if err := json.Unmarshal(call.Payload, &fiche); err != nil {
+				return kernel.Result{}, err
+			}
+		}
+		ready, why := fiche.Ready()
+		if ready {
+			_, _ = a.k.Post("manager", "comms", "fiche", fiche.Code+" prête")
+			_, _ = a.k.Post("manager", "operator", "fiche", fiche.Code+" vers Proximity et Empire")
+		}
+		return kernel.Result{OK: ready, Message: why, Data: fiche}, nil
 
 	case "manager.assign":
 		brain := payloadQuery(call, "brain")
