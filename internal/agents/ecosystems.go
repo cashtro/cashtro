@@ -62,6 +62,11 @@ func Links() []Link {
 			Via:    "l'école enseigne le Web3 que les bots exécutent",
 			Agents: []string{"research", "memory", "architect"},
 		},
+		{
+			From: "optimisation", To: "direction",
+			Via:    "Optimisation contredit chaque proposition et ne laisse passer que l'option la plus courte",
+			Agents: []string{"reviewer", "explorer", "manager"},
+		},
 	}
 }
 

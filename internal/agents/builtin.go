@@ -121,6 +121,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.automate",
 			"manager.org",
 			"manager.loi",
+			"manager.contradict",
 			"manager.chain",
 			"manager.fiche",
 			"manager.assign",
@@ -210,6 +211,21 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"total":        len(a.board.Repos),
 			"repos":        a.board.Repos,
 		}}, nil
+
+	case "manager.contradict":
+		var proposal Proposal
+		if len(call.Payload) > 0 {
+			if err := json.Unmarshal(call.Payload, &proposal); err != nil {
+				return kernel.Result{}, err
+			}
+		}
+		verdict := Contradict(proposal)
+		_, _ = a.k.Post("manager", "reviewer", "contradict", verdict.Attack)
+		_, _ = a.k.Post("manager", "explorer", "contradict", verdict.Attack)
+		if verdict.Ready {
+			a.k.Remember("optimisation", proposal.Subject+" → "+verdict.Best)
+		}
+		return kernel.Result{OK: verdict.Ready, Message: verdict.Attack, Data: verdict}, nil
 
 	case "manager.chain":
 		id := payloadQuery(call, "id")

@@ -743,6 +743,16 @@
         "memory",
         "architect"
       ]
+    },
+    {
+      "from": "optimisation",
+      "to": "direction",
+      "via": "Optimisation contredit chaque proposition et ne laisse passer que l'option la plus courte",
+      "agents": [
+        "reviewer",
+        "explorer",
+        "manager"
+      ]
     }
   ],
   "agents": [
@@ -750,7 +760,6 @@
     "init",
     "architect",
     "router",
-    "explorer",
     "memory",
     "comms",
     "planner",
@@ -758,9 +767,10 @@
     "delivery",
     "operator",
     "deploy",
-    "reviewer",
     "security",
-    "investigator"
+    "investigator",
+    "reviewer",
+    "explorer"
   ],
   "org": {
     "seats": [
@@ -789,6 +799,7 @@
         "name": "Direction",
         "reportsTo": "ceo",
         "chief": "manager",
+        "mandate": "Arbitre seulement après qu'Optimisation a contredit le choix. Une décision sans option rejetée n'est pas une décision.",
         "members": [
           {
             "agent": "manager",
@@ -814,6 +825,7 @@
         "name": "Ingénierie",
         "reportsTo": "cto",
         "chief": "architect",
+        "mandate": "Construit. Pose au moins deux façons de faire, avec le coût. Ne se note pas elle-même.",
         "members": [
           {
             "agent": "architect",
@@ -835,14 +847,6 @@
             ]
           },
           {
-            "agent": "explorer",
-            "title": "employé spécialisé carte",
-            "skills": [
-              "Graphify",
-              "recherche interne"
-            ]
-          },
-          {
             "agent": "memory",
             "title": "employé spécialisé dossier",
             "skills": [
@@ -857,6 +861,7 @@
         "name": "Marché",
         "reportsTo": "cmp",
         "chief": "comms",
+        "mandate": "Vend une offre à la fois. Chaque campagne a une variante plus courte. On mesure avant d'élargir.",
         "members": [
           {
             "agent": "comms",
@@ -891,6 +896,7 @@
         "name": "Opérations",
         "reportsTo": "cto",
         "chief": "delivery",
+        "mandate": "Livre. Ne déclare pas le travail fini. Optimisation teste le résultat contre un chemin plus court.",
         "members": [
           {
             "agent": "delivery",
@@ -916,14 +922,6 @@
               "preview",
               "release"
             ]
-          },
-          {
-            "agent": "reviewer",
-            "title": "employé spécialisé qualité",
-            "skills": [
-              "revue",
-              "artifacts"
-            ]
           }
         ]
       },
@@ -932,6 +930,7 @@
         "name": "Contrôle",
         "reportsTo": "ceo",
         "chief": "security",
+        "mandate": "Dit si c'est permis et si ça peut casser. Ne choisit pas la meilleure option : c'est le métier d'Optimisation.",
         "members": [
           {
             "agent": "security",
@@ -949,6 +948,33 @@
               "trace",
               "perte",
               "blast radius"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "optimisation",
+        "name": "Optimisation",
+        "reportsTo": "ceo",
+        "chief": "reviewer",
+        "mandate": "Contredit et teste tout ce que les autres départements proposent. Ne s'arrête que sur l'option la plus optimisée : moins d'étapes, moins de coût, moins de risque.",
+        "members": [
+          {
+            "agent": "reviewer",
+            "title": "chef de département, teste et contredit",
+            "skills": [
+              "contre-épreuve",
+              "test",
+              "option rejetée"
+            ]
+          },
+          {
+            "agent": "explorer",
+            "title": "employé spécialisé option plus courte",
+            "skills": [
+              "Graphify",
+              "chemin existant",
+              "moindre coût"
             ]
           }
         ]

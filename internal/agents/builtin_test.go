@@ -115,7 +115,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 
 	org := Chart()
-	if len(org.Seats) != 3 || len(org.Departments) != 5 || len(org.Divisions) != 8 {
+	if len(org.Seats) != 3 || len(org.Departments) != 6 || len(org.Divisions) != 8 {
 		t.Fatalf("org seats/depts/divs = %d %d %d", len(org.Seats), len(org.Departments), len(org.Divisions))
 	}
 	var scanWork int
@@ -151,6 +151,17 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if len(org.Members()) != 15 {
 		t.Fatalf("employees = %d, want 15", len(org.Members()))
 	}
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.contradict",
+		Payload:    []byte(`{"subject":"site","options":[{"name":"refaire","cost":8,"steps":6},{"name":"réutiliser","cost":1,"steps":2}]}`),
+	})
+	if err != nil || !res.OK {
+		t.Fatalf("manager.contradict: %+v %v", res, err)
+	}
+	if res.Data.(Verdict).Best != "réutiliser" {
+		t.Fatalf("best = %+v", res.Data)
+	}
+
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.org"})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.org: %+v %v", res, err)

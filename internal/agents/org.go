@@ -1,6 +1,6 @@
 package agents
 
-// Organization is the cooperative. Three chiefs, five departments,
+// Organization is the cooperative. Three chiefs, six departments,
 // the 15 real agentics as specialized employees. No extra processes.
 type Organization struct {
 	Seats       []Seat       `json:"seats"`
@@ -22,6 +22,7 @@ type Department struct {
 	Name      string   `json:"name"`
 	ReportsTo string   `json:"reportsTo"`
 	Chief     string   `json:"chief"`
+	Mandate   string   `json:"mandate"`
 	Members   []Member `json:"members"`
 }
 
@@ -54,6 +55,7 @@ func Chart() Organization {
 		Departments: []Department{
 			{
 				ID: "direction", Name: "Direction", ReportsTo: "ceo", Chief: "manager",
+				Mandate: "Arbitre seulement après qu'Optimisation a contredit le choix. Une décision sans option rejetée n'est pas une décision.",
 				Members: []Member{
 					{Agent: "manager", Title: "CEO", Skills: []string{"arbitrage", "rentabilité", "assignation"}},
 					{Agent: "init", Title: "secrétaire général", Skills: []string{"boot", "état du système"}},
@@ -61,15 +63,16 @@ func Chart() Organization {
 			},
 			{
 				ID: "ingenierie", Name: "Ingénierie", ReportsTo: "cto", Chief: "architect",
+				Mandate: "Construit. Pose au moins deux façons de faire, avec le coût. Ne se note pas elle-même.",
 				Members: []Member{
 					{Agent: "architect", Title: "CTO", Skills: []string{"conception", "chaînes", "offres"}},
 					{Agent: "router", Title: "employé spécialisé modèles", Skills: []string{"coût des modèles", "Ollama", "Kimi K3", "GLM max"}},
-					{Agent: "explorer", Title: "employé spécialisé carte", Skills: []string{"Graphify", "recherche interne"}},
 					{Agent: "memory", Title: "employé spécialisé dossier", Skills: []string{"mémoire", "fiches"}},
 				},
 			},
 			{
 				ID: "marche", Name: "Marché", ReportsTo: "cmp", Chief: "comms",
+				Mandate: "Vend une offre à la fois. Chaque campagne a une variante plus courte. On mesure avant d'élargir.",
 				Members: []Member{
 					{Agent: "comms", Title: "CMP", Skills: []string{"vente", "campagnes", "comms.allow"}},
 					{Agent: "planner", Title: "chef de département planification", Skills: []string{"backlog", "priorité rentable"}},
@@ -78,18 +81,27 @@ func Chart() Organization {
 			},
 			{
 				ID: "operations", Name: "Opérations", ReportsTo: "cto", Chief: "delivery",
+				Mandate: "Livre. Ne déclare pas le travail fini. Optimisation teste le résultat contre un chemin plus court.",
 				Members: []Member{
 					{Agent: "delivery", Title: "chef de département livraison", Skills: []string{"idée", "concept", "production"}},
 					{Agent: "operator", Title: "employé spécialisé exécution", Skills: []string{"confection", "browser"}},
 					{Agent: "deploy", Title: "employé spécialisé release", Skills: []string{"preview", "release"}},
-					{Agent: "reviewer", Title: "employé spécialisé qualité", Skills: []string{"revue", "artifacts"}},
 				},
 			},
 			{
 				ID: "controle", Name: "Contrôle", ReportsTo: "ceo", Chief: "security",
+				Mandate: "Dit si c'est permis et si ça peut casser. Ne choisit pas la meilleure option : c'est le métier d'Optimisation.",
 				Members: []Member{
 					{Agent: "security", Title: "chef de département risque", Skills: []string{"CVE", "secrets", "triage"}},
 					{Agent: "investigator", Title: "employé spécialisé incidents", Skills: []string{"trace", "perte", "blast radius"}},
+				},
+			},
+			{
+				ID: "optimisation", Name: "Optimisation", ReportsTo: "ceo", Chief: "reviewer",
+				Mandate: "Contredit et teste tout ce que les autres départements proposent. Ne s'arrête que sur l'option la plus optimisée : moins d'étapes, moins de coût, moins de risque.",
+				Members: []Member{
+					{Agent: "reviewer", Title: "chef de département, teste et contredit", Skills: []string{"contre-épreuve", "test", "option rejetée"}},
+					{Agent: "explorer", Title: "employé spécialisé option plus courte", Skills: []string{"Graphify", "chemin existant", "moindre coût"}},
 				},
 			},
 		},
