@@ -54,7 +54,8 @@ func Lines() []Line {
 			Mandate: "Autre projet, autre écosystème. Il ne scanne pas. " +
 				"Il vend les items qu'il fetch depuis le Scan App. " +
 				"Le repo Evolu-Jeunes/ScanApp est ce marketplace, et c'est lui qui fonctionne. " +
-				"Son site de vente sera connecté à MCP et à Stripe. " +
+				"Il n'est pas en ligne. On le déploie une fois prêt, pas avant. " +
+				"Son site de vente sera connecté à MCP et à Stripe. Pas le live Empire. " +
 				"Encore sans vente et sans client. But : vendre plus cher, profit. " +
 				"Prix CAD, taxes non incluses, Canada entier. " +
 				"Photo en ligne seulement avec les droits, sinon une image à nous. " +

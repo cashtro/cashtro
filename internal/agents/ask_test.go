@@ -1,6 +1,9 @@
 package agents
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestQuestionsBlockUntilAnswered(t *testing.T) {
 	open := OpenQuestions("scanapp", nil)
@@ -10,6 +13,14 @@ func TestQuestionsBlockUntilAnswered(t *testing.T) {
 	filled := OpenQuestions("scanapp", map[string]string{"catalogue": "tout le stock"})
 	if len(filled) != 0 {
 		t.Fatalf("scan still open: %+v", filled)
+	}
+	self := AskSelf("marketplace", nil)
+	if len(self.Open) != 0 || self.Answered["url"] == "" || !strings.Contains(self.Answered["marge"], "ne pas inventer") {
+		t.Fatalf("self = %+v", self)
+	}
+	scan := AskSelf("scanapp", nil)
+	if len(scan.Open) != 0 || scan.Answered["catalogue"] == "" {
+		t.Fatalf("scan self = %+v", scan)
 	}
 	shop := OpenQuestions("marketplace", nil)
 	if len(shop) != 3 {

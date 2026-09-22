@@ -3,6 +3,7 @@ package agents
 import (
 	"context"
 	"encoding/json"
+	"strings"
 	"testing"
 
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -128,18 +129,18 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("scanapp chain = %d steps", scanWork)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
-		Capability: "manager.chain",
-		Payload:    []byte(`{"id":"scanapp"}`),
+		Capability: "manager.ask",
+		Payload:    []byte(`{"action":"marketplace"}`),
 	})
-	if err != nil || res.OK {
-		t.Fatalf("chain without context should ask: %+v %v", res, err)
+	if err != nil || !res.OK {
+		t.Fatalf("self ask should close marketplace: %+v %v", res, err)
 	}
-	if qs, ok := res.Data.([]Question); !ok || len(qs) != 1 || qs[0].ID != "catalogue" {
-		t.Fatalf("questions = %#v", res.Data)
+	if !strings.Contains(res.Data.(SelfCheck).Answered["url"], "Pas en ligne") {
+		t.Fatalf("url answer = %+v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.chain",
-		Payload:    []byte(`{"id":"scanapp","answers":{"catalogue":"à confirmer"}}`),
+		Payload:    []byte(`{"id":"scanapp"}`),
 	})
 	if err != nil || !res.OK {
 		t.Fatalf("manager.chain: %+v %v", res, err)

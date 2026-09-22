@@ -219,11 +219,14 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		if action == "" {
 			action = payloadQuery(call, "id")
 		}
-		open := OpenQuestions(action, payloadAnswers(call))
-		return kernel.Result{OK: len(open) == 0, Message: askMessage(open), Data: open}, nil
+		check := AskSelf(action, payloadAnswers(call))
+		for id, ans := range check.Answered {
+			a.k.Remember(action, id+": "+ans)
+		}
+		return kernel.Result{OK: len(check.Open) == 0, Message: askMessage(check.Open), Data: check}, nil
 
 	case "manager.contradict":
-		if open := OpenQuestions("contradict", payloadAnswers(call)); len(open) > 0 {
+		if open := AskSelf("contradict", payloadAnswers(call)).Open; len(open) > 0 {
 			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
 		}
 		var proposal Proposal
@@ -266,7 +269,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		if !ok {
 			return kernel.Result{OK: false, Message: "unknown chain: " + id}, nil
 		}
-		if open := OpenQuestions(id, payloadAnswers(call)); len(open) > 0 {
+		if open := AskSelf(id, payloadAnswers(call)).Open; len(open) > 0 {
 			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
 		}
 		posted := make([]string, 0, len(steps))
@@ -297,7 +300,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		}
 		ready, why := fiche.Ready()
 		if ready {
-			if open := OpenQuestions("fiche", payloadAnswers(call)); len(open) > 0 {
+			if open := AskSelf("fiche", payloadAnswers(call)).Open; len(open) > 0 {
 				return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
 			}
 			_, _ = a.k.Post("manager", "comms", "fiche", fiche.Code+" prête")
@@ -306,7 +309,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		return kernel.Result{OK: ready, Message: why, Data: fiche}, nil
 
 	case "manager.assign":
-		if open := OpenQuestions("assign", payloadAnswers(call)); len(open) > 0 {
+		if open := AskSelf("assign", payloadAnswers(call)).Open; len(open) > 0 {
 			return kernel.Result{OK: false, Message: askMessage(open), Data: open}, nil
 		}
 		brain := payloadQuery(call, "brain")

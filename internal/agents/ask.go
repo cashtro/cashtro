@@ -48,6 +48,51 @@ func QuestionsFor(action string) []Question {
 	}
 }
 
+// Known is what was already said. The system uses it instead of asking again.
+func Known(action string) map[string]string {
+	switch action {
+	case "scanapp", "chain":
+		return map[string]string{
+			"catalogue": "Empire vend les produits du Scan App qui ont une fiche prête. Pas la ligne brute de la base.",
+		}
+	case "marketplace":
+		return map[string]string{
+			"marge":  "Plus cher que la référence, pour un profit. Le montant n'est pas donné : ne pas inventer de pourcentage.",
+			"url":    "Pas en ligne. Déployer une fois prêt. Le scanner n'est pas ce site.",
+			"stripe": "Stripe et MCP sur le site du marketplace seulement. Le live Empire n'est pas branché à Stripe.",
+		}
+	default:
+		return nil
+	}
+}
+
+// SelfCheck is the system questioning itself before it moves.
+type SelfCheck struct {
+	Action   string            `json:"action"`
+	Asked    []Question        `json:"asked"`
+	Answered map[string]string `json:"answered"`
+	Open     []Question        `json:"open"`
+}
+
+// AskSelf poses the questions and answers them from what is already known.
+func AskSelf(action string, extra map[string]string) SelfCheck {
+	answered := map[string]string{}
+	for k, v := range Known(action) {
+		answered[k] = v
+	}
+	for k, v := range extra {
+		if strings.TrimSpace(v) != "" {
+			answered[k] = strings.TrimSpace(v)
+		}
+	}
+	return SelfCheck{
+		Action:   action,
+		Asked:    QuestionsFor(action),
+		Answered: answered,
+		Open:     OpenQuestions(action, answered),
+	}
+}
+
 // OpenQuestions returns the questions that still have no answer.
 func OpenQuestions(action string, answers map[string]string) []Question {
 	var open []Question
