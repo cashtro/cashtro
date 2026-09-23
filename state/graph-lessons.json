@@ -1,0 +1,992 @@
+[
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "SIGNUP_RATE_LIMIT",
+    "file": "cashtro/PBTM/innomax-html-package/assets/js/signup.js"
+  },
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "YAML",
+    "file": "cashtro/PBTM/innomax-html-package/swagger/swagger-config.js"
+  },
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "adminBtn",
+    "file": "cashtro/PBTM/innomax-html-package/assets/js/dashboard-demo.js"
+  },
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "adminModal",
+    "file": "cashtro/PBTM/innomax-html-package/assets/js/dashboard-demo.js"
+  },
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "authLimiter",
+    "file": "cashtro/PBTM/innomax-html-package/routes(api)/utils/auth-middleware.js"
+  },
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "authPaths",
+    "file": "cashtro/PBTM/innomax-html-package/docs/index.js"
+  },
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "authRoutes",
+    "file": "cashtro/PBTM/innomax-html-package/server.js"
+  },
+  {
+    "repo": "cashtro/PBTM",
+    "skill": "author",
+    "file": "cashtro/PBTM/innomax-html-package/package.json"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "About",
+    "file": "cashtro/cashtro/internal/kernel/kernel.go"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "Access",
+    "file": "cashtro/cashtro/tools/recon/src/schema.ts"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "Agent",
+    "file": "cashtro/cashtro/internal/kernel/kernel.go"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "Agent",
+    "file": "cashtro/cashtro/packages/sdk/src/index.ts"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "AgentRuntime",
+    "file": "cashtro/cashtro/packages/sdk/src/index.ts"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "AppOpts",
+    "file": "cashtro/cashtro/apps/api/src/app.ts"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "Blueprint",
+    "file": "cashtro/cashtro/internal/agents/engine.go"
+  },
+  {
+    "repo": "cashtro/cashtro",
+    "skill": "Board",
+    "file": "cashtro/cashtro/internal/agents/operate.go"
+  },
+  {
+    "repo": "cashtro/epicenter",
+    "skill": "Brain",
+    "file": "cashtro/epicenter/agents/epicenter.go"
+  },
+  {
+    "repo": "cashtro/epicenter",
+    "skill": "SubBrain",
+    "file": "cashtro/epicenter/agents/epicenter.go"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "AIAgent",
+    "file": "cashtro/trading_bot-main/ai/agent/ai_agent.py"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "AIModel",
+    "file": "cashtro/trading_bot-main/ai_integration.py"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "AdaptiveStrategy",
+    "file": "cashtro/trading_bot-main/core/strategy/adaptive_strategy.py"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "BacktestResult",
+    "file": "cashtro/trading_bot-main/core/trading/backtesting.py"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "BacktestResults",
+    "file": "cashtro/trading_bot-main/core/trading/backtester.py"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "Backtester",
+    "file": "cashtro/trading_bot-main/core/trading/backtester.py"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "Backtester",
+    "file": "cashtro/trading_bot-main/core/trading/backtesting.py"
+  },
+  {
+    "repo": "cashtro/trading_bot-main",
+    "skill": "BaseTradingModel",
+    "file": "cashtro/trading_bot-main/ai/models/base_model.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "AIAgent",
+    "file": "evolu/AI-BOT/ai/agent/ai_agent.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "AIModel",
+    "file": "evolu/AI-BOT/ai_integration.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "AdaptiveStrategy",
+    "file": "evolu/AI-BOT/core/strategy/adaptive_strategy.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "BacktestResult",
+    "file": "evolu/AI-BOT/core/trading/backtesting.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "BacktestResults",
+    "file": "evolu/AI-BOT/core/trading/backtester.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "Backtester",
+    "file": "evolu/AI-BOT/core/trading/backtester.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "Backtester",
+    "file": "evolu/AI-BOT/core/trading/backtesting.py"
+  },
+  {
+    "repo": "evolu/AI-BOT",
+    "skill": "BaseTradingModel",
+    "file": "evolu/AI-BOT/ai/models/base_model.py"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "AllowedRole",
+    "file": "evolu/Api-Proximity/apps/backend/src/middleware/rbac.ts"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "ApiResponse",
+    "file": "evolu/Api-Proximity/apps/frontend-portail-client/app/[slug]/page.tsx"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "ArchivedBooking",
+    "file": "evolu/Api-Proximity/apps/frontend-admin/app/planner/[businessId]/archive/page.tsx"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "AuditAction",
+    "file": "evolu/Api-Proximity/apps/backend/src/lib/auditLog.ts"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "AuditEntityType",
+    "file": "evolu/Api-Proximity/apps/backend/src/lib/auditLog.ts"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "AvailabilityResponse",
+    "file": "evolu/Api-Proximity/apps/backend/src/modules/D-availability/availability.types.ts"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "AvailabilityResponse",
+    "file": "evolu/Api-Proximity/apps/frontend-admin/lib/planner-types.ts"
+  },
+  {
+    "repo": "evolu/Api-Proximity",
+    "skill": "AvailabilitySlot",
+    "file": "evolu/Api-Proximity/apps/backend/src/modules/D-availability/availability.types.ts"
+  },
+  {
+    "repo": "evolu/AstroPoulet",
+    "skill": "Astro_Poulet_Walker_Nav_Menu",
+    "file": "evolu/AstroPoulet/functions.php"
+  },
+  {
+    "repo": "evolu/AstroPoulet",
+    "skill": "Astro_Poulet_Walker_Nav_Menu",
+    "file": "evolu/AstroPoulet/inc/theme-functions.php"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A10CandidateUniverse",
+    "file": "evolu/Blockchain-Trading-/auto_trader/src/validation/a10_preregistration.py"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A10CoveragePolicy",
+    "file": "evolu/Blockchain-Trading-/auto_trader/src/validation/a10_external_information_coverage.py"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A10FinalStatus",
+    "file": "evolu/Blockchain-Trading-/auto_trader/src/validation/a10_preregistration.py"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A10Preregistration",
+    "file": "evolu/Blockchain-Trading-/auto_trader/src/validation/a10_preregistration.py"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A10PreregistrationError",
+    "file": "evolu/Blockchain-Trading-/auto_trader/src/validation/a10_preregistration.py"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A10SelectionRule",
+    "file": "evolu/Blockchain-Trading-/auto_trader/src/validation/a10_preregistration.py"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A11AdmissionError",
+    "file": "evolu/Blockchain-Trading-/auto_trader/scripts/run_a11_multi_source_meta_model.py"
+  },
+  {
+    "repo": "evolu/Blockchain-Trading-",
+    "skill": "A11ArtifactManifest",
+    "file": "evolu/Blockchain-Trading-/auto_trader/src/validation/a11_artifact.py"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCEPTED_MIMES",
+    "file": "evolu/CRM/src/components/est/PricingDocumentsPanel.tsx"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCEPTED_PHOTO_TYPES",
+    "file": "evolu/CRM/src/components/vox/FormRenderer.tsx"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCEPTED_TYPES",
+    "file": "evolu/CRM/src/components/act/CaptureClassify.tsx"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCEPTED_TYPES",
+    "file": "evolu/CRM/src/components/est/ContextDocUploader.tsx"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCESS_HIERARCHY",
+    "file": "evolu/CRM/src/hooks/useModuleAccess.ts"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCESS_LEVELS",
+    "file": "evolu/CRM/src/components/admin/InviteUserModal.tsx"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCESS_LEVELS",
+    "file": "evolu/CRM/src/pages/modules/UserManagement.tsx"
+  },
+  {
+    "repo": "evolu/CRM",
+    "skill": "ACCESS_LOGISTICS_MULTIPLIERS",
+    "file": "evolu/CRM/src/lib/estAccessAdjustments.ts"
+  },
+  {
+    "repo": "evolu/Corps-Art",
+    "skill": "checkedRadio",
+    "file": "evolu/Corps-Art/corps-arts/page-prendre-rendez-vous.php"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "author",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "build",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "description",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "devDependencies",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "license",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "minify",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "name",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Decoland",
+    "skill": "sass",
+    "file": "evolu/Decoland/package.json"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "ALLOWED_KINDS",
+    "file": "evolu/Empire-/empiremedia/app/api/user-files/route.js"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "ALLOWED_THUMBNAIL_TYPES",
+    "file": "evolu/Empire-/empiremedia/lib/upload-media.js"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "AZURE_ACCOUNT",
+    "file": "evolu/Empire-/empiremedia/media-server.js"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "AZURE_CONTAINER",
+    "file": "evolu/Empire-/empiremedia/media-server.js"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "AZURE_SAS",
+    "file": "evolu/Empire-/empiremedia/media-server.js"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "Avatar",
+    "file": "evolu/Empire-/empiremedia/components/ui/avatar.jsx"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "AvatarFallback",
+    "file": "evolu/Empire-/empiremedia/components/ui/avatar.jsx"
+  },
+  {
+    "repo": "evolu/Empire-",
+    "skill": "AvatarImage",
+    "file": "evolu/Empire-/empiremedia/components/ui/avatar.jsx"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "APP_URL",
+    "file": "evolu/EmpireMedia/Frontend-blkboxmedia/src/constants.ts"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "AccordionContent",
+    "file": "evolu/EmpireMedia/Frontend-blkboxmedia/src/components/ui/accordion.tsx"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "AccordionItem",
+    "file": "evolu/EmpireMedia/Frontend-blkboxmedia/src/components/ui/accordion.tsx"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "AccordionTrigger",
+    "file": "evolu/EmpireMedia/Frontend-blkboxmedia/src/components/ui/accordion.tsx"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "Alert",
+    "file": "evolu/EmpireMedia/Frontend-blkboxmedia/src/components/ui/alert.tsx"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "Alert",
+    "file": "evolu/EmpireMedia/Goodsound - Poadcaster HTML Template/HTML_TEMPLATE/js/vendor/bootstrap.esm.js"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "Alert",
+    "file": "evolu/EmpireMedia/Goodsound - Poadcaster HTML Template/HTML_TEMPLATE/js/vendor/bootstrap.js"
+  },
+  {
+    "repo": "evolu/EmpireMedia",
+    "skill": "AlertDescription",
+    "file": "evolu/EmpireMedia/Frontend-blkboxmedia/src/components/ui/alert.tsx"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "AgentRun",
+    "file": "evolu/Giant/brain/giant.ts"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "Answers",
+    "file": "evolu/Giant/brain/giant.ts"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "Book",
+    "file": "evolu/Giant/brain/giant.ts"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "Bought",
+    "file": "evolu/Giant/programs/giant/src/lib.rs"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "BridgeLook",
+    "file": "evolu/Giant/brain/giant.ts"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "CARGO_ENCODED_RUSTFLAGS",
+    "file": "evolu/Giant/scripts/anchor-build.sh"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "CLAIM_RECORD_SEED",
+    "file": "evolu/Giant/app/src/lib/presale.ts"
+  },
+  {
+    "repo": "evolu/Giant",
+    "skill": "CLAIM_RECORD_SEED",
+    "file": "evolu/Giant/programs/giant/src/lib.rs"
+  },
+  {
+    "repo": "evolu/Hypotheque.ca",
+    "skill": "SHQ_Nav_Walker",
+    "file": "evolu/Hypotheque.ca/functions.php"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "AdminAuthResult",
+    "file": "evolu/MB-Health/src/lib/admin/auth.ts"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "BookingFormProps",
+    "file": "evolu/MB-Health/src/components/forms/BookingForm.tsx"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "ClientLayoutProps",
+    "file": "evolu/MB-Health/src/components/layout/ClientLayout.tsx"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "ContactFormProps",
+    "file": "evolu/MB-Health/src/components/forms/ContactForm.tsx"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "ContactMessage",
+    "file": "evolu/MB-Health/src/app/api/contact/route.ts"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "ContactRequest",
+    "file": "evolu/MB-Health/src/app/api/contact/route.ts"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "FaqInput",
+    "file": "evolu/MB-Health/src/app/actions/admin/faqs.ts"
+  },
+  {
+    "repo": "evolu/MB-Health",
+    "skill": "FooterProps",
+    "file": "evolu/MB-Health/src/components/layout/Footer.tsx"
+  },
+  {
+    "repo": "evolu/Newnordique",
+    "skill": "glassElements",
+    "file": "evolu/Newnordique/assets/js/pages/home.js"
+  },
+  {
+    "repo": "evolu/Nft",
+    "skill": "respond",
+    "file": "evolu/Nft/main-file/documentation/js/respond.js"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "ACCENT",
+    "file": "evolu/Nhl/frontend/src/components/DarkSelect.tsx"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "AHLAdapter",
+    "file": "evolu/Nhl/backend/sports/hockey_ahl/adapter.py"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "AHLCollector",
+    "file": "evolu/Nhl/backend/sports/hockey_ahl/collector.py"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "AHLFeatureBuilder",
+    "file": "evolu/Nhl/backend/sports/hockey_ahl/features.py"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "AHLFeatureExtractor",
+    "file": "evolu/Nhl/backend/sports/hockey_ahl/feedback/hockey_ahl_feature_extractor.py"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "AHL_TEAM_OPTIONS",
+    "file": "evolu/Nhl/frontend/src/constants/teams/ahlTeams.ts"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "ANIMATION_CONFIG",
+    "file": "evolu/Nhl/frontend/src/components/LogoLoop.tsx"
+  },
+  {
+    "repo": "evolu/Nhl",
+    "skill": "APIClient",
+    "file": "evolu/Nhl/backend/sports/nhl/api_client.py"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "SIGNUP_RATE_LIMIT",
+    "file": "evolu/Panda/innomax-html-package/assets/js/signup.js"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "SupabaseService",
+    "file": "evolu/Panda/innomax-html-package/routes(api)/utils/supabaseUtil.js"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "YAML",
+    "file": "evolu/Panda/innomax-html-package/swagger/swagger-config.js"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "achatRoutes",
+    "file": "evolu/Panda/innomax-html-package/server.js"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "adminBtn",
+    "file": "evolu/Panda/innomax-html-package/assets/js/dashboard-demo.js"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "adminModal",
+    "file": "evolu/Panda/innomax-html-package/assets/js/dashboard-demo.js"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "allImages",
+    "file": "evolu/Panda/innomax-html-package/optimize-images.js"
+  },
+  {
+    "repo": "evolu/Panda",
+    "skill": "authLimiter",
+    "file": "evolu/Panda/innomax-html-package/routes(api)/utils/auth-middleware.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "SIGNUP_RATE_LIMIT",
+    "file": "evolu/Pandora/innomax-html-package/assets/js/signup.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "SupabaseService",
+    "file": "evolu/Pandora/innomax-html-package/routes(api)/utils/supabaseUtil.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "YAML",
+    "file": "evolu/Pandora/innomax-html-package/swagger/swagger-config.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "adminBtn",
+    "file": "evolu/Pandora/innomax-html-package/assets/js/dashboard-demo.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "adminModal",
+    "file": "evolu/Pandora/innomax-html-package/assets/js/dashboard-demo.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "authLimiter",
+    "file": "evolu/Pandora/innomax-html-package/routes(api)/utils/auth-middleware.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "authPaths",
+    "file": "evolu/Pandora/innomax-html-package/docs/index.js"
+  },
+  {
+    "repo": "evolu/Pandora",
+    "skill": "authRoutes",
+    "file": "evolu/Pandora/innomax-html-package/server.js"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "Admin",
+    "file": "evolu/Plugin/admin/class-admin.php"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "AutoTranslateUI",
+    "file": "evolu/Plugin/admin/class-autotranslate-ui.php"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "AzureTranslator",
+    "file": "evolu/Plugin/inc/class-translator.php"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "DiffEngine",
+    "file": "evolu/Plugin/inc/class-repeater-sync.php"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "FieldClassifier",
+    "file": "evolu/Plugin/inc/class-repeater-sync.php"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "GoogleTranslator",
+    "file": "evolu/Plugin/inc/class-translator.php"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "InstructionsSync",
+    "file": "evolu/Plugin/inc/class-instructions-sync.php"
+  },
+  {
+    "repo": "evolu/Plugin",
+    "skill": "OptionsSync",
+    "file": "evolu/Plugin/inc/class-options-sync.php"
+  },
+  {
+    "repo": "evolu/Pollo",
+    "skill": "Astro_Poulet_Walker_Nav_Menu",
+    "file": "evolu/Pollo/functions.php"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCEPTED_MIMES",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/components/est/PricingDocumentsPanel.tsx"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCEPTED_PHOTO_TYPES",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/components/vox/FormRenderer.tsx"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCEPTED_TYPES",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/components/act/CaptureClassify.tsx"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCEPTED_TYPES",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/components/est/ContextDocUploader.tsx"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCESS_HIERARCHY",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/hooks/useModuleAccess.ts"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCESS_LEVELS",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/components/admin/InviteUserModal.tsx"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCESS_LEVELS",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/pages/modules/UserManagement.tsx"
+  },
+  {
+    "repo": "evolu/Proximity",
+    "skill": "ACCESS_LOGISTICS_MULTIPLIERS",
+    "file": "evolu/Proximity/apps/CRM/itercore-1ba1f01f-main/src/lib/estAccessAdjustments.ts"
+  },
+  {
+    "repo": "evolu/Proxy",
+    "skill": "PSC_ACF_Fields",
+    "file": "evolu/Proxy/plugins/proxi-soins-core/includes/class-psc-acf-fields.php"
+  },
+  {
+    "repo": "evolu/Proxy",
+    "skill": "PSC_Polylang",
+    "file": "evolu/Proxy/plugins/proxi-soins-core/includes/class-psc-polylang.php"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "ActionBadgeProps",
+    "file": "evolu/ScanApp/scanapp/src/components/seller/history/ActionBadge.tsx"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "ActionBreakdownChartProps",
+    "file": "evolu/ScanApp/scanapp/src/components/seller/stats/ActionBreakdownChart.tsx"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "ActionBreakdownItem",
+    "file": "evolu/ScanApp/scanapp/src/components/seller/stats/ActionBreakdownChart.tsx"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "ApplyScanResponse",
+    "file": "evolu/ScanApp/scanapp/src/utils/scans.ts"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "BarcodeSearchCardProps",
+    "file": "evolu/ScanApp/scanapp/src/components/scan/add-product/BarcodeSearchCard.tsx"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "BestWorstChartProps",
+    "file": "evolu/ScanApp/scanapp/src/components/seller/stats/BestWorstChart.tsx"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "COLORS",
+    "file": "evolu/ScanApp/scanapp/src/components/seller/stats/ActionBreakdownChart.tsx"
+  },
+  {
+    "repo": "evolu/ScanApp",
+    "skill": "CreateProductInput",
+    "file": "evolu/ScanApp/scanapp/src/schemas/product.ts"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "AIAgent",
+    "file": "evolu/TradingBotCodex/ai/agent/ai_agent.py"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "BacktestResult",
+    "file": "evolu/TradingBotCodex/core/trading/backtesting.py"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "BacktestResults",
+    "file": "evolu/TradingBotCodex/core/trading/backtester.py"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "Backtester",
+    "file": "evolu/TradingBotCodex/core/trading/backtester.py"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "Backtester",
+    "file": "evolu/TradingBotCodex/core/trading/backtesting.py"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "BinanceAPI",
+    "file": "evolu/TradingBotCodex/core/exchange/binance_api.py"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "BollingerBands",
+    "file": "evolu/TradingBotCodex/core/indicators/volatility.py"
+  },
+  {
+    "repo": "evolu/TradingBotCodex",
+    "skill": "CryptoTradingBot",
+    "file": "evolu/TradingBotCodex/core/bot/trading_bot.py"
+  },
+  {
+    "repo": "evolu/bot",
+    "skill": "AIModel",
+    "file": "evolu/bot/ai_integration.py"
+  },
+  {
+    "repo": "evolu/bubbles",
+    "skill": "PB_Nav_Walker",
+    "file": "evolu/bubbles/pink-bubbles/inc/nav-walker.php"
+  },
+  {
+    "repo": "evolu/clic",
+    "skill": "ClicNouveau_Walker_Nav_Menu",
+    "file": "evolu/clic/functions.php"
+  },
+  {
+    "repo": "evolu/demo-repository",
+    "skill": "dependencies",
+    "file": "evolu/demo-repository/package.json"
+  },
+  {
+    "repo": "evolu/demo-repository",
+    "skill": "description",
+    "file": "evolu/demo-repository/package.json"
+  },
+  {
+    "repo": "evolu/demo-repository",
+    "skill": "license",
+    "file": "evolu/demo-repository/package.json"
+  },
+  {
+    "repo": "evolu/demo-repository",
+    "skill": "name",
+    "file": "evolu/demo-repository/package.json"
+  },
+  {
+    "repo": "evolu/demo-repository",
+    "skill": "version",
+    "file": "evolu/demo-repository/package.json"
+  },
+  {
+    "repo": "evolu/educonnexion",
+    "skill": "Educonnexion_Nav_Walker",
+    "file": "evolu/educonnexion/functions.php"
+  },
+  {
+    "repo": "evolu/h20landing",
+    "skill": "H2OriginCountdown",
+    "file": "evolu/h20landing/assets/js/countdown.js"
+  },
+  {
+    "repo": "evolu/immobilier",
+    "skill": "galleryCarousel",
+    "file": "evolu/immobilier/assets/js/main.js"
+  },
+  {
+    "repo": "evolu/immobilier",
+    "skill": "propertiesCarousel",
+    "file": "evolu/immobilier/assets/js/main.js"
+  },
+  {
+    "repo": "evolu/noix",
+    "skill": "respond",
+    "file": "evolu/noix/Doc/js/respond.js"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "EasyPeasyICS",
+    "file": "evolu/sigma/form/php-mailer/extras/EasyPeasyICS.php"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "Google",
+    "file": "evolu/sigma/form/php-mailer/get_oauth_token.php"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "PHPMailer",
+    "file": "evolu/sigma/form/php-mailer/class.phpmailer.php"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "PHPMailerOAuth",
+    "file": "evolu/sigma/form/php-mailer/class.phpmaileroauth.php"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "PHPMailerOAuthGoogle",
+    "file": "evolu/sigma/form/php-mailer/class.phpmaileroauthgoogle.php"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "POP3",
+    "file": "evolu/sigma/form/php-mailer/class.pop3.php"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "SMTP",
+    "file": "evolu/sigma/form/php-mailer/class.smtp.php"
+  },
+  {
+    "repo": "evolu/sigma",
+    "skill": "authors",
+    "file": "evolu/sigma/form/php-mailer/composer.json"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "EasyPeasyICS",
+    "file": "evolu/sigmaNew/form/php-mailer/extras/EasyPeasyICS.php"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "Google",
+    "file": "evolu/sigmaNew/form/php-mailer/get_oauth_token.php"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "PHPMailer",
+    "file": "evolu/sigmaNew/form/php-mailer/class.phpmailer.php"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "PHPMailerOAuth",
+    "file": "evolu/sigmaNew/form/php-mailer/class.phpmaileroauth.php"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "PHPMailerOAuthGoogle",
+    "file": "evolu/sigmaNew/form/php-mailer/class.phpmaileroauthgoogle.php"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "POP3",
+    "file": "evolu/sigmaNew/form/php-mailer/class.pop3.php"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "SMTP",
+    "file": "evolu/sigmaNew/form/php-mailer/class.smtp.php"
+  },
+  {
+    "repo": "evolu/sigmaNew",
+    "skill": "authors",
+    "file": "evolu/sigmaNew/form/php-mailer/composer.json"
+  },
+  {
+    "repo": "evolu/Fix2",
+    "skill": "VoiceState",
+    "file": "evolu/Fix2/brain/vapi.ts"
+  },
+  {
+    "repo": "evolu/Fix2",
+    "skill": "Client",
+    "file": "evolu/Fix2/src/components/client-book.tsx"
+  },
+  {
+    "repo": "evolu/Fix2",
+    "skill": "Entry",
+    "file": "evolu/Fix2/src/lib/carnet.ts"
+  },
+  {
+    "repo": "evolu/Fix2",
+    "skill": "appendMove",
+    "file": "evolu/Fix2/brain/cycle.ts"
+  },
+  {
+    "repo": "evolu/Fix2",
+    "skill": "FixAgent",
+    "file": "evolu/Fix2/brain/roster.ts"
+  },
+  {
+    "repo": "evolu/Fix2",
+    "skill": "taxQuebec",
+    "file": "evolu/Fix2/brain/cycle.ts"
+  }
+]
