@@ -19,13 +19,16 @@ func TestTheEyeWatchesOurRepos(t *testing.T) {
 	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "instinct" {
 		t.Fatal("the eye must withhold secrets and wait for Instinct")
 	}
-	if ok, _ := EyeChange("eye", "instinct"); ok {
+	if ok, _ := EyeChange("instinct", "instinct", "eye"); ok {
+		t.Fatal("a change outside Voltron must stay closed")
+	}
+	if ok, _ := EyeChange("eye", "instinct", "voltron"); ok {
 		t.Fatal("a change outside Instinct must stay closed")
 	}
-	if ok, _ := EyeChange("cashtro/epicenter", "voltron"); ok {
+	if ok, _ := EyeChange("cashtro/epicenter", "voltron", "voltron"); ok {
 		t.Fatal("another seat must not open the change")
 	}
-	ok, msg := EyeChange("instinct", "instinct")
+	ok, msg := EyeChange("instinct", "instinct", "voltron")
 	if !ok || msg != "brouillon ouvert. rien n'est appliqué" {
 		t.Fatalf("instinct change = %v %s", ok, msg)
 	}

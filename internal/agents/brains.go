@@ -20,7 +20,7 @@ func Brains() []LoadedBrain {
 		{ID: "forgeron", Name: "Le Forgeron", Seat: "instinct", Dept: "operations", Do: "Construire le brouillon. Pas une arme."},
 		{ID: "orfevre", Name: "L'Orfèvre", Seat: "instinct", Dept: "controle", Do: "Exécuter le contrôle. Citer la règle."},
 		{ID: "hustler", Name: "Le Hustler", Seat: "instinct", Dept: "marche", Do: "Ouvrir The Hustle. Une offre, une mesure. Il ne décide pas à la place d'Instinct."},
-		{ID: "voltron", Name: "Voltron", Seat: "voltron", Dept: "flux", Do: "Ouvrir le cycle et tenir le noyau allumé."},
+		{ID: "voltron", Name: "Voltron", Seat: "voltron", Dept: "flux", Do: "Tenir chaque chaîne agentique allumée. Elles rapportent ici. Aucune n'est un site."},
 		{ID: "scrum", Name: "Scrum", Seat: "scrum", Dept: "direction", Do: "Prendre chaque dépôt et chaque projet nouveau."},
 		{ID: "forge", Name: "Forge", Seat: "forge", Dept: "ingenierie", Do: "Faire tourner le conglomérat de développement. Pas une arme."},
 		{ID: "eye", Name: "The Eye", Seat: "eye", Dept: "controle", Do: "Nommer une faiblesse. Tout changement passe par Instinct avant d'être écrit. Ne pas attaquer."},

@@ -97,3 +97,32 @@ func TestWorkersRunAndStayLocal(t *testing.T) {
 		}
 	}
 }
+
+func TestVoltronLayersStayOn(t *testing.T) {
+	k, err := Boot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	res, err := k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.layers"})
+	if err != nil || !res.OK {
+		t.Fatalf("os.layers: %+v %v", res, err)
+	}
+	if res.Data.(map[string]any)["operative"] != true || res.Data.(map[string]any)["website"] != false {
+		t.Fatalf("layers = %+v", res.Data)
+	}
+	layers := res.Data.(map[string]any)["layers"].([]Layer)
+	if len(layers) != 5 {
+		t.Fatalf("count = %d", len(layers))
+	}
+	for _, id := range []string{"ops", "hustle", "eye", "forge", "giant"} {
+		found := false
+		for _, layer := range layers {
+			if layer.ID == id && layer.ReportsTo == "voltron" && layer.InVoltron && layer.Operative && !layer.Website && layer.OptionalThrough == "voltron" {
+				found = true
+			}
+		}
+		if !found {
+			t.Fatalf("missing %s in %+v", id, layers)
+		}
+	}
+}

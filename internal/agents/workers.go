@@ -75,6 +75,15 @@ func initInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 		}
 		k.Publish("init", "voltron", "moteur branché avec instinct", nil)
 		return res, nil
+	case "os.layers":
+		ok, loose := VoltronHolds()
+		if !ok {
+			return kernel.Result{OK: false, Message: "chaîne hors de Voltron: " + loose}, nil
+		}
+		k.Publish("init", "voltron", "chaînes opérantes", map[string]any{"count": len(Layers())})
+		return kernel.Result{OK: true, Message: "chaînes dans Voltron", Data: map[string]any{
+			"layers": Layers(), "operative": true, "website": false,
+		}}, nil
 	}
 	return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
 }

@@ -37,7 +37,10 @@ func TheEye() Eye {
 }
 
 // EyeChange opens a draft only after Instinct. The draft is not applied.
-func EyeChange(via, seat string) (bool, string) {
+func EyeChange(via, seat, caller string) (bool, string) {
+	if caller != "voltron" {
+		return false, "une fonction optionnelle passe par Voltron"
+	}
 	if via != "instinct" && via != "cashtro/epicenter" {
 		return false, "The Eye passe par Instinct avant tout changement."
 	}

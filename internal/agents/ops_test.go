@@ -4,7 +4,7 @@ import "testing"
 
 func TestOpsChainsHelpInstinct(t *testing.T) {
 	ops := Ops()
-	if ops.Repo != "Evolu-Jeunes/OPS" || ops.Brain != "ops" || ops.Source != "https://web-ops.shop/" {
+	if ops.Repo != "Evolu-Jeunes/OPS" || ops.Brain != "ops" || ops.Website || !ops.InVoltron || !ops.Operative || ops.ReportsTo != "voltron" {
 		t.Fatalf("repo %+v", ops)
 	}
 	if len(ops.Chains) != 3 || ops.Agents != 60 || ops.Brains != 300 {

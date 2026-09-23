@@ -38,7 +38,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 		resident(kernel.Spec{
 			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 			Role: "kernel", Summary: "Voltron boots the OS and can start the same cycle Instinct runs.",
-			Capabilities: []string{"os.about", "os.cycle", "os.engine"}, Autostart: true,
+			Capabilities: []string{"os.about", "os.cycle", "os.engine", "os.layers"}, Autostart: true,
 		}, initInvoke),
 		&deliveryAgent{cat: cat},
 		&routerAgent{bus: router},
