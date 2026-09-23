@@ -107,7 +107,7 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "fix2":
 		return []ChainStep{
-			{Line: "fix2", Order: 1, Agent: "memory", Do: "Lire le CRM Lovable Evolu-Jeunes/CRM. Homme à tout faire, résidentiel. Ne pas écrire dans le carnet des agents."},
+			{Line: "fix2", Order: 1, Agent: "memory", Do: "Lire la base de Fixtool, Evolu-Jeunes/Fix2. Le site garde tous les clients. Ne pas écrire dans le carnet des agents."},
 			{Line: "fix2", Order: 2, Agent: "planner", Do: "Déposer le client dans ce CRM seulement. Vapi ne parle que de cette base."},
 			{Line: "fix2", Order: 3, Agent: "security", Do: "Retirer un secret. Refuser un paiement, un permis déposé, une édition de thème, et un appel sans clé."},
 			{Line: "fix2", Order: 4, Agent: "manager", Do: "Epicenter décide en dernier. Le cycle des quarante agents s'arrête là."},

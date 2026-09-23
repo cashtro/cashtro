@@ -28,7 +28,7 @@ func TestVapiKeepsOneDatabasePerProject(t *testing.T) {
 	if !ok || !mok || !pok || fix.Database == market.Database || market.Database == panda.Database {
 		t.Fatalf("fix %v market %v panda %v", fix, market, panda)
 	}
-	if fix.Database != "Evolu-Jeunes/CRM" || fix.Database == "db:agentics" {
+	if fix.Database != "Evolu-Jeunes/Fix2" || fix.Database == "db:agentics" {
 		t.Fatalf("fix database = %s", fix.Database)
 	}
 
@@ -45,7 +45,7 @@ func TestVapiKeepsOneDatabasePerProject(t *testing.T) {
 		t.Fatalf("panda %+v %v", other, err)
 	}
 	home, err := VapiFile(k, "fix2", "contact", "Cuisine", "chantier fix2")
-	if err != nil || home.Database != "Evolu-Jeunes/CRM" {
+	if err != nil || home.Database != "Evolu-Jeunes/Fix2" {
 		t.Fatalf("fix2 %+v %v", home, err)
 	}
 	for _, fact := range k.Recall("vapi:db:marketing") {
@@ -53,7 +53,7 @@ func TestVapiKeepsOneDatabasePerProject(t *testing.T) {
 			t.Fatalf("marketing database saw another project: %+v", fact)
 		}
 	}
-	if len(k.Recall("vapi:Evolu-Jeunes/CRM")) != 1 || len(k.Recall("vapi:db:panda")) != 1 {
+	if len(k.Recall("vapi:Evolu-Jeunes/Fix2")) != 1 || len(k.Recall("vapi:db:panda")) != 1 {
 		t.Fatal("each database should keep its own note")
 	}
 }

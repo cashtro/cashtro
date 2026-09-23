@@ -114,7 +114,7 @@ func Links() []Link {
 		},
 		{
 			From: "fix2", To: "marketing",
-			Via:    "Les deux sont le même CRM Lovable, cloné. Fix2 tient Evolu-Jeunes/CRM. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe.",
+			Via:    "Fixtool tient ses clients sur Evolu-Jeunes/Fix2. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe.",
 			Agents: []string{"operator", "memory", "manager"},
 		},
 		{
