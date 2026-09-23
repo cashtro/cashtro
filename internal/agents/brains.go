@@ -23,7 +23,7 @@ func Brains() []LoadedBrain {
 		{ID: "voltron", Name: "Voltron", Seat: "voltron", Dept: "flux", Do: "Ouvrir le cycle et tenir le noyau allumé."},
 		{ID: "scrum", Name: "Scrum", Seat: "scrum", Dept: "direction", Do: "Prendre chaque dépôt et chaque projet nouveau."},
 		{ID: "forge", Name: "Forge", Seat: "forge", Dept: "ingenierie", Do: "Faire tourner le conglomérat de développement. Pas une arme."},
-		{ID: "eye", Name: "The Eye", Seat: "eye", Dept: "controle", Do: "Nommer une faiblesse et écrire le correctif. Ne pas attaquer."},
+		{ID: "eye", Name: "The Eye", Seat: "eye", Dept: "controle", Do: "Nommer une faiblesse. Tout changement passe par Epicenter avant d'être écrit. Ne pas attaquer."},
 		{ID: "giant", Name: "Giant", Seat: "giant", Dept: "controle", Do: "Tenir la formation crypto. Le mint n'est pas une option."},
 		{ID: "accueil", Name: "Accueil", Seat: "ops", Dept: "marche", Do: "Qualifier le lead. Ne pas appeler et ne pas envoyer de SMS."},
 		{ID: "terrain", Name: "Terrain", Seat: "ops", Dept: "operations", Do: "Tenir soumission, chantier, tournée et facture en brouillon."},

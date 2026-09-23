@@ -10,10 +10,23 @@ func TestTheEyeWatchesOurRepos(t *testing.T) {
 	if len(eye.Scope) != 2 || eye.Scope[0] != "cashtro" || eye.Scope[1] != "Evolu-Jeunes" {
 		t.Fatalf("scope %+v", eye.Scope)
 	}
-	if len(eye.Steps) != 8 || eye.Steps[0] != "veille" || eye.Steps[7] != "sceau" {
+	if len(eye.Steps) != 9 || eye.Steps[0] != "veille" || eye.Steps[5] != "epicenter" || eye.Steps[6] != "rustine" || eye.Steps[8] != "sceau" {
 		t.Fatalf("chain %+v", eye.Steps)
+	}
+	if eye.Gate != "cashtro/epicenter" || !eye.ThroughEpicenter {
+		t.Fatalf("gate %+v", eye)
 	}
 	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "tartaria" {
 		t.Fatal("the eye must withhold secrets and wait for Tartaria")
+	}
+	if ok, _ := EyeChange("eye", "tartaria"); ok {
+		t.Fatal("a change outside Epicenter must stay closed")
+	}
+	if ok, _ := EyeChange("cashtro/epicenter", "voltron"); ok {
+		t.Fatal("another seat must not open the change")
+	}
+	ok, msg := EyeChange("epicenter", "tartaria")
+	if !ok || msg != "brouillon ouvert. rien n'est appliqué" {
+		t.Fatalf("epicenter change = %v %s", ok, msg)
 	}
 }
