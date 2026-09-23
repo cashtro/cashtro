@@ -82,7 +82,7 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "panda":
 		return []ChainStep{
-			{Line: "panda", Order: 1, Agent: "architect", Do: "Décrire l'offre white-glove : IA, installation, cours."},
+			{Line: "panda", Order: 1, Agent: "architect", Do: "Décrire l'offre white-glove : IA, installation, cours. La copie suit le guide que l'équipe tient et comprend."},
 			{Line: "panda", Order: 2, Agent: "comms", Do: "Vendre le service. Ne pas installer chez le client sans accord."},
 		}, true
 	case "nft-giant":
@@ -100,7 +100,7 @@ func Chain(line string) ([]ChainStep, bool) {
 		return []ChainStep{
 			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire la copie agents du CRM Lovable, Evolu-Jeunes/CRM-Agents, base db:agentics. Marketing, Panda et Proximity cloud y passent les leads. Pas la copie Fix Tout."},
 			{Line: "marketing", Order: 2, Agent: "memory", Do: "Déposer une note de croissance. Brouillon. Rien n'est écrit dans Supabase d'ici. Aucun appel Vapi ne part."},
-			{Line: "marketing", Order: 3, Agent: "planner", Do: "Une campagne Pandora, mesurée, rangée sur cette note."},
+			{Line: "marketing", Order: 3, Agent: "planner", Do: "Une campagne Pandora, mesurée, écrite depuis le guide que l'équipe tient et comprend. Le PDF n'est pas collé. Rien n'est posté."},
 			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress. Une fiche Fix Tout n'entre pas dans ce carnet."},
 			{Line: "marketing", Order: 5, Agent: "comms", Do: "Courriel, SMS ou portail seulement après consentement, identité, désabonnement, et allow."},
 			{Line: "marketing", Order: 6, Agent: "manager", Do: "Epicenter Einstein décide en dernier. Sans lui, la note reste un brouillon."},
