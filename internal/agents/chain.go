@@ -119,7 +119,7 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "propres":
 		return []ChainStep{
-			{Line: "propres", Order: 1, Agent: "comms", Do: "Stripe sur PBTM, Pandora et le marketing. Ce ne sont pas des clients."},
+			{Line: "propres", Order: 1, Agent: "comms", Do: "Stripe sur PBTM, Pandora et le marketing. Ce ne sont pas des clients. La voix Vapi de Pandora reste sur db:pandora. Un lien public ne la réécrit pas."},
 			{Line: "propres", Order: 2, Agent: "security", Do: "Refuser ce Stripe sur un site Proximity sans demande explicite."},
 		}, true
 	case "trading":
