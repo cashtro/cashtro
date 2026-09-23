@@ -179,6 +179,7 @@ func Lens(k *kernel.Kernel) map[string]any {
 		"taxOn100":       TaxQuebec(10000),
 		"nodes":          len(board.Nodes),
 		"edges":          len(board.Edges),
+		"brains":         len(Brains()),
 	}
 }
 
@@ -224,16 +225,31 @@ func EngineRun(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 		k.Remember("fonds:caisse", strconv.Itoa(tax.Total))
 		pulses = append(pulses, map[string]any{"id": "tax", "total": tax.Total})
 	}
+	report := AnalyzeAll()
+	var loose []string
+	for _, item := range report {
+		if !item.Connected {
+			loose = append(loose, item.ID)
+		}
+	}
+	if len(loose) > 0 {
+		return kernel.Result{OK: false, Message: "analyse débranchée: " + strings.Join(loose, ", "), Data: map[string]any{
+			"loose": loose,
+		}}, nil
+	}
 	board := MakeBlueprint(k)
 	k.Publish("manager", "engine", "constellations branchées", map[string]any{
-		"anchor": board.Anchor,
-		"count":  len(items),
+		"anchor":   board.Anchor,
+		"count":    len(items),
+		"analyzed": len(report),
 	})
 	return kernel.Result{OK: true, Message: "moteur en marche. une ancre", Data: map[string]any{
-		"anchor": board.Anchor,
-		"empty":  board.Empty,
-		"pulses": pulses,
-		"lens":   Lens(k),
+		"anchor":   board.Anchor,
+		"empty":    board.Empty,
+		"pulses":   pulses,
+		"brains":   len(Brains()),
+		"analyzed": len(report),
+		"lens":     Lens(k),
 	}}, nil
 }
 

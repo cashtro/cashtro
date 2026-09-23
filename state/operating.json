@@ -1447,6 +1447,106 @@
       }
     ]
   },
+  "brains": [
+    {
+      "id": "tartaria",
+      "name": "Tartaria",
+      "seat": "tartaria",
+      "dept": "direction",
+      "do": "Charger les cinq cerveaux et trancher en dernier."
+    },
+    {
+      "id": "architecte",
+      "name": "L'Architecte",
+      "seat": "tartaria",
+      "dept": "ingenierie",
+      "do": "Penser le méta-cerveau. Deux façons, puis la plus courte."
+    },
+    {
+      "id": "cartographe",
+      "name": "Le Cartographe",
+      "seat": "tartaria",
+      "dept": "direction",
+      "do": "Voir chaque dépôt sur Graphify avant le coup."
+    },
+    {
+      "id": "forgeron",
+      "name": "Le Forgeron",
+      "seat": "tartaria",
+      "dept": "operations",
+      "do": "Construire le brouillon. Pas une arme."
+    },
+    {
+      "id": "orfevre",
+      "name": "L'Orfèvre",
+      "seat": "tartaria",
+      "dept": "controle",
+      "do": "Exécuter le contrôle. Citer la règle."
+    },
+    {
+      "id": "hustler",
+      "name": "Le Hustler",
+      "seat": "tartaria",
+      "dept": "marche",
+      "do": "Relier les chaînes. Une offre, une mesure."
+    },
+    {
+      "id": "voltron",
+      "name": "Voltron",
+      "seat": "voltron",
+      "dept": "flux",
+      "do": "Ouvrir le cycle et tenir le noyau allumé."
+    },
+    {
+      "id": "scrum",
+      "name": "Scrum",
+      "seat": "scrum",
+      "dept": "direction",
+      "do": "Prendre chaque dépôt et chaque projet nouveau."
+    },
+    {
+      "id": "forge",
+      "name": "Forge",
+      "seat": "forge",
+      "dept": "ingenierie",
+      "do": "Faire tourner le conglomérat de développement. Pas une arme."
+    },
+    {
+      "id": "eye",
+      "name": "The Eye",
+      "seat": "eye",
+      "dept": "controle",
+      "do": "Nommer une faiblesse et écrire le correctif. Ne pas attaquer."
+    },
+    {
+      "id": "giant",
+      "name": "Giant",
+      "seat": "giant",
+      "dept": "controle",
+      "do": "Tenir la formation crypto. Le mint n'est pas une option."
+    },
+    {
+      "id": "accueil",
+      "name": "Accueil",
+      "seat": "ops",
+      "dept": "marche",
+      "do": "Qualifier le lead. Ne pas appeler et ne pas envoyer de SMS."
+    },
+    {
+      "id": "terrain",
+      "name": "Terrain",
+      "seat": "ops",
+      "dept": "operations",
+      "do": "Tenir soumission, chantier, tournée et facture en brouillon."
+    },
+    {
+      "id": "propriete",
+      "name": "Propriété",
+      "seat": "ops",
+      "dept": "ingenierie",
+      "do": "Posséder OPS et aider les dépôts cashtro et Evolu-Jeunes."
+    }
+  ],
   "compliance": {
     "disclaimer": "Checklist opérable, pas un avis juridique. Avant un site live ou une vente : avocat du Québec, et au besoin CAI, OQLF, RACJ ou AMF.",
     "officer": "manager",

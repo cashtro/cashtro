@@ -85,4 +85,15 @@ func TestWorkersRunAndStayLocal(t *testing.T) {
 	if data["line"] != "wordpress" || data["department"] != "wordpress" {
 		t.Fatalf("trace = %+v", data)
 	}
+
+	for _, id := range []string{"architecte", "forge", "eye", "giant", "accueil", "propriete"} {
+		raw, _ = json.Marshal(map[string]string{"id": id, "task": "lire le cerveau"})
+		res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.run", Payload: raw})
+		if err != nil || !res.OK {
+			t.Fatalf("cycle %s: %+v %v", id, res, err)
+		}
+		if !strings.Contains(res.Message, "rien n'est poussé") {
+			t.Fatalf("cycle %s message = %s", id, res.Message)
+		}
+	}
 }

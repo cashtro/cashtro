@@ -134,7 +134,15 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "fonds", Order: 3, Agent: "reviewer", Do: "Garder le calcul le plus court. Une assiette, deux taxes."},
 			{Line: "fonds", Order: 4, Agent: "comms", Do: "Le chèque reste un brouillon tant que allow n'est pas donné."},
 		}, true
+	case "watch":
+		return []ChainStep{
+			{Line: "watch", Order: 1, Agent: "memory", Do: "Nommer le trou sur le tableau. Cette veille ne déploie rien."},
+			{Line: "watch", Order: 2, Agent: "manager", Do: "Tartaria décide. Le dépôt de l'agence reste hors tableau."},
+		}, true
 	default:
+		if steps, ok := brainChain(line); ok {
+			return steps, true
+		}
 		return nil, false
 	}
 }

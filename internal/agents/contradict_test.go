@@ -38,3 +38,11 @@ func TestOptimisationDepartment(t *testing.T) {
 		t.Fatal("missing optimisation department")
 	}
 }
+
+func TestContradictSitsOnEveryChain(t *testing.T) {
+	for _, a := range AnalyzeAll() {
+		if !a.Connected || a.Best != "le plus court" {
+			t.Fatalf("%s contradict = %+v", a.ID, a)
+		}
+	}
+}

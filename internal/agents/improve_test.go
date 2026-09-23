@@ -27,3 +27,20 @@ func TestDepartmentFillsItsOwnGap(t *testing.T) {
 		}
 	}
 }
+
+func TestImproveRunsOnEveryBrain(t *testing.T) {
+	for _, b := range Brains() {
+		a := Analyze(b.ID)
+		if !a.Connected || !a.Improved || a.Dept != b.Dept {
+			t.Fatalf("%s improve = %+v", b.ID, a)
+		}
+		again, ok := Improve(b.Dept, a.Best)
+		if !ok {
+			t.Fatalf("%s department missing", b.ID)
+		}
+		filled, ok := Improve(b.Dept, again.Result)
+		if !ok || !filled.Specialized {
+			t.Fatalf("%s second pass = %+v", b.ID, filled)
+		}
+	}
+}

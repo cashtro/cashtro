@@ -94,6 +94,9 @@ func Known(action string) map[string]string {
 		if _, ok := LineByID(action); ok {
 			return lineKnown(action)
 		}
+		if known, ok := brainKnown(action); ok {
+			return known
+		}
 		return nil
 	}
 }

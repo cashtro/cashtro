@@ -12,17 +12,18 @@ import (
 // Board is the one operating picture. The kernel boots from this,
 // not from hardcoded counts.
 type Board struct {
-	Version    string       `json:"version"`
-	Fiches     int          `json:"fiches"`
-	Repos      []RepoCard   `json:"repos"`
-	Lines      []LineView   `json:"lines"`
-	Links      []Link       `json:"links"`
-	Agents     []string     `json:"agents"`
-	Org        Organization `json:"org"`
-	Compliance Compliance   `json:"compliance"`
-	Graph      GraphView    `json:"graph"`
-	Gaps       []string     `json:"gaps"`
-	Rules      []string     `json:"rules"`
+	Version    string        `json:"version"`
+	Fiches     int           `json:"fiches"`
+	Repos      []RepoCard    `json:"repos"`
+	Lines      []LineView    `json:"lines"`
+	Links      []Link        `json:"links"`
+	Agents     []string      `json:"agents"`
+	Org        Organization  `json:"org"`
+	Brains     []LoadedBrain `json:"brains"`
+	Compliance Compliance    `json:"compliance"`
+	Graph      GraphView     `json:"graph"`
+	Gaps       []string      `json:"gaps"`
+	Rules      []string      `json:"rules"`
 }
 
 // RepoCard is one GitHub repo as the fiches describe it.
@@ -79,6 +80,7 @@ func LoadBoard() (Board, error) {
 func AlignBoard(b Board) Board {
 	b.Version = "2"
 	b.Org = Chart()
+	b.Brains = Brains()
 	b.Compliance = Loi()
 	b.Agents = agentNames(b.Org)
 	b.Links = Links()
@@ -136,6 +138,7 @@ func boardFromLines() Board {
 		Links:      Links(),
 		Agents:     agentNames(org),
 		Org:        org,
+		Brains:     Brains(),
 		Compliance: Loi(),
 		Rules: []string{
 			"Coopérative : CEO, CTO, CMP. Neuf départements. Quinze employés spécialisés. Le flow stack relie chaque division à une fonction et à un produit.",

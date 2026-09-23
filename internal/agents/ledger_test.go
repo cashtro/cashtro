@@ -13,3 +13,22 @@ func TestMoveChainDoesNotRewrite(t *testing.T) {
 		t.Fatal("a rewritten move must break the chain")
 	}
 }
+
+func TestLedgerSealsEveryAnalysis(t *testing.T) {
+	for _, a := range AnalyzeAll() {
+		if !a.Intact || !a.Connected {
+			t.Fatalf("%s ledger = %+v", a.ID, a)
+		}
+	}
+	for _, b := range Brains() {
+		moves := AppendMove(nil, "ask:"+b.ID, "Quelle est la position?", b.Do)
+		moves = AppendMove(moves, "chain:"+b.ID, "Quelle est la position?", "Tartaria décide.")
+		if !ChainIntact(moves) {
+			t.Fatalf("%s moves broke", b.ID)
+		}
+		moves[0].Coup = "réécrit"
+		if ChainIntact(moves) {
+			t.Fatalf("%s rewrite stayed intact", b.ID)
+		}
+	}
+}

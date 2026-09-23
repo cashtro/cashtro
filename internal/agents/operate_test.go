@@ -14,6 +14,12 @@ func TestWordPressLeavesTheOtherDepartment(t *testing.T) {
 	if len(board.Lines) != 14 || len(board.Links) != 22 || len(board.Org.Departments) != 9 {
 		t.Fatalf("lines %d links %d depts %d", len(board.Lines), len(board.Links), len(board.Org.Departments))
 	}
+	if len(board.Brains) != len(Brains()) || len(board.Brains) != 14 {
+		t.Fatalf("brains = %d", len(board.Brains))
+	}
+	if gap := Disconnected(); len(gap) != 0 {
+		t.Fatalf("board not analyzing: %v", gap)
+	}
 	var wordpress, proximity int
 	wp := map[string]bool{}
 	for _, ln := range board.Lines {

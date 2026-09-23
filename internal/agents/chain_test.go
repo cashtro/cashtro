@@ -1,6 +1,9 @@
 package agents
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestScanChainAndFicheGate(t *testing.T) {
 	steps, ok := Chain("scanapp")
@@ -44,5 +47,27 @@ func TestEveryLineRunsAClosedChain(t *testing.T) {
 	}
 	if open := AskSelf("watch", nil).Open; len(open) != 0 {
 		t.Fatalf("watch open: %+v", open)
+	}
+	steps, ok := Chain("watch")
+	if !ok || len(steps) < 2 {
+		t.Fatalf("watch chain = %d ok %v", len(steps), ok)
+	}
+}
+
+func TestChainReachesEveryBrain(t *testing.T) {
+	if len(Lines()) != 14 {
+		t.Fatalf("lines = %d", len(Lines()))
+	}
+	for _, b := range Brains() {
+		steps, ok := Chain(b.ID)
+		if !ok || len(steps) < 2 || steps[0].Agent != "memory" || steps[1].Agent != "manager" {
+			t.Fatalf("%s chain = %+v ok %v", b.ID, steps, ok)
+		}
+		if steps[0].Do == "" || !strings.Contains(steps[1].Do, "Tartaria") {
+			t.Fatalf("%s steps do not close on Tartaria: %+v", b.ID, steps)
+		}
+	}
+	if gap := Disconnected(); len(gap) != 0 {
+		t.Fatalf("chain not connected: %v", gap)
 	}
 }
