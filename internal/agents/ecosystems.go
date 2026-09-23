@@ -104,22 +104,22 @@ func Links() []Link {
 		},
 		{
 			From: "proximity", To: "marketing",
-			Via:    "Proximity cloud passe par le carnet des agents, avec marketing et Panda. Le CRM Lovable de Fix2 ne reçoit pas cette note.",
+			Via:    "Proximity cloud passe par le carnet des agents, avec marketing et Panda. Le CRM Lovable de Fix Tout ne reçoit pas cette note.",
 			Agents: []string{"memory", "explorer", "manager"},
 		},
 		{
 			From: "panda", To: "marketing",
-			Via:    "Panda dépose le lead dans le carnet des agents. Le CRM Lovable de Fix2 reste à part.",
+			Via:    "Panda dépose le lead dans le carnet des agents. Le CRM Lovable de Fix Tout reste à part.",
 			Agents: []string{"planner", "memory"},
 		},
 		{
 			From: "fix2", To: "marketing",
-			Via:    "Fixtool tient ses clients sur Evolu-Jeunes/Fix2. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe.",
+			Via:    "Fix Tout tient ses clients sur Evolu-Jeunes/Fix2. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe.",
 			Agents: []string{"operator", "memory", "manager"},
 		},
 		{
 			From: "agentics", To: "chains",
-			Via:    "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix2 n'est pas cette base.",
+			Via:    "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base.",
 			Agents: []string{"comms", "planner"},
 		},
 	}

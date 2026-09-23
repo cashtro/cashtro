@@ -98,16 +98,16 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "marketing":
 		return []ChainStep{
-			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire la copie agents du CRM Lovable, Evolu-Jeunes/CRM-Agents, base db:agentics. Marketing, Panda et Proximity cloud y passent les leads. Pas la copie Fix2."},
+			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire la copie agents du CRM Lovable, Evolu-Jeunes/CRM-Agents, base db:agentics. Marketing, Panda et Proximity cloud y passent les leads. Pas la copie Fix Tout."},
 			{Line: "marketing", Order: 2, Agent: "memory", Do: "Déposer une note de croissance. Brouillon. Rien n'est écrit dans Supabase d'ici. Aucun appel Vapi ne part."},
 			{Line: "marketing", Order: 3, Agent: "planner", Do: "Une campagne Pandora, mesurée, rangée sur cette note."},
-			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress. Une fiche Fix2 n'entre pas dans ce carnet."},
+			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress. Une fiche Fix Tout n'entre pas dans ce carnet."},
 			{Line: "marketing", Order: 5, Agent: "comms", Do: "Courriel, SMS ou portail seulement après consentement, identité, désabonnement, et allow."},
 			{Line: "marketing", Order: 6, Agent: "manager", Do: "Epicenter décide en dernier. Sans lui, la note reste un brouillon."},
 		}, true
 	case "fix2":
 		return []ChainStep{
-			{Line: "fix2", Order: 1, Agent: "memory", Do: "Lire la base de Fixtool, Evolu-Jeunes/Fix2. Le site garde tous les clients. Ne pas écrire dans le carnet des agents."},
+			{Line: "fix2", Order: 1, Agent: "memory", Do: "Lire la base de Fix Tout, Evolu-Jeunes/Fix2. Le site garde tous les clients. Ne pas écrire dans le carnet des agents."},
 			{Line: "fix2", Order: 2, Agent: "planner", Do: "Déposer le client dans ce CRM seulement. Vapi ne parle que de cette base."},
 			{Line: "fix2", Order: 3, Agent: "security", Do: "Retirer un secret. Refuser un paiement, un permis déposé, une édition de thème, et un appel sans clé."},
 			{Line: "fix2", Order: 4, Agent: "manager", Do: "Epicenter décide en dernier. Le cycle des quarante agents s'arrête là."},

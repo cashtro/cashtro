@@ -1,5 +1,5 @@
 {
-  "anchor": "6eda88a18634b1992040456a9ecb8239290b0d9d042f545444c2eb636ce6ed29",
+  "anchor": "165a5a0526493236cf53bad3dc7fe94fd58e24c5fe4f1990bc7d0fb1df2a2be2",
   "constellations": [
     {
       "id": "control",
@@ -70,7 +70,7 @@
       "name": "Marketing digital corporate",
       "infrastructure": "agence, Panda, Proximity cloud, carnet des agents",
       "function": "manager.crm",
-      "product": "carnet des agents",
+      "product": "Evolu-Jeunes/CRM-Agents",
       "agent": "planner"
     },
     {
@@ -99,10 +99,10 @@
     },
     {
       "id": "fix2",
-      "name": "Fix2",
-      "infrastructure": "CRM Lovable, homme à tout faire",
+      "name": "Fix Tout",
+      "infrastructure": "site Fix Tout, sa base, école de skills",
       "function": "operator.work",
-      "product": "Evolu-Jeunes/CRM",
+      "product": "Evolu-Jeunes/Fix2",
       "agent": "operator"
     },
     {
@@ -295,7 +295,7 @@
     {
       "from": "proximity",
       "to": "marketing",
-      "via": "Proximity cloud passe par le carnet des agents, avec marketing et Panda. Le CRM Lovable de Fix2 ne reçoit pas cette note.",
+      "via": "Proximity cloud passe par le carnet des agents, avec marketing et Panda. Le CRM Lovable de Fix Tout ne reçoit pas cette note.",
       "agents": [
         "memory",
         "explorer",
@@ -305,7 +305,7 @@
     {
       "from": "panda",
       "to": "marketing",
-      "via": "Panda dépose le lead dans le carnet des agents. Le CRM Lovable de Fix2 reste à part.",
+      "via": "Panda dépose le lead dans le carnet des agents. Le CRM Lovable de Fix Tout reste à part.",
       "agents": [
         "planner",
         "memory"
@@ -314,7 +314,7 @@
     {
       "from": "fix2",
       "to": "marketing",
-      "via": "Le CRM de Fix2 est le carnet Lovable. Le carnet des agents est une autre base. Aucune fiche ne passe.",
+      "via": "Fix Tout tient ses clients sur Evolu-Jeunes/Fix2. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe.",
       "agents": [
         "operator",
         "memory",
@@ -324,7 +324,7 @@
     {
       "from": "agentics",
       "to": "chains",
-      "via": "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix2 n'est pas cette base.",
+      "via": "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base.",
       "agents": [
         "comms",
         "planner"
@@ -371,13 +371,13 @@
     {
       "division": "marketing",
       "function": "manager.crm",
-      "product": "carnet des agents",
+      "product": "Evolu-Jeunes/CRM-Agents",
       "agent": "planner"
     },
     {
       "division": "fix2",
       "function": "operator.work",
-      "product": "Evolu-Jeunes/CRM",
+      "product": "Evolu-Jeunes/Fix2",
       "agent": "operator"
     },
     {
@@ -403,7 +403,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "6eda88a18634b1992040456a9ecb8239290b0d9d042f545444c2eb636ce6ed29"
+      "name": "165a5a0526493236cf53bad3dc7fe94fd58e24c5fe4f1990bc7d0fb1df2a2be2"
     },
     {
       "id": "const:control",
@@ -528,7 +528,7 @@
     {
       "id": "const:fix2",
       "kind": "constellation",
-      "name": "Fix2"
+      "name": "Fix Tout"
     },
     {
       "id": "agent:operator",
@@ -670,7 +670,7 @@
     {
       "from": "const:fix2",
       "to": "anchor",
-      "via": "CRM Lovable, homme à tout faire"
+      "via": "site Fix Tout, sa base, école de skills"
     },
     {
       "from": "const:fix2",
@@ -780,22 +780,22 @@
     {
       "from": "proximity",
       "to": "marketing",
-      "via": "Proximity cloud passe par le carnet des agents, avec marketing et Panda. Le CRM Lovable de Fix2 ne reçoit pas cette note."
+      "via": "Proximity cloud passe par le carnet des agents, avec marketing et Panda. Le CRM Lovable de Fix Tout ne reçoit pas cette note."
     },
     {
       "from": "panda",
       "to": "marketing",
-      "via": "Panda dépose le lead dans le carnet des agents. Le CRM Lovable de Fix2 reste à part."
+      "via": "Panda dépose le lead dans le carnet des agents. Le CRM Lovable de Fix Tout reste à part."
     },
     {
       "from": "fix2",
       "to": "marketing",
-      "via": "Le CRM de Fix2 est le carnet Lovable. Le carnet des agents est une autre base. Aucune fiche ne passe."
+      "via": "Fix Tout tient ses clients sur Evolu-Jeunes/Fix2. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe."
     },
     {
       "from": "agentics",
       "to": "chains",
-      "via": "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix2 n'est pas cette base."
+      "via": "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base."
     }
   ],
   "empty": 0

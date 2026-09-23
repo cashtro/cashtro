@@ -7,7 +7,7 @@ import (
 	"github.com/cashtro/cashtro/internal/kernel"
 )
 
-// CRMBook is one book. The agent book and the Fix2 book are not the same database.
+// CRMBook is one book. The agent book and the Fix Tout book are not the same database.
 // Voice is Vapi. A call is not placed from this process.
 type CRMBook struct {
 	Repo     string   `json:"repo"`
@@ -57,7 +57,7 @@ var crmLines = map[string]string{
 	"fonds":       "une note de livre, pas un virement",
 }
 
-// CRM is the agent book. Fix2's clients are not stored here.
+// CRM is the agent book. Fix Tout's clients are not stored here.
 func CRM() CRMBook {
 	lines := make([]string, 0, len(Lines()))
 	for _, ln := range Lines() {
@@ -76,11 +76,11 @@ func CRM() CRMBook {
 		Gathers:  []string{"contact", "lead", "note"},
 		Modules:  []string{"messages", "leads", "marketing"},
 		Lines:    lines,
-		Parked:   []string{"envoi", "appel", "client Fix2", "CRM Lovable", "ordre"},
+		Parked:   []string{"envoi", "appel", "client Fix Tout", "CRM Lovable", "ordre"},
 		Next: []string{
 			"Les agents se parlent ici et s'y passent les leads.",
 			"L'agence est marketing, Panda et Proximity cloud. Elle relie chaque chaîne.",
-			"Les clients Fixtool restent sur le site Evolu-Jeunes/Fix2. Ils n'entrent pas ici.",
+			"Les clients Fix Tout restent sur le site Evolu-Jeunes/Fix2. Ils n'entrent pas ici.",
 			"Vapi ouvre un projet à la fois. Chaque projet a sa propre base.",
 			"Un envoi ou un appel attend Epicenter.",
 		},
@@ -94,7 +94,7 @@ func CRM() CRMBook {
 func Fix2CRM() CRMBook {
 	return CRMBook{
 		Repo:     "Evolu-Jeunes/Fix2",
-		App:      "Fixtool",
+		App:      "Fix Tout",
 		Host:     "local",
 		Copy:     "Evolu-Jeunes/CRM-Agents",
 		Voice:    "vapi",
@@ -123,7 +123,7 @@ func CRMGrow(k *kernel.Kernel, line, kind, title, body string, send bool) (CRMGr
 		return CRMGrowth{}, fmt.Errorf("envoi refusé")
 	}
 	if line == "fix2" {
-		return CRMGrowth{}, fmt.Errorf("Fix2 tient le CRM Lovable")
+		return CRMGrowth{}, fmt.Errorf("Fix Tout tient le CRM Lovable")
 	}
 	why, ok := crmLines[line]
 	if !ok {
@@ -164,7 +164,7 @@ func CRMGrow(k *kernel.Kernel, line, kind, title, body string, send bool) (CRMGr
 func CRMInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	title := payloadQuery(call, "title")
 	if title == "" {
-		return kernel.Result{OK: true, Message: "carnet des agents, pas le CRM Lovable de Fix2", Data: CRM()}, nil
+		return kernel.Result{OK: true, Message: "carnet des agents, pas le CRM Lovable de Fix Tout", Data: CRM()}, nil
 	}
 	note, err := CRMGrow(k, payloadQuery(call, "line"), payloadQuery(call, "kind"), title, payloadQuery(call, "body"), payloadQuery(call, "send") == "true")
 	if err != nil {

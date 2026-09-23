@@ -101,7 +101,7 @@ func Lines() []Line {
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
 			Mandate: "L'agence, avec Panda et Proximity cloud, relie chaque chaîne par la copie agents du CRM Lovable. " +
-				"Les leads et le marketing passent là. Le CRM Lovable de Fix2 n'est pas ce carnet. Lovable n'édite pas les thèmes.",
+				"Les leads et le marketing passent là. Le CRM Lovable de Fix Tout n'est pas ce carnet. Lovable n'édite pas les thèmes.",
 			Controls: "Explorer lit le carnet des agents. Memory y dépose le passage. Epicenter décide avant un envoi.",
 			Repos:    []string{},
 		},
@@ -131,11 +131,11 @@ func Lines() []Line {
 			},
 		},
 		{
-			ID: "fix2", Name: "Fix2", Brain: "Forgeron",
-			Mandate: "Homme à tout faire, résidentiel. Fixtool est son propre site et sa propre base, Evolu-Jeunes/Fix2. " +
+			ID: "fix2", Name: "Fix Tout", Brain: "Forgeron",
+			Mandate: "Homme à tout faire, résidentiel. Fix Tout est son propre site et sa propre base, Evolu-Jeunes/Fix2. " +
 				"Il garde tous les clients. Le carnet des agents est Evolu-Jeunes/CRM-Agents. Ce n'est pas un thème WordPress. " +
 				"La voix Vapi de ce CRM ne lit que cette base. Quarante agents. Epicenter décide en dernier.",
-			Controls: "Le site est Evolu-Jeunes/Fix2. Les clients restent dans le CRM Lovable. Rien n'est envoyé, payé ou déposé sans Epicenter.",
+			Controls: "Le site est Evolu-Jeunes/Fix2. Les clients restent sur le site de Fix Tout. Rien n'est envoyé, payé ou déposé sans Epicenter.",
 			Repos:    []string{"Evolu-Jeunes/Fix2", "Evolu-Jeunes/CRM"},
 		},
 		{
