@@ -12,6 +12,10 @@ type HustlePartner struct {
 	BestFriend     string `json:"bestFriend"`
 	KillerInstinct bool   `json:"killerInstinct"`
 	LoadsInstinct  bool   `json:"loadsInstinctBrain"`
+	OwnBrain       bool   `json:"ownBrain"`
+	MainBrain      string `json:"mainBrain"`
+	SameShape      bool   `json:"sameShape"`
+	Niche          string `json:"niche"`
 	LoadsVoltron   bool   `json:"loadsVoltronBrain"`
 	Automated      bool   `json:"automated"`
 	Weapons        bool   `json:"weapons"`
@@ -35,7 +39,11 @@ func Hustle() HustlePartner {
 		Brains:         100,
 		BestFriend:     "instinct",
 		KillerInstinct: true,
-		LoadsInstinct:  true,
+		LoadsInstinct:  false,
+		OwnBrain:       true,
+		MainBrain:      "instinct",
+		SameShape:      true,
+		Niche:          "métaux légaux",
 		LoadsVoltron:   true,
 		Automated:      true,
 		Weapons:        false,

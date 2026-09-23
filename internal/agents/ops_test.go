@@ -10,8 +10,8 @@ func TestOpsChainsHelpInstinct(t *testing.T) {
 	if len(ops.Chains) != 3 || ops.Agents != 60 || ops.Brains != 300 {
 		t.Fatalf("swarm %+v", ops)
 	}
-	if !ops.LoadsInstinct || !ops.LoadsVoltron || !ops.Automated || ops.Weapons {
-		t.Fatal("ops must load Epicenter Einstein and Voltron and make no weapon")
+	if ops.LoadsInstinct || !ops.OwnBrain || ops.MainBrain != "instinct" || !ops.LoadsVoltron || !ops.Automated || ops.Weapons {
+		t.Fatal("ops must run its own brain, report to the main brain, and make no weapon")
 	}
 	if ops.Sent || ops.Paid || ops.Dialed {
 		t.Fatal("ops must not send, charge, or dial")

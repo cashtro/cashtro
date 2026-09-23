@@ -15,7 +15,7 @@ func Lines() []Line {
 	return []Line{
 		{
 			ID: "control", Name: "Cerveau principal", Brain: "Manager",
-			Mandate:  "Synchronise les deux GitHub, les fiches, les lignes et les liens. Voltron le tient allumé. Graphify est la carte. C'est le tableau opérable, pas un neuvième produit.",
+			Mandate:  "Synchronise les deux GitHub, les fiches, les lignes et les liens. Voltron le tient allumé. Graphify est la carte. C'est le tableau opérable, pas un neuvième produit. Chaque autre programme a son cerveau, de la même forme, et seulement pour sa fonction.",
 			Controls: "Manager lit state/operating.json au boot. Explorer lit le graphe. Memory ajoute un maillon.",
 			Repos:    []string{"cashtro/cashtro", "cashtro/epicenter"},
 		},

@@ -1,9 +1,9 @@
 package agents
 
 // TheEye is the defensive watch. It reads cashtro and Evolu-Jeunes
-// and names a weakness. Epicenter Einstein's brain, seated in cashtro/epicenter,
-// runs inside as a corporation. Every change goes through Epicenter Einstein first.
-// Epicenter Einstein sits there. The watch does not attack or copy a secret.
+// and names a weakness. It runs its own brain, the same five-desk shape,
+// and only for the watch. Epicenter Einstein stays the main brain and decides.
+// The watch does not attack or copy a secret.
 type Eye struct {
 	Name            string   `json:"name"`
 	Repo            string   `json:"repo"`
@@ -18,13 +18,18 @@ type Eye struct {
 	ThroughInstinct bool     `json:"throughInstinct"`
 	DecidedBy       string   `json:"decidedBy"`
 	LoadsInstinct   bool     `json:"loadsInstinctBrain"`
+	OwnBrain        bool     `json:"ownBrain"`
+	MainBrain       string   `json:"mainBrain"`
+	SameShape       bool     `json:"sameShape"`
+	FunctionsOnly   bool     `json:"functionsOnly"`
+	Niche           string   `json:"niche"`
 	BrainSource     string   `json:"brainSource"`
 	Corporation     []Desk   `json:"corporation"`
 	Workers         int      `json:"workers"`
 	SameBrain       bool     `json:"sameBrain"`
 }
 
-// SubBrain is one hemisphere inside a desk of Epicenter Einstein's brain.
+// SubBrain is one hemisphere inside a desk.
 type SubBrain struct {
 	ID      string `json:"id"`
 	Name    string `json:"name"`
@@ -32,7 +37,7 @@ type SubBrain struct {
 	Bridges bool   `json:"bridges"`
 }
 
-// Desk is one of the five brains. The same roster sits in cashtro/epicenter.
+// Desk is one of five. The main brain's roster sits in cashtro/epicenter.
 type Desk struct {
 	ID        string     `json:"id"`
 	Name      string     `json:"name"`
@@ -42,8 +47,8 @@ type Desk struct {
 	SubBrains []SubBrain `json:"subBrains"`
 }
 
-// Corporation is Epicenter Einstein's five-brain company. It runs inside The Eye.
-func Corporation() []Desk {
+// MainBrain is Epicenter Einstein's five desks. Programs do not run this roster as their own.
+func MainBrain() []Desk {
 	return []Desk{
 		{
 			ID: "architecte", Name: "L'Architecte", Motto: "Le Cerveau qui pense — le méta-cerveau",
@@ -103,13 +108,14 @@ func Corporation() []Desk {
 	}
 }
 
+// Corporation is the main brain. A program's own desks come from NicheByID.
+func Corporation() []Desk {
+	return MainBrain()
+}
+
 // TheEye returns the watch roster. The working look lives in Evolu-Jeunes/Forge/brain/eye.ts.
 func TheEye() Eye {
-	desks := Corporation()
-	workers := 0
-	for _, desk := range desks {
-		workers += desk.Workers
-	}
+	own, _ := NicheByID("eye")
 	return Eye{
 		Name:            "The Eye",
 		Repo:            "Evolu-Jeunes/Forge",
@@ -123,11 +129,16 @@ func TheEye() Eye {
 		AppliesPatch:    false,
 		ThroughInstinct: true,
 		DecidedBy:       "instinct",
-		LoadsInstinct:   true,
-		BrainSource:     "cashtro/epicenter",
-		Corporation:     desks,
-		Workers:         workers,
-		SameBrain:       true,
+		LoadsInstinct:   false,
+		OwnBrain:        true,
+		MainBrain:       "instinct",
+		SameShape:       true,
+		FunctionsOnly:   true,
+		Niche:           own.Niche,
+		BrainSource:     "Evolu-Jeunes/Forge",
+		Corporation:     own.Desks,
+		Workers:         own.Workers,
+		SameBrain:       false,
 	}
 }
 

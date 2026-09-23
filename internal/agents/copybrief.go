@@ -132,9 +132,15 @@ func CopyUpgrade(round int) []CopySeat {
 			add(member.Agent, kind, dept.ID)
 		}
 	}
-	for _, desk := range Corporation() {
+	for _, desk := range MainBrain() {
 		add(desk.ID, "desk", "")
 		add(desk.ID+"-workers", "worker", "")
+	}
+	for _, brain := range NicheBrains() {
+		for _, desk := range brain.Desks {
+			add(desk.ID, "desk", "")
+			add(desk.ID+"-workers", "worker", "")
+		}
 	}
 	for _, division := range Chart().Divisions {
 		add(division.ID, "department", division.Department)

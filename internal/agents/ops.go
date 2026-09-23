@@ -9,6 +9,10 @@ type OpsPartner struct {
 	Agents          int      `json:"agents"`
 	Brains          int      `json:"brains"`
 	LoadsInstinct   bool     `json:"loadsInstinctBrain"`
+	OwnBrain        bool     `json:"ownBrain"`
+	MainBrain       string   `json:"mainBrain"`
+	SameShape       bool     `json:"sameShape"`
+	Niche           string   `json:"niche"`
 	LoadsVoltron    bool     `json:"loadsVoltronBrain"`
 	ReportsTo       string   `json:"reportsTo"`
 	InVoltron       bool     `json:"inVoltron"`
@@ -33,7 +37,11 @@ func Ops() OpsPartner {
 		Chains:          []string{"accueil", "terrain", "propriete"},
 		Agents:          60,
 		Brains:          300,
-		LoadsInstinct:   true,
+		LoadsInstinct:   false,
+		OwnBrain:        true,
+		MainBrain:       "instinct",
+		SameShape:       true,
+		Niche:           "opérations en brouillon",
 		LoadsVoltron:    true,
 		ReportsTo:       "voltron",
 		InVoltron:       true,

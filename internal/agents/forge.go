@@ -1,11 +1,15 @@
 package agents
 
-// ForgePartner is the development conglomerate. It loads Epicenter Einstein and Voltron.
-// Scrum takes every repository. The crew does not make a weapon.
+// ForgePartner is the development conglomerate. It runs its own brain
+// and reports to the main brain. Scrum takes every repository. The crew does not make a weapon.
 type ForgePartner struct {
 	Repo          string   `json:"repo"`
 	Brain         string   `json:"brain"`
 	LoadsInstinct bool     `json:"loadsInstinctBrain"`
+	OwnBrain      bool     `json:"ownBrain"`
+	MainBrain     string   `json:"mainBrain"`
+	SameShape     bool     `json:"sameShape"`
+	Niche         string   `json:"niche"`
 	LoadsVoltron  bool     `json:"loadsVoltronBrain"`
 	Weapons       bool     `json:"weapons"`
 	Partners      []string `json:"partners"`
@@ -25,7 +29,11 @@ func Forge() ForgePartner {
 	return ForgePartner{
 		Repo:          "Evolu-Jeunes/Forge",
 		Brain:         "forge",
-		LoadsInstinct: true,
+		LoadsInstinct: false,
+		OwnBrain:      true,
+		MainBrain:     "instinct",
+		SameShape:     true,
+		Niche:         "développement",
 		LoadsVoltron:  true,
 		Weapons:       false,
 		Partners:      []string{"voltron", "scrum", "instinct"},
