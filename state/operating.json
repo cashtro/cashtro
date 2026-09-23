@@ -1488,7 +1488,7 @@
       "name": "Le Hustler",
       "seat": "instinct",
       "dept": "marche",
-      "do": "Relier les chaînes. Une offre, une mesure."
+      "do": "Ouvrir The Hustle. Une offre, une mesure. Il ne décide pas à la place d'Instinct."
     },
     {
       "id": "voltron",
@@ -1545,6 +1545,13 @@
       "seat": "ops",
       "dept": "ingenierie",
       "do": "Posséder OPS et aider les dépôts cashtro et Evolu-Jeunes."
+    },
+    {
+      "id": "hustle",
+      "name": "The Hustle",
+      "seat": "instinct",
+      "dept": "marche",
+      "do": "Lire, tenir les deux métaux, et ne garder que le coup légal. Une offre, une mesure. Instinct est l'ami."
     }
   ],
   "compliance": {
