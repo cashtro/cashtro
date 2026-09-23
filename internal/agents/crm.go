@@ -78,6 +78,7 @@ func CRM() CRMBook {
 		Parked:  []string{"envoi", "appel", "écriture Supabase", "édition d'un thème", "ordre", "fiche Fix2"},
 		Next: []string{
 			"Les agents grandissent dans ce carnet. Fix2 n'y écrit pas.",
+			"Vapi ouvre un projet à la fois. Chaque projet a sa propre base.",
 			"La voix de ce carnet est Vapi. Aucun appel ne part d'ici.",
 			"La copie dans Proximity n'est pas un second carnet.",
 			"Un brouillon reste en mémoire. Supabase n'est pas écrit d'ici.",
