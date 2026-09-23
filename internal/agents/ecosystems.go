@@ -104,18 +104,23 @@ func Links() []Link {
 		},
 		{
 			From: "proximity", To: "marketing",
-			Via:    "Le nom d'un client peut être noté dans le carnet des agents. Lovable n'édite pas le site. Fix2 ne reçoit pas cette note.",
+			Via:    "Proximity cloud passe par le carnet des agents, avec marketing et Panda. Le CRM Lovable de Fix2 ne reçoit pas cette note.",
 			Agents: []string{"memory", "explorer", "manager"},
 		},
 		{
 			From: "panda", To: "marketing",
-			Via:    "Panda dépose une note client dans le carnet des agents. Le carnet Fix2 reste à part.",
+			Via:    "Panda dépose le lead dans le carnet des agents. Le CRM Lovable de Fix2 reste à part.",
 			Agents: []string{"planner", "memory"},
 		},
 		{
 			From: "fix2", To: "marketing",
-			Via:    "Fix2 tient son carnet. Le carnet des agents reste Evolu-Jeunes/CRM. Aucune fiche ne passe de l'un à l'autre.",
+			Via:    "Le CRM de Fix2 est le carnet Lovable. Le carnet des agents est une autre base. Aucune fiche ne passe.",
 			Agents: []string{"operator", "memory", "manager"},
+		},
+		{
+			From: "agentics", To: "chains",
+			Via:    "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix2 n'est pas cette base.",
+			Agents: []string{"comms", "planner"},
 		},
 	}
 }

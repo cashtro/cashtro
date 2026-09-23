@@ -138,15 +138,15 @@ func lineKnown(id string) map[string]string {
 		}
 	case "marketing":
 		return map[string]string{
-			"situation":   "Les agents grandissent dans Evolu-Jeunes/CRM. La voix est Vapi. Pandora, Panda et un nom de client Proximity y déposent un brouillon.",
-			"manque":      "Le consentement, l'identité, le désabonnement, et la décision d'Epicenter avant un envoi ou un appel.",
-			"intouchable": "Le carnet Fix2, la copie CRM dans Proximity, un thème WordPress, un ordre Giant, et un secret.",
+			"situation":   "L'agence — marketing, Panda, Proximity cloud — passe par le carnet des agents. Chaque chaîne s'y parle.",
+			"manque":      "Le consentement avant un envoi, et la décision d'Epicenter.",
+			"intouchable": "Le CRM Lovable de Fix2, un thème WordPress, un ordre Giant, et un secret.",
 		}
 	case "fix2":
 		return map[string]string{
-			"situation":   "Fix2 a son propre carnet. La voix est Vapi. Quarante agents ont chacun un emploi.",
-			"manque":      "La clé Vapi pour ouvrir un appel, et la décision d'Epicenter avant un envoi, un paiement, ou un permis déposé.",
-			"intouchable": "Le carnet des agents, WordPress comme carnet, Lovable branché ici, une licence inventée, et un client inventé.",
+			"situation":   "Fix2 est un homme à tout faire, résidentiel. Son CRM est le carnet Lovable.",
+			"manque":      "La décision d'Epicenter avant un envoi, un paiement, ou un permis déposé.",
+			"intouchable": "Le carnet des agents, un chantier commercial inventé, une licence inventée, et un client inventé.",
 		}
 	case "empire":
 		return map[string]string{

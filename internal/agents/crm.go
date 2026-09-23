@@ -7,23 +7,23 @@ import (
 	"github.com/cashtro/cashtro/internal/kernel"
 )
 
-// CRMBook is the agent growth book. Fix2 does not write here.
-// The copy under Proximity is not a second book.
+// CRMBook is one book. The agent book and the Fix2 book are not the same database.
 // Voice is Vapi. A call is not placed from this process.
 type CRMBook struct {
-	Repo    string   `json:"repo"`
-	App     string   `json:"app"`
-	Host    string   `json:"host"`
-	Copy    string   `json:"copy"`
-	Voice   string   `json:"voice"`
-	Gathers []string `json:"gathers"`
-	Modules []string `json:"modules"`
-	Lines   []string `json:"lines"`
-	Parked  []string `json:"parked"`
-	Next    []string `json:"next"`
-	Writes  bool     `json:"writes"`
-	Sent    bool     `json:"sent"`
-	Dialed  bool     `json:"dialed"`
+	Repo     string   `json:"repo"`
+	App      string   `json:"app"`
+	Host     string   `json:"host"`
+	Copy     string   `json:"copy"`
+	Voice    string   `json:"voice"`
+	Database string   `json:"database"`
+	Gathers  []string `json:"gathers"`
+	Modules  []string `json:"modules"`
+	Lines    []string `json:"lines"`
+	Parked   []string `json:"parked"`
+	Next     []string `json:"next"`
+	Writes   bool     `json:"writes"`
+	Sent     bool     `json:"sent"`
+	Dialed   bool     `json:"dialed"`
 }
 
 // CRMGrowth is one draft note. It is remembered. It is not written to Supabase and it is not sent.
@@ -57,7 +57,7 @@ var crmLines = map[string]string{
 	"fonds":       "une note de livre, pas un virement",
 }
 
-// CRM is the agent book. Fix2 is absent on purpose.
+// CRM is the agent book. Fix2's clients are not stored here.
 func CRM() CRMBook {
 	lines := make([]string, 0, len(Lines()))
 	for _, ln := range Lines() {
@@ -67,23 +67,46 @@ func CRM() CRMBook {
 		lines = append(lines, ln.ID)
 	}
 	return CRMBook{
-		Repo:    "Evolu-Jeunes/CRM",
-		App:     "Itercore",
-		Host:    "itercore.lovable.app",
-		Copy:    "Evolu-Jeunes/Proximity/apps/CRM",
-		Voice:   "vapi",
-		Gathers: []string{"contact", "lead", "note"},
-		Modules: []string{"contacts", "leads", "notes", "voix"},
-		Lines:   lines,
-		Parked:  []string{"envoi", "appel", "écriture Supabase", "édition d'un thème", "ordre", "fiche Fix2"},
+		Repo:     "cashtro/cashtro",
+		App:      "Agentics",
+		Host:     "local",
+		Copy:     "",
+		Voice:    "vapi",
+		Database: "db:agentics",
+		Gathers:  []string{"contact", "lead", "note"},
+		Modules:  []string{"messages", "leads", "marketing"},
+		Lines:    lines,
+		Parked:   []string{"envoi", "appel", "client Fix2", "CRM Lovable", "ordre"},
 		Next: []string{
-			"Les agents grandissent dans ce carnet. Fix2 n'y écrit pas.",
+			"Les agents se parlent ici et s'y passent les leads.",
+			"L'agence est marketing, Panda et Proximity cloud. Elle relie chaque chaîne.",
+			"Le CRM de Fix2 est le carnet Lovable. Il n'est pas cette base.",
 			"Vapi ouvre un projet à la fois. Chaque projet a sa propre base.",
-			"La voix de ce carnet est Vapi. Aucun appel ne part d'ici.",
-			"La copie dans Proximity n'est pas un second carnet.",
-			"Un brouillon reste en mémoire. Supabase n'est pas écrit d'ici.",
-			"Une ligne WordPress peut noter le client. Elle n'édite pas le thème.",
-			"Un envoi, un appel ou un ordre attend Epicenter.",
+			"Un envoi ou un appel attend Epicenter.",
+		},
+		Writes: false,
+		Sent:   false,
+		Dialed: false,
+	}
+}
+
+// Fix2CRM is the Lovable book. Residential handyman only.
+func Fix2CRM() CRMBook {
+	return CRMBook{
+		Repo:     "Evolu-Jeunes/CRM",
+		App:      "Fix2",
+		Host:     "itercore.lovable.app",
+		Copy:     "Evolu-Jeunes/Proximity/apps/CRM",
+		Voice:    "vapi",
+		Database: "Evolu-Jeunes/CRM",
+		Gathers:  []string{"contact", "lead", "note"},
+		Modules:  []string{"contacts", "leads", "estimates", "voix"},
+		Lines:    []string{"fix2"},
+		Parked:   []string{"carnet des agents", "autre projet", "envoi", "appel"},
+		Next: []string{
+			"Homme à tout faire, résidentiel.",
+			"Ce carnet Lovable ne reçoit que les clients Fix2.",
+			"Les agents ne s'y parlent pas.",
 		},
 		Writes: false,
 		Sent:   false,
@@ -101,7 +124,7 @@ func CRMGrow(k *kernel.Kernel, line, kind, title, body string, send bool) (CRMGr
 		return CRMGrowth{}, fmt.Errorf("envoi refusé")
 	}
 	if line == "fix2" {
-		return CRMGrowth{}, fmt.Errorf("Fix2 tient son propre carnet")
+		return CRMGrowth{}, fmt.Errorf("Fix2 tient le CRM Lovable")
 	}
 	why, ok := crmLines[line]
 	if !ok {
@@ -129,7 +152,7 @@ func CRMGrow(k *kernel.Kernel, line, kind, title, body string, send bool) (CRMGr
 		DecidedBy: "epicenter",
 	}
 	if k != nil {
-		k.Remember("crm:"+line, kind+" · "+title+" · "+why)
+		k.Remember("agentics:"+line, kind+" · "+title+" · "+why)
 		note.Remembered = true
 		k.Publish("memory", "epicenter", "crm brouillon "+line, map[string]any{
 			"kind": kind, "title": title, "sent": false, "decidedBy": "epicenter",
@@ -142,7 +165,7 @@ func CRMGrow(k *kernel.Kernel, line, kind, title, body string, send bool) (CRMGr
 func CRMInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	title := payloadQuery(call, "title")
 	if title == "" {
-		return kernel.Result{OK: true, Message: "carnet des agents, voix Vapi, pas Fix2", Data: CRM()}, nil
+		return kernel.Result{OK: true, Message: "carnet des agents, pas le CRM Lovable de Fix2", Data: CRM()}, nil
 	}
 	note, err := CRMGrow(k, payloadQuery(call, "line"), payloadQuery(call, "kind"), title, payloadQuery(call, "body"), payloadQuery(call, "send") == "true")
 	if err != nil {

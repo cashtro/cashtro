@@ -100,10 +100,10 @@ func Lines() []Line {
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
-			Mandate: "Pandora mesure une campagne et la range dans Evolu-Jeunes/CRM. " +
-				"Ce carnet sert aux agents. La voix est Vapi. Fix2 n'y dépose pas ses chantiers. Lovable n'édite pas les thèmes.",
-			Controls: "Explorer lit. Memory dépose un brouillon. Vapi est la voix, aucun appel ne part d'ici. Epicenter décide avant un envoi.",
-			Repos:    []string{"Evolu-Jeunes/CRM"},
+			Mandate: "L'agence, avec Panda et Proximity cloud, relie chaque chaîne par le carnet des agents. " +
+				"Les leads et le marketing passent là. Le CRM Lovable de Fix2 n'est pas ce carnet. Lovable n'édite pas les thèmes.",
+			Controls: "Explorer lit le carnet des agents. Memory y dépose le passage. Epicenter décide avant un envoi.",
+			Repos:    []string{},
 		},
 		{
 			ID: "empire", Name: "Empire Media", Brain: "Forgeron",
@@ -132,11 +132,11 @@ func Lines() []Line {
 		},
 		{
 			ID: "fix2", Name: "Fix2", Brain: "Forgeron",
-			Mandate: "Compagnie de construction. Son carnet est le sien, dans Evolu-Jeunes/Fix2. " +
-				"Il ne se mélange pas au carnet des agents. Ce n'est pas un thème WordPress. Lovable n'est pas branché. " +
-				"La voix de ce carnet est Vapi. Quarante agents. Epicenter décide en dernier.",
-			Controls: "Operator tient le site local. Le carnet Fix2 ne reçoit que Fix2. Vapi n'appelle pas sans clé. Rien n'est envoyé, payé ou déposé sans Epicenter.",
-			Repos:    []string{"Evolu-Jeunes/Fix2"},
+			Mandate: "Homme à tout faire, résidentiel. Le CRM client est le carnet Lovable Evolu-Jeunes/CRM. " +
+				"Ce n'est pas le carnet des agents. Ce n'est pas un thème WordPress. " +
+				"La voix Vapi de ce CRM ne lit que cette base. Quarante agents. Epicenter décide en dernier.",
+			Controls: "Le site est Evolu-Jeunes/Fix2. Les clients restent dans le CRM Lovable. Rien n'est envoyé, payé ou déposé sans Epicenter.",
+			Repos:    []string{"Evolu-Jeunes/Fix2", "Evolu-Jeunes/CRM"},
 		},
 		{
 			ID: "fonds", Name: "Fonds", Brain: "Manager",

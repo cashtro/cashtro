@@ -66,9 +66,9 @@ func infrastructureOf(id string) string {
 	case "ecole":
 		return "programme de cours"
 	case "marketing":
-		return "Pandora, une campagne, voix Vapi"
+		return "agence, Panda, Proximity cloud, carnet des agents"
 	case "fix2":
-		return "carnet propre, voix Vapi, quarante agents"
+		return "CRM Lovable, homme à tout faire"
 	case "empire":
 		return "studio live"
 	case "propres":

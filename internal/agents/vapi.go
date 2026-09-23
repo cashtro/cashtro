@@ -58,7 +58,7 @@ func VapiDeskBy(project string) (VapiDesk, bool) {
 
 func vapiDatabase(project string) string {
 	if project == "fix2" {
-		return "Evolu-Jeunes/Fix2"
+		return "Evolu-Jeunes/CRM"
 	}
 	return "db:" + project
 }
