@@ -67,10 +67,10 @@ func CRM() CRMBook {
 		lines = append(lines, ln.ID)
 	}
 	return CRMBook{
-		Repo:     "cashtro/cashtro",
+		Repo:     "Evolu-Jeunes/CRM-Agents",
 		App:      "Agentics",
 		Host:     "local",
-		Copy:     "",
+		Copy:     "Evolu-Jeunes/CRM",
 		Voice:    "vapi",
 		Database: "db:agentics",
 		Gathers:  []string{"contact", "lead", "note"},
@@ -80,7 +80,7 @@ func CRM() CRMBook {
 		Next: []string{
 			"Les agents se parlent ici et s'y passent les leads.",
 			"L'agence est marketing, Panda et Proximity cloud. Elle relie chaque chaîne.",
-			"Le CRM de Fix2 est le carnet Lovable. Il n'est pas cette base.",
+			"Ce carnet est la copie agents du même CRM Lovable. La copie Fix2 est Evolu-Jeunes/CRM.",
 			"Vapi ouvre un projet à la fois. Chaque projet a sa propre base.",
 			"Un envoi ou un appel attend Epicenter.",
 		},
@@ -96,7 +96,7 @@ func Fix2CRM() CRMBook {
 		Repo:     "Evolu-Jeunes/CRM",
 		App:      "Fix2",
 		Host:     "itercore.lovable.app",
-		Copy:     "Evolu-Jeunes/Proximity/apps/CRM",
+		Copy:     "Evolu-Jeunes/CRM-Agents",
 		Voice:    "vapi",
 		Database: "Evolu-Jeunes/CRM",
 		Gathers:  []string{"contact", "lead", "note"},
@@ -106,7 +106,7 @@ func Fix2CRM() CRMBook {
 		Next: []string{
 			"Homme à tout faire, résidentiel.",
 			"Ce carnet Lovable ne reçoit que les clients Fix2.",
-			"Les agents ne s'y parlent pas.",
+			"La copie agents est Evolu-Jeunes/CRM-Agents. Les agents ne s'y parlent pas.",
 		},
 		Writes: false,
 		Sent:   false,

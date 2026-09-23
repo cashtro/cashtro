@@ -98,7 +98,7 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "marketing":
 		return []ChainStep{
-			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire le carnet des agents, db:agentics. Marketing, Panda et Proximity cloud y passent les leads. Pas le CRM Lovable de Fix2."},
+			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire la copie agents du CRM Lovable, Evolu-Jeunes/CRM-Agents, base db:agentics. Marketing, Panda et Proximity cloud y passent les leads. Pas la copie Fix2."},
 			{Line: "marketing", Order: 2, Agent: "memory", Do: "Déposer une note de croissance. Brouillon. Rien n'est écrit dans Supabase d'ici. Aucun appel Vapi ne part."},
 			{Line: "marketing", Order: 3, Agent: "planner", Do: "Une campagne Pandora, mesurée, rangée sur cette note."},
 			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress. Une fiche Fix2 n'entre pas dans ce carnet."},

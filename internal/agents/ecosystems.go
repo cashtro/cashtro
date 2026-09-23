@@ -114,7 +114,7 @@ func Links() []Link {
 		},
 		{
 			From: "fix2", To: "marketing",
-			Via:    "Le CRM de Fix2 est le carnet Lovable. Le carnet des agents est une autre base. Aucune fiche ne passe.",
+			Via:    "Les deux sont le même CRM Lovable, cloné. Fix2 tient Evolu-Jeunes/CRM. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe.",
 			Agents: []string{"operator", "memory", "manager"},
 		},
 		{

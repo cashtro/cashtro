@@ -8,11 +8,11 @@ import (
 
 func TestAgentCRMStaysApartFromFix2(t *testing.T) {
 	book := CRM()
-	if book.Repo != "cashtro/cashtro" || book.Database != "db:agentics" || book.Voice != "vapi" || book.Writes || book.Sent || book.Dialed {
+	if book.Repo != "Evolu-Jeunes/CRM-Agents" || book.Copy != "Evolu-Jeunes/CRM" || book.Database != "db:agentics" || book.Voice != "vapi" || book.Writes || book.Sent || book.Dialed {
 		t.Fatalf("book %+v", book)
 	}
 	fix := Fix2CRM()
-	if fix.Repo != "Evolu-Jeunes/CRM" || fix.Database != "Evolu-Jeunes/CRM" || fix.Database == book.Database || len(fix.Lines) != 1 || fix.Lines[0] != "fix2" {
+	if fix.Repo != "Evolu-Jeunes/CRM" || fix.Copy != "Evolu-Jeunes/CRM-Agents" || fix.Database != "Evolu-Jeunes/CRM" || fix.Database == book.Database || len(fix.Lines) != 1 || fix.Lines[0] != "fix2" {
 		t.Fatalf("fix2 book %+v", fix)
 	}
 	if len(book.Lines) != len(Lines())-1 || len(book.Next) < 5 {
