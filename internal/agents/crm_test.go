@@ -29,7 +29,7 @@ func TestAgentCRMStaysApartFromFix2(t *testing.T) {
 			continue
 		}
 		note, err := CRMGrow(k, ln.ID, "note", ln.Name, "brouillon du conglomerat", false)
-		if err != nil || note.Status != "brouillon" || note.Sent || note.DecidedBy != "epicenter" || !note.Remembered {
+		if err != nil || note.Status != "brouillon" || note.Sent || note.DecidedBy != "tartaria" || !note.Remembered {
 			t.Fatalf("%s note %+v err %v", ln.ID, note, err)
 		}
 	}

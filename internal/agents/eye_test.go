@@ -13,7 +13,7 @@ func TestTheEyeWatchesOurRepos(t *testing.T) {
 	if len(eye.Steps) != 8 || eye.Steps[0] != "veille" || eye.Steps[7] != "sceau" {
 		t.Fatalf("chain %+v", eye.Steps)
 	}
-	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "epicenter" {
-		t.Fatal("the eye must withhold secrets and wait for Epicenter")
+	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "tartaria" {
+		t.Fatal("the eye must withhold secrets and wait for Tartaria")
 	}
 }

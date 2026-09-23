@@ -82,7 +82,7 @@ func CRM() CRMBook {
 			"L'agence est marketing, Panda et Proximity cloud. Elle relie chaque chaîne.",
 			"Les clients Fix Tout restent sur le site Evolu-Jeunes/Fix2. Ils n'entrent pas ici.",
 			"Vapi ouvre un projet à la fois. Chaque projet a sa propre base.",
-			"Un envoi ou un appel attend Epicenter.",
+			"Un envoi ou un appel attend Tartaria.",
 		},
 		Writes: false,
 		Sent:   false,
@@ -148,13 +148,13 @@ func CRMGrow(k *kernel.Kernel, line, kind, title, body string, send bool) (CRMGr
 		Body:      body,
 		Status:    "brouillon",
 		Sent:      false,
-		DecidedBy: "epicenter",
+		DecidedBy: "tartaria",
 	}
 	if k != nil {
 		k.Remember("agentics:"+line, kind+" · "+title+" · "+why)
 		note.Remembered = true
-		k.Publish("memory", "epicenter", "crm brouillon "+line, map[string]any{
-			"kind": kind, "title": title, "sent": false, "decidedBy": "epicenter",
+		k.Publish("memory", "tartaria", "crm brouillon "+line, map[string]any{
+			"kind": kind, "title": title, "sent": false, "decidedBy": "tartaria",
 		})
 	}
 	return note, nil

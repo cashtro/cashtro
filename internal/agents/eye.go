@@ -27,6 +27,6 @@ func TheEye() Eye {
 		Flood:         false,
 		CopiesSecrets: false,
 		AppliesPatch:  false,
-		DecidedBy:     "epicenter",
+		DecidedBy:     "tartaria",
 	}
 }

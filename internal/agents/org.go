@@ -94,7 +94,7 @@ func Chart() Organization {
 			},
 			{
 				ID: "wordpress", Name: "WordPress", ReportsTo: "cto", Chief: "operator",
-				Mandate: "Epicenter et Voltron dirigent. Le commit reste sur les sites WordPress (PHP, ACF Pro, XAMPP) et sur Proximity, Next Proximity, Proximity App, et Api-Proximity. Lovable n'y touche pas.",
+				Mandate: "Tartaria et Voltron dirigent. Le commit reste sur les sites WordPress (PHP, ACF Pro, XAMPP) et sur Proximity, Next Proximity, Proximity App, et Api-Proximity. Lovable n'y touche pas.",
 				Members: []Member{
 					{Agent: "operator", Title: "confection WordPress", Skills: []string{"PHP", "ACF Pro", "XAMPP", "thèmes"}},
 					{Agent: "memory", Title: "dossier de chaque site", Skills: []string{"contexte", "pages", "champs ACF"}},
@@ -126,7 +126,7 @@ func Chart() Organization {
 			},
 			{
 				ID: "flux", Name: "Flow stack", ReportsTo: "cto", Chief: "architect",
-				Mandate: "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Epicenter lance le cycle.",
+				Mandate: "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Tartaria lance le cycle.",
 				Members: []Member{
 					{Agent: "architect", Title: "chef du flux", Skills: []string{"division", "fonction", "produit"}},
 					{Agent: "operator", Title: "worker confection", Skills: []string{"exécution locale"}},
@@ -156,10 +156,10 @@ func Chart() Organization {
 				},
 			},
 			{ID: "panda", Name: "Panda", Chief: "architect", Department: "ingenierie", Function: "architect.plan", Product: "Evolu-Jeunes/Panda", Revenue: "White-glove : IA, installation, cours, entreprises et particuliers.", Guard: "On vend le service. On ne déploie pas chez le client sans allow."},
-			{ID: "nft-giant", Name: "NFT + Giant", Chief: "manager", Department: "controle", Function: "manager.run", Product: "Evolu-Jeunes/Giant brain", Revenue: "Art avec utilité, token Giant, lecture de marché.", Guard: "Epicenter décide en dernier. Pas de mint, pas d'ordre, pas de pont."},
+			{ID: "nft-giant", Name: "NFT + Giant", Chief: "manager", Department: "controle", Function: "manager.run", Product: "Evolu-Jeunes/Giant brain", Revenue: "Art avec utilité, token Giant, lecture de marché.", Guard: "Tartaria décide en dernier. Pas de mint, pas d'ordre, pas de pont."},
 			{ID: "ecole", Name: "École", Chief: "research", Department: "marche", Function: "research.ingest", Product: "Evolu-Jeunes/educonnexion", Revenue: "Cours tech (WordPress, Web3).", Guard: "Le cours décrit. Il ne promet pas un gain de trading."},
-			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Function: "manager.crm", Product: "Evolu-Jeunes/CRM-Agents", Revenue: "L'agence: marketing, Panda, Proximity cloud. Elle relie chaque chaîne.", Guard: "Les leads passent dans la copie agents. La copie Fix Tout n'y entre pas. Lovable n'entre pas dans WordPress. Epicenter décide avant un envoi."},
-			{ID: "fix2", Name: "Fix Tout", Chief: "operator", Department: "operations", Function: "operator.work", Product: "Evolu-Jeunes/Fix2", Revenue: "Homme à tout faire, résidentiel. Le site garde tous les clients.", Guard: "Pas le carnet des agents. Pas WordPress. Pas d'envoi, pas de paiement, pas de permis déposé. Epicenter décide."},
+			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Function: "manager.crm", Product: "Evolu-Jeunes/CRM-Agents", Revenue: "L'agence: marketing, Panda, Proximity cloud. Elle relie chaque chaîne.", Guard: "Les leads passent dans la copie agents. La copie Fix Tout n'y entre pas. Lovable n'entre pas dans WordPress. Tartaria décide avant un envoi."},
+			{ID: "fix2", Name: "Fix Tout", Chief: "operator", Department: "operations", Function: "operator.work", Product: "Evolu-Jeunes/Fix2", Revenue: "Homme à tout faire, résidentiel. Le site garde tous les clients.", Guard: "Pas le carnet des agents. Pas WordPress. Pas d'envoi, pas de paiement, pas de permis déposé. Tartaria décide."},
 			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Function: "delivery.advance", Product: "Evolu-Jeunes/EmpireMedia", Revenue: "Live sell du stock Scan App, sur toutes les plateformes live.", Guard: "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."},
 			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Function: "investigator.trace", Product: "Bots et Giant", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
 			{ID: "fonds", Name: "Fonds", Chief: "planner", Department: "direction", Function: "manager.tax", Product: "Grand livre interne", Revenue: "Position, chèques en brouillon, TPS et TVQ.", Guard: "Pas une banque. Pas une déclaration. Rien ne sort sans allow."},

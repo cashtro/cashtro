@@ -66,14 +66,14 @@ func initInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 		if err != nil {
 			return res, err
 		}
-		k.Publish("init", "voltron", "cycle lancé avec epicenter", map[string]any{"line": payloadQuery(call, "id")})
+		k.Publish("init", "voltron", "cycle lancé avec tartaria", map[string]any{"line": payloadQuery(call, "id")})
 		return res, nil
 	case "os.engine":
 		res, err := EngineRun(k, call)
 		if err != nil {
 			return res, err
 		}
-		k.Publish("init", "voltron", "moteur branché avec epicenter", nil)
+		k.Publish("init", "voltron", "moteur branché avec tartaria", nil)
 		return res, nil
 	}
 	return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
@@ -222,7 +222,7 @@ func investigatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, erro
 	}}, nil
 }
 
-// RunCycle is the autonomous pass. Voltron and Epicenter both call it.
+// RunCycle is the autonomous pass. Voltron and Tartaria both call it.
 // Each worker runs. A secret stops the pass. A release stays behind comms.allow.
 func RunCycle(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	line := payloadQuery(call, "id")
@@ -255,13 +255,13 @@ func RunCycle(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 		})
 		if !res.OK {
 			return kernel.Result{OK: false, Message: res.Message, Data: map[string]any{
-				"line": line, "directedBy": []string{"voltron", "epicenter"}, "steps": done,
+				"line": line, "directedBy": []string{"voltron", "tartaria"}, "steps": done,
 			}}, nil
 		}
 	}
-	k.Publish("manager", "epicenter", "cycle bouclé "+line, map[string]any{"steps": len(done)})
+	k.Publish("manager", "tartaria", "cycle bouclé "+line, map[string]any{"steps": len(done)})
 	return kernel.Result{OK: true, Message: "cycle autonome bouclé. rien n'est poussé", Data: map[string]any{
-		"line": line, "directedBy": []string{"voltron", "epicenter"}, "steps": done,
+		"line": line, "directedBy": []string{"voltron", "tartaria"}, "steps": done,
 	}}, nil
 }
 

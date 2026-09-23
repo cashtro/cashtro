@@ -1,10 +1,10 @@
 {
-  "anchor": "165a5a0526493236cf53bad3dc7fe94fd58e24c5fe4f1990bc7d0fb1df2a2be2",
+  "anchor": "7ff3969234a1d6fb7349eb90a44a90ad3366b4805b75ff9853122cc65dcfc2de",
   "constellations": [
     {
       "id": "control",
       "name": "Cerveau principal",
-      "infrastructure": "kernel, Voltron, Epicenter, Graphify",
+      "infrastructure": "kernel, Voltron, Tartaria, Graphify",
       "function": "memory.store",
       "product": "cashtro/cashtro",
       "agent": "manager"
@@ -117,15 +117,15 @@
   "links": [
     {
       "from": "voltron",
-      "to": "epicenter",
-      "via": "Voltron tient le kernel allumé. Epicenter tient le tableau. L'un sans l'autre ne fait rien.",
+      "to": "tartaria",
+      "via": "Voltron tient le kernel allumé. Tartaria tient le tableau. L'un sans l'autre ne fait rien.",
       "agents": [
         "init",
         "manager"
       ]
     },
     {
-      "from": "epicenter",
+      "from": "tartaria",
       "to": "graphify",
       "via": "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant.",
       "agents": [
@@ -134,7 +134,7 @@
       ]
     },
     {
-      "from": "epicenter",
+      "from": "tartaria",
       "to": "proximity",
       "via": "le cerveau principal ouvre le cycle et tient l'usine de sites",
       "agents": [
@@ -144,9 +144,9 @@
       ]
     },
     {
-      "from": "epicenter",
+      "from": "tartaria",
       "to": "wordpress",
-      "via": "Epicenter et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+      "via": "Tartaria et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
       "agents": [
         "manager",
         "operator"
@@ -175,7 +175,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter décide en dernier. Aucun ordre live.",
+      "via": "Giant a son cerveau. Les bots restent des modèles. Tartaria décide en dernier. Aucun ordre live.",
       "agents": [
         "architect",
         "security",
@@ -403,7 +403,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "165a5a0526493236cf53bad3dc7fe94fd58e24c5fe4f1990bc7d0fb1df2a2be2"
+      "name": "7ff3969234a1d6fb7349eb90a44a90ad3366b4805b75ff9853122cc65dcfc2de"
     },
     {
       "id": "const:control",
@@ -550,7 +550,7 @@
     {
       "from": "const:control",
       "to": "anchor",
-      "via": "kernel, Voltron, Epicenter, Graphify"
+      "via": "kernel, Voltron, Tartaria, Graphify"
     },
     {
       "from": "const:control",
@@ -689,23 +689,23 @@
     },
     {
       "from": "voltron",
-      "to": "epicenter",
-      "via": "Voltron tient le kernel allumé. Epicenter tient le tableau. L'un sans l'autre ne fait rien."
+      "to": "tartaria",
+      "via": "Voltron tient le kernel allumé. Tartaria tient le tableau. L'un sans l'autre ne fait rien."
     },
     {
-      "from": "epicenter",
+      "from": "tartaria",
       "to": "graphify",
       "via": "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant."
     },
     {
-      "from": "epicenter",
+      "from": "tartaria",
       "to": "proximity",
       "via": "le cerveau principal ouvre le cycle et tient l'usine de sites"
     },
     {
-      "from": "epicenter",
+      "from": "tartaria",
       "to": "wordpress",
-      "via": "Epicenter et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API."
+      "via": "Tartaria et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API."
     },
     {
       "from": "graphify",
@@ -720,7 +720,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter décide en dernier. Aucun ordre live."
+      "via": "Giant a son cerveau. Les bots restent des modèles. Tartaria décide en dernier. Aucun ordre live."
     },
     {
       "from": "empire",
