@@ -81,6 +81,87 @@ func CopyUnderstand(id string) (CopyLesson, bool) {
 	return CopyLesson{}, false
 }
 
+// CopySeat is one chain, agent, worker, or department after the upgrade.
+type CopySeat struct {
+	ID      string       `json:"id"`
+	Kind    string       `json:"kind"`
+	Primary bool         `json:"primary"`
+	Lessons []CopyLesson `json:"lessons"`
+	Copied  bool         `json:"copied"`
+	Posted  bool         `json:"posted"`
+}
+
+// CopyUpgrade gives the guide to every chain, every agent, and every worker.
+// A marketing department holds every lesson. The others take one lesson this round.
+func CopyUpgrade(round int) []CopySeat {
+	if round < 1 {
+		round = 1
+	}
+	lessons := copyLessons()
+	var seats []CopySeat
+	seen := map[string]bool{}
+	add := func(id, kind, dept string) {
+		key := kind + ":" + id
+		if id == "" || seen[key] {
+			return
+		}
+		seen[key] = true
+		primary := marketingPrimary(id, dept)
+		got := []CopyLesson{lessons[(round-1)%len(lessons)]}
+		if primary {
+			got = lessons
+		}
+		seats = append(seats, CopySeat{ID: id, Kind: kind, Primary: primary, Lessons: got, Copied: false, Posted: false})
+	}
+	for _, layer := range Layers() {
+		dept := ""
+		if layer.ID == "hustle" {
+			dept = "marche"
+		}
+		add(layer.ID, "chain", dept)
+	}
+	for _, brain := range Brains() {
+		add(brain.ID, "agent", brain.Dept)
+	}
+	for _, dept := range Chart().Departments {
+		for _, member := range dept.Members {
+			kind := "agent"
+			if dept.ID == "flux" || stringsContainsWorker(member.Title) {
+				kind = "worker"
+			}
+			add(member.Agent, kind, dept.ID)
+		}
+	}
+	for _, desk := range Corporation() {
+		add(desk.ID, "desk", "")
+		add(desk.ID+"-workers", "worker", "")
+	}
+	for _, division := range Chart().Divisions {
+		add(division.ID, "department", division.Department)
+	}
+	for _, team := range MarketingCopy().Teams {
+		add(team.ID, "department", "marche")
+	}
+	return seats
+}
+
+func marketingPrimary(id, dept string) bool {
+	switch id {
+	case "marketing", "panda", "pandora", "scanapp", "marche", "hustle", "hustler", "accueil":
+		return true
+	}
+	return dept == "marche"
+}
+
+func stringsContainsWorker(title string) bool {
+	for i := 0; i+6 <= len(title); i++ {
+		if title[i:i+6] == "worker" || title[i:i+6] == "Worker" {
+			return true
+		}
+	}
+	return false
+}
+
 // CopyHeld reports whether every marketing team holds the guide and understands it.
 func CopyHeld() bool {
 	brief := MarketingCopy()

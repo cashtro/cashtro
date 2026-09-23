@@ -101,7 +101,7 @@ func Lines() []Line {
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
 			Mandate: "L'agence, avec Panda et Proximity cloud, relie chaque chaîne par la copie agents du CRM Lovable. " +
-				"Les leads et le marketing passent là. L'équipe tient le guide 7 Figure Marketing Copy et en comprend les leçons. Le PDF n'est pas collé. " +
+				"Les leads et le marketing passent là. L'équipe tient le guide 7 Figure Marketing Copy et en comprend les leçons. Chaque chaîne, chaque agent et chaque worker en reçoit une. Le département marché tient le guide entier. Le PDF n'est pas collé. " +
 				"Le CRM Lovable de Fix Tout n'est pas ce carnet. Lovable n'édite pas les thèmes.",
 			Controls: "Explorer lit le carnet des agents. Memory y dépose le passage. Epicenter Einstein décide avant un envoi.",
 			Repos:    []string{},

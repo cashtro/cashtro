@@ -81,8 +81,16 @@ func initInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 			return kernel.Result{OK: false, Message: "chaîne hors de Voltron: " + loose}, nil
 		}
 		k.Publish("init", "voltron", "chaînes opérantes", map[string]any{"count": len(Layers())})
+		upgrade := CopyUpgrade(1)
+		marketing := 0
+		for _, seat := range upgrade {
+			if seat.Primary {
+				marketing++
+			}
+		}
 		return kernel.Result{OK: true, Message: "chaînes dans Voltron", Data: map[string]any{
 			"layers": Layers(), "operative": true, "website": false,
+			"copyUpgrade": map[string]any{"seats": len(upgrade), "marketing": marketing, "inHand": true, "copied": false},
 		}}, nil
 	}
 	return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
