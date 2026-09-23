@@ -156,7 +156,7 @@ func Chart() Organization {
 				},
 			},
 			{ID: "panda", Name: "Panda", Chief: "architect", Department: "ingenierie", Function: "architect.plan", Product: "Evolu-Jeunes/Panda", Revenue: "White-glove : IA, installation, cours, entreprises et particuliers.", Guard: "On vend le service. On ne déploie pas chez le client sans allow."},
-			{ID: "nft-giant", Name: "NFT + Giant", Chief: "security", Department: "controle", Function: "security.triage", Product: "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant", Revenue: "Art avec utilité, token Giant, tirages de visibilité.", Guard: "Pas de mint ni de campagne sans revue risque et allow."},
+			{ID: "nft-giant", Name: "NFT + Giant", Chief: "manager", Department: "controle", Function: "manager.run", Product: "Evolu-Jeunes/Giant brain", Revenue: "Art avec utilité, token Giant, lecture de marché.", Guard: "Epicenter décide en dernier. Pas de mint, pas d'ordre, pas de pont."},
 			{ID: "ecole", Name: "École", Chief: "research", Department: "marche", Function: "research.ingest", Product: "Evolu-Jeunes/educonnexion", Revenue: "Cours tech (WordPress, Web3).", Guard: "Le cours décrit. Il ne promet pas un gain de trading."},
 			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Function: "comms.send", Product: "Evolu-Jeunes/CRM", Revenue: "Gestion marketing des business corporate.", Guard: "Une campagne à la fois. Mesurer avant d'élargir."},
 			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Function: "delivery.advance", Product: "Evolu-Jeunes/EmpireMedia", Revenue: "Live sell du stock Scan App, sur toutes les plateformes live.", Guard: "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."},

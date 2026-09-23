@@ -44,7 +44,7 @@ func Links() []Link {
 		},
 		{
 			From: "nft-giant", To: "trading",
-			Via:    "le token Giant relie l'art NFT aux bots qui tradent",
+			Via:    "Giant a son cerveau. Les bots restent des modèles. Epicenter décide en dernier. Aucun ordre live.",
 			Agents: []string{"architect", "security", "investigator", "router"},
 		},
 		{

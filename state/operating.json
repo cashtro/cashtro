@@ -737,7 +737,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "le token Giant relie l'art NFT aux bots qui tradent",
+      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter décide en dernier. Aucun ordre live.",
       "agents": [
         "architect",
         "security",
@@ -1334,12 +1334,12 @@
       {
         "id": "nft-giant",
         "name": "NFT + Giant",
-        "chief": "security",
+        "chief": "manager",
         "department": "controle",
-        "function": "security.triage",
-        "product": "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant",
-        "revenue": "Art avec utilité, token Giant, tirages de visibilité.",
-        "guard": "Pas de mint ni de campagne sans revue risque et allow."
+        "function": "manager.run",
+        "product": "Evolu-Jeunes/Giant brain",
+        "revenue": "Art avec utilité, token Giant, lecture de marché.",
+        "guard": "Epicenter décide en dernier. Pas de mint, pas d'ordre, pas de pont."
       },
       {
         "id": "ecole",

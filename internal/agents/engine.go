@@ -62,7 +62,7 @@ func infrastructureOf(id string) string {
 	case "panda":
 		return "offre white-glove"
 	case "nft-giant":
-		return "art et token Giant"
+		return "cerveau propre de Giant, art, token, lecture de marché"
 	case "ecole":
 		return "programme de cours"
 	case "marketing":

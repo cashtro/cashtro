@@ -126,9 +126,9 @@ func lineKnown(id string) map[string]string {
 		}
 	case "nft-giant":
 		return map[string]string{
-			"situation":   "Art utile, token Giant, tirages de visibilité.",
-			"manque":      "La revue avant un mint ou un tirage.",
-			"intouchable": "Aucun mint et aucun tirage sans classement.",
+			"situation":   "Giant a son cerveau. Voltron ouvre, Giant travaille, Epicenter décide à la fin.",
+			"manque":      "La décision d'Epicenter avant un mint, un ordre, un déploiement, ou un pont.",
+			"intouchable": "Remplacer le cerveau de Giant par celui d'Epicenter, un ordre live, ou un mint de CQ.",
 		}
 	case "ecole":
 		return map[string]string{

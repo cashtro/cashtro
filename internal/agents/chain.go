@@ -87,8 +87,9 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "nft-giant":
 		return []ChainStep{
-			{Line: "nft-giant", Order: 1, Agent: "security", Do: "Le cerveau crypto est Evolu-Jeunes/Giant/brain. Revue avant un mint ou une campagne. Pas de mint sans cette revue."},
-			{Line: "nft-giant", Order: 2, Agent: "investigator", Do: "Un tirage reste classé avant publication. Pas une loterie lancée d'ici. CQ n'est pas minté."},
+			{Line: "nft-giant", Order: 1, Agent: "init", Do: "Voltron ouvre. Le cerveau est celui de Giant, Evolu-Jeunes/Giant/brain. Ce n'est pas le cerveau d'Epicenter."},
+			{Line: "nft-giant", Order: 2, Agent: "investigator", Do: "Chaque agent a une tâche. Lecture publique, gems en note, modèles de bots. Aucun ordre. CQ n'est pas minté."},
+			{Line: "nft-giant", Order: 3, Agent: "manager", Do: "Epicenter décide en dernier. Un mint, un ordre, un déploiement ou un pont reste arrêté."},
 		}, true
 	case "ecole":
 		return []ChainStep{

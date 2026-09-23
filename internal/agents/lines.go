@@ -87,9 +87,9 @@ func Lines() []Line {
 		},
 		{
 			ID: "nft-giant", Name: "NFT + token Giant", Brain: "Hustler",
-			Mandate: "NFT pour vendre l'art en ligne avec utilité, branché sur Giant, le token de l'écosystème. " +
-				"Tirages : marketing digital offert, volume, prix, partenariats de visibilité.",
-			Controls: "Hustler opère art, token et tirages. Architecte relie les contrats et les chaînes.",
+			Mandate: "Giant a son propre cerveau crypto. Voltron ouvre le cycle, Giant le fait tourner, Epicenter décide en dernier. " +
+				"NFT pour l'art utile, token GNT, lecture de marché, gems en note, modèles de bots. Aucun ordre live.",
+			Controls: "Le cerveau de Giant tient les agents crypto. Epicenter est le dernier mot. Pas de mint, pas d'ordre, pas de pont.",
 			Repos:    []string{"Evolu-Jeunes/Nft", "Evolu-Jeunes/Giant"},
 		},
 		{

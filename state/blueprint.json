@@ -1,5 +1,5 @@
 {
-  "anchor": "f6a89ab8309a20fe48fcc0e8ea86a59c00ba5c7afdfa42d69bc6ff7039b28622",
+  "anchor": "ad669241a3e43dd2490870af4386fd43844905d716710e99f7dd79ee88b9b1d6",
   "constellations": [
     {
       "id": "control",
@@ -52,10 +52,10 @@
     {
       "id": "nft-giant",
       "name": "NFT + token Giant",
-      "infrastructure": "art et token Giant",
-      "function": "security.triage",
-      "product": "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant",
-      "agent": "security"
+      "infrastructure": "cerveau propre de Giant, art, token, lecture de marché",
+      "function": "manager.run",
+      "product": "Evolu-Jeunes/Giant brain",
+      "agent": "manager"
     },
     {
       "id": "ecole",
@@ -167,7 +167,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "le token Giant relie l'art NFT aux bots qui tradent",
+      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter décide en dernier. Aucun ordre live.",
       "agents": [
         "architect",
         "security",
@@ -312,9 +312,9 @@
     },
     {
       "division": "nft-giant",
-      "function": "security.triage",
-      "product": "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant",
-      "agent": "security"
+      "function": "manager.run",
+      "product": "Evolu-Jeunes/Giant brain",
+      "agent": "manager"
     },
     {
       "division": "ecole",
@@ -351,7 +351,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "f6a89ab8309a20fe48fcc0e8ea86a59c00ba5c7afdfa42d69bc6ff7039b28622"
+      "name": "ad669241a3e43dd2490870af4386fd43844905d716710e99f7dd79ee88b9b1d6"
     },
     {
       "id": "const:control",
@@ -419,9 +419,9 @@
       "name": "NFT + token Giant"
     },
     {
-      "id": "agent:security",
+      "id": "agent:manager",
       "kind": "agent",
-      "name": "security"
+      "name": "manager"
     },
     {
       "id": "const:ecole",
@@ -548,12 +548,12 @@
     {
       "from": "const:nft-giant",
       "to": "anchor",
-      "via": "art et token Giant"
+      "via": "cerveau propre de Giant, art, token, lecture de marché"
     },
     {
       "from": "const:nft-giant",
-      "to": "agent:security",
-      "via": "security.triage"
+      "to": "agent:manager",
+      "via": "manager.run"
     },
     {
       "from": "const:ecole",
@@ -648,7 +648,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "le token Giant relie l'art NFT aux bots qui tradent"
+      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter décide en dernier. Aucun ordre live."
     },
     {
       "from": "empire",
