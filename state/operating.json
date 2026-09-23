@@ -1207,6 +1207,71 @@
             ]
           }
         ]
+      },
+      {
+        "id": "flux",
+        "name": "Flow stack",
+        "reportsTo": "cto",
+        "chief": "architect",
+        "mandate": "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Epicenter lance le cycle.",
+        "craft": [
+          {
+            "mark": "fonction",
+            "fill": "Fonction : la capability du worker qui exécute ce pas."
+          },
+          {
+            "mark": "produit",
+            "fill": "Produit : le dépôt ou la ligne où ce pas a le droit d'atterrir."
+          }
+        ],
+        "members": [
+          {
+            "agent": "architect",
+            "title": "chef du flux",
+            "skills": [
+              "division",
+              "fonction",
+              "produit"
+            ]
+          },
+          {
+            "agent": "operator",
+            "title": "worker confection",
+            "skills": [
+              "exécution locale"
+            ]
+          },
+          {
+            "agent": "security",
+            "title": "worker filtre",
+            "skills": [
+              "secrets",
+              "Loi 25"
+            ]
+          },
+          {
+            "agent": "reviewer",
+            "title": "worker second filtre",
+            "skills": [
+              "option courte"
+            ]
+          },
+          {
+            "agent": "investigator",
+            "title": "worker trace",
+            "skills": [
+              "rayon"
+            ]
+          },
+          {
+            "agent": "deploy",
+            "title": "worker sortie",
+            "skills": [
+              "preview",
+              "allow"
+            ]
+          }
+        ]
       }
     ],
     "divisions": [
@@ -1215,6 +1280,8 @@
         "name": "WordPress Proximity",
         "chief": "operator",
         "department": "wordpress",
+        "function": "operator.work",
+        "product": "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity",
         "revenue": "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity.",
         "guard": "Le commit ne sort pas de ces dépôts. Security filtre, reviewer filtre encore, comms.allow avant de quitter le local. Lovable n'entre pas."
       },
@@ -1223,6 +1290,8 @@
         "name": "Proximity Agency",
         "chief": "deploy",
         "department": "azure",
+        "function": "manager.line",
+        "product": "Comptes hors WordPress et hors produits Proximity nommés",
         "revenue": "L'autre équipe : comptes qui ne sont pas le WordPress ni les produits Proximity nommés.",
         "guard": "Ne pas committer ces dépôts sur le département WordPress, ni l'inverse."
       },
@@ -1231,6 +1300,8 @@
         "name": "Scan App",
         "chief": "comms",
         "department": "marche",
+        "function": "operator.work",
+        "product": "Stock du scanner interne",
         "revenue": "Le scan tient le stock vrai. La fiche vend ce stock. La promo et le média tournent autour de la fiche, pas autour de la photo seule.",
         "guard": "On ne publie pas l'image brute de la base. Photo générée ou trouvée, avec les droits. Une personne identifiable n'est pas un produit.",
         "work": [
@@ -1249,6 +1320,8 @@
         "name": "Panda",
         "chief": "architect",
         "department": "ingenierie",
+        "function": "architect.plan",
+        "product": "Evolu-Jeunes/Panda",
         "revenue": "White-glove : IA, installation, cours, entreprises et particuliers.",
         "guard": "On vend le service. On ne déploie pas chez le client sans allow."
       },
@@ -1257,6 +1330,8 @@
         "name": "NFT + Giant",
         "chief": "security",
         "department": "controle",
+        "function": "security.triage",
+        "product": "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant",
         "revenue": "Art avec utilité, token Giant, tirages de visibilité.",
         "guard": "Pas de mint ni de campagne sans revue risque et allow."
       },
@@ -1265,6 +1340,8 @@
         "name": "École",
         "chief": "research",
         "department": "marche",
+        "function": "research.ingest",
+        "product": "Evolu-Jeunes/educonnexion",
         "revenue": "Cours tech (WordPress, Web3).",
         "guard": "Le cours décrit. Il ne promet pas un gain de trading."
       },
@@ -1273,6 +1350,8 @@
         "name": "Marketing",
         "chief": "planner",
         "department": "marche",
+        "function": "comms.send",
+        "product": "Evolu-Jeunes/CRM",
         "revenue": "Gestion marketing des business corporate.",
         "guard": "Une campagne à la fois. Mesurer avant d'élargir."
       },
@@ -1281,6 +1360,8 @@
         "name": "Empire Media",
         "chief": "delivery",
         "department": "operations",
+        "function": "delivery.advance",
+        "product": "Evolu-Jeunes/EmpireMedia",
         "revenue": "Live sell du stock Scan App, sur toutes les plateformes live.",
         "guard": "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."
       },
@@ -1289,6 +1370,8 @@
         "name": "Trading",
         "chief": "investigator",
         "department": "controle",
+        "function": "investigator.trace",
+        "product": "Bots et Giant",
         "revenue": "Bots sur exchanges, Web3, liés à Giant.",
         "guard": "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."
       }
@@ -1461,7 +1544,7 @@
   },
   "gaps": null,
   "rules": [
-    "Coopérative : CEO, CTO, CMP. Huit départements. Quinze employés spécialisés. WordPress et l'autre équipe Proximity ne partagent pas les mêmes dépôts.",
+    "Coopérative : CEO, CTO, CMP. Neuf départements. Quinze employés spécialisés. Le flow stack relie chaque division à une fonction et à un produit.",
     "Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
     "La chaîne des coups ne se réécrit pas.",
     "L'agence centrale rapporte. Epicenter décide. Elle n'est pas un siège de ce tableau.",

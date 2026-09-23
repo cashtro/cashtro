@@ -37,11 +37,9 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 	return []kernel.Agent{
 		resident(kernel.Spec{
 			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
-			Role: "kernel", Summary: "Boots the OS and publishes the manifesto.",
-			Capabilities: []string{"os.about"}, Autostart: true,
-		}, func(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
-			return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
-		}),
+			Role: "kernel", Summary: "Voltron boots the OS and can start the same cycle Epicenter runs.",
+			Capabilities: []string{"os.about", "os.cycle"}, Autostart: true,
+		}, initInvoke),
 		&deliveryAgent{cat: cat},
 		&routerAgent{bus: router},
 		&researchAgent{},
@@ -51,30 +49,30 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 			Capabilities: []string{"explorer.search"}, Autostart: true,
 		}, explorerInvoke),
 		resident(kernel.Spec{
-			ID: "operator", Name: "Operator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "computer-use", Summary: "Drives the browser and desktop the way a shipper would.",
-			Capabilities: []string{"operator.browse"}, Autostart: true,
-		}, nil),
+			ID: "operator", Name: "Operator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "computer-use", Summary: "Travaille en local sur un dépôt du roster. Ne pousse rien.",
+			Capabilities: []string{"operator.work", "operator.browse"}, Autostart: true,
+		}, operatorInvoke),
 		resident(kernel.Spec{
-			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "qa", Summary: "Reads walkthrough video and screenshot artifacts before we call a ship done.",
+			ID: "reviewer", Name: "Reviewer", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "qa", Summary: "Filtre encore : garde l'option la plus courte.",
 			Capabilities: []string{"reviewer.watch"}, Autostart: true,
-		}, nil),
+		}, reviewerInvoke),
 		resident(kernel.Spec{
-			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "design", Summary: "Shapes AI-powered apps, agents, and workflows before they hit the line.",
+			ID: "architect", Name: "Architect", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "design", Summary: "Relie la division, la fonction et le produit avant le cycle.",
 			Capabilities: []string{"architect.plan"}, Autostart: true,
-		}, nil),
+		}, architectInvoke),
 		resident(kernel.Spec{
-			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "release", Summary: "Owns CI, preview, and production promotion.",
+			ID: "deploy", Name: "Deploy", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "release", Summary: "Enregistre une sortie locale. La production attend comms.allow et ne part pas d'ici.",
 			Capabilities: []string{"deploy.release"}, Autostart: true,
-		}, nil),
+		}, deployInvoke),
 		resident(kernel.Spec{
-			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "guard", Summary: "Triage CVE and SAST findings on the board before they ship.",
+			ID: "security", Name: "Security", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "guard", Summary: "Filtre les secrets et la sortie d'un site déjà en ligne. Pas d'attaque.",
 			Capabilities: []string{"security.triage"}, Autostart: true,
-		}, nil),
+		}, securityInvoke),
 		resident(kernel.Spec{
 			ID: "memory", Name: "Memory", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "recall", Summary: "Episodic facts. Store and recall without a model.",
@@ -91,10 +89,10 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
 		resident(kernel.Spec{
-			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeResident,
-			Role: "incident", Summary: "Traces a failing check or a live incident back to the blast radius.",
+			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "incident", Summary: "Nomme la ligne, le département et les dépôts voisins. Ne lit pas un secret.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
-		}, nil),
+		}, investigatorInvoke),
 		&managerAgent{},
 	}
 }
@@ -131,6 +129,8 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.graphify",
 			"manager.ledger",
 			"manager.watch",
+			"manager.flow",
+			"manager.run",
 		},
 		Autostart: true,
 	}
@@ -402,6 +402,12 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"nodes": 39593,
 			"edges": 99285,
 		}}, nil
+
+	case "manager.flow":
+		return kernel.Result{OK: true, Message: "division, fonction, produit", Data: Flows()}, nil
+
+	case "manager.run":
+		return RunCycle(a.k, call)
 
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)

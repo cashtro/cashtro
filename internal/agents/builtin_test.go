@@ -19,7 +19,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("processes = %d, want 15", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 8 {
+	if about.Running != 15 || about.Live != 14 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -116,7 +116,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 
 	org := Chart()
-	if len(org.Seats) != 3 || len(org.Departments) != 8 || len(org.Divisions) != 9 {
+	if len(org.Seats) != 3 || len(org.Departments) != 9 || len(org.Divisions) != 9 {
 		t.Fatalf("org seats/depts/divs = %d %d %d", len(org.Seats), len(org.Departments), len(org.Divisions))
 	}
 	var scanWork int

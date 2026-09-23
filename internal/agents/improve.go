@@ -54,6 +54,11 @@ func craftFor(id string) []Craft {
 			{Mark: "ressource azure", Fill: "Ressource Azure : le service ou le site branché, nommé."},
 			{Mark: "site live", Fill: "Site live : lecture seule, preview, puis accord. Pas de réécriture directe."},
 		}
+	case "flux":
+		return []Craft{
+			{Mark: "fonction", Fill: "Fonction : la capability du worker qui exécute ce pas."},
+			{Mark: "produit", Fill: "Produit : le dépôt ou la ligne où ce pas a le droit d'atterrir."},
+		}
 	case "optimisation":
 		return []Craft{
 			{Mark: "rejet", Fill: "Rejet : l'option plus lourde, avec son score."},

@@ -11,7 +11,7 @@ func TestWordPressLeavesTheOtherDepartment(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(board.Lines) != 12 || len(board.Links) != 18 || len(board.Org.Departments) != 8 {
+	if len(board.Lines) != 12 || len(board.Links) != 18 || len(board.Org.Departments) != 9 {
 		t.Fatalf("lines %d links %d depts %d", len(board.Lines), len(board.Links), len(board.Org.Departments))
 	}
 	var wordpress, proximity int

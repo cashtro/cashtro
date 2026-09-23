@@ -1,6 +1,6 @@
 package agents
 
-// Organization is the cooperative. Three chiefs, eight departments,
+// Organization is the cooperative. Three chiefs, nine departments,
 // the 15 real agentics as specialized employees. No extra processes.
 // The central agency is another repo and another prompt. It is not here.
 type Organization struct {
@@ -35,12 +35,14 @@ type Member struct {
 	Skills []string `json:"skills"`
 }
 
-// Division is a profit or activity center. One chief, one revenue, one guard.
+// Division is a profit or activity center. One chief, one function, one product.
 type Division struct {
 	ID         string   `json:"id"`
 	Name       string   `json:"name"`
 	Chief      string   `json:"chief"`
 	Department string   `json:"department"`
+	Function   string   `json:"function"`
+	Product    string   `json:"product"`
 	Revenue    string   `json:"revenue"`
 	Guard      string   `json:"guard"`
 	Work       []string `json:"work,omitempty"`
@@ -122,12 +124,24 @@ func Chart() Organization {
 					{Agent: "explorer", Title: "employé spécialisé option plus courte", Skills: []string{"Graphify", "chemin existant", "moindre coût"}},
 				},
 			},
+			{
+				ID: "flux", Name: "Flow stack", ReportsTo: "cto", Chief: "architect",
+				Mandate: "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Epicenter lance le cycle.",
+				Members: []Member{
+					{Agent: "architect", Title: "chef du flux", Skills: []string{"division", "fonction", "produit"}},
+					{Agent: "operator", Title: "worker confection", Skills: []string{"exécution locale"}},
+					{Agent: "security", Title: "worker filtre", Skills: []string{"secrets", "Loi 25"}},
+					{Agent: "reviewer", Title: "worker second filtre", Skills: []string{"option courte"}},
+					{Agent: "investigator", Title: "worker trace", Skills: []string{"rayon"}},
+					{Agent: "deploy", Title: "worker sortie", Skills: []string{"preview", "allow"}},
+				},
+			},
 		},
 		Divisions: []Division{
-			{ID: "wordpress", Name: "WordPress Proximity", Chief: "operator", Department: "wordpress", Revenue: "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity.", Guard: "Le commit ne sort pas de ces dépôts. Security filtre, reviewer filtre encore, comms.allow avant de quitter le local. Lovable n'entre pas."},
-			{ID: "proximity", Name: "Proximity Agency", Chief: "deploy", Department: "azure", Revenue: "L'autre équipe : comptes qui ne sont pas le WordPress ni les produits Proximity nommés.", Guard: "Ne pas committer ces dépôts sur le département WordPress, ni l'inverse."},
+			{ID: "wordpress", Name: "WordPress Proximity", Chief: "operator", Department: "wordpress", Function: "operator.work", Product: "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity", Revenue: "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity.", Guard: "Le commit ne sort pas de ces dépôts. Security filtre, reviewer filtre encore, comms.allow avant de quitter le local. Lovable n'entre pas."},
+			{ID: "proximity", Name: "Proximity Agency", Chief: "deploy", Department: "azure", Function: "manager.line", Product: "Comptes hors WordPress et hors produits Proximity nommés", Revenue: "L'autre équipe : comptes qui ne sont pas le WordPress ni les produits Proximity nommés.", Guard: "Ne pas committer ces dépôts sur le département WordPress, ni l'inverse."},
 			{
-				ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche",
+				ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche", Function: "operator.work", Product: "Stock du scanner interne",
 				Revenue: "Le scan tient le stock vrai. La fiche vend ce stock. La promo et le média tournent autour de la fiche, pas autour de la photo seule.",
 				Guard:   "On ne publie pas l'image brute de la base. Photo générée ou trouvée, avec les droits. Une personne identifiable n'est pas un produit.",
 				Work: []string{
@@ -141,12 +155,12 @@ func Chart() Organization {
 					"Le stock vient de inventory-scanner-theta.vercel.app. Le repo est le marketplace, qui vend via MCP et Stripe. Empire vend le même stock en live. Proximity n'est pas dans cette chaîne.",
 				},
 			},
-			{ID: "panda", Name: "Panda", Chief: "architect", Department: "ingenierie", Revenue: "White-glove : IA, installation, cours, entreprises et particuliers.", Guard: "On vend le service. On ne déploie pas chez le client sans allow."},
-			{ID: "nft-giant", Name: "NFT + Giant", Chief: "security", Department: "controle", Revenue: "Art avec utilité, token Giant, tirages de visibilité.", Guard: "Pas de mint ni de campagne sans revue risque et allow."},
-			{ID: "ecole", Name: "École", Chief: "research", Department: "marche", Revenue: "Cours tech (WordPress, Web3).", Guard: "Le cours décrit. Il ne promet pas un gain de trading."},
-			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Revenue: "Gestion marketing des business corporate.", Guard: "Une campagne à la fois. Mesurer avant d'élargir."},
-			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Revenue: "Live sell du stock Scan App, sur toutes les plateformes live.", Guard: "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."},
-			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
+			{ID: "panda", Name: "Panda", Chief: "architect", Department: "ingenierie", Function: "architect.plan", Product: "Evolu-Jeunes/Panda", Revenue: "White-glove : IA, installation, cours, entreprises et particuliers.", Guard: "On vend le service. On ne déploie pas chez le client sans allow."},
+			{ID: "nft-giant", Name: "NFT + Giant", Chief: "security", Department: "controle", Function: "security.triage", Product: "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant", Revenue: "Art avec utilité, token Giant, tirages de visibilité.", Guard: "Pas de mint ni de campagne sans revue risque et allow."},
+			{ID: "ecole", Name: "École", Chief: "research", Department: "marche", Function: "research.ingest", Product: "Evolu-Jeunes/educonnexion", Revenue: "Cours tech (WordPress, Web3).", Guard: "Le cours décrit. Il ne promet pas un gain de trading."},
+			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Function: "comms.send", Product: "Evolu-Jeunes/CRM", Revenue: "Gestion marketing des business corporate.", Guard: "Une campagne à la fois. Mesurer avant d'élargir."},
+			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Function: "delivery.advance", Product: "Evolu-Jeunes/EmpireMedia", Revenue: "Live sell du stock Scan App, sur toutes les plateformes live.", Guard: "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."},
+			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Function: "investigator.trace", Product: "Bots et Giant", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
 		},
 	}
 	for i := range org.Departments {
