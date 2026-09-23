@@ -21,11 +21,11 @@ func Lines() []Line {
 		},
 		{
 			ID: "wordpress", Name: "WordPress Proximity", Brain: "Forgeron",
-			Mandate: "Tartaria et Voltron dirigent ce département. Le commit, lui, ne part que d'ici. " +
+			Mandate: "Instinct et Voltron dirigent ce département. Le commit, lui, ne part que d'ici. " +
 				"Sites WordPress Proximity : PHP, ACF Pro, thèmes, XAMPP. " +
 				"Et les produits à connaître et à committer : Proximity, Next Proximity (apps/web), Proximity App, Api-Proximity. " +
 				"Proximity App est le WordPress de l'agence. Lovable n'entre pas.",
-			Controls: "Operator confectionne. Security filtre. Reviewer filtre encore. Memory garde le contexte. Rien en ligne sans comms.allow. Aucun commit sur Tartaria, Voltron, ou une autre marque.",
+			Controls: "Operator confectionne. Security filtre. Reviewer filtre encore. Memory garde le contexte. Rien en ligne sans comms.allow. Aucun commit sur Instinct, Voltron, ou une autre marque.",
 			Repos: []string{
 				"Evolu-Jeunes/immobilier", "Evolu-Jeunes/hypotheque", "Evolu-Jeunes/Hypotheque.ca",
 				"Evolu-Jeunes/MD-clinic",
@@ -87,9 +87,9 @@ func Lines() []Line {
 		},
 		{
 			ID: "nft-giant", Name: "NFT + token Giant", Brain: "Hustler",
-			Mandate: "Giant a son propre cerveau crypto et il est en formation. Le mint n'est pas une option. Voltron ouvre le cycle, Giant le fait tourner, Tartaria décide en dernier. " +
+			Mandate: "Giant a son propre cerveau crypto et il est en formation. Le mint n'est pas une option. Voltron ouvre le cycle, Giant le fait tourner, Instinct décide en dernier. " +
 				"NFT pour l'art utile, token GNT, lecture de marché, gems en note, modèles de bots. Aucun ordre live.",
-			Controls: "Le cerveau de Giant tient les agents crypto. Tartaria est le dernier mot. Pas de mint, pas d'ordre, pas de pont.",
+			Controls: "Le cerveau de Giant tient les agents crypto. Instinct est le dernier mot. Pas de mint, pas d'ordre, pas de pont.",
 			Repos:    []string{"Evolu-Jeunes/Nft", "Evolu-Jeunes/Giant"},
 		},
 		{
@@ -102,7 +102,7 @@ func Lines() []Line {
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
 			Mandate: "L'agence, avec Panda et Proximity cloud, relie chaque chaîne par la copie agents du CRM Lovable. " +
 				"Les leads et le marketing passent là. Le CRM Lovable de Fix Tout n'est pas ce carnet. Lovable n'édite pas les thèmes.",
-			Controls: "Explorer lit le carnet des agents. Memory y dépose le passage. Tartaria décide avant un envoi.",
+			Controls: "Explorer lit le carnet des agents. Memory y dépose le passage. Instinct décide avant un envoi.",
 			Repos:    []string{},
 		},
 		{
@@ -134,8 +134,8 @@ func Lines() []Line {
 			ID: "fix2", Name: "Fix Tout", Brain: "Forgeron",
 			Mandate: "Homme à tout faire, résidentiel. Fix Tout est son propre site et sa propre base, Evolu-Jeunes/Fix2. " +
 				"Il garde tous les clients. Le carnet des agents est Evolu-Jeunes/CRM-Agents. Ce n'est pas un thème WordPress. " +
-				"La voix Vapi de ce CRM ne lit que cette base. Quarante agents. Tartaria décide en dernier.",
-			Controls: "Le site est Evolu-Jeunes/Fix2. Les clients restent sur le site de Fix Tout. Rien n'est envoyé, payé ou déposé sans Tartaria.",
+				"La voix Vapi de ce CRM ne lit que cette base. Quarante agents. Instinct décide en dernier.",
+			Controls: "Le site est Evolu-Jeunes/Fix2. Les clients restent sur le site de Fix Tout. Rien n'est envoyé, payé ou déposé sans Instinct.",
 			Repos:    []string{"Evolu-Jeunes/Fix2", "Evolu-Jeunes/CRM"},
 		},
 		{

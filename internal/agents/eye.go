@@ -2,7 +2,7 @@ package agents
 
 // TheEye is the defensive watch. It reads cashtro and Evolu-Jeunes
 // and names a weakness. Every change goes through Epicenter first.
-// Tartaria sits there. The watch does not attack or copy a secret.
+// Instinct sits there. The watch does not attack or copy a secret.
 type Eye struct {
 	Name             string   `json:"name"`
 	Repo             string   `json:"repo"`
@@ -32,7 +32,7 @@ func TheEye() Eye {
 		CopiesSecrets:    false,
 		AppliesPatch:     false,
 		ThroughEpicenter: true,
-		DecidedBy:        "tartaria",
+		DecidedBy:        "instinct",
 	}
 }
 
@@ -41,8 +41,8 @@ func EyeChange(via, seat string) (bool, string) {
 	if via != "epicenter" && via != "cashtro/epicenter" {
 		return false, "The Eye passe par Epicenter avant tout changement."
 	}
-	if seat != "tartaria" {
-		return false, "Tartaria siège dans Epicenter. Sans lui, aucun changement."
+	if seat != "instinct" {
+		return false, "Instinct siège dans Epicenter. Sans lui, aucun changement."
 	}
 	return true, "brouillon ouvert. rien n'est appliqué"
 }

@@ -1,7 +1,7 @@
 {
   "department": "wordpress",
   "directedBy": [
-    "tartaria",
+    "instinct",
     "voltron"
   ],
   "commitsOnlyTo": [
@@ -12,7 +12,7 @@
     "Evolu-Jeunes/Api-Proximity"
   ],
   "doesNotCommitTo": [
-    "tartaria",
+    "instinct",
     "voltron",
     "lovable",
     "autres marques"

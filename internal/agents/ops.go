@@ -1,7 +1,7 @@
 package agents
 
 // OpsPartner is the operations conglomerate. Three chains, twenty agents,
-// five brains each. It loads Tartaria and Voltron. It does not send or charge.
+// five brains each. It loads Instinct and Voltron. It does not send or charge.
 type OpsPartner struct {
 	Repo          string   `json:"repo"`
 	Source        string   `json:"source"`
@@ -9,7 +9,7 @@ type OpsPartner struct {
 	Chains        []string `json:"chains"`
 	Agents        int      `json:"agents"`
 	Brains        int      `json:"brains"`
-	LoadsTartaria bool     `json:"loadsTartariaBrain"`
+	LoadsInstinct bool     `json:"loadsInstinctBrain"`
 	LoadsVoltron  bool     `json:"loadsVoltronBrain"`
 	Automated     bool     `json:"automated"`
 	Weapons       bool     `json:"weapons"`
@@ -30,7 +30,7 @@ func Ops() OpsPartner {
 		Chains:        []string{"accueil", "terrain", "propriete"},
 		Agents:        60,
 		Brains:        300,
-		LoadsTartaria: true,
+		LoadsInstinct: true,
 		LoadsVoltron:  true,
 		Automated:     true,
 		Weapons:       false,
@@ -39,6 +39,6 @@ func Ops() OpsPartner {
 		Dialed:        false,
 		OpenedBy:      "voltron",
 		OrderedBy:     "scrum",
-		DecidedBy:     "tartaria",
+		DecidedBy:     "instinct",
 	}
 }

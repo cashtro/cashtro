@@ -50,7 +50,7 @@ type Blueprint struct {
 func infrastructureOf(id string) string {
 	switch id {
 	case "control":
-		return "kernel, Voltron, Tartaria, Graphify"
+		return "kernel, Voltron, Instinct, Graphify"
 	case "wordpress":
 		return "XAMPP, PHP, ACF Pro"
 	case "proximity":

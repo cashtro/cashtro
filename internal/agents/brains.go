@@ -11,15 +11,15 @@ type LoadedBrain struct {
 }
 
 // Brains is the set that must be analyzed, not only named.
-// Tartaria's five, Voltron, Scrum, Forge, The Eye, Giant, and the three OPS chains.
+// Instinct's five, Voltron, Scrum, Forge, The Eye, Giant, and the three OPS chains.
 func Brains() []LoadedBrain {
 	return []LoadedBrain{
-		{ID: "tartaria", Name: "Tartaria", Seat: "tartaria", Dept: "direction", Do: "Charger les cinq cerveaux et trancher en dernier."},
-		{ID: "architecte", Name: "L'Architecte", Seat: "tartaria", Dept: "ingenierie", Do: "Penser le méta-cerveau. Deux façons, puis la plus courte."},
-		{ID: "cartographe", Name: "Le Cartographe", Seat: "tartaria", Dept: "direction", Do: "Voir chaque dépôt sur Graphify avant le coup."},
-		{ID: "forgeron", Name: "Le Forgeron", Seat: "tartaria", Dept: "operations", Do: "Construire le brouillon. Pas une arme."},
-		{ID: "orfevre", Name: "L'Orfèvre", Seat: "tartaria", Dept: "controle", Do: "Exécuter le contrôle. Citer la règle."},
-		{ID: "hustler", Name: "Le Hustler", Seat: "tartaria", Dept: "marche", Do: "Relier les chaînes. Une offre, une mesure."},
+		{ID: "instinct", Name: "Instinct", Seat: "instinct", Dept: "direction", Do: "Charger les cinq cerveaux et trancher en dernier."},
+		{ID: "architecte", Name: "L'Architecte", Seat: "instinct", Dept: "ingenierie", Do: "Penser le méta-cerveau. Deux façons, puis la plus courte."},
+		{ID: "cartographe", Name: "Le Cartographe", Seat: "instinct", Dept: "direction", Do: "Voir chaque dépôt sur Graphify avant le coup."},
+		{ID: "forgeron", Name: "Le Forgeron", Seat: "instinct", Dept: "operations", Do: "Construire le brouillon. Pas une arme."},
+		{ID: "orfevre", Name: "L'Orfèvre", Seat: "instinct", Dept: "controle", Do: "Exécuter le contrôle. Citer la règle."},
+		{ID: "hustler", Name: "Le Hustler", Seat: "instinct", Dept: "marche", Do: "Relier les chaînes. Une offre, une mesure."},
 		{ID: "voltron", Name: "Voltron", Seat: "voltron", Dept: "flux", Do: "Ouvrir le cycle et tenir le noyau allumé."},
 		{ID: "scrum", Name: "Scrum", Seat: "scrum", Dept: "direction", Do: "Prendre chaque dépôt et chaque projet nouveau."},
 		{ID: "forge", Name: "Forge", Seat: "forge", Dept: "ingenierie", Do: "Faire tourner le conglomérat de développement. Pas une arme."},
@@ -48,7 +48,7 @@ func brainKnown(id string) (map[string]string, bool) {
 	}
 	return map[string]string{
 		"situation":   b.Name + " est chargé. " + b.Do,
-		"manque":      "La décision de Tartaria avant un envoi, un paiement, un appel, ou un déploiement.",
+		"manque":      "La décision d'Instinct avant un envoi, un paiement, un appel, ou un déploiement.",
 		"intouchable": "Un site client déjà en ligne, un secret, et une arme.",
 	}, true
 }
@@ -60,7 +60,7 @@ func brainChain(id string) ([]ChainStep, bool) {
 	}
 	return []ChainStep{
 		{Line: id, Order: 1, Agent: "memory", Do: b.Do},
-		{Line: id, Order: 2, Agent: "manager", Do: "Tartaria lit ce cerveau et décide. Le coup le plus court reste."},
+		{Line: id, Order: 2, Agent: "manager", Do: "Instinct lit ce cerveau et décide. Le coup le plus court reste."},
 	}, true
 }
 

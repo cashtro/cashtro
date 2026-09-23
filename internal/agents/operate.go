@@ -144,7 +144,7 @@ func boardFromLines() Board {
 			"Coopérative : CEO, CTO, CMP. Neuf départements. Quinze employés spécialisés. Le flow stack relie chaque division à une fonction et à un produit.",
 			"Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
 			"La chaîne des coups ne se réécrit pas.",
-			"L'agence centrale rapporte. Tartaria décide. Elle n'est pas un siège de ce tableau.",
+			"L'agence centrale rapporte. Instinct décide. Elle n'est pas un siège de ce tableau.",
 			"Le roster de 1001 n'est pas des processus.",
 			"Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
 			"Les sites clients déjà en production se lisent, ils ne se déploient pas.",
@@ -324,7 +324,7 @@ func readGraph(path string) (GraphView, error) {
 			repos[n.ID] = true
 		}
 	}
-	hubs := map[string]bool{"tartaria": true, "evolu": true, "cashtro": true}
+	hubs := map[string]bool{"instinct": true, "evolu": true, "cashtro": true}
 	bridges := 0
 	for _, e := range g.Links {
 		if hubs[e.Source] || hubs[e.Target] {

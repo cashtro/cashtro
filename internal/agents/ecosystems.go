@@ -13,23 +13,23 @@ type Link struct {
 func Links() []Link {
 	return []Link{
 		{
-			From: "voltron", To: "tartaria",
-			Via:    "Voltron tient le kernel allumé. Tartaria tient le tableau. L'un sans l'autre ne fait rien.",
+			From: "voltron", To: "instinct",
+			Via:    "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien.",
 			Agents: []string{"init", "manager"},
 		},
 		{
-			From: "tartaria", To: "graphify",
+			From: "instinct", To: "graphify",
 			Via:    "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant.",
 			Agents: []string{"explorer", "memory"},
 		},
 		{
-			From: "tartaria", To: "proximity",
+			From: "instinct", To: "proximity",
 			Via:    "le cerveau principal ouvre le cycle et tient l'usine de sites",
 			Agents: []string{"init", "manager", "planner"},
 		},
 		{
-			From: "tartaria", To: "wordpress",
-			Via:    "Tartaria et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+			From: "instinct", To: "wordpress",
+			Via:    "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
 			Agents: []string{"manager", "operator"},
 		},
 		{
@@ -44,7 +44,7 @@ func Links() []Link {
 		},
 		{
 			From: "nft-giant", To: "trading",
-			Via:    "Giant a son cerveau. Les bots restent des modèles. Tartaria décide en dernier. Aucun ordre live.",
+			Via:    "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live.",
 			Agents: []string{"architect", "security", "investigator", "router"},
 		},
 		{

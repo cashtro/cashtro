@@ -685,15 +685,15 @@
   "links": [
     {
       "from": "voltron",
-      "to": "tartaria",
-      "via": "Voltron tient le kernel allumé. Tartaria tient le tableau. L'un sans l'autre ne fait rien.",
+      "to": "instinct",
+      "via": "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien.",
       "agents": [
         "init",
         "manager"
       ]
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "graphify",
       "via": "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant.",
       "agents": [
@@ -702,7 +702,7 @@
       ]
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "proximity",
       "via": "le cerveau principal ouvre le cycle et tient l'usine de sites",
       "agents": [
@@ -712,9 +712,9 @@
       ]
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "wordpress",
-      "via": "Tartaria et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+      "via": "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
       "agents": [
         "manager",
         "operator"
@@ -743,7 +743,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Tartaria décide en dernier. Aucun ordre live.",
+      "via": "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live.",
       "agents": [
         "architect",
         "security",
@@ -1114,7 +1114,7 @@
         "name": "WordPress",
         "reportsTo": "cto",
         "chief": "operator",
-        "mandate": "Tartaria et Voltron dirigent. Le commit reste sur les sites WordPress (PHP, ACF Pro, XAMPP) et sur Proximity, Next Proximity, Proximity App, et Api-Proximity. Lovable n'y touche pas.",
+        "mandate": "Instinct et Voltron dirigent. Le commit reste sur les sites WordPress (PHP, ACF Pro, XAMPP) et sur Proximity, Next Proximity, Proximity App, et Api-Proximity. Lovable n'y touche pas.",
         "craft": [
           {
             "mark": "thème",
@@ -1263,7 +1263,7 @@
         "name": "Flow stack",
         "reportsTo": "cto",
         "chief": "architect",
-        "mandate": "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Tartaria lance le cycle.",
+        "mandate": "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Instinct lance le cycle.",
         "craft": [
           {
             "mark": "fonction",
@@ -1383,7 +1383,7 @@
         "function": "manager.run",
         "product": "Evolu-Jeunes/Giant brain",
         "revenue": "Art avec utilité, token Giant, lecture de marché.",
-        "guard": "Tartaria décide en dernier. Pas de mint, pas d'ordre, pas de pont."
+        "guard": "Instinct décide en dernier. Pas de mint, pas d'ordre, pas de pont."
       },
       {
         "id": "ecole",
@@ -1403,7 +1403,7 @@
         "function": "manager.crm",
         "product": "Evolu-Jeunes/CRM-Agents",
         "revenue": "L'agence: marketing, Panda, Proximity cloud. Elle relie chaque chaîne.",
-        "guard": "Les leads passent dans la copie agents. La copie Fix Tout n'y entre pas. Lovable n'entre pas dans WordPress. Tartaria décide avant un envoi."
+        "guard": "Les leads passent dans la copie agents. La copie Fix Tout n'y entre pas. Lovable n'entre pas dans WordPress. Instinct décide avant un envoi."
       },
       {
         "id": "fix2",
@@ -1413,7 +1413,7 @@
         "function": "operator.work",
         "product": "Evolu-Jeunes/Fix2",
         "revenue": "Homme à tout faire, résidentiel. Le site garde tous les clients.",
-        "guard": "Pas le carnet des agents. Pas WordPress. Pas d'envoi, pas de paiement, pas de permis déposé. Tartaria décide."
+        "guard": "Pas le carnet des agents. Pas WordPress. Pas d'envoi, pas de paiement, pas de permis déposé. Instinct décide."
       },
       {
         "id": "empire",
@@ -1449,44 +1449,44 @@
   },
   "brains": [
     {
-      "id": "tartaria",
-      "name": "Tartaria",
-      "seat": "tartaria",
+      "id": "instinct",
+      "name": "Instinct",
+      "seat": "instinct",
       "dept": "direction",
       "do": "Charger les cinq cerveaux et trancher en dernier."
     },
     {
       "id": "architecte",
       "name": "L'Architecte",
-      "seat": "tartaria",
+      "seat": "instinct",
       "dept": "ingenierie",
       "do": "Penser le méta-cerveau. Deux façons, puis la plus courte."
     },
     {
       "id": "cartographe",
       "name": "Le Cartographe",
-      "seat": "tartaria",
+      "seat": "instinct",
       "dept": "direction",
       "do": "Voir chaque dépôt sur Graphify avant le coup."
     },
     {
       "id": "forgeron",
       "name": "Le Forgeron",
-      "seat": "tartaria",
+      "seat": "instinct",
       "dept": "operations",
       "do": "Construire le brouillon. Pas une arme."
     },
     {
       "id": "orfevre",
       "name": "L'Orfèvre",
-      "seat": "tartaria",
+      "seat": "instinct",
       "dept": "controle",
       "do": "Exécuter le contrôle. Citer la règle."
     },
     {
       "id": "hustler",
       "name": "Le Hustler",
-      "seat": "tartaria",
+      "seat": "instinct",
       "dept": "marche",
       "do": "Relier les chaînes. Une offre, une mesure."
     },
@@ -1717,7 +1717,7 @@
     "Coopérative : CEO, CTO, CMP. Neuf départements. Quinze employés spécialisés. Le flow stack relie chaque division à une fonction et à un produit.",
     "Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
     "La chaîne des coups ne se réécrit pas.",
-    "L'agence centrale rapporte. Tartaria décide. Elle n'est pas un siège de ce tableau.",
+    "L'agence centrale rapporte. Instinct décide. Elle n'est pas un siège de ce tableau.",
     "Le roster de 1001 n'est pas des processus.",
     "Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
     "Les sites clients déjà en production se lisent, ils ne se déploient pas.",

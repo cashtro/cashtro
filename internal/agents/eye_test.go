@@ -16,16 +16,16 @@ func TestTheEyeWatchesOurRepos(t *testing.T) {
 	if eye.Gate != "cashtro/epicenter" || !eye.ThroughEpicenter {
 		t.Fatalf("gate %+v", eye)
 	}
-	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "tartaria" {
-		t.Fatal("the eye must withhold secrets and wait for Tartaria")
+	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "instinct" {
+		t.Fatal("the eye must withhold secrets and wait for Instinct")
 	}
-	if ok, _ := EyeChange("eye", "tartaria"); ok {
+	if ok, _ := EyeChange("eye", "instinct"); ok {
 		t.Fatal("a change outside Epicenter must stay closed")
 	}
 	if ok, _ := EyeChange("cashtro/epicenter", "voltron"); ok {
 		t.Fatal("another seat must not open the change")
 	}
-	ok, msg := EyeChange("epicenter", "tartaria")
+	ok, msg := EyeChange("epicenter", "instinct")
 	if !ok || msg != "brouillon ouvert. rien n'est appliqué" {
 		t.Fatalf("epicenter change = %v %s", ok, msg)
 	}

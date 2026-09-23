@@ -37,7 +37,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 	return []kernel.Agent{
 		resident(kernel.Spec{
 			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
-			Role: "kernel", Summary: "Voltron boots the OS and can start the same cycle Tartaria runs.",
+			Role: "kernel", Summary: "Voltron boots the OS and can start the same cycle Instinct runs.",
 			Capabilities: []string{"os.about", "os.cycle", "os.engine"}, Autostart: true,
 		}, initInvoke),
 		&deliveryAgent{cat: cat},
@@ -97,7 +97,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 	}
 }
 
-// managerAgent is the Tartaria project manager. It oversees all 57 repos
+// managerAgent is the Instinct project manager. It oversees all 57 repos
 // across cashtro + Evolu-Jeunes, reads the project fiches, queries the
 // Graphify map, and coordinates the five brains.
 type managerAgent struct {
@@ -109,7 +109,7 @@ type managerAgent struct {
 func (a *managerAgent) Spec() kernel.Spec {
 	return kernel.Spec{
 		ID: "manager", Name: "Manager", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
-		Role:    "tartaria",
+		Role:    "instinct",
 		Summary: "CEO of the cooperative. Loads the operating board and coordinates departments.",
 		Capabilities: []string{
 			"manager.status",
@@ -151,7 +151,7 @@ func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 	}
 	a.board = board
 	evolu, cashtro := board.counts()
-	k.Publish("manager", "tartaria", "operating board loaded", map[string]any{
+	k.Publish("manager", "instinct", "operating board loaded", map[string]any{
 		"fiches":  board.Fiches,
 		"evolu":   evolu,
 		"cashtro": cashtro,
@@ -162,7 +162,7 @@ func (a *managerAgent) Boot(ctx context.Context, k *kernel.Kernel) error {
 	})
 	_, _ = a.runEcosystems()
 	a.moves = AppendMove(nil, "boot", StrategyQuestions()[0].Ask, "Le tableau est relu. Chaque ligne est un nœud. Les trous sont publiés.")
-	k.Publish("manager", "tartaria", "move chain extended", map[string]any{
+	k.Publish("manager", "instinct", "move chain extended", map[string]any{
 		"index": a.moves[0].Index,
 		"hash":  a.moves[0].Hash,
 	})
@@ -392,7 +392,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			return kernel.Result{OK: false, Message: "brain and repo required"}, nil
 		}
 		_, _ = a.k.Post("manager", "planner", "assign", brain+":"+repo)
-		a.k.Remember("tartaria", "assigned "+repo+" to "+brain)
+		a.k.Remember("instinct", "assigned "+repo+" to "+brain)
 		return kernel.Result{OK: true, Message: "assigned " + repo + " → " + brain, Data: map[string]any{
 			"brain": brain, "repo": repo,
 		}}, nil
@@ -403,7 +403,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			query = payloadQuery(call, "prompt")
 		}
 		_, _ = a.k.Post("manager", "explorer", "graphify", query)
-		a.k.Remember("tartaria", "graphify query: "+query)
+		a.k.Remember("instinct", "graphify query: "+query)
 		return kernel.Result{OK: true, Message: "graphify query: " + query, Data: map[string]any{
 			"query": query,
 			"nodes": 39593,

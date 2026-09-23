@@ -1,10 +1,10 @@
 {
-  "anchor": "7ff3969234a1d6fb7349eb90a44a90ad3366b4805b75ff9853122cc65dcfc2de",
+  "anchor": "6933ebed648fca880ce338eb7f06401899460f2967374df80f286b9f5d18e2c0",
   "constellations": [
     {
       "id": "control",
       "name": "Cerveau principal",
-      "infrastructure": "kernel, Voltron, Tartaria, Graphify",
+      "infrastructure": "kernel, Voltron, Instinct, Graphify",
       "function": "memory.store",
       "product": "cashtro/cashtro",
       "agent": "manager"
@@ -117,15 +117,15 @@
   "links": [
     {
       "from": "voltron",
-      "to": "tartaria",
-      "via": "Voltron tient le kernel allumé. Tartaria tient le tableau. L'un sans l'autre ne fait rien.",
+      "to": "instinct",
+      "via": "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien.",
       "agents": [
         "init",
         "manager"
       ]
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "graphify",
       "via": "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant.",
       "agents": [
@@ -134,7 +134,7 @@
       ]
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "proximity",
       "via": "le cerveau principal ouvre le cycle et tient l'usine de sites",
       "agents": [
@@ -144,9 +144,9 @@
       ]
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "wordpress",
-      "via": "Tartaria et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+      "via": "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
       "agents": [
         "manager",
         "operator"
@@ -175,7 +175,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Tartaria décide en dernier. Aucun ordre live.",
+      "via": "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live.",
       "agents": [
         "architect",
         "security",
@@ -403,7 +403,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "7ff3969234a1d6fb7349eb90a44a90ad3366b4805b75ff9853122cc65dcfc2de"
+      "name": "6933ebed648fca880ce338eb7f06401899460f2967374df80f286b9f5d18e2c0"
     },
     {
       "id": "const:control",
@@ -550,7 +550,7 @@
     {
       "from": "const:control",
       "to": "anchor",
-      "via": "kernel, Voltron, Tartaria, Graphify"
+      "via": "kernel, Voltron, Instinct, Graphify"
     },
     {
       "from": "const:control",
@@ -689,23 +689,23 @@
     },
     {
       "from": "voltron",
-      "to": "tartaria",
-      "via": "Voltron tient le kernel allumé. Tartaria tient le tableau. L'un sans l'autre ne fait rien."
+      "to": "instinct",
+      "via": "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien."
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "graphify",
       "via": "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant."
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "proximity",
       "via": "le cerveau principal ouvre le cycle et tient l'usine de sites"
     },
     {
-      "from": "tartaria",
+      "from": "instinct",
       "to": "wordpress",
-      "via": "Tartaria et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API."
+      "via": "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API."
     },
     {
       "from": "graphify",
@@ -720,7 +720,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Tartaria décide en dernier. Aucun ordre live."
+      "via": "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live."
     },
     {
       "from": "empire",

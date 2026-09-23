@@ -105,15 +105,15 @@ func lineKnown(id string) map[string]string {
 	switch id {
 	case "control":
 		return map[string]string{
-			"situation":   "Le tableau est chargé. Tartaria tranche.",
+			"situation":   "Le tableau est chargé. Instinct tranche.",
 			"manque":      "Rien à inventer. Un trou de fiche arrête le coup.",
 			"intouchable": "Les sites clients déjà en ligne, et le dépôt de l'agence.",
 		}
 	case "wordpress":
 		return map[string]string{
-			"situation":   "Tartaria et Voltron dirigent. Le commit va sur un site WordPress, Proximity, Next Proximity, Proximity App, ou l'API.",
+			"situation":   "Instinct et Voltron dirigent. Le commit va sur un site WordPress, Proximity, Next Proximity, Proximity App, ou l'API.",
 			"manque":      "L'accord avant de quitter le local.",
-			"intouchable": "Lovable, Tartaria, Voltron, et toute marque qui n'est pas dans la demande.",
+			"intouchable": "Lovable, Instinct, Voltron, et toute marque qui n'est pas dans la demande.",
 		}
 	case "proximity":
 		return map[string]string{
@@ -129,9 +129,9 @@ func lineKnown(id string) map[string]string {
 		}
 	case "nft-giant":
 		return map[string]string{
-			"situation":   "Giant a son cerveau crypto et il est en formation. Voltron ouvre, Giant travaille, Tartaria décide à la fin. Le mint n'est pas une option.",
-			"manque":      "La fin de la formation, puis la décision de Tartaria, avant un mint, un ordre, un déploiement, ou un pont.",
-			"intouchable": "Remplacer le cerveau de Giant par celui de Tartaria, un ordre live, ou un mint de CQ.",
+			"situation":   "Giant a son cerveau crypto et il est en formation. Voltron ouvre, Giant travaille, Instinct décide à la fin. Le mint n'est pas une option.",
+			"manque":      "La fin de la formation, puis la décision d'Instinct, avant un mint, un ordre, un déploiement, ou un pont.",
+			"intouchable": "Remplacer le cerveau de Giant par celui d'Instinct, un ordre live, ou un mint de CQ.",
 		}
 	case "ecole":
 		return map[string]string{
@@ -142,13 +142,13 @@ func lineKnown(id string) map[string]string {
 	case "marketing":
 		return map[string]string{
 			"situation":   "L'agence — marketing, Panda, Proximity cloud — passe par le carnet des agents. Chaque chaîne s'y parle.",
-			"manque":      "Le consentement avant un envoi, et la décision de Tartaria.",
+			"manque":      "Le consentement avant un envoi, et la décision d'Instinct.",
 			"intouchable": "Le CRM Lovable de Fix Tout, un thème WordPress, un ordre Giant, et un secret.",
 		}
 	case "fix2":
 		return map[string]string{
 			"situation":   "Fix Tout est un homme à tout faire, résidentiel. Son CRM est le carnet Lovable.",
-			"manque":      "La décision de Tartaria avant un envoi, un paiement, ou un permis déposé.",
+			"manque":      "La décision d'Instinct avant un envoi, un paiement, ou un permis déposé.",
 			"intouchable": "Le carnet des agents, un chantier commercial inventé, une licence inventée, et un client inventé.",
 		}
 	case "empire":
