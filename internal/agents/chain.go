@@ -116,6 +116,13 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "trading", Order: 1, Agent: "investigator", Do: "Aucun ordre live sans réponse AMF écrite."},
 			{Line: "trading", Order: 2, Agent: "architect", Do: "Le modèle reste un modèle. Giant n'est pas un ordre."},
 		}, true
+	case "fonds":
+		return []ChainStep{
+			{Line: "fonds", Order: 1, Agent: "planner", Do: "Calculer TPS et TVQ et tenir la position du grand livre. Pas un virement."},
+			{Line: "fonds", Order: 2, Agent: "security", Do: "Filtre : pas de secret, pas de mouvement hors du livre."},
+			{Line: "fonds", Order: 3, Agent: "reviewer", Do: "Garder le calcul le plus court. Une assiette, deux taxes."},
+			{Line: "fonds", Order: 4, Agent: "comms", Do: "Le chèque reste un brouillon tant que allow n'est pas donné."},
+		}, true
 	default:
 		return nil, false
 	}

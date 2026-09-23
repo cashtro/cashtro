@@ -22,7 +22,7 @@ func TestWorkersRunAndStayLocal(t *testing.T) {
 		t.Fatalf("departments = %d", len(Chart().Departments))
 	}
 	flows := Flows()
-	if len(flows) != 9 || flows[0].Function == "" || flows[0].Product == "" {
+	if len(flows) != 10 || flows[0].Function == "" || flows[0].Product == "" {
 		t.Fatalf("flows = %+v", flows)
 	}
 

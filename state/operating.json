@@ -668,6 +668,12 @@
         "Evolu-Jeunes/bot",
         "cashtro/trading_bot-main"
       ]
+    },
+    {
+      "id": "fonds",
+      "name": "Fonds",
+      "brain": "Manager",
+      "repos": null
     }
   ],
   "links": [
@@ -1374,6 +1380,16 @@
         "product": "Bots et Giant",
         "revenue": "Bots sur exchanges, Web3, liés à Giant.",
         "guard": "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."
+      },
+      {
+        "id": "fonds",
+        "name": "Fonds",
+        "chief": "planner",
+        "department": "direction",
+        "function": "manager.tax",
+        "product": "Grand livre interne",
+        "revenue": "Position, chèques en brouillon, TPS et TVQ.",
+        "guard": "Pas une banque. Pas une déclaration. Rien ne sort sans allow."
       }
     ]
   },

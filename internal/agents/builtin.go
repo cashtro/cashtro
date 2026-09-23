@@ -38,7 +38,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 		resident(kernel.Spec{
 			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
 			Role: "kernel", Summary: "Voltron boots the OS and can start the same cycle Epicenter runs.",
-			Capabilities: []string{"os.about", "os.cycle"}, Autostart: true,
+			Capabilities: []string{"os.about", "os.cycle", "os.engine"}, Autostart: true,
 		}, initInvoke),
 		&deliveryAgent{cat: cat},
 		&routerAgent{bus: router},
@@ -131,6 +131,12 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.watch",
 			"manager.flow",
 			"manager.run",
+			"manager.engine",
+			"manager.blueprint",
+			"manager.funds",
+			"manager.tax",
+			"manager.check",
+			"manager.lens",
 		},
 		Autostart: true,
 	}
@@ -408,6 +414,24 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.run":
 		return RunCycle(a.k, call)
+
+	case "manager.engine":
+		return EngineRun(a.k, call)
+
+	case "manager.blueprint":
+		return kernel.Result{OK: true, Message: "blueprint", Data: MakeBlueprint(a.k)}, nil
+
+	case "manager.funds":
+		return FundsInvoke(a.k, call)
+
+	case "manager.tax":
+		return TaxInvoke(call)
+
+	case "manager.check":
+		return CheckInvoke(a.k, call)
+
+	case "manager.lens":
+		return kernel.Result{OK: true, Message: "lentille", Data: Lens(a.k)}, nil
 
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)

@@ -131,6 +131,13 @@ func Lines() []Line {
 				"Evolu-Jeunes/Giant",
 			},
 		},
+		{
+			ID: "fonds", Name: "Fonds", Brain: "Manager",
+			Mandate: "Grand livre interne, chèques en brouillon, TPS et TVQ. " +
+				"Ce n'est pas une banque et ce n'est pas une déclaration. Rien ne sort sans comms.allow.",
+			Controls: "Planner tient la position. Security filtre. Reviewer garde le calcul le plus court. Le chèque reste un brouillon.",
+			Repos:    []string{},
+		},
 	}
 }
 
@@ -151,7 +158,7 @@ func UsesStripe(id string, clientRequested bool) bool {
 	switch id {
 	case "proximity":
 		return clientRequested
-	case "scanapp", "control", "trading", "nft-giant", "ecole":
+	case "scanapp", "control", "trading", "nft-giant", "ecole", "fonds":
 		return false
 	case "marketplace", "propres", "marketing", "panda", "empire":
 		return true

@@ -60,12 +60,20 @@ func secretNames(text string) []string {
 }
 
 func initInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
-	if call.Capability == "os.cycle" {
+	switch call.Capability {
+	case "os.cycle":
 		res, err := RunCycle(k, call)
 		if err != nil {
 			return res, err
 		}
 		k.Publish("init", "voltron", "cycle lancé avec epicenter", map[string]any{"line": payloadQuery(call, "id")})
+		return res, nil
+	case "os.engine":
+		res, err := EngineRun(k, call)
+		if err != nil {
+			return res, err
+		}
+		k.Publish("init", "voltron", "moteur branché avec epicenter", nil)
 		return res, nil
 	}
 	return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil

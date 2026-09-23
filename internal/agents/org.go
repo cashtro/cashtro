@@ -161,6 +161,7 @@ func Chart() Organization {
 			{ID: "marketing", Name: "Marketing", Chief: "planner", Department: "marche", Function: "comms.send", Product: "Evolu-Jeunes/CRM", Revenue: "Gestion marketing des business corporate.", Guard: "Une campagne à la fois. Mesurer avant d'élargir."},
 			{ID: "empire", Name: "Empire Media", Chief: "delivery", Department: "operations", Function: "delivery.advance", Product: "Evolu-Jeunes/EmpireMedia", Revenue: "Live sell du stock Scan App, sur toutes les plateformes live.", Guard: "Le live vend une fiche déjà scannée. Pas de stock inventé. Proximity ne publie pas ces fiches."},
 			{ID: "trading", Name: "Trading", Chief: "investigator", Department: "controle", Function: "investigator.trace", Product: "Bots et Giant", Revenue: "Bots sur exchanges, Web3, liés à Giant.", Guard: "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."},
+			{ID: "fonds", Name: "Fonds", Chief: "planner", Department: "direction", Function: "manager.tax", Product: "Grand livre interne", Revenue: "Position, chèques en brouillon, TPS et TVQ.", Guard: "Pas une banque. Pas une déclaration. Rien ne sort sans allow."},
 		},
 	}
 	for i := range org.Departments {

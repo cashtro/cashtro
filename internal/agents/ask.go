@@ -160,6 +160,12 @@ func lineKnown(id string) map[string]string {
 			"manque":      "La réponse AMF écrite.",
 			"intouchable": "Un ordre ou une vente de token sans cette réponse.",
 		}
+	case "fonds":
+		return map[string]string{
+			"situation":   "Grand livre interne. TPS 5 % et TVQ 9,975 % sur l'assiette.",
+			"manque":      "L'accord avant qu'un chèque quitte le brouillon.",
+			"intouchable": "Une banque, une déclaration, et un virement réel.",
+		}
 	default:
 		return nil
 	}

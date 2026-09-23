@@ -1,0 +1,710 @@
+{
+  "anchor": "f6a89ab8309a20fe48fcc0e8ea86a59c00ba5c7afdfa42d69bc6ff7039b28622",
+  "constellations": [
+    {
+      "id": "control",
+      "name": "Cerveau principal",
+      "infrastructure": "kernel, Voltron, Epicenter, Graphify",
+      "function": "memory.store",
+      "product": "cashtro/cashtro",
+      "agent": "manager"
+    },
+    {
+      "id": "wordpress",
+      "name": "WordPress Proximity",
+      "infrastructure": "XAMPP, PHP, ACF Pro",
+      "function": "operator.work",
+      "product": "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity",
+      "agent": "operator"
+    },
+    {
+      "id": "proximity",
+      "name": "Proximity Agency",
+      "infrastructure": "comptes hors thème",
+      "function": "manager.line",
+      "product": "Comptes hors WordPress et hors produits Proximity nommés",
+      "agent": "deploy"
+    },
+    {
+      "id": "scanapp",
+      "name": "Scan App",
+      "infrastructure": "scanner interne",
+      "function": "operator.work",
+      "product": "Stock du scanner interne",
+      "agent": "comms"
+    },
+    {
+      "id": "marketplace",
+      "name": "Scan App Marketplace",
+      "infrastructure": "MCP, Stripe, fiche",
+      "function": "memory.store",
+      "product": "Evolu-Jeunes/ScanApp",
+      "agent": "manager"
+    },
+    {
+      "id": "panda",
+      "name": "Panda White Glove",
+      "infrastructure": "offre white-glove",
+      "function": "architect.plan",
+      "product": "Evolu-Jeunes/Panda",
+      "agent": "architect"
+    },
+    {
+      "id": "nft-giant",
+      "name": "NFT + token Giant",
+      "infrastructure": "art et token Giant",
+      "function": "security.triage",
+      "product": "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant",
+      "agent": "security"
+    },
+    {
+      "id": "ecole",
+      "name": "École tech",
+      "infrastructure": "programme de cours",
+      "function": "research.ingest",
+      "product": "Evolu-Jeunes/educonnexion",
+      "agent": "research"
+    },
+    {
+      "id": "marketing",
+      "name": "Marketing digital corporate",
+      "infrastructure": "Pandora, une campagne",
+      "function": "comms.send",
+      "product": "Evolu-Jeunes/CRM",
+      "agent": "planner"
+    },
+    {
+      "id": "empire",
+      "name": "Empire Media",
+      "infrastructure": "studio live",
+      "function": "delivery.advance",
+      "product": "Evolu-Jeunes/EmpireMedia",
+      "agent": "delivery"
+    },
+    {
+      "id": "propres",
+      "name": "Projets propres",
+      "infrastructure": "Stripe des projets propres",
+      "function": "memory.store",
+      "product": "cashtro/PBTM",
+      "agent": "manager"
+    },
+    {
+      "id": "trading",
+      "name": "Crypto et AI bot",
+      "infrastructure": "modèle, aucun ordre live",
+      "function": "investigator.trace",
+      "product": "Bots et Giant",
+      "agent": "investigator"
+    },
+    {
+      "id": "fonds",
+      "name": "Fonds",
+      "infrastructure": "grand livre, chèque interne, TPS et TVQ",
+      "function": "manager.tax",
+      "product": "Grand livre interne",
+      "agent": "planner"
+    }
+  ],
+  "links": [
+    {
+      "from": "voltron",
+      "to": "epicenter",
+      "via": "Voltron tient le kernel allumé. Epicenter tient le tableau. L'un sans l'autre ne fait rien.",
+      "agents": [
+        "init",
+        "manager"
+      ]
+    },
+    {
+      "from": "epicenter",
+      "to": "graphify",
+      "via": "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant.",
+      "agents": [
+        "explorer",
+        "memory"
+      ]
+    },
+    {
+      "from": "epicenter",
+      "to": "proximity",
+      "via": "le cerveau principal ouvre le cycle et tient l'usine de sites",
+      "agents": [
+        "init",
+        "manager",
+        "planner"
+      ]
+    },
+    {
+      "from": "epicenter",
+      "to": "wordpress",
+      "via": "Epicenter et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+      "agents": [
+        "manager",
+        "operator"
+      ]
+    },
+    {
+      "from": "graphify",
+      "to": "wordpress",
+      "via": "Le contexte de chaque thème WordPress est gardé ici. Lovable n'entre pas.",
+      "agents": [
+        "memory",
+        "operator",
+        "security"
+      ]
+    },
+    {
+      "from": "proximity",
+      "to": "panda",
+      "via": "Panda installe l'IA et les cours white-glove sur les sites clients",
+      "agents": [
+        "architect",
+        "operator",
+        "planner"
+      ]
+    },
+    {
+      "from": "nft-giant",
+      "to": "trading",
+      "via": "le token Giant relie l'art NFT aux bots qui tradent",
+      "agents": [
+        "architect",
+        "security",
+        "investigator",
+        "router"
+      ]
+    },
+    {
+      "from": "empire",
+      "to": "scanapp",
+      "via": "le live Empire vend le stock Scan App sur toutes les plateformes live. Proximity n'est pas dans cette chaîne.",
+      "agents": [
+        "operator",
+        "comms",
+        "delivery",
+        "reviewer",
+        "deploy"
+      ]
+    },
+    {
+      "from": "propres",
+      "to": "marketing",
+      "via": "Pandora est la maison marketing. Elle ne poste pas toute seule. Une campagne mesurée, puis Facebook, après comms.allow.",
+      "agents": [
+        "planner",
+        "comms",
+        "explorer"
+      ]
+    },
+    {
+      "from": "marketing",
+      "to": "proximity",
+      "via": "le marketing corporate promeut les sites et mesure via Graphify",
+      "agents": [
+        "comms",
+        "planner",
+        "explorer"
+      ]
+    },
+    {
+      "from": "wordpress",
+      "to": "control",
+      "via": "Créer, puis filtrer, puis filtrer encore. Security dit si c'est permis. Reviewer garde la voie la plus courte. Pas d'attaque.",
+      "agents": [
+        "operator",
+        "security",
+        "reviewer",
+        "comms"
+      ]
+    },
+    {
+      "from": "marketing",
+      "to": "empire",
+      "via": "le média du live part dans la gestion marketing",
+      "agents": [
+        "comms",
+        "explorer"
+      ]
+    },
+    {
+      "from": "marketing",
+      "to": "panda",
+      "via": "les campagnes vendent le service white-glove",
+      "agents": [
+        "comms",
+        "research"
+      ]
+    },
+    {
+      "from": "ecole",
+      "to": "proximity",
+      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
+      "agents": [
+        "research",
+        "operator",
+        "memory"
+      ]
+    },
+    {
+      "from": "ecole",
+      "to": "trading",
+      "via": "l'école enseigne le Web3 que les bots exécutent",
+      "agents": [
+        "research",
+        "memory",
+        "architect"
+      ]
+    },
+    {
+      "from": "marketplace",
+      "to": "scanapp",
+      "via": "le marketplace fetch les items du Scan App pour les vendre. Deux projets, deux écosystèmes. Il ne scanne pas.",
+      "agents": [
+        "delivery",
+        "comms"
+      ]
+    },
+    {
+      "from": "azure",
+      "to": "proximity",
+      "via": "l'équipe Azure gère le système branché, en même temps que le reste. Pas le Scan App, pas le marketplace.",
+      "agents": [
+        "deploy",
+        "operator"
+      ]
+    },
+    {
+      "from": "optimisation",
+      "to": "direction",
+      "via": "Optimisation contredit chaque proposition et ne laisse passer que l'option la plus courte",
+      "agents": [
+        "reviewer",
+        "explorer",
+        "manager"
+      ]
+    }
+  ],
+  "flows": [
+    {
+      "division": "wordpress",
+      "function": "operator.work",
+      "product": "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity",
+      "agent": "operator"
+    },
+    {
+      "division": "proximity",
+      "function": "manager.line",
+      "product": "Comptes hors WordPress et hors produits Proximity nommés",
+      "agent": "deploy"
+    },
+    {
+      "division": "scanapp",
+      "function": "operator.work",
+      "product": "Stock du scanner interne",
+      "agent": "comms"
+    },
+    {
+      "division": "panda",
+      "function": "architect.plan",
+      "product": "Evolu-Jeunes/Panda",
+      "agent": "architect"
+    },
+    {
+      "division": "nft-giant",
+      "function": "security.triage",
+      "product": "Evolu-Jeunes/Nft, Evolu-Jeunes/Giant",
+      "agent": "security"
+    },
+    {
+      "division": "ecole",
+      "function": "research.ingest",
+      "product": "Evolu-Jeunes/educonnexion",
+      "agent": "research"
+    },
+    {
+      "division": "marketing",
+      "function": "comms.send",
+      "product": "Evolu-Jeunes/CRM",
+      "agent": "planner"
+    },
+    {
+      "division": "empire",
+      "function": "delivery.advance",
+      "product": "Evolu-Jeunes/EmpireMedia",
+      "agent": "delivery"
+    },
+    {
+      "division": "trading",
+      "function": "investigator.trace",
+      "product": "Bots et Giant",
+      "agent": "investigator"
+    },
+    {
+      "division": "fonds",
+      "function": "manager.tax",
+      "product": "Grand livre interne",
+      "agent": "planner"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "anchor",
+      "kind": "anchor",
+      "name": "f6a89ab8309a20fe48fcc0e8ea86a59c00ba5c7afdfa42d69bc6ff7039b28622"
+    },
+    {
+      "id": "const:control",
+      "kind": "constellation",
+      "name": "Cerveau principal"
+    },
+    {
+      "id": "agent:manager",
+      "kind": "agent",
+      "name": "manager"
+    },
+    {
+      "id": "const:wordpress",
+      "kind": "constellation",
+      "name": "WordPress Proximity"
+    },
+    {
+      "id": "agent:operator",
+      "kind": "agent",
+      "name": "operator"
+    },
+    {
+      "id": "const:proximity",
+      "kind": "constellation",
+      "name": "Proximity Agency"
+    },
+    {
+      "id": "agent:deploy",
+      "kind": "agent",
+      "name": "deploy"
+    },
+    {
+      "id": "const:scanapp",
+      "kind": "constellation",
+      "name": "Scan App"
+    },
+    {
+      "id": "agent:comms",
+      "kind": "agent",
+      "name": "comms"
+    },
+    {
+      "id": "const:marketplace",
+      "kind": "constellation",
+      "name": "Scan App Marketplace"
+    },
+    {
+      "id": "agent:manager",
+      "kind": "agent",
+      "name": "manager"
+    },
+    {
+      "id": "const:panda",
+      "kind": "constellation",
+      "name": "Panda White Glove"
+    },
+    {
+      "id": "agent:architect",
+      "kind": "agent",
+      "name": "architect"
+    },
+    {
+      "id": "const:nft-giant",
+      "kind": "constellation",
+      "name": "NFT + token Giant"
+    },
+    {
+      "id": "agent:security",
+      "kind": "agent",
+      "name": "security"
+    },
+    {
+      "id": "const:ecole",
+      "kind": "constellation",
+      "name": "École tech"
+    },
+    {
+      "id": "agent:research",
+      "kind": "agent",
+      "name": "research"
+    },
+    {
+      "id": "const:marketing",
+      "kind": "constellation",
+      "name": "Marketing digital corporate"
+    },
+    {
+      "id": "agent:planner",
+      "kind": "agent",
+      "name": "planner"
+    },
+    {
+      "id": "const:empire",
+      "kind": "constellation",
+      "name": "Empire Media"
+    },
+    {
+      "id": "agent:delivery",
+      "kind": "agent",
+      "name": "delivery"
+    },
+    {
+      "id": "const:propres",
+      "kind": "constellation",
+      "name": "Projets propres"
+    },
+    {
+      "id": "agent:manager",
+      "kind": "agent",
+      "name": "manager"
+    },
+    {
+      "id": "const:trading",
+      "kind": "constellation",
+      "name": "Crypto et AI bot"
+    },
+    {
+      "id": "agent:investigator",
+      "kind": "agent",
+      "name": "investigator"
+    },
+    {
+      "id": "const:fonds",
+      "kind": "constellation",
+      "name": "Fonds"
+    },
+    {
+      "id": "agent:planner",
+      "kind": "agent",
+      "name": "planner"
+    }
+  ],
+  "edges": [
+    {
+      "from": "const:control",
+      "to": "anchor",
+      "via": "kernel, Voltron, Epicenter, Graphify"
+    },
+    {
+      "from": "const:control",
+      "to": "agent:manager",
+      "via": "memory.store"
+    },
+    {
+      "from": "const:wordpress",
+      "to": "anchor",
+      "via": "XAMPP, PHP, ACF Pro"
+    },
+    {
+      "from": "const:wordpress",
+      "to": "agent:operator",
+      "via": "operator.work"
+    },
+    {
+      "from": "const:proximity",
+      "to": "anchor",
+      "via": "comptes hors thème"
+    },
+    {
+      "from": "const:proximity",
+      "to": "agent:deploy",
+      "via": "manager.line"
+    },
+    {
+      "from": "const:scanapp",
+      "to": "anchor",
+      "via": "scanner interne"
+    },
+    {
+      "from": "const:scanapp",
+      "to": "agent:comms",
+      "via": "operator.work"
+    },
+    {
+      "from": "const:marketplace",
+      "to": "anchor",
+      "via": "MCP, Stripe, fiche"
+    },
+    {
+      "from": "const:marketplace",
+      "to": "agent:manager",
+      "via": "memory.store"
+    },
+    {
+      "from": "const:panda",
+      "to": "anchor",
+      "via": "offre white-glove"
+    },
+    {
+      "from": "const:panda",
+      "to": "agent:architect",
+      "via": "architect.plan"
+    },
+    {
+      "from": "const:nft-giant",
+      "to": "anchor",
+      "via": "art et token Giant"
+    },
+    {
+      "from": "const:nft-giant",
+      "to": "agent:security",
+      "via": "security.triage"
+    },
+    {
+      "from": "const:ecole",
+      "to": "anchor",
+      "via": "programme de cours"
+    },
+    {
+      "from": "const:ecole",
+      "to": "agent:research",
+      "via": "research.ingest"
+    },
+    {
+      "from": "const:marketing",
+      "to": "anchor",
+      "via": "Pandora, une campagne"
+    },
+    {
+      "from": "const:marketing",
+      "to": "agent:planner",
+      "via": "comms.send"
+    },
+    {
+      "from": "const:empire",
+      "to": "anchor",
+      "via": "studio live"
+    },
+    {
+      "from": "const:empire",
+      "to": "agent:delivery",
+      "via": "delivery.advance"
+    },
+    {
+      "from": "const:propres",
+      "to": "anchor",
+      "via": "Stripe des projets propres"
+    },
+    {
+      "from": "const:propres",
+      "to": "agent:manager",
+      "via": "memory.store"
+    },
+    {
+      "from": "const:trading",
+      "to": "anchor",
+      "via": "modèle, aucun ordre live"
+    },
+    {
+      "from": "const:trading",
+      "to": "agent:investigator",
+      "via": "investigator.trace"
+    },
+    {
+      "from": "const:fonds",
+      "to": "anchor",
+      "via": "grand livre, chèque interne, TPS et TVQ"
+    },
+    {
+      "from": "const:fonds",
+      "to": "agent:planner",
+      "via": "manager.tax"
+    },
+    {
+      "from": "voltron",
+      "to": "epicenter",
+      "via": "Voltron tient le kernel allumé. Epicenter tient le tableau. L'un sans l'autre ne fait rien."
+    },
+    {
+      "from": "epicenter",
+      "to": "graphify",
+      "via": "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant."
+    },
+    {
+      "from": "epicenter",
+      "to": "proximity",
+      "via": "le cerveau principal ouvre le cycle et tient l'usine de sites"
+    },
+    {
+      "from": "epicenter",
+      "to": "wordpress",
+      "via": "Epicenter et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API."
+    },
+    {
+      "from": "graphify",
+      "to": "wordpress",
+      "via": "Le contexte de chaque thème WordPress est gardé ici. Lovable n'entre pas."
+    },
+    {
+      "from": "proximity",
+      "to": "panda",
+      "via": "Panda installe l'IA et les cours white-glove sur les sites clients"
+    },
+    {
+      "from": "nft-giant",
+      "to": "trading",
+      "via": "le token Giant relie l'art NFT aux bots qui tradent"
+    },
+    {
+      "from": "empire",
+      "to": "scanapp",
+      "via": "le live Empire vend le stock Scan App sur toutes les plateformes live. Proximity n'est pas dans cette chaîne."
+    },
+    {
+      "from": "propres",
+      "to": "marketing",
+      "via": "Pandora est la maison marketing. Elle ne poste pas toute seule. Une campagne mesurée, puis Facebook, après comms.allow."
+    },
+    {
+      "from": "marketing",
+      "to": "proximity",
+      "via": "le marketing corporate promeut les sites et mesure via Graphify"
+    },
+    {
+      "from": "wordpress",
+      "to": "control",
+      "via": "Créer, puis filtrer, puis filtrer encore. Security dit si c'est permis. Reviewer garde la voie la plus courte. Pas d'attaque."
+    },
+    {
+      "from": "marketing",
+      "to": "empire",
+      "via": "le média du live part dans la gestion marketing"
+    },
+    {
+      "from": "marketing",
+      "to": "panda",
+      "via": "les campagnes vendent le service white-glove"
+    },
+    {
+      "from": "ecole",
+      "to": "proximity",
+      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress."
+    },
+    {
+      "from": "ecole",
+      "to": "trading",
+      "via": "l'école enseigne le Web3 que les bots exécutent"
+    },
+    {
+      "from": "marketplace",
+      "to": "scanapp",
+      "via": "le marketplace fetch les items du Scan App pour les vendre. Deux projets, deux écosystèmes. Il ne scanne pas."
+    },
+    {
+      "from": "azure",
+      "to": "proximity",
+      "via": "l'équipe Azure gère le système branché, en même temps que le reste. Pas le Scan App, pas le marketplace."
+    },
+    {
+      "from": "optimisation",
+      "to": "direction",
+      "via": "Optimisation contredit chaque proposition et ne laisse passer que l'option la plus courte"
+    }
+  ],
+  "empty": 0
+}
