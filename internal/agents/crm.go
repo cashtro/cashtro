@@ -82,7 +82,7 @@ func CRM() CRMBook {
 			"L'agence est marketing, Panda et Proximity cloud. Elle relie chaque chaîne.",
 			"Les clients Fix Tout restent sur le site Evolu-Jeunes/Fix2. Ils n'entrent pas ici.",
 			"Vapi ouvre un projet à la fois. Chaque projet a sa propre base.",
-			"Un envoi ou un appel attend Instinct.",
+			"Un envoi ou un appel attend Epicenter Einstein.",
 		},
 		Writes: false,
 		Sent:   false,

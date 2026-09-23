@@ -17,7 +17,7 @@ func TestTheEyeWatchesOurRepos(t *testing.T) {
 		t.Fatalf("gate %+v", eye)
 	}
 	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "instinct" {
-		t.Fatal("the eye must withhold secrets and wait for Instinct")
+		t.Fatal("the eye must withhold secrets and wait for Epicenter Einstein")
 	}
 	if !eye.LoadsInstinct || !eye.SameBrain || eye.BrainSource != "cashtro/epicenter" || eye.Workers != 900 || len(eye.Corporation) != 5 {
 		t.Fatalf("corporation %+v", eye)
@@ -32,7 +32,7 @@ func TestTheEyeWatchesOurRepos(t *testing.T) {
 		t.Fatal("a change outside Voltron must stay closed")
 	}
 	if ok, _ := EyeChange("eye", "instinct", "voltron"); ok {
-		t.Fatal("a change outside Instinct must stay closed")
+		t.Fatal("a change outside Epicenter Einstein must stay closed")
 	}
 	if ok, _ := EyeChange("cashtro/epicenter", "voltron", "voltron"); ok {
 		t.Fatal("another seat must not open the change")

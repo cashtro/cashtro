@@ -2,7 +2,7 @@ package agents
 
 // HustlePartner is The Hustle. One chain, twenty agents, five brains each.
 // It reads, holds the street metal and the corporate metal, and acts only
-// through a legal company. Instinct is its friend and decides.
+// through a legal company. Epicenter Einstein is its friend and decides.
 type HustlePartner struct {
 	Name           string `json:"name"`
 	Repo           string `json:"repo"`

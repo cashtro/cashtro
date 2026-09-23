@@ -11,7 +11,7 @@ func TestOpsChainsHelpInstinct(t *testing.T) {
 		t.Fatalf("swarm %+v", ops)
 	}
 	if !ops.LoadsInstinct || !ops.LoadsVoltron || !ops.Automated || ops.Weapons {
-		t.Fatal("ops must load Instinct and Voltron and make no weapon")
+		t.Fatal("ops must load Epicenter Einstein and Voltron and make no weapon")
 	}
 	if ops.Sent || ops.Paid || ops.Dialed {
 		t.Fatal("ops must not send, charge, or dial")

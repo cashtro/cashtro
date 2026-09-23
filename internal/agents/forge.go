@@ -1,6 +1,6 @@
 package agents
 
-// ForgePartner is the development conglomerate. It loads Instinct and Voltron.
+// ForgePartner is the development conglomerate. It loads Epicenter Einstein and Voltron.
 // Scrum takes every repository. The crew does not make a weapon.
 type ForgePartner struct {
 	Repo          string   `json:"repo"`

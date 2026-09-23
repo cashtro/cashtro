@@ -1,9 +1,9 @@
 package agents
 
 // TheEye is the defensive watch. It reads cashtro and Evolu-Jeunes
-// and names a weakness. Instinct's brain, seated in cashtro/epicenter,
-// runs inside as a corporation. Every change goes through Instinct first.
-// Instinct sits there. The watch does not attack or copy a secret.
+// and names a weakness. Epicenter Einstein's brain, seated in cashtro/epicenter,
+// runs inside as a corporation. Every change goes through Epicenter Einstein first.
+// Epicenter Einstein sits there. The watch does not attack or copy a secret.
 type Eye struct {
 	Name            string   `json:"name"`
 	Repo            string   `json:"repo"`
@@ -24,7 +24,7 @@ type Eye struct {
 	SameBrain       bool     `json:"sameBrain"`
 }
 
-// SubBrain is one hemisphere inside a desk of Instinct's brain.
+// SubBrain is one hemisphere inside a desk of Epicenter Einstein's brain.
 type SubBrain struct {
 	ID      string `json:"id"`
 	Name    string `json:"name"`
@@ -42,7 +42,7 @@ type Desk struct {
 	SubBrains []SubBrain `json:"subBrains"`
 }
 
-// Corporation is Instinct's five-brain company. It runs inside The Eye.
+// Corporation is Epicenter Einstein's five-brain company. It runs inside The Eye.
 func Corporation() []Desk {
 	return []Desk{
 		{
@@ -131,16 +131,16 @@ func TheEye() Eye {
 	}
 }
 
-// EyeChange opens a draft only after Instinct. The draft is not applied.
+// EyeChange opens a draft only after Epicenter Einstein. The draft is not applied.
 func EyeChange(via, seat, caller string) (bool, string) {
 	if caller != "voltron" {
 		return false, "une fonction optionnelle passe par Voltron"
 	}
 	if via != "instinct" && via != "cashtro/epicenter" {
-		return false, "The Eye passe par Instinct avant tout changement."
+		return false, "The Eye passe par Epicenter Einstein avant tout changement."
 	}
 	if seat != "instinct" {
-		return false, "Sans Instinct, aucun changement."
+		return false, "Sans Epicenter Einstein, aucun changement."
 	}
 	return true, "brouillon ouvert. rien n'est appliqué"
 }

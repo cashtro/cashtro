@@ -686,7 +686,7 @@
     {
       "from": "voltron",
       "to": "instinct",
-      "via": "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien.",
+      "via": "Voltron tient le kernel allumé. Epicenter Einstein tient le tableau. L'un sans l'autre ne fait rien.",
       "agents": [
         "init",
         "manager"
@@ -714,7 +714,7 @@
     {
       "from": "instinct",
       "to": "wordpress",
-      "via": "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+      "via": "Epicenter Einstein et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
       "agents": [
         "manager",
         "operator"
@@ -743,7 +743,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live.",
+      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live.",
       "agents": [
         "architect",
         "security",
@@ -1114,7 +1114,7 @@
         "name": "WordPress",
         "reportsTo": "cto",
         "chief": "operator",
-        "mandate": "Instinct et Voltron dirigent. Le commit reste sur les sites WordPress (PHP, ACF Pro, XAMPP) et sur Proximity, Next Proximity, Proximity App, et Api-Proximity. Lovable n'y touche pas.",
+        "mandate": "Epicenter Einstein et Voltron dirigent. Le commit reste sur les sites WordPress (PHP, ACF Pro, XAMPP) et sur Proximity, Next Proximity, Proximity App, et Api-Proximity. Lovable n'y touche pas.",
         "craft": [
           {
             "mark": "thème",
@@ -1263,7 +1263,7 @@
         "name": "Flow stack",
         "reportsTo": "cto",
         "chief": "architect",
-        "mandate": "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Instinct lance le cycle.",
+        "mandate": "La technologie qui fait tourner les workers, pas un résultat ajouté après. Chaque division a une fonction et un produit. Voltron tient le kernel. Epicenter Einstein lance le cycle.",
         "craft": [
           {
             "mark": "fonction",
@@ -1383,7 +1383,7 @@
         "function": "manager.run",
         "product": "Evolu-Jeunes/Giant brain",
         "revenue": "Art avec utilité, token Giant, lecture de marché.",
-        "guard": "Instinct décide en dernier. Pas de mint, pas d'ordre, pas de pont."
+        "guard": "Epicenter Einstein décide en dernier. Pas de mint, pas d'ordre, pas de pont."
       },
       {
         "id": "ecole",
@@ -1403,7 +1403,7 @@
         "function": "manager.crm",
         "product": "Evolu-Jeunes/CRM-Agents",
         "revenue": "L'agence: marketing, Panda, Proximity cloud. Elle relie chaque chaîne.",
-        "guard": "Les leads passent dans la copie agents. La copie Fix Tout n'y entre pas. Lovable n'entre pas dans WordPress. Instinct décide avant un envoi."
+        "guard": "Les leads passent dans la copie agents. La copie Fix Tout n'y entre pas. Lovable n'entre pas dans WordPress. Epicenter Einstein décide avant un envoi."
       },
       {
         "id": "fix2",
@@ -1413,7 +1413,7 @@
         "function": "operator.work",
         "product": "Evolu-Jeunes/Fix2",
         "revenue": "Homme à tout faire, résidentiel. Le site garde tous les clients.",
-        "guard": "Pas le carnet des agents. Pas WordPress. Pas d'envoi, pas de paiement, pas de permis déposé. Instinct décide."
+        "guard": "Pas le carnet des agents. Pas WordPress. Pas d'envoi, pas de paiement, pas de permis déposé. Epicenter Einstein décide."
       },
       {
         "id": "empire",
@@ -1450,7 +1450,7 @@
   "brains": [
     {
       "id": "instinct",
-      "name": "Instinct",
+      "name": "Epicenter Einstein",
       "seat": "instinct",
       "dept": "direction",
       "do": "Charger les cinq cerveaux et trancher en dernier."
@@ -1488,7 +1488,7 @@
       "name": "Le Hustler",
       "seat": "instinct",
       "dept": "marche",
-      "do": "Ouvrir The Hustle. Une offre, une mesure. Il ne décide pas à la place d'Instinct."
+      "do": "Ouvrir The Hustle. Une offre, une mesure. Il ne décide pas à la place d'Epicenter Einstein."
     },
     {
       "id": "voltron",
@@ -1516,7 +1516,7 @@
       "name": "The Eye",
       "seat": "eye",
       "dept": "controle",
-      "do": "Nommer une faiblesse. Le cerveau d'Instinct, cashtro/epicenter, fait tourner sa corporation à l'intérieur. Tout changement passe par Instinct. Ne pas attaquer."
+      "do": "Nommer une faiblesse. Le cerveau d'Epicenter Einstein, cashtro/epicenter, fait tourner sa corporation à l'intérieur. Tout changement passe par Epicenter Einstein. Ne pas attaquer."
     },
     {
       "id": "giant",
@@ -1551,7 +1551,7 @@
       "name": "The Hustle",
       "seat": "instinct",
       "dept": "marche",
-      "do": "Lire, tenir les deux métaux, et ne garder que le coup légal. Une offre, une mesure. Instinct est l'ami."
+      "do": "Lire, tenir les deux métaux, et ne garder que le coup légal. Une offre, une mesure. Epicenter Einstein est l'ami."
     }
   ],
   "compliance": {
@@ -1724,7 +1724,7 @@
     "Coopérative : CEO, CTO, CMP. Neuf départements. Quinze employés spécialisés. Le flow stack relie chaque division à une fonction et à un produit.",
     "Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
     "La chaîne des coups ne se réécrit pas.",
-    "L'agence centrale rapporte. Instinct décide. Elle n'est pas un siège de ce tableau.",
+    "L'agence centrale rapporte. Epicenter Einstein décide. Elle n'est pas un siège de ce tableau.",
     "Le roster de 1001 n'est pas des processus.",
     "Aucun déploiement, aucun envoi, aucun ordre de trading sans comms.allow.",
     "Les sites clients déjà en production se lisent, ils ne se déploient pas.",

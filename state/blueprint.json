@@ -1,10 +1,10 @@
 {
-  "anchor": "6933ebed648fca880ce338eb7f06401899460f2967374df80f286b9f5d18e2c0",
+  "anchor": "c2dc8f6b5ec8b8e399fddf3378d462e1adb0d79892280473171ca4f9be1e07d2",
   "constellations": [
     {
       "id": "control",
       "name": "Cerveau principal",
-      "infrastructure": "kernel, Voltron, Instinct, Graphify",
+      "infrastructure": "kernel, Voltron, Epicenter Einstein, Graphify",
       "function": "memory.store",
       "product": "cashtro/cashtro",
       "agent": "manager"
@@ -118,7 +118,7 @@
     {
       "from": "voltron",
       "to": "instinct",
-      "via": "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien.",
+      "via": "Voltron tient le kernel allumé. Epicenter Einstein tient le tableau. L'un sans l'autre ne fait rien.",
       "agents": [
         "init",
         "manager"
@@ -146,7 +146,7 @@
     {
       "from": "instinct",
       "to": "wordpress",
-      "via": "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+      "via": "Epicenter Einstein et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
       "agents": [
         "manager",
         "operator"
@@ -175,7 +175,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live.",
+      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live.",
       "agents": [
         "architect",
         "security",
@@ -403,7 +403,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "6933ebed648fca880ce338eb7f06401899460f2967374df80f286b9f5d18e2c0"
+      "name": "c2dc8f6b5ec8b8e399fddf3378d462e1adb0d79892280473171ca4f9be1e07d2"
     },
     {
       "id": "const:control",
@@ -550,7 +550,7 @@
     {
       "from": "const:control",
       "to": "anchor",
-      "via": "kernel, Voltron, Instinct, Graphify"
+      "via": "kernel, Voltron, Epicenter Einstein, Graphify"
     },
     {
       "from": "const:control",
@@ -690,7 +690,7 @@
     {
       "from": "voltron",
       "to": "instinct",
-      "via": "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien."
+      "via": "Voltron tient le kernel allumé. Epicenter Einstein tient le tableau. L'un sans l'autre ne fait rien."
     },
     {
       "from": "instinct",
@@ -705,7 +705,7 @@
     {
       "from": "instinct",
       "to": "wordpress",
-      "via": "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API."
+      "via": "Epicenter Einstein et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API."
     },
     {
       "from": "graphify",
@@ -720,7 +720,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live."
+      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live."
     },
     {
       "from": "empire",

@@ -22,7 +22,7 @@ func TestLedgerSealsEveryAnalysis(t *testing.T) {
 	}
 	for _, b := range Brains() {
 		moves := AppendMove(nil, "ask:"+b.ID, "Quelle est la position?", b.Do)
-		moves = AppendMove(moves, "chain:"+b.ID, "Quelle est la position?", "Instinct décide.")
+		moves = AppendMove(moves, "chain:"+b.ID, "Quelle est la position?", "Epicenter Einstein décide.")
 		if !ChainIntact(moves) {
 			t.Fatalf("%s moves broke", b.ID)
 		}

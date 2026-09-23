@@ -11,24 +11,24 @@ type LoadedBrain struct {
 }
 
 // Brains is the set that must be analyzed, not only named.
-// Instinct's five, Voltron, Scrum, Forge, The Eye, Giant, the three OPS chains, and The Hustle.
+// Epicenter Einstein's five, Voltron, Scrum, Forge, The Eye, Giant, the three OPS chains, and The Hustle.
 func Brains() []LoadedBrain {
 	return []LoadedBrain{
-		{ID: "instinct", Name: "Instinct", Seat: "instinct", Dept: "direction", Do: "Charger les cinq cerveaux et trancher en dernier."},
+		{ID: "instinct", Name: "Epicenter Einstein", Seat: "instinct", Dept: "direction", Do: "Charger les cinq cerveaux et trancher en dernier."},
 		{ID: "architecte", Name: "L'Architecte", Seat: "instinct", Dept: "ingenierie", Do: "Penser le méta-cerveau. Deux façons, puis la plus courte."},
 		{ID: "cartographe", Name: "Le Cartographe", Seat: "instinct", Dept: "direction", Do: "Voir chaque dépôt sur Graphify avant le coup."},
 		{ID: "forgeron", Name: "Le Forgeron", Seat: "instinct", Dept: "operations", Do: "Construire le brouillon. Pas une arme."},
 		{ID: "orfevre", Name: "L'Orfèvre", Seat: "instinct", Dept: "controle", Do: "Exécuter le contrôle. Citer la règle."},
-		{ID: "hustler", Name: "Le Hustler", Seat: "instinct", Dept: "marche", Do: "Ouvrir The Hustle. Une offre, une mesure. Il ne décide pas à la place d'Instinct."},
+		{ID: "hustler", Name: "Le Hustler", Seat: "instinct", Dept: "marche", Do: "Ouvrir The Hustle. Une offre, une mesure. Il ne décide pas à la place d'Epicenter Einstein."},
 		{ID: "voltron", Name: "Voltron", Seat: "voltron", Dept: "flux", Do: "Tenir chaque chaîne agentique allumée. Elles rapportent ici. Aucune n'est un site."},
 		{ID: "scrum", Name: "Scrum", Seat: "scrum", Dept: "direction", Do: "Prendre chaque dépôt et chaque projet nouveau."},
 		{ID: "forge", Name: "Forge", Seat: "forge", Dept: "ingenierie", Do: "Faire tourner le conglomérat de développement. Pas une arme."},
-		{ID: "eye", Name: "The Eye", Seat: "eye", Dept: "controle", Do: "Nommer une faiblesse. Le cerveau d'Instinct, cashtro/epicenter, fait tourner sa corporation à l'intérieur. Tout changement passe par Instinct. Ne pas attaquer."},
+		{ID: "eye", Name: "The Eye", Seat: "eye", Dept: "controle", Do: "Nommer une faiblesse. Le cerveau d'Epicenter Einstein, cashtro/epicenter, fait tourner sa corporation à l'intérieur. Tout changement passe par Epicenter Einstein. Ne pas attaquer."},
 		{ID: "giant", Name: "Giant", Seat: "giant", Dept: "controle", Do: "Tenir la formation crypto. Le mint n'est pas une option."},
 		{ID: "accueil", Name: "Accueil", Seat: "ops", Dept: "marche", Do: "Qualifier le lead. Ne pas appeler et ne pas envoyer de SMS."},
 		{ID: "terrain", Name: "Terrain", Seat: "ops", Dept: "operations", Do: "Tenir soumission, chantier, tournée et facture en brouillon."},
 		{ID: "propriete", Name: "Propriété", Seat: "ops", Dept: "ingenierie", Do: "Posséder OPS et aider les dépôts cashtro et Evolu-Jeunes."},
-		{ID: "hustle", Name: "The Hustle", Seat: "instinct", Dept: "marche", Do: "Lire, tenir les deux métaux, et ne garder que le coup légal. Une offre, une mesure. Instinct est l'ami."},
+		{ID: "hustle", Name: "The Hustle", Seat: "instinct", Dept: "marche", Do: "Lire, tenir les deux métaux, et ne garder que le coup légal. Une offre, une mesure. Epicenter Einstein est l'ami."},
 	}
 }
 
@@ -49,7 +49,7 @@ func brainKnown(id string) (map[string]string, bool) {
 	}
 	return map[string]string{
 		"situation":   b.Name + " est chargé. " + b.Do,
-		"manque":      "La décision d'Instinct avant un envoi, un paiement, un appel, ou un déploiement.",
+		"manque":      "La décision d'Epicenter Einstein avant un envoi, un paiement, un appel, ou un déploiement.",
 		"intouchable": "Un site client déjà en ligne, un secret, et une arme.",
 	}, true
 }
@@ -61,7 +61,7 @@ func brainChain(id string) ([]ChainStep, bool) {
 	}
 	return []ChainStep{
 		{Line: id, Order: 1, Agent: "memory", Do: b.Do},
-		{Line: id, Order: 2, Agent: "manager", Do: "Instinct lit ce cerveau et décide. Le coup le plus court reste."},
+		{Line: id, Order: 2, Agent: "manager", Do: "Epicenter Einstein lit ce cerveau et décide. Le coup le plus court reste."},
 	}, true
 }
 

@@ -14,7 +14,7 @@ func Links() []Link {
 	return []Link{
 		{
 			From: "voltron", To: "instinct",
-			Via:    "Voltron tient le kernel allumé. Instinct tient le tableau. L'un sans l'autre ne fait rien.",
+			Via:    "Voltron tient le kernel allumé. Epicenter Einstein tient le tableau. L'un sans l'autre ne fait rien.",
 			Agents: []string{"init", "manager"},
 		},
 		{
@@ -29,7 +29,7 @@ func Links() []Link {
 		},
 		{
 			From: "instinct", To: "wordpress",
-			Via:    "Instinct et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+			Via:    "Epicenter Einstein et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
 			Agents: []string{"manager", "operator"},
 		},
 		{
@@ -44,7 +44,7 @@ func Links() []Link {
 		},
 		{
 			From: "nft-giant", To: "trading",
-			Via:    "Giant a son cerveau. Les bots restent des modèles. Instinct décide en dernier. Aucun ordre live.",
+			Via:    "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live.",
 			Agents: []string{"architect", "security", "investigator", "router"},
 		},
 		{

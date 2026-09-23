@@ -231,7 +231,7 @@ func investigatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, erro
 	}}, nil
 }
 
-// RunCycle is the autonomous pass. Voltron and Instinct both call it.
+// RunCycle is the autonomous pass. Voltron and Epicenter Einstein both call it.
 // Each worker runs. A secret stops the pass. A release stays behind comms.allow.
 func RunCycle(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	line := payloadQuery(call, "id")

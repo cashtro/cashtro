@@ -37,7 +37,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 	return []kernel.Agent{
 		resident(kernel.Spec{
 			ID: "init", Name: "Init", Kind: kernel.KindSystem, Mode: kernel.ModeLive,
-			Role: "kernel", Summary: "Voltron boots the OS and can start the same cycle Instinct runs.",
+			Role: "kernel", Summary: "Voltron boots the OS and can start the same cycle Epicenter Einstein runs.",
 			Capabilities: []string{"os.about", "os.cycle", "os.engine", "os.layers"}, Autostart: true,
 		}, initInvoke),
 		&deliveryAgent{cat: cat},
@@ -97,7 +97,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 	}
 }
 
-// managerAgent is the Instinct project manager. It oversees all 57 repos
+// managerAgent is the Epicenter Einstein project manager. It oversees all 57 repos
 // across cashtro + Evolu-Jeunes, reads the project fiches, queries the
 // Graphify map, and coordinates the five brains.
 type managerAgent struct {

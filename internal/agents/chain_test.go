@@ -63,8 +63,8 @@ func TestChainReachesEveryBrain(t *testing.T) {
 		if !ok || len(steps) < 2 || steps[0].Agent != "memory" || steps[1].Agent != "manager" {
 			t.Fatalf("%s chain = %+v ok %v", b.ID, steps, ok)
 		}
-		if steps[0].Do == "" || !strings.Contains(steps[1].Do, "Instinct") {
-			t.Fatalf("%s steps do not close on Instinct: %+v", b.ID, steps)
+		if steps[0].Do == "" || !strings.Contains(steps[1].Do, "Epicenter Einstein") {
+			t.Fatalf("%s steps do not close on Epicenter Einstein: %+v", b.ID, steps)
 		}
 	}
 	if gap := Disconnected(); len(gap) != 0 {

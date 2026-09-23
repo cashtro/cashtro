@@ -56,7 +56,7 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "control":
 		return []ChainStep{
-			{Line: "control", Order: 1, Agent: "manager", Do: "Lire le tableau et nommer les trous. Ne pas trancher à la place d'Instinct."},
+			{Line: "control", Order: 1, Agent: "manager", Do: "Lire le tableau et nommer les trous. Ne pas trancher à la place d'Epicenter Einstein."},
 			{Line: "control", Order: 2, Agent: "explorer", Do: "Lire Graphify avant le coup. Pas de deuxième carte."},
 			{Line: "control", Order: 3, Agent: "memory", Do: "Ajouter un maillon à la chaîne. Ne pas réécrire le maillon d'avant. Ne pas mélanger le dépôt de l'agence."},
 			{Line: "control", Order: 4, Agent: "init", Do: "Voltron relance le kernel s'il tombe. Il ne déploie pas."},
@@ -64,7 +64,7 @@ func Chain(line string) ([]ChainStep, bool) {
 	case "wordpress":
 		return []ChainStep{
 			{Line: "wordpress", Order: 1, Agent: "memory", Do: "Charger le contexte : site WordPress (pages, ACF) ou un produit nommé — Proximity, Next Proximity dans apps/web, Proximity App, Api-Proximity."},
-			{Line: "wordpress", Order: 2, Agent: "operator", Do: "Le commit va seulement sur un site WordPress (PHP, ACF Pro, XAMPP) ou sur Proximity, Proximity App, l'API, ou Next. Pas Lovable. Pas Instinct. Pas Voltron. Pas une autre marque."},
+			{Line: "wordpress", Order: 2, Agent: "operator", Do: "Le commit va seulement sur un site WordPress (PHP, ACF Pro, XAMPP) ou sur Proximity, Proximity App, l'API, ou Next. Pas Lovable. Pas Epicenter Einstein. Pas Voltron. Pas une autre marque."},
 			{Line: "wordpress", Order: 3, Agent: "security", Do: "Filtre : secrets, Loi 25, site déjà en ligne. Interdit si ça sort de la demande."},
 			{Line: "wordpress", Order: 4, Agent: "reviewer", Do: "Filtre encore : la plus courte des deux façons, et rien d'autre n'a bougé."},
 			{Line: "wordpress", Order: 5, Agent: "comms", Do: "Accord avant de quitter le local. Sans allow, ça reste local."},
@@ -87,9 +87,9 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "nft-giant":
 		return []ChainStep{
-			{Line: "nft-giant", Order: 1, Agent: "init", Do: "Voltron ouvre. Le cerveau est celui de Giant, Evolu-Jeunes/Giant/brain. Ce n'est pas le cerveau d'Instinct."},
+			{Line: "nft-giant", Order: 1, Agent: "init", Do: "Voltron ouvre. Le cerveau est celui de Giant, Evolu-Jeunes/Giant/brain. Ce n'est pas le cerveau d'Epicenter Einstein."},
 			{Line: "nft-giant", Order: 2, Agent: "investigator", Do: "Chaque agent a une tâche. Lecture publique, gems en note, modèles de bots. Aucun ordre. CQ n'est pas minté."},
-			{Line: "nft-giant", Order: 3, Agent: "manager", Do: "Instinct décide en dernier. Un mint, un ordre, un déploiement ou un pont reste arrêté."},
+			{Line: "nft-giant", Order: 3, Agent: "manager", Do: "Epicenter Einstein décide en dernier. Un mint, un ordre, un déploiement ou un pont reste arrêté."},
 		}, true
 	case "ecole":
 		return []ChainStep{
@@ -103,14 +103,14 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "marketing", Order: 3, Agent: "planner", Do: "Une campagne Pandora, mesurée, rangée sur cette note."},
 			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress. Une fiche Fix Tout n'entre pas dans ce carnet."},
 			{Line: "marketing", Order: 5, Agent: "comms", Do: "Courriel, SMS ou portail seulement après consentement, identité, désabonnement, et allow."},
-			{Line: "marketing", Order: 6, Agent: "manager", Do: "Instinct décide en dernier. Sans lui, la note reste un brouillon."},
+			{Line: "marketing", Order: 6, Agent: "manager", Do: "Epicenter Einstein décide en dernier. Sans lui, la note reste un brouillon."},
 		}, true
 	case "fix2":
 		return []ChainStep{
 			{Line: "fix2", Order: 1, Agent: "memory", Do: "Lire la base de Fix Tout, Evolu-Jeunes/Fix2. Le site garde tous les clients. Ne pas écrire dans le carnet des agents."},
 			{Line: "fix2", Order: 2, Agent: "planner", Do: "Déposer le client dans ce CRM seulement. Vapi ne parle que de cette base."},
 			{Line: "fix2", Order: 3, Agent: "security", Do: "Retirer un secret. Refuser un paiement, un permis déposé, une édition de thème, et un appel sans clé."},
-			{Line: "fix2", Order: 4, Agent: "manager", Do: "Instinct décide en dernier. Le cycle des quarante agents s'arrête là."},
+			{Line: "fix2", Order: 4, Agent: "manager", Do: "Epicenter Einstein décide en dernier. Le cycle des quarante agents s'arrête là."},
 		}, true
 	case "empire":
 		return []ChainStep{
@@ -137,7 +137,7 @@ func Chain(line string) ([]ChainStep, bool) {
 	case "watch":
 		return []ChainStep{
 			{Line: "watch", Order: 1, Agent: "memory", Do: "Nommer le trou sur le tableau. Cette veille ne déploie rien."},
-			{Line: "watch", Order: 2, Agent: "manager", Do: "Instinct décide. Le dépôt de l'agence reste hors tableau."},
+			{Line: "watch", Order: 2, Agent: "manager", Do: "Epicenter Einstein décide. Le dépôt de l'agence reste hors tableau."},
 		}, true
 	default:
 		if steps, ok := brainChain(line); ok {
