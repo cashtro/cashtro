@@ -1,7 +1,8 @@
 package agents
 
 // TheEye is the defensive watch. It reads cashtro and Evolu-Jeunes
-// and names a weakness. Every change goes through Instinct first.
+// and names a weakness. Instinct's brain, seated in cashtro/epicenter,
+// runs inside as a corporation. Every change goes through Instinct first.
 // Instinct sits there. The watch does not attack or copy a secret.
 type Eye struct {
 	Name            string   `json:"name"`
@@ -16,10 +17,99 @@ type Eye struct {
 	AppliesPatch    bool     `json:"appliesPatch"`
 	ThroughInstinct bool     `json:"throughInstinct"`
 	DecidedBy       string   `json:"decidedBy"`
+	LoadsInstinct   bool     `json:"loadsInstinctBrain"`
+	BrainSource     string   `json:"brainSource"`
+	Corporation     []Desk   `json:"corporation"`
+	Workers         int      `json:"workers"`
+	SameBrain       bool     `json:"sameBrain"`
+}
+
+// SubBrain is one hemisphere inside a desk of Instinct's brain.
+type SubBrain struct {
+	ID      string `json:"id"`
+	Name    string `json:"name"`
+	Role    string `json:"role"`
+	Bridges bool   `json:"bridges"`
+}
+
+// Desk is one of the five brains. The same roster sits in cashtro/epicenter.
+type Desk struct {
+	ID        string     `json:"id"`
+	Name      string     `json:"name"`
+	Motto     string     `json:"motto"`
+	Directors []string   `json:"directors"`
+	Workers   int        `json:"workers"`
+	SubBrains []SubBrain `json:"subBrains"`
+}
+
+// Corporation is Instinct's five-brain company. It runs inside The Eye.
+func Corporation() []Desk {
+	return []Desk{
+		{
+			ID: "architecte", Name: "L'Architecte", Motto: "Le Cerveau qui pense — le méta-cerveau",
+			Directors: []string{"architect"}, Workers: 200,
+			SubBrains: []SubBrain{
+				{ID: "meta", Name: "Méta-Cerveau", Role: "deep-learning, self-improvement, cerveau dans le cerveau"},
+				{ID: "relativite", Name: "Relativité", Role: "théorie de la relativité appliquée aux chaînes"},
+				{ID: "gematria", Name: "Géomatria", Role: "géométrie sacrée et calcul symbolique"},
+				{ID: "marche", Name: "Calcul du marché", Role: "calcul prédictif du marché"},
+				{ID: "chaînes", Name: "Tisseur de chaînes", Role: "construit les chaînes agentics et les nœuds", Bridges: true},
+			},
+		},
+		{
+			ID: "cartographe", Name: "Le Cartographe", Motto: "Le Cerveau qui voit — la cartographie",
+			Directors: []string{"planner", "research", "explorer", "memory"}, Workers: 150,
+			SubBrains: []SubBrain{
+				{ID: "plan", Name: "Planificateur", Role: "planification de tous les projets"},
+				{ID: "map", Name: "Mappeur", Role: "mapping des projets sur la chaîne"},
+				{ID: "graphify", Name: "Graphifieur", Role: "suit toute la chaîne via Graphify"},
+				{ID: "monitor", Name: "Moniteur", Role: "monitorise tous les projets 24/7"},
+				{ID: "philosophe", Name: "Philosophe", Role: "recherche concepts & philosophie pour améliorer la pensée et la structure", Bridges: true},
+			},
+		},
+		{
+			ID: "forgeron", Name: "Le Forgeron", Motto: "Le Cerveau qui construit — 24/7",
+			Directors: []string{"operator", "deploy"}, Workers: 200,
+			SubBrains: []SubBrain{
+				{ID: "soudeur", Name: "Le Soudeur", Role: "frontend / UI"},
+				{ID: "mecanicien", Name: "Le Mécanicien", Role: "backend / API"},
+				{ID: "tisserand", Name: "Le Tisserand", Role: "intégration des chaînes"},
+				{ID: "mineur", Name: "Le Mineur", Role: "données / DB"},
+				{ID: "ambassadeur", Name: "L'Ambassadeur", Role: "connexion aux autres chaînes agentics", Bridges: true},
+			},
+		},
+		{
+			ID: "orfevre", Name: "L'Orfèvre", Motto: "Le Cerveau qui exécute — 24/7",
+			Directors: []string{"reviewer", "delivery"}, Workers: 200,
+			SubBrains: []SubBrain{
+				{ID: "controleur", Name: "Le Contrôleur", Role: "QA / tests"},
+				{ID: "livreur", Name: "Le Livreur", Role: "delivery / ship"},
+				{ID: "polisseur", Name: "Le Polisseur", Role: "refactor / perf"},
+				{ID: "documenteur", Name: "Le Documenteur", Role: "docs / structure"},
+				{ID: "diplomate", Name: "Le Diplomate", Role: "connexion aux autres chaînes agentics", Bridges: true},
+			},
+		},
+		{
+			ID: "hustler", Name: "Le Hustler", Motto: "Le Cerveau qui conquiert — le gangster intelligent",
+			Directors: []string{"security", "investigator", "comms", "router"}, Workers: 150,
+			SubBrains: []SubBrain{
+				{ID: "stratège", Name: "Le Stratège", Role: "suit tout, planification stratégique"},
+				{ID: "traqueur", Name: "Le Traqueur", Role: "suit ce qui rapporte (green)"},
+				{ID: "recruteur", Name: "Le Recruteur", Role: "team de hustlers"},
+				{ID: "empire", Name: "Le Bâtisseur d'empire", Role: "crée de nouveaux business, automatise le tout"},
+				{ID: "pontife", Name: "Le Pontife", Role: "utilise les 2 repos, toutes les chaînes, tous les nœuds, A→Z", Bridges: true},
+			},
+		},
+	}
 }
 
 // TheEye returns the watch roster. The working look lives in Evolu-Jeunes/Forge/brain/eye.ts.
 func TheEye() Eye {
+	desks := Corporation()
+	workers := 0
+	for _, desk := range desks {
+		workers += desk.Workers
+	}
 	return Eye{
 		Name:            "The Eye",
 		Repo:            "Evolu-Jeunes/Forge",
@@ -33,6 +123,11 @@ func TheEye() Eye {
 		AppliesPatch:    false,
 		ThroughInstinct: true,
 		DecidedBy:       "instinct",
+		LoadsInstinct:   true,
+		BrainSource:     "cashtro/epicenter",
+		Corporation:     desks,
+		Workers:         workers,
+		SameBrain:       true,
 	}
 }
 

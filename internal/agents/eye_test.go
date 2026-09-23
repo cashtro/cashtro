@@ -19,6 +19,15 @@ func TestTheEyeWatchesOurRepos(t *testing.T) {
 	if eye.Attacks || eye.Flood || eye.CopiesSecrets || eye.AppliesPatch || eye.DecidedBy != "instinct" {
 		t.Fatal("the eye must withhold secrets and wait for Instinct")
 	}
+	if !eye.LoadsInstinct || !eye.SameBrain || eye.BrainSource != "cashtro/epicenter" || eye.Workers != 900 || len(eye.Corporation) != 5 {
+		t.Fatalf("corporation %+v", eye)
+	}
+	want := []string{"architecte", "cartographe", "forgeron", "orfevre", "hustler"}
+	for i, id := range want {
+		if eye.Corporation[i].ID != id || len(eye.Corporation[i].SubBrains) != 5 || eye.Corporation[i].Workers == 0 {
+			t.Fatalf("desk %+v", eye.Corporation[i])
+		}
+	}
 	if ok, _ := EyeChange("instinct", "instinct", "eye"); ok {
 		t.Fatal("a change outside Voltron must stay closed")
 	}
