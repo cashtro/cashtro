@@ -19,7 +19,7 @@ func Brains() []LoadedBrain {
 		{ID: "cartographe", Name: "Le Cartographe", Seat: "instinct", Dept: "direction", Do: "Voir chaque dépôt sur Graphify avant le coup."},
 		{ID: "forgeron", Name: "Le Forgeron", Seat: "instinct", Dept: "operations", Do: "Construire le brouillon. Pas une arme."},
 		{ID: "orfevre", Name: "L'Orfèvre", Seat: "instinct", Dept: "controle", Do: "Exécuter le contrôle. Citer la règle."},
-		{ID: "hustler", Name: "Le Hustler", Seat: "instinct", Dept: "marche", Do: "Ouvrir The Hustle. Une offre, une mesure. Il ne décide pas à la place d'Epicenter Einstein."},
+		{ID: "hustler", Name: "Le Hustler", Seat: "instinct", Dept: "marche", Do: "Tenir le courant et les concepts. C'est la personne, l'autre vie. L'équipe lit les deux GitHub et toutes les chaînes. Le but reste ouvert. Epicenter Einstein tranche le lancement."},
 		{ID: "voltron", Name: "Voltron", Seat: "voltron", Dept: "flux", Do: "Tenir chaque chaîne agentique allumée. Elles rapportent ici. Aucune n'est un site."},
 		{ID: "scrum", Name: "Scrum", Seat: "scrum", Dept: "direction", Do: "Prendre chaque dépôt et chaque projet nouveau."},
 		{ID: "forge", Name: "Forge", Seat: "forge", Dept: "ingenierie", Do: "Faire tourner le conglomérat de développement. Pas une arme."},
