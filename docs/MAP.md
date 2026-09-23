@@ -1,11 +1,11 @@
-# Epicenter — schema Mermaid
+# Instinct — schema Mermaid
 
 Graphify reste la map vivante. Ce schema Mermaid nomme les deux voies (Ollama interne, Kimi K3 et GLM 5.3 max), les 5 cerveaux, leurs sous-cerveaux et les 58 projets.
 
 ```mermaid
 %%{init: {'theme':'dark','flowchart':{'htmlLabels':true,'nodeSpacing':18,'rankSpacing':28}}}%%
 flowchart TB
-  manager["MANAGER<br/>Epicenter · 58 projets"]
+  manager["MANAGER<br/>Instinct · 58 projets"]
   subgraph lanes["Les deux voies"]
     ollama["Ollama interne<br/>llama3.2"]
     kimi["Kimi K3<br/>moonshotai/kimi-k3"]
@@ -43,7 +43,7 @@ flowchart TB
   cartographe --> cartographe_s1
   subgraph repos_cartographe["Le Cartographe · projets"]
     cashtro_cashtro["cashtro<br/>cashtro"]
-    cashtro_epicenter["epicenter<br/>cashtro"]
+    cashtro_epicenter["instinct<br/>cashtro"]
     Evolu_Jeunes_Api_Proximity["Api-Proximity<br/>Evolu"]
     Evolu_Jeunes_demo_repository["demo-repository<br/>Evolu"]
     Evolu_Jeunes_educonnexion["educonnexion<br/>Evolu"]

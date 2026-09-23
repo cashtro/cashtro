@@ -1516,7 +1516,7 @@
       "name": "The Eye",
       "seat": "eye",
       "dept": "controle",
-      "do": "Nommer une faiblesse. Tout changement passe par Epicenter avant d'être écrit. Ne pas attaquer."
+      "do": "Nommer une faiblesse. Tout changement passe par Instinct avant d'être écrit. Ne pas attaquer."
     },
     {
       "id": "giant",
