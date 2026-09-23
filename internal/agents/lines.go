@@ -15,15 +15,17 @@ func Lines() []Line {
 	return []Line{
 		{
 			ID: "control", Name: "Cerveau principal", Brain: "Manager",
-			Mandate:  "Synchronise les deux GitHub, les fiches, les lignes et les liens. C'est le tableau opérable, pas un neuvième produit.",
-			Controls: "Manager lit state/operating.json au boot.",
+			Mandate:  "Synchronise les deux GitHub, les fiches, les lignes et les liens. Voltron le tient allumé. Graphify est la carte. C'est le tableau opérable, pas un neuvième produit.",
+			Controls: "Manager lit state/operating.json au boot. Explorer lit le graphe. Memory ajoute un maillon.",
 			Repos:    []string{"cashtro/cashtro", "cashtro/epicenter"},
 		},
 		{
 			ID: "proximity", Name: "Proximity Agency", Brain: "Forgeron",
-			Mandate: "Usine de sites WordPress, PHP et ACF Pro pour Proximity Agency. " +
-				"Couche de déploiement Azure pilotée par le cerveau principal : confection optimisée, programmation, mise en ligne.",
-			Controls: "Manager assigne, Forgeron confectionne, Orfèvre déploie sur Azure, Cartographe surveille via Graphify.",
+			Mandate: "Usine de sites pour Proximity Agency. " +
+				"Un site neuf naît dans Lovable, puis son dépôt entre ici. " +
+				"Un site déjà là reste WordPress, PHP et ACF Pro : une demande client change ce site, elle n'en crée pas un autre. " +
+				"Couche Azure : preview, accord, mise en ligne.",
+			Controls: "Memory tient le contexte du site. Planner tient la demande. Security lit. Deploy ne promeut qu'après comms.allow.",
 			Repos: []string{
 				"Evolu-Jeunes/Proximity", "Evolu-Jeunes/ProximityApp", "Evolu-Jeunes/Proximity-Agentic",
 				"Evolu-Jeunes/Api-Proximity", "Evolu-Jeunes/Proxy", "Evolu-Jeunes/Plugin",
@@ -86,7 +88,8 @@ func Lines() []Line {
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
-			Mandate: "Système automatisé de gestion pour le marketing digital entier des business corporate en ligne. " +
+			Mandate: "Pandora est la maison du marketing digital. " +
+				"Une campagne à la fois, mesurée, puis Facebook ou courriel. " +
 				"Les campagnes de rabais du marketplace s'appuient sur la comparaison des prix en ligne.",
 			Controls: "Hustler pilote campagnes et gestion. Stripe encaisse, ce n'est pas un client Proximity.",
 			Repos:    []string{"Evolu-Jeunes/CRM"},

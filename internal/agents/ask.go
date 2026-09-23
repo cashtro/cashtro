@@ -108,9 +108,9 @@ func lineKnown(id string) map[string]string {
 		}
 	case "proximity":
 		return map[string]string{
-			"situation":   "Sites WordPress, PHP et ACF Pro sur Azure, pour des clients.",
-			"manque":      "La preview. Pas une réécriture.",
-			"intouchable": "Un site client déjà en production.",
+			"situation":   "Chaque site a son contexte. Une demande client change ce site. Un site neuf passe par Lovable.",
+			"manque":      "L'accord sur la preview. Pas une mise en ligne directe.",
+			"intouchable": "Tout ce que la demande ne nomme pas, et un site live sans allow.",
 		}
 	case "panda":
 		return map[string]string{
@@ -132,9 +132,9 @@ func lineKnown(id string) map[string]string {
 		}
 	case "marketing":
 		return map[string]string{
-			"situation":   "Gestion marketing. Une campagne à la fois.",
-			"manque":      "La mesure avant d'élargir.",
-			"intouchable": "Le compte Stripe d'un site client Proximity.",
+			"situation":   "Pandora tient une campagne. Facebook vient après la mesure.",
+			"manque":      "Le consentement, l'identité, le désabonnement, et l'accord.",
+			"intouchable": "Le compte Stripe et les pages d'un site client Proximity.",
 		}
 	case "empire":
 		return map[string]string{

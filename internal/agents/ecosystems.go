@@ -13,9 +13,29 @@ type Link struct {
 func Links() []Link {
 	return []Link{
 		{
+			From: "voltron", To: "epicenter",
+			Via:    "Voltron tient le kernel allumé. Epicenter tient le tableau. L'un sans l'autre ne fait rien.",
+			Agents: []string{"init", "manager"},
+		},
+		{
+			From: "epicenter", To: "graphify",
+			Via:    "Aucun coup ne part sans le graphe des deux GitHub. Le graphe grandit, la chaîne garde le lien d'avant.",
+			Agents: []string{"explorer", "memory"},
+		},
+		{
 			From: "epicenter", To: "proximity",
 			Via:    "le cerveau principal ouvre le cycle et tient l'usine de sites",
 			Agents: []string{"init", "manager", "planner"},
+		},
+		{
+			From: "graphify", To: "proximity",
+			Via:    "Chaque site est un contexte gardé. Une demande client est le coup suivant sur ce contexte, pas un site nouveau.",
+			Agents: []string{"memory", "planner", "security"},
+		},
+		{
+			From: "lovable", To: "proximity",
+			Via:    "Un site neuf naît dans Lovable. Son dépôt entre ensuite dans la chaîne Proximity. Lovable ne touche pas un WordPress déjà en ligne.",
+			Agents: []string{"architect", "delivery"},
 		},
 		{
 			From: "proximity", To: "panda",
@@ -33,9 +53,19 @@ func Links() []Link {
 			Agents: []string{"operator", "comms", "delivery", "reviewer", "deploy"},
 		},
 		{
+			From: "propres", To: "marketing",
+			Via:    "Pandora est la maison marketing. Elle ne poste pas toute seule. Une campagne mesurée, puis Facebook, après comms.allow.",
+			Agents: []string{"planner", "comms", "explorer"},
+		},
+		{
 			From: "marketing", To: "proximity",
 			Via:    "le marketing corporate promeut les sites et mesure via Graphify",
 			Agents: []string{"comms", "planner", "explorer"},
+		},
+		{
+			From: "proximity", To: "control",
+			Via:    "Un site live ne change qu'en preview, revue, puis accord. La sécurité lit le graphe. Elle n'attaque pas.",
+			Agents: []string{"security", "reviewer", "comms", "deploy"},
 		},
 		{
 			From: "marketing", To: "empire",

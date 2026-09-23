@@ -57,12 +57,21 @@ func Chain(line string) ([]ChainStep, bool) {
 	case "control":
 		return []ChainStep{
 			{Line: "control", Order: 1, Agent: "manager", Do: "Lire le tableau et nommer les trous. Ne pas trancher à la place d'Epicenter."},
-			{Line: "control", Order: 2, Agent: "memory", Do: "Garder le coup. Ne pas réécrire un site client. Ne pas mélanger le dépôt de l'agence."},
+			{Line: "control", Order: 2, Agent: "explorer", Do: "Lire Graphify avant le coup. Pas de deuxième carte."},
+			{Line: "control", Order: 3, Agent: "memory", Do: "Ajouter un maillon à la chaîne. Ne pas réécrire le maillon d'avant. Ne pas mélanger le dépôt de l'agence."},
+			{Line: "control", Order: 4, Agent: "init", Do: "Voltron relance le kernel s'il tombe. Il ne déploie pas."},
 		}, true
 	case "proximity":
 		return []ChainStep{
-			{Line: "proximity", Order: 1, Agent: "operator", Do: "Lire le site client WordPress, PHP, ACF Pro. Ne pas le réécrire."},
-			{Line: "proximity", Order: 2, Agent: "deploy", Do: "Preview sur Azure, puis accord. Pas de mise en ligne directe."},
+			{Line: "proximity", Order: 1, Agent: "memory", Do: "Charger le contexte de ce site : dépôt, WordPress ou Lovable, ce qui est déjà en ligne."},
+			{Line: "proximity", Order: 2, Agent: "planner", Do: "Une demande client devient un seul ship. Pas un nouveau site si le site existe."},
+			{Line: "proximity", Order: 3, Agent: "architect", Do: "Deux façons de faire le changement. Garder la plus courte. Un site neuf passe par Lovable, puis son dépôt entre ici."},
+			{Line: "proximity", Order: 4, Agent: "security", Do: "Lire le graphe : secrets, Loi 25, limite du site live. Pas d'attaque. Pas de réécriture totale."},
+			{Line: "proximity", Order: 5, Agent: "operator", Do: "Appliquer le changement sur une preview. WordPress, PHP, ACF Pro, ou le dépôt sorti de Lovable."},
+			{Line: "proximity", Order: 6, Agent: "reviewer", Do: "La preview tient la demande, et rien d'autre n'a bougé."},
+			{Line: "proximity", Order: 7, Agent: "comms", Do: "Accord du client. Sans allow, la preview reste une preview."},
+			{Line: "proximity", Order: 8, Agent: "deploy", Do: "Promouvoir la preview. Azure pour Proximity. Jamais une mise en ligne directe."},
+			{Line: "proximity", Order: 9, Agent: "memory", Do: "Écrire le nouveau contexte du site. La prochaine demande part de là."},
 		}, true
 	case "marketplace":
 		return []ChainStep{
@@ -86,8 +95,9 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "marketing":
 		return []ChainStep{
-			{Line: "marketing", Order: 1, Agent: "planner", Do: "Une campagne. Mesurer avant d'élargir."},
-			{Line: "marketing", Order: 2, Agent: "comms", Do: "Les rabais comparent les prix en ligne. Stripe ici n'est pas un site client Proximity."},
+			{Line: "marketing", Order: 1, Agent: "planner", Do: "Une campagne Pandora. Mesurer avant d'élargir."},
+			{Line: "marketing", Order: 2, Agent: "explorer", Do: "Lire le contexte Pandora et CRM. Pas le compte d'un client Proximity."},
+			{Line: "marketing", Order: 3, Agent: "comms", Do: "Facebook ou courriel seulement après consentement, identité, désabonnement, et allow. Les rabais comparent les prix en ligne."},
 		}, true
 	case "empire":
 		return []ChainStep{
