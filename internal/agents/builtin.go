@@ -137,6 +137,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.tax",
 			"manager.check",
 			"manager.lens",
+			"manager.crm",
 		},
 		Autostart: true,
 	}
@@ -432,6 +433,9 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.lens":
 		return kernel.Result{OK: true, Message: "lentille", Data: Lens(a.k)}, nil
+
+	case "manager.crm":
+		return CRMInvoke(a.k, call)
 
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)

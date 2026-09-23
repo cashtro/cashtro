@@ -138,9 +138,9 @@ func lineKnown(id string) map[string]string {
 		}
 	case "marketing":
 		return map[string]string{
-			"situation":   "Pandora tient une campagne. Facebook vient après la mesure.",
-			"manque":      "Le consentement, l'identité, le désabonnement, et l'accord.",
-			"intouchable": "Le compte Stripe et les pages d'un site client Proximity.",
+			"situation":   "Un seul CRM Lovable, Evolu-Jeunes/CRM. Pandora, Panda et un nom de client Proximity y déposent un brouillon.",
+			"manque":      "Le consentement, l'identité, le désabonnement, et la décision d'Epicenter avant un envoi.",
+			"intouchable": "La copie CRM dans Proximity, un thème WordPress, un ordre Giant, et un secret.",
 		}
 	case "empire":
 		return map[string]string{

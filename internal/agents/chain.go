@@ -98,9 +98,12 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "marketing":
 		return []ChainStep{
-			{Line: "marketing", Order: 1, Agent: "planner", Do: "Une campagne Pandora. Mesurer avant d'élargir."},
-			{Line: "marketing", Order: 2, Agent: "explorer", Do: "Lire le contexte Pandora et CRM. Pas le compte d'un client Proximity."},
-			{Line: "marketing", Order: 3, Agent: "comms", Do: "Facebook ou courriel seulement après consentement, identité, désabonnement, et allow. Les rabais comparent les prix en ligne."},
+			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire le seul CRM Lovable, Evolu-Jeunes/CRM (Itercore). Contacts, leads, notes. Pas la copie dans Proximity."},
+			{Line: "marketing", Order: 2, Agent: "memory", Do: "Déposer une note de croissance. Brouillon. Rien n'est écrit dans Supabase d'ici."},
+			{Line: "marketing", Order: 3, Agent: "planner", Do: "Une campagne Pandora, mesurée, rangée sur cette note."},
+			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress."},
+			{Line: "marketing", Order: 5, Agent: "comms", Do: "Courriel, SMS ou portail seulement après consentement, identité, désabonnement, et allow."},
+			{Line: "marketing", Order: 6, Agent: "manager", Do: "Epicenter décide en dernier. Sans lui, la note reste un brouillon."},
 		}, true
 	case "empire":
 		return []ChainStep{

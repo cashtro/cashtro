@@ -102,6 +102,16 @@ func Links() []Link {
 			Via:    "Optimisation contredit chaque proposition et ne laisse passer que l'option la plus courte",
 			Agents: []string{"reviewer", "explorer", "manager"},
 		},
+		{
+			From: "proximity", To: "marketing",
+			Via:    "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site.",
+			Agents: []string{"memory", "explorer", "manager"},
+		},
+		{
+			From: "panda", To: "marketing",
+			Via:    "Panda dépose une note client dans le même CRM. Un seul carnet.",
+			Agents: []string{"planner", "memory"},
+		},
 	}
 }
 

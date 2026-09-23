@@ -1,5 +1,5 @@
 {
-  "anchor": "ad669241a3e43dd2490870af4386fd43844905d716710e99f7dd79ee88b9b1d6",
+  "anchor": "5e95c899a3aa4ab8984db8ed7a411856ac4fb38e2d967f0f8a658dc34eab7dea",
   "constellations": [
     {
       "id": "control",
@@ -69,7 +69,7 @@
       "id": "marketing",
       "name": "Marketing digital corporate",
       "infrastructure": "Pandora, une campagne",
-      "function": "comms.send",
+      "function": "manager.crm",
       "product": "Evolu-Jeunes/CRM",
       "agent": "planner"
     },
@@ -283,6 +283,25 @@
         "explorer",
         "manager"
       ]
+    },
+    {
+      "from": "proximity",
+      "to": "marketing",
+      "via": "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site.",
+      "agents": [
+        "memory",
+        "explorer",
+        "manager"
+      ]
+    },
+    {
+      "from": "panda",
+      "to": "marketing",
+      "via": "Panda dépose une note client dans le même CRM. Un seul carnet.",
+      "agents": [
+        "planner",
+        "memory"
+      ]
     }
   ],
   "flows": [
@@ -324,7 +343,7 @@
     },
     {
       "division": "marketing",
-      "function": "comms.send",
+      "function": "manager.crm",
       "product": "Evolu-Jeunes/CRM",
       "agent": "planner"
     },
@@ -351,7 +370,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "ad669241a3e43dd2490870af4386fd43844905d716710e99f7dd79ee88b9b1d6"
+      "name": "5e95c899a3aa4ab8984db8ed7a411856ac4fb38e2d967f0f8a658dc34eab7dea"
     },
     {
       "id": "const:control",
@@ -573,7 +592,7 @@
     {
       "from": "const:marketing",
       "to": "agent:planner",
-      "via": "comms.send"
+      "via": "manager.crm"
     },
     {
       "from": "const:empire",
@@ -704,6 +723,16 @@
       "from": "optimisation",
       "to": "direction",
       "via": "Optimisation contredit chaque proposition et ne laisse passer que l'option la plus courte"
+    },
+    {
+      "from": "proximity",
+      "to": "marketing",
+      "via": "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site."
+    },
+    {
+      "from": "panda",
+      "to": "marketing",
+      "via": "Panda dépose une note client dans le même CRM. Un seul carnet."
     }
   ],
   "empty": 0

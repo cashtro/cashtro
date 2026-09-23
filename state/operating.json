@@ -853,6 +853,25 @@
         "explorer",
         "manager"
       ]
+    },
+    {
+      "from": "proximity",
+      "to": "marketing",
+      "via": "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site.",
+      "agents": [
+        "memory",
+        "explorer",
+        "manager"
+      ]
+    },
+    {
+      "from": "panda",
+      "to": "marketing",
+      "via": "Panda dépose une note client dans le même CRM. Un seul carnet.",
+      "agents": [
+        "planner",
+        "memory"
+      ]
     }
   ],
   "agents": [
@@ -1356,10 +1375,10 @@
         "name": "Marketing",
         "chief": "planner",
         "department": "marche",
-        "function": "comms.send",
+        "function": "manager.crm",
         "product": "Evolu-Jeunes/CRM",
-        "revenue": "Gestion marketing des business corporate.",
-        "guard": "Une campagne à la fois. Mesurer avant d'élargir."
+        "revenue": "Un seul carnet Lovable pour les contacts, les leads et les notes.",
+        "guard": "Brouillon seulement. Lovable n'entre pas dans WordPress. Epicenter décide avant un envoi."
       },
       {
         "id": "empire",

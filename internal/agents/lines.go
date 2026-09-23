@@ -100,10 +100,10 @@ func Lines() []Line {
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
-			Mandate: "Pandora est la maison du marketing digital. " +
-				"Une campagne à la fois, mesurée, puis Facebook ou courriel. " +
-				"Les campagnes de rabais du marketplace s'appuient sur la comparaison des prix en ligne.",
-			Controls: "Hustler pilote campagnes et gestion. Stripe encaisse, ce n'est pas un client Proximity.",
+			Mandate: "Le seul CRM Lovable est Evolu-Jeunes/CRM (Itercore) : contacts, leads, notes. " +
+				"Pandora mesure une campagne et la range dans ce carnet. Panda et le nom d'un client Proximity peuvent y déposer une note. " +
+				"La copie dans Proximity n'est pas un second CRM. Lovable n'édite pas les thèmes.",
+			Controls: "Explorer lit. Memory dépose un brouillon. Epicenter décide avant un envoi. Stripe encaisse, ce n'est pas un client Proximity.",
 			Repos:    []string{"Evolu-Jeunes/CRM"},
 		},
 		{
