@@ -6,6 +6,55 @@ import (
 	"testing"
 )
 
+func TestWordPressLeavesTheOtherDepartment(t *testing.T) {
+	board, err := LoadBoard()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(board.Lines) != 12 || len(board.Links) != 18 || len(board.Org.Departments) != 8 {
+		t.Fatalf("lines %d links %d depts %d", len(board.Lines), len(board.Links), len(board.Org.Departments))
+	}
+	var wordpress, proximity int
+	wp := map[string]bool{}
+	for _, ln := range board.Lines {
+		if ln.ID == "wordpress" {
+			wordpress = len(ln.Repos)
+			for _, r := range ln.Repos {
+				wp[r] = true
+			}
+		}
+		if ln.ID == "proximity" {
+			proximity = len(ln.Repos)
+			for _, r := range ln.Repos {
+				if wp[r] {
+					t.Fatalf("wordpress repo still on the other team: %s", r)
+				}
+			}
+		}
+	}
+	if wordpress < 20 || proximity == 0 || proximity > wordpress {
+		t.Fatalf("wordpress repos = %d, other proximity repos = %d", wordpress, proximity)
+	}
+	for _, repo := range []string{"Evolu-Jeunes/Proximity", "Evolu-Jeunes/ProximityApp", "Evolu-Jeunes/Api-Proximity"} {
+		if !wp[repo] {
+			t.Fatalf("%s is not on the wordpress commit list", repo)
+		}
+	}
+	for _, c := range board.Repos {
+		if wp[c.FullName] && c.LineID != "wordpress" {
+			t.Fatalf("%s filed as %s", c.FullName, c.LineID)
+		}
+	}
+	root, err := findFile("go.mod")
+	if err != nil {
+		t.Fatal(err)
+	}
+	out := filepath.Join(filepath.Dir(root), "state", "operating.json")
+	if err := SaveBoard(out, board); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestBuildBoardSyncsFiches(t *testing.T) {
 	dir := os.Getenv("EPICENTER_PROJECTS")
 	if dir == "" {
@@ -25,7 +74,7 @@ func TestBuildBoardSyncsFiches(t *testing.T) {
 	if board.Fiches != 58 {
 		t.Fatalf("fiches = %d, want 58", board.Fiches)
 	}
-	if len(board.Lines) != 11 || len(board.Agents) != 15 || len(board.Links) != 12 {
+	if len(board.Lines) != 12 || len(board.Agents) != 15 || len(board.Links) != 18 {
 		t.Fatalf("lines %d agents %d links %d", len(board.Lines), len(board.Agents), len(board.Links))
 	}
 	if len(board.Gaps) != 0 {
@@ -51,8 +100,14 @@ func TestBuildBoardSyncsFiches(t *testing.T) {
 			proximity = len(ln.Repos)
 		}
 	}
-	if proximity < 30 {
-		t.Fatalf("proximity repos = %d", proximity)
+	var wordpress int
+	for _, ln := range board.Lines {
+		if ln.ID == "wordpress" {
+			wordpress = len(ln.Repos)
+		}
+	}
+	if wordpress < 20 || proximity > wordpress {
+		t.Fatalf("wordpress repos = %d, other proximity repos = %d", wordpress, proximity)
 	}
 	root, err := findFile("go.mod")
 	if err != nil {

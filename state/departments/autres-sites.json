@@ -1,0 +1,254 @@
+{
+  "department": "autres-sites",
+  "mandate": "L'autre équipe. Ces comptes ne sont pas des sites WordPress du département, ni Proximity, ni Next Proximity, ni Proximity App, ni Api-Proximity.",
+  "sites": [
+    {
+      "repo": "Evolu-Jeunes/Proximity-Agentic",
+      "department": "autres-sites",
+      "present": true,
+      "pages": []
+    },
+    {
+      "repo": "Evolu-Jeunes/MB-Health",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "src/app/[locale]/about/page.tsx",
+        "src/app/[locale]/admin/faqs/page.tsx",
+        "src/app/[locale]/admin/layout.tsx",
+        "src/app/[locale]/admin/login/page.tsx",
+        "src/app/[locale]/admin/messages/page.tsx",
+        "src/app/[locale]/admin/page.tsx",
+        "src/app/[locale]/admin/services/page.tsx",
+        "src/app/[locale]/admin/therapists/page.tsx",
+        "src/app/[locale]/contact/page.tsx",
+        "src/app/[locale]/faq/page.tsx",
+        "src/app/[locale]/layout.tsx",
+        "src/app/[locale]/page.tsx",
+        "src/app/layout.tsx",
+        "src/app/page.tsx",
+        "src/components/forms/BookingForm.tsx",
+        "src/components/forms/ContactForm.tsx",
+        "src/components/layout/ClientLayout.tsx",
+        "src/components/layout/Footer.tsx",
+        "src/components/layout/Header.tsx",
+        "src/components/ui/SpecialistModal.tsx"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/Btkavocat",
+      "department": "autres-sites",
+      "present": true,
+      "pages": []
+    },
+    {
+      "repo": "Evolu-Jeunes/Neuro-equilibre",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "about_meryem_clinique_neuro_quilibre/code.html",
+        "accueil_clinique_neuro_quilibre/code.html",
+        "adults_clinique_neuro_quilibre/code.html",
+        "book_appointment_clinique_neuro_quilibre/code.html",
+        "children_clinique_neuro_quilibre/code.html",
+        "contact_clinique_neuro_quilibre/code.html",
+        "home_clinique_neuro_quilibre/code.html",
+        "index.html",
+        "nos_programmes_clinique_neuro_quilibre/code.html",
+        "our_programs_clinique_neuro_quilibre/code.html",
+        "pourquoi_le_neurofeedback_clinique_neuro_quilibre/code.html",
+        "propos_de_meryem_clinique_neuro_quilibre/code.html",
+        "teens_clinique_neuro_quilibre/code.html",
+        "why_neurofeedback_clinique_neuro_quilibre/code.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/CPA",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "code/Acceuil.html",
+        "code/a propos.html",
+        "code/blog.html",
+        "code/contact.html",
+        "code/expertise.html",
+        "code/service_pme.html",
+        "code/services.html",
+        "code/zones.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/Expertise",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "bi_expertise_digital_platform/accueil_bi_expertise/code.html",
+        "bi_expertise_digital_platform/bi_comptabilit_bi_expertise/code.html",
+        "bi_expertise_digital_platform/bi_conseil_bi_expertise/code.html",
+        "bi_expertise_digital_platform/bi_imp_t_refined_bi_expertise/code.html",
+        "bi_expertise_digital_platform/commencer_en_ligne_bi_expertise/code.html",
+        "bi_expertise_digital_platform/contact_bi_expertise/code.html",
+        "bi_expertise_digital_platform/faq_bi_expertise/code.html",
+        "bi_expertise_digital_platform/imp_t_bi_expertise/code.html",
+        "bi_expertise_digital_platform/industries_bi_expertise/code.html",
+        "bi_expertise_digital_platform/propos_bi_expertise/code.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/Alaska",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "01_home_alaska_luxury_winterwear/code.html",
+        "02_men_collection_alaska/code.html",
+        "03_women_collection_alaska/code.html",
+        "04_kids_collection_alaska/code.html",
+        "05_product_page_alaska_the_arctic_parka/code.html",
+        "06_lookbook_alaska_campaign_2027/code.html",
+        "07_about_alaska_our_heritage/code.html",
+        "08_technology_alaska_technical_excellence/code.html",
+        "09_store_locator_find_alaska/code.html",
+        "10_journal_alaska_lifestyle/code.html",
+        "11_contact_alaska_concierge/code.html",
+        "12_faq_help_center/code.html",
+        "13_my_account_personal_sanctuary/code.html",
+        "14_wishlist_your_curated_collection/code.html",
+        "15_cart_your_selection/code.html",
+        "16_checkout_secure_purchase/code.html",
+        "17_search_discover_alaska/code.html",
+        "18_404_lost_in_the_whiteout/code.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/Al-Soudani",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "al_soudani_accueil_desktop/code.html",
+        "al_soudani_accueil_mobile/code.html",
+        "al_soudani_contact_desktop/code.html",
+        "al_soudani_contact_mobile/code.html",
+        "al_soudani_mechoui_traiteur_desktop/code.html",
+        "al_soudani_mechoui_traiteur_mobile/code.html",
+        "al_soudani_menu_desktop/code.html",
+        "al_soudani_menu_mobile/code.html",
+        "al_soudani_mobile_home/code.html",
+        "al_soudani_premium_restaurant_home/code.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/MtlEvolution",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "mtl_volution_landing_page/code.html",
+        "mtl_volution_landing_page_with_logo/code.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/noix",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "Bagery/about-element-1.html",
+        "Bagery/about-element-2.html",
+        "Bagery/blog-details.html",
+        "Bagery/blog-grid.html",
+        "Bagery/contact.html",
+        "Bagery/error.html",
+        "Bagery/feature-element-1.html",
+        "Bagery/gallery-1.html",
+        "Bagery/gallery-2.html",
+        "Bagery/gallery-3.html",
+        "Bagery/index-2.html",
+        "Bagery/index-3.html",
+        "Bagery/index-onepage.html",
+        "Bagery/index-rtl.html",
+        "Bagery/news-element-1.html",
+        "Bagery/news-element-2.html",
+        "Bagery/our-menu.html",
+        "Bagery/project-element-1.html",
+        "Bagery/project-element-2.html",
+        "Bagery/sendemail.php",
+        "Bagery/shop-1.html",
+        "Bagery/shop-2.html",
+        "Bagery/shop-details.html",
+        "Bagery/shop-element-1.html",
+        "Bagery/shop-element-2.html",
+        "Bagery/team-element-1.html",
+        "Bagery/team-element-2.html",
+        "Bagery/team.html",
+        "Bagery/testimonial.html",
+        "Doc/index.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/Noix_landing",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "noix_boutique_landing_page_fid_le/code.html"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/nordiqueweb",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "access_la_nordique.php",
+        "ambassadeur_la_nordique_respect_charte.php",
+        "ambassador_page_la_nordique.php",
+        "home_page_la_nordique.php",
+        "la_nordique_du_qu_bec_ambassadeur.php",
+        "order_account_la_nordique.php",
+        "our_story_la_nordique.php",
+        "product_page_la_nordique.php"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/Nhl",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "frontend/index.html",
+        "frontend/src/Account.tsx",
+        "frontend/src/Ahl.tsx",
+        "frontend/src/App.tsx",
+        "frontend/src/Basketball.tsx",
+        "frontend/src/BlurText.tsx",
+        "frontend/src/Cfl.tsx",
+        "frontend/src/Dashboard.tsx",
+        "frontend/src/Gleague.tsx",
+        "frontend/src/Mlb.tsx",
+        "frontend/src/MonSolde.tsx",
+        "frontend/src/MyBets.tsx",
+        "frontend/src/Nba.tsx",
+        "frontend/src/Nhl.tsx",
+        "frontend/src/Picks.tsx",
+        "frontend/src/Pricing.tsx",
+        "frontend/src/Pwhl.tsx",
+        "frontend/src/Soccer.tsx",
+        "frontend/src/Ufc.tsx",
+        "frontend/src/Wnba.tsx",
+        "frontend/src/components/AdminPage.tsx",
+        "frontend/src/components/CompetitionSelector.tsx",
+        "frontend/src/components/GradientText.tsx",
+        "frontend/src/components/NavBar.tsx",
+        "frontend/src/components/SeriesBracket.tsx",
+        "frontend/src/components/SplitText.tsx",
+        "frontend/src/components/SportLayout.tsx",
+        "frontend/src/components/SportUpcomingPanel.tsx",
+        "frontend/src/main.tsx",
+        "frontend/src/nfl.tsx"
+      ]
+    },
+    {
+      "repo": "Evolu-Jeunes/demo-repository",
+      "department": "autres-sites",
+      "present": true,
+      "pages": [
+        "index.html"
+      ]
+    }
+  ]
+}

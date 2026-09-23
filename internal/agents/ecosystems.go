@@ -28,14 +28,14 @@ func Links() []Link {
 			Agents: []string{"init", "manager", "planner"},
 		},
 		{
-			From: "graphify", To: "proximity",
-			Via:    "Chaque site est un contexte gardé. Une demande client est le coup suivant sur ce contexte, pas un site nouveau.",
-			Agents: []string{"memory", "planner", "security"},
+			From: "epicenter", To: "wordpress",
+			Via:    "Epicenter et Voltron dirigent le département. Le commit, lui, reste sur les sites WordPress et sur Proximity, Next, l'App, et l'API.",
+			Agents: []string{"manager", "operator"},
 		},
 		{
-			From: "lovable", To: "proximity",
-			Via:    "Un site neuf naît dans Lovable. Son dépôt entre ensuite dans la chaîne Proximity. Lovable ne touche pas un WordPress déjà en ligne.",
-			Agents: []string{"architect", "delivery"},
+			From: "graphify", To: "wordpress",
+			Via:    "Le contexte de chaque thème WordPress est gardé ici. Lovable n'entre pas.",
+			Agents: []string{"memory", "operator", "security"},
 		},
 		{
 			From: "proximity", To: "panda",
@@ -63,9 +63,9 @@ func Links() []Link {
 			Agents: []string{"comms", "planner", "explorer"},
 		},
 		{
-			From: "proximity", To: "control",
-			Via:    "Un site live ne change qu'en preview, revue, puis accord. La sécurité lit le graphe. Elle n'attaque pas.",
-			Agents: []string{"security", "reviewer", "comms", "deploy"},
+			From: "wordpress", To: "control",
+			Via:    "Créer, puis filtrer, puis filtrer encore. Security dit si c'est permis. Reviewer garde la voie la plus courte. Pas d'attaque.",
+			Agents: []string{"operator", "security", "reviewer", "comms"},
 		},
 		{
 			From: "marketing", To: "empire",
@@ -79,8 +79,8 @@ func Links() []Link {
 		},
 		{
 			From: "ecole", To: "proximity",
-			Via:    "Éduconnexion enseigne WordPress, PHP et ACF Pro",
-			Agents: []string{"research", "memory", "planner"},
+			Via:    "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
+			Agents: []string{"research", "operator", "memory"},
 		},
 		{
 			From: "ecole", To: "trading",

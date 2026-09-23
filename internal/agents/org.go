@@ -1,6 +1,6 @@
 package agents
 
-// Organization is the cooperative. Three chiefs, seven departments,
+// Organization is the cooperative. Three chiefs, eight departments,
 // the 15 real agentics as specialized employees. No extra processes.
 // The central agency is another repo and another prompt. It is not here.
 type Organization struct {
@@ -91,11 +91,19 @@ func Chart() Organization {
 				},
 			},
 			{
+				ID: "wordpress", Name: "WordPress", ReportsTo: "cto", Chief: "operator",
+				Mandate: "Epicenter et Voltron dirigent. Le commit reste sur les sites WordPress (PHP, ACF Pro, XAMPP) et sur Proximity, Next Proximity, Proximity App, et Api-Proximity. Lovable n'y touche pas.",
+				Members: []Member{
+					{Agent: "operator", Title: "confection WordPress", Skills: []string{"PHP", "ACF Pro", "XAMPP", "thèmes"}},
+					{Agent: "memory", Title: "dossier de chaque site", Skills: []string{"contexte", "pages", "champs ACF"}},
+				},
+			},
+			{
 				ID: "azure", Name: "Azure", ReportsTo: "cto", Chief: "deploy",
-				Mandate: "Équipe du système branché sur Azure. Elle tourne en même temps que les autres. Sites Proximity, WordPress, PHP, ACF Pro. Elle ne scanne pas et elle ne vend pas le marketplace.",
+				Mandate: "L'autre équipe de la même maison. Applications et pages qui ne sont pas des thèmes WordPress. Elle ne touche pas PHP, ACF Pro, ni XAMPP. Elle ne scanne pas et elle ne vend pas le marketplace.",
 				Members: []Member{
 					{Agent: "deploy", Title: "chef d'équipe Azure", Skills: []string{"Azure", "preview", "release"}},
-					{Agent: "operator", Title: "confection des sites Azure", Skills: []string{"WordPress", "PHP", "ACF Pro"}},
+					{Agent: "operator", Title: "confection hors thème", Skills: []string{"applications", "pages", "comptes hors WordPress"}},
 				},
 			},
 			{
@@ -116,7 +124,8 @@ func Chart() Organization {
 			},
 		},
 		Divisions: []Division{
-			{ID: "proximity", Name: "Proximity Agency", Chief: "operator", Department: "azure", Revenue: "Sites clients WordPress / PHP / ACF Pro, branchés sur Azure.", Guard: "Les sites déjà en ligne se lisent. Preview seulement, puis comms.allow. L'équipe Azure gère ça en parallèle."},
+			{ID: "wordpress", Name: "WordPress Proximity", Chief: "operator", Department: "wordpress", Revenue: "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity.", Guard: "Le commit ne sort pas de ces dépôts. Security filtre, reviewer filtre encore, comms.allow avant de quitter le local. Lovable n'entre pas."},
+			{ID: "proximity", Name: "Proximity Agency", Chief: "deploy", Department: "azure", Revenue: "L'autre équipe : comptes qui ne sont pas le WordPress ni les produits Proximity nommés.", Guard: "Ne pas committer ces dépôts sur le département WordPress, ni l'inverse."},
 			{
 				ID: "scanapp", Name: "Scan App", Chief: "comms", Department: "marche",
 				Revenue: "Le scan tient le stock vrai. La fiche vend ce stock. La promo et le média tournent autour de la fiche, pas autour de la photo seule.",

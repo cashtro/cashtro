@@ -20,26 +20,38 @@ func Lines() []Line {
 			Repos:    []string{"cashtro/cashtro", "cashtro/epicenter"},
 		},
 		{
-			ID: "proximity", Name: "Proximity Agency", Brain: "Forgeron",
-			Mandate: "Usine de sites pour Proximity Agency. " +
-				"Un site neuf naît dans Lovable, puis son dépôt entre ici. " +
-				"Un site déjà là reste WordPress, PHP et ACF Pro : une demande client change ce site, elle n'en crée pas un autre. " +
-				"Couche Azure : preview, accord, mise en ligne.",
-			Controls: "Memory tient le contexte du site. Planner tient la demande. Security lit. Deploy ne promeut qu'après comms.allow.",
+			ID: "wordpress", Name: "WordPress Proximity", Brain: "Forgeron",
+			Mandate: "Epicenter et Voltron dirigent ce département. Le commit, lui, ne part que d'ici. " +
+				"Sites WordPress Proximity : PHP, ACF Pro, thèmes, XAMPP. " +
+				"Et les produits à connaître et à committer : Proximity, Next Proximity (apps/web), Proximity App, Api-Proximity. " +
+				"Proximity App est le WordPress de l'agence. Lovable n'entre pas.",
+			Controls: "Operator confectionne. Security filtre. Reviewer filtre encore. Memory garde le contexte. Rien en ligne sans comms.allow. Aucun commit sur Epicenter, Voltron, ou une autre marque.",
 			Repos: []string{
-				"Evolu-Jeunes/Proximity", "Evolu-Jeunes/ProximityApp", "Evolu-Jeunes/Proximity-Agentic",
-				"Evolu-Jeunes/Api-Proximity", "Evolu-Jeunes/Proxy", "Evolu-Jeunes/Plugin",
-				"Evolu-Jeunes/Btkavocat", "Evolu-Jeunes/MD-clinic", "Evolu-Jeunes/MB-Health",
-				"Evolu-Jeunes/Neuro-equilibre", "Evolu-Jeunes/Hypotheque.ca", "Evolu-Jeunes/hypotheque",
-				"Evolu-Jeunes/immobilier", "Evolu-Jeunes/AsselinCPA", "Evolu-Jeunes/CPA",
-				"Evolu-Jeunes/Expertise", "Evolu-Jeunes/GroulxGroulx", "Evolu-Jeunes/Corps-Art",
-				"Evolu-Jeunes/Alaska", "Evolu-Jeunes/Al-Soudani", "Evolu-Jeunes/AstroPoulet",
-				"Evolu-Jeunes/bubbles", "Evolu-Jeunes/clic", "Evolu-Jeunes/Decoland",
-				"Evolu-Jeunes/h20", "Evolu-Jeunes/h20landing", "Evolu-Jeunes/H2oH2o",
-				"cashtro/H2OriginTest", "Evolu-Jeunes/noix", "Evolu-Jeunes/Noix_landing",
-				"Evolu-Jeunes/lanordique", "Evolu-Jeunes/Newnordique", "Evolu-Jeunes/nordiqueweb",
-				"Evolu-Jeunes/MtlEvolution", "Evolu-Jeunes/multiservices", "Evolu-Jeunes/Nhl",
-				"Evolu-Jeunes/Pollo", "Evolu-Jeunes/demo-repository",
+				"Evolu-Jeunes/immobilier", "Evolu-Jeunes/hypotheque", "Evolu-Jeunes/Hypotheque.ca",
+				"Evolu-Jeunes/MD-clinic",
+				"Evolu-Jeunes/AsselinCPA", "Evolu-Jeunes/GroulxGroulx", "Evolu-Jeunes/Corps-Art",
+				"Evolu-Jeunes/AstroPoulet", "Evolu-Jeunes/Pollo", "Evolu-Jeunes/Decoland",
+				"Evolu-Jeunes/bubbles", "Evolu-Jeunes/clic", "Evolu-Jeunes/multiservices",
+				"Evolu-Jeunes/lanordique", "Evolu-Jeunes/Newnordique",
+				"Evolu-Jeunes/h20", "Evolu-Jeunes/h20landing", "Evolu-Jeunes/H2oH2o", "cashtro/H2OriginTest",
+				"Evolu-Jeunes/Proximity", "Evolu-Jeunes/ProximityApp", "Evolu-Jeunes/Api-Proximity",
+				"Evolu-Jeunes/Proxy", "Evolu-Jeunes/Plugin",
+				"Evolu-Jeunes/educonnexion", "Evolu-Jeunes/sigma", "Evolu-Jeunes/sigmaNew",
+			},
+		},
+		{
+			ID: "proximity", Name: "Proximity Agency", Brain: "Forgeron",
+			Mandate: "L'autre département de la même maison. " +
+				"Comptes qui ne sont pas des sites WordPress, ni Proximity, ni Next Proximity, ni Proximity App, ni l'API. " +
+				"Ce département ne commit pas sur PHP, ACF Pro, ni XAMPP.",
+			Controls: "L'autre équipe empile ces comptes. Le kernel ne les mélange pas avec le département WordPress.",
+			Repos: []string{
+				"Evolu-Jeunes/Proximity-Agentic",
+				"Evolu-Jeunes/MB-Health", "Evolu-Jeunes/Btkavocat",
+				"Evolu-Jeunes/Neuro-equilibre", "Evolu-Jeunes/CPA", "Evolu-Jeunes/Expertise",
+				"Evolu-Jeunes/Alaska", "Evolu-Jeunes/Al-Soudani", "Evolu-Jeunes/MtlEvolution",
+				"Evolu-Jeunes/noix", "Evolu-Jeunes/Noix_landing", "Evolu-Jeunes/nordiqueweb",
+				"Evolu-Jeunes/Nhl", "Evolu-Jeunes/demo-repository",
 			},
 		},
 		{
@@ -83,7 +95,7 @@ func Lines() []Line {
 		{
 			ID: "ecole", Name: "École tech", Brain: "Cartographe",
 			Mandate:  "Enseigner tout ce qui est tech. Éduconnexion est le côté école.",
-			Controls: "Cartographe tient le programme. Forgeron tient le site WordPress.",
+			Controls: "Cartographe tient le programme. Le thème Éduconnexion est au département WordPress.",
 			Repos:    []string{"Evolu-Jeunes/educonnexion"},
 		},
 		{
@@ -116,7 +128,7 @@ func Lines() []Line {
 			Repos: []string{
 				"Evolu-Jeunes/AI-BOT", "Evolu-Jeunes/bot", "Evolu-Jeunes/Blockchain-Trading-",
 				"Evolu-Jeunes/TradingBotCodex", "cashtro/trading_bot-main",
-				"Evolu-Jeunes/sigma", "Evolu-Jeunes/sigmaNew", "Evolu-Jeunes/Giant",
+				"Evolu-Jeunes/Giant",
 			},
 		},
 	}

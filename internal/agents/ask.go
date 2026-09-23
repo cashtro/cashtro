@@ -106,11 +106,17 @@ func lineKnown(id string) map[string]string {
 			"manque":      "Rien à inventer. Un trou de fiche arrête le coup.",
 			"intouchable": "Les sites clients déjà en ligne, et le dépôt de l'agence.",
 		}
+	case "wordpress":
+		return map[string]string{
+			"situation":   "Epicenter et Voltron dirigent. Le commit va sur un site WordPress, Proximity, Next Proximity, Proximity App, ou l'API.",
+			"manque":      "L'accord avant de quitter le local.",
+			"intouchable": "Lovable, Epicenter, Voltron, et toute marque qui n'est pas dans la demande.",
+		}
 	case "proximity":
 		return map[string]string{
-			"situation":   "Chaque site a son contexte. Une demande client change ce site. Un site neuf passe par Lovable.",
-			"manque":      "L'accord sur la preview. Pas une mise en ligne directe.",
-			"intouchable": "Tout ce que la demande ne nomme pas, et un site live sans allow.",
+			"situation":   "L'autre département. Comptes hors WordPress et hors Proximity, Next, App, API.",
+			"manque":      "L'autre équipe empile ces comptes.",
+			"intouchable": "Les thèmes, Proximity, Next Proximity, Proximity App, et Api-Proximity.",
 		}
 	case "panda":
 		return map[string]string{

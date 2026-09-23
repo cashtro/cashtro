@@ -71,11 +71,26 @@ func LoadBoard() (Board, error) {
 	if err := json.Unmarshal(raw, &b); err != nil {
 		return Board{}, err
 	}
+	return AlignBoard(b), nil
+}
+
+// AlignBoard keeps the fiche cards and puts lines, links, and the chart
+// back on the code roster. WordPress themes leave the other department.
+func AlignBoard(b Board) Board {
 	b.Version = "2"
 	b.Org = Chart()
 	b.Compliance = Loi()
 	b.Agents = agentNames(b.Org)
-	return b, nil
+	b.Links = Links()
+	b.Repos = retargetCards(b.Repos)
+	b.Lines = tally(b.Repos)
+	fresh := boardFromLines().Rules
+	if len(b.Rules) == len(fresh) && len(b.Rules) > 0 {
+		b.Rules[0] = fresh[0]
+	} else {
+		b.Rules = fresh
+	}
+	return b
 }
 
 // BuildBoard syncs fiches, the line roster, and the accounts graph into one board.
@@ -85,9 +100,9 @@ func BuildBoard(ficheDir, graphPath string) (Board, error) {
 		return Board{}, err
 	}
 	b := boardFromLines()
-	b.Repos = cards
+	b.Repos = retargetCards(cards)
 	b.Fiches = len(cards)
-	b.Lines = tally(cards)
+	b.Lines = tally(b.Repos)
 	b.Gaps = gaps(cards)
 	if graphPath != "" {
 		g, err := readGraph(graphPath)
@@ -123,7 +138,7 @@ func boardFromLines() Board {
 		Org:        org,
 		Compliance: Loi(),
 		Rules: []string{
-			"Coopérative : CEO, CTO, CMP. Sept départements. Quinze employés spécialisés.",
+			"Coopérative : CEO, CTO, CMP. Huit départements. Quinze employés spécialisés. WordPress et l'autre équipe Proximity ne partagent pas les mêmes dépôts.",
 			"Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
 			"La chaîne des coups ne se réécrit pas.",
 			"L'agence centrale rapporte. Epicenter décide. Elle n'est pas un siège de ce tableau.",
@@ -206,10 +221,59 @@ func readFiches(dir string) ([]RepoCard, error) {
 	return cards, nil
 }
 
+// rosterOwner is the department that holds this repo.
+// A WordPress theme stays on that line even when an old fiche still says Proximity.
+func rosterOwner(full string) (Line, bool) {
+	var found Line
+	ok := false
+	for _, ln := range Lines() {
+		for _, repo := range ln.Repos {
+			if repo != full {
+				continue
+			}
+			if ln.ID == "wordpress" {
+				return ln, true
+			}
+			if !ok {
+				found = ln
+				ok = true
+			}
+		}
+	}
+	return found, ok
+}
+
+func retargetCards(cards []RepoCard) []RepoCard {
+	out := append([]RepoCard(nil), cards...)
+	for i, c := range out {
+		ln, ok := rosterOwner(c.FullName)
+		if !ok {
+			continue
+		}
+		out[i].Line = ln.Name
+		out[i].LineID = ln.ID
+	}
+	return out
+}
+
 func tally(cards []RepoCard) []LineView {
-	buckets := map[string][]string{}
+	present := map[string]bool{}
 	for _, c := range cards {
-		if c.LineID == "" {
+		present[c.FullName] = true
+	}
+	useAll := len(cards) == 0
+	onRoster := map[string]bool{}
+	buckets := map[string][]string{}
+	for _, ln := range Lines() {
+		for _, repo := range ln.Repos {
+			onRoster[repo] = true
+			if useAll || present[repo] {
+				buckets[ln.ID] = append(buckets[ln.ID], repo)
+			}
+		}
+	}
+	for _, c := range cards {
+		if onRoster[c.FullName] || c.LineID == "" {
 			continue
 		}
 		buckets[c.LineID] = append(buckets[c.LineID], c.FullName)

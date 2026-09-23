@@ -44,6 +44,11 @@ func craftFor(id string) []Craft {
 			{Mark: "règle", Fill: "Règle : permis ou interdit, citée, pas un avis."},
 			{Mark: "ça casse", Fill: "Ça casse : le cas qui fait perdre de l'argent ou des données."},
 		}
+	case "wordpress":
+		return []Craft{
+			{Mark: "thème", Fill: "Thème : le dépôt WordPress, la page, et le champ ACF touchés."},
+			{Mark: "xampp", Fill: "XAMPP : le changement est local tant que comms.allow n'est pas donné."},
+		}
 	case "azure":
 		return []Craft{
 			{Mark: "ressource azure", Fill: "Ressource Azure : le service ou le site branché, nommé."},

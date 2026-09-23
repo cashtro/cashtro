@@ -61,17 +61,19 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "control", Order: 3, Agent: "memory", Do: "Ajouter un maillon à la chaîne. Ne pas réécrire le maillon d'avant. Ne pas mélanger le dépôt de l'agence."},
 			{Line: "control", Order: 4, Agent: "init", Do: "Voltron relance le kernel s'il tombe. Il ne déploie pas."},
 		}, true
+	case "wordpress":
+		return []ChainStep{
+			{Line: "wordpress", Order: 1, Agent: "memory", Do: "Charger le contexte : site WordPress (pages, ACF) ou un produit nommé — Proximity, Next Proximity dans apps/web, Proximity App, Api-Proximity."},
+			{Line: "wordpress", Order: 2, Agent: "operator", Do: "Le commit va seulement sur un site WordPress (PHP, ACF Pro, XAMPP) ou sur Proximity, Proximity App, l'API, ou Next. Pas Lovable. Pas Epicenter. Pas Voltron. Pas une autre marque."},
+			{Line: "wordpress", Order: 3, Agent: "security", Do: "Filtre : secrets, Loi 25, site déjà en ligne. Interdit si ça sort de la demande."},
+			{Line: "wordpress", Order: 4, Agent: "reviewer", Do: "Filtre encore : la plus courte des deux façons, et rien d'autre n'a bougé."},
+			{Line: "wordpress", Order: 5, Agent: "comms", Do: "Accord avant de quitter le local. Sans allow, ça reste local."},
+			{Line: "wordpress", Order: 6, Agent: "memory", Do: "Écrire le contexte à jour : pages, champs ACF, ou le produit touché, et ce qui reste."},
+		}, true
 	case "proximity":
 		return []ChainStep{
-			{Line: "proximity", Order: 1, Agent: "memory", Do: "Charger le contexte de ce site : dépôt, WordPress ou Lovable, ce qui est déjà en ligne."},
-			{Line: "proximity", Order: 2, Agent: "planner", Do: "Une demande client devient un seul ship. Pas un nouveau site si le site existe."},
-			{Line: "proximity", Order: 3, Agent: "architect", Do: "Deux façons de faire le changement. Garder la plus courte. Un site neuf passe par Lovable, puis son dépôt entre ici."},
-			{Line: "proximity", Order: 4, Agent: "security", Do: "Lire le graphe : secrets, Loi 25, limite du site live. Pas d'attaque. Pas de réécriture totale."},
-			{Line: "proximity", Order: 5, Agent: "operator", Do: "Appliquer le changement sur une preview. WordPress, PHP, ACF Pro, ou le dépôt sorti de Lovable."},
-			{Line: "proximity", Order: 6, Agent: "reviewer", Do: "La preview tient la demande, et rien d'autre n'a bougé."},
-			{Line: "proximity", Order: 7, Agent: "comms", Do: "Accord du client. Sans allow, la preview reste une preview."},
-			{Line: "proximity", Order: 8, Agent: "deploy", Do: "Promouvoir la preview. Azure pour Proximity. Jamais une mise en ligne directe."},
-			{Line: "proximity", Order: 9, Agent: "memory", Do: "Écrire le nouveau contexte du site. La prochaine demande part de là."},
+			{Line: "proximity", Order: 1, Agent: "memory", Do: "Ces comptes ne sont pas le département WordPress. Proximity, Next, Proximity App et l'API n'y sont pas."},
+			{Line: "proximity", Order: 2, Agent: "manager", Do: "Ne pas committer depuis cette ligne sur un thème, ni sur Proximity, Proximity App, Api-Proximity, ou Next."},
 		}, true
 	case "marketplace":
 		return []ChainStep{
