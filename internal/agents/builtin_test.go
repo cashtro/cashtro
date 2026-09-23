@@ -92,8 +92,8 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if got := status["agents"]; got != 15 {
 		t.Fatalf("board agents = %v, want 15", got)
 	}
-	if got := status["lines"]; got != 13 {
-		t.Fatalf("board lines = %v, want 13", got)
+	if got := status["lines"]; got != 14 {
+		t.Fatalf("board lines = %v, want 14", got)
 	}
 
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.lines"})
@@ -101,7 +101,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.lines: %+v %v", res, err)
 	}
 	lines, ok := res.Data.([]Line)
-	if !ok || len(lines) != 13 {
+	if !ok || len(lines) != 14 {
 		t.Fatalf("lines = %#v", res.Data)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
@@ -116,7 +116,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	}
 
 	org := Chart()
-	if len(org.Seats) != 3 || len(org.Departments) != 9 || len(org.Divisions) != 10 {
+	if len(org.Seats) != 3 || len(org.Departments) != 9 || len(org.Divisions) != 11 {
 		t.Fatalf("org seats/depts/divs = %d %d %d", len(org.Seats), len(org.Departments), len(org.Divisions))
 	}
 	var scanWork int

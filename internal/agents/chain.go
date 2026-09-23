@@ -98,12 +98,19 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "marketing":
 		return []ChainStep{
-			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire le seul CRM Lovable, Evolu-Jeunes/CRM (Itercore). Contacts, leads, notes. Pas la copie dans Proximity."},
-			{Line: "marketing", Order: 2, Agent: "memory", Do: "Déposer une note de croissance. Brouillon. Rien n'est écrit dans Supabase d'ici."},
+			{Line: "marketing", Order: 1, Agent: "explorer", Do: "Lire Evolu-Jeunes/CRM. Contacts, leads, notes. La voix est Vapi. Pas le carnet Fix2. Pas la copie dans Proximity."},
+			{Line: "marketing", Order: 2, Agent: "memory", Do: "Déposer une note de croissance. Brouillon. Rien n'est écrit dans Supabase d'ici. Aucun appel Vapi ne part."},
 			{Line: "marketing", Order: 3, Agent: "planner", Do: "Une campagne Pandora, mesurée, rangée sur cette note."},
-			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress."},
+			{Line: "marketing", Order: 4, Agent: "security", Do: "Retirer les secrets. Lovable n'entre pas dans un thème WordPress. Une fiche Fix2 n'entre pas dans ce carnet."},
 			{Line: "marketing", Order: 5, Agent: "comms", Do: "Courriel, SMS ou portail seulement après consentement, identité, désabonnement, et allow."},
 			{Line: "marketing", Order: 6, Agent: "manager", Do: "Epicenter décide en dernier. Sans lui, la note reste un brouillon."},
+		}, true
+	case "fix2":
+		return []ChainStep{
+			{Line: "fix2", Order: 1, Agent: "memory", Do: "Lire le carnet Fix2 seulement. Ne pas écrire dans Evolu-Jeunes/CRM. Ce n'est pas un thème. Lovable n'est pas branché."},
+			{Line: "fix2", Order: 2, Agent: "planner", Do: "Déposer un contact, une demande ou une note dans ce carnet. La voix Vapi note l'appel ici, ou pas du tout."},
+			{Line: "fix2", Order: 3, Agent: "security", Do: "Retirer un secret. Refuser un paiement, un permis déposé, une édition de thème, et un appel sans clé."},
+			{Line: "fix2", Order: 4, Agent: "manager", Do: "Epicenter décide en dernier. Le cycle des quarante agents s'arrête là."},
 		}, true
 	case "empire":
 		return []ChainStep{

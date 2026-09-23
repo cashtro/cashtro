@@ -1,5 +1,5 @@
 {
-  "anchor": "5e95c899a3aa4ab8984db8ed7a411856ac4fb38e2d967f0f8a658dc34eab7dea",
+  "anchor": "ed55ff8c408e92dd726e9dcd25214911cdd9726b81bc697ca1b9362b6a53370d",
   "constellations": [
     {
       "id": "control",
@@ -68,7 +68,7 @@
     {
       "id": "marketing",
       "name": "Marketing digital corporate",
-      "infrastructure": "Pandora, une campagne",
+      "infrastructure": "Pandora, une campagne, voix Vapi",
       "function": "manager.crm",
       "product": "Evolu-Jeunes/CRM",
       "agent": "planner"
@@ -96,6 +96,14 @@
       "function": "investigator.trace",
       "product": "Bots et Giant",
       "agent": "investigator"
+    },
+    {
+      "id": "fix2",
+      "name": "Fix2",
+      "infrastructure": "carnet propre, voix Vapi, quarante agents",
+      "function": "operator.work",
+      "product": "Evolu-Jeunes/Fix2",
+      "agent": "operator"
     },
     {
       "id": "fonds",
@@ -287,7 +295,7 @@
     {
       "from": "proximity",
       "to": "marketing",
-      "via": "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site.",
+      "via": "Le nom d'un client peut être noté dans le carnet des agents. Lovable n'édite pas le site. Fix2 ne reçoit pas cette note.",
       "agents": [
         "memory",
         "explorer",
@@ -297,10 +305,20 @@
     {
       "from": "panda",
       "to": "marketing",
-      "via": "Panda dépose une note client dans le même CRM. Un seul carnet.",
+      "via": "Panda dépose une note client dans le carnet des agents. Le carnet Fix2 reste à part.",
       "agents": [
         "planner",
         "memory"
+      ]
+    },
+    {
+      "from": "fix2",
+      "to": "marketing",
+      "via": "Fix2 tient son carnet. Le carnet des agents reste Evolu-Jeunes/CRM. Aucune fiche ne passe de l'un à l'autre.",
+      "agents": [
+        "operator",
+        "memory",
+        "manager"
       ]
     }
   ],
@@ -348,6 +366,12 @@
       "agent": "planner"
     },
     {
+      "division": "fix2",
+      "function": "operator.work",
+      "product": "Evolu-Jeunes/Fix2",
+      "agent": "operator"
+    },
+    {
       "division": "empire",
       "function": "delivery.advance",
       "product": "Evolu-Jeunes/EmpireMedia",
@@ -370,7 +394,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "5e95c899a3aa4ab8984db8ed7a411856ac4fb38e2d967f0f8a658dc34eab7dea"
+      "name": "ed55ff8c408e92dd726e9dcd25214911cdd9726b81bc697ca1b9362b6a53370d"
     },
     {
       "id": "const:control",
@@ -493,6 +517,16 @@
       "name": "investigator"
     },
     {
+      "id": "const:fix2",
+      "kind": "constellation",
+      "name": "Fix2"
+    },
+    {
+      "id": "agent:operator",
+      "kind": "agent",
+      "name": "operator"
+    },
+    {
       "id": "const:fonds",
       "kind": "constellation",
       "name": "Fonds"
@@ -587,7 +621,7 @@
     {
       "from": "const:marketing",
       "to": "anchor",
-      "via": "Pandora, une campagne"
+      "via": "Pandora, une campagne, voix Vapi"
     },
     {
       "from": "const:marketing",
@@ -623,6 +657,16 @@
       "from": "const:trading",
       "to": "agent:investigator",
       "via": "investigator.trace"
+    },
+    {
+      "from": "const:fix2",
+      "to": "anchor",
+      "via": "carnet propre, voix Vapi, quarante agents"
+    },
+    {
+      "from": "const:fix2",
+      "to": "agent:operator",
+      "via": "operator.work"
     },
     {
       "from": "const:fonds",
@@ -727,12 +771,17 @@
     {
       "from": "proximity",
       "to": "marketing",
-      "via": "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site."
+      "via": "Le nom d'un client peut être noté dans le carnet des agents. Lovable n'édite pas le site. Fix2 ne reçoit pas cette note."
     },
     {
       "from": "panda",
       "to": "marketing",
-      "via": "Panda dépose une note client dans le même CRM. Un seul carnet."
+      "via": "Panda dépose une note client dans le carnet des agents. Le carnet Fix2 reste à part."
+    },
+    {
+      "from": "fix2",
+      "to": "marketing",
+      "via": "Fix2 tient son carnet. Le carnet des agents reste Evolu-Jeunes/CRM. Aucune fiche ne passe de l'un à l'autre."
     }
   ],
   "empty": 0

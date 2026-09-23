@@ -104,13 +104,18 @@ func Links() []Link {
 		},
 		{
 			From: "proximity", To: "marketing",
-			Via:    "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site.",
+			Via:    "Le nom d'un client peut être noté dans le carnet des agents. Lovable n'édite pas le site. Fix2 ne reçoit pas cette note.",
 			Agents: []string{"memory", "explorer", "manager"},
 		},
 		{
 			From: "panda", To: "marketing",
-			Via:    "Panda dépose une note client dans le même CRM. Un seul carnet.",
+			Via:    "Panda dépose une note client dans le carnet des agents. Le carnet Fix2 reste à part.",
 			Agents: []string{"planner", "memory"},
+		},
+		{
+			From: "fix2", To: "marketing",
+			Via:    "Fix2 tient son carnet. Le carnet des agents reste Evolu-Jeunes/CRM. Aucune fiche ne passe de l'un à l'autre.",
+			Agents: []string{"operator", "memory", "manager"},
 		},
 	}
 }

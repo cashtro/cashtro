@@ -11,7 +11,7 @@ func TestWordPressLeavesTheOtherDepartment(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(board.Lines) != 13 || len(board.Links) != 20 || len(board.Org.Departments) != 9 {
+	if len(board.Lines) != 14 || len(board.Links) != 21 || len(board.Org.Departments) != 9 {
 		t.Fatalf("lines %d links %d depts %d", len(board.Lines), len(board.Links), len(board.Org.Departments))
 	}
 	var wordpress, proximity int
@@ -74,7 +74,7 @@ func TestBuildBoardSyncsFiches(t *testing.T) {
 	if board.Fiches != 58 {
 		t.Fatalf("fiches = %d, want 58", board.Fiches)
 	}
-	if len(board.Lines) != 13 || len(board.Agents) != 15 || len(board.Links) != 20 {
+	if len(board.Lines) != 14 || len(board.Agents) != 15 || len(board.Links) != 21 {
 		t.Fatalf("lines %d agents %d links %d", len(board.Lines), len(board.Agents), len(board.Links))
 	}
 	if len(board.Gaps) != 0 {

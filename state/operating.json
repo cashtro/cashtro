@@ -670,6 +670,12 @@
       ]
     },
     {
+      "id": "fix2",
+      "name": "Fix2",
+      "brain": "Forgeron",
+      "repos": null
+    },
+    {
       "id": "fonds",
       "name": "Fonds",
       "brain": "Manager",
@@ -857,7 +863,7 @@
     {
       "from": "proximity",
       "to": "marketing",
-      "via": "Le nom d'un client peut être noté dans le CRM Lovable. Lovable n'édite pas le site.",
+      "via": "Le nom d'un client peut être noté dans le carnet des agents. Lovable n'édite pas le site. Fix2 ne reçoit pas cette note.",
       "agents": [
         "memory",
         "explorer",
@@ -867,10 +873,20 @@
     {
       "from": "panda",
       "to": "marketing",
-      "via": "Panda dépose une note client dans le même CRM. Un seul carnet.",
+      "via": "Panda dépose une note client dans le carnet des agents. Le carnet Fix2 reste à part.",
       "agents": [
         "planner",
         "memory"
+      ]
+    },
+    {
+      "from": "fix2",
+      "to": "marketing",
+      "via": "Fix2 tient son carnet. Le carnet des agents reste Evolu-Jeunes/CRM. Aucune fiche ne passe de l'un à l'autre.",
+      "agents": [
+        "operator",
+        "memory",
+        "manager"
       ]
     }
   ],
@@ -1377,8 +1393,18 @@
         "department": "marche",
         "function": "manager.crm",
         "product": "Evolu-Jeunes/CRM",
-        "revenue": "Un seul carnet Lovable pour les contacts, les leads et les notes.",
-        "guard": "Brouillon seulement. Lovable n'entre pas dans WordPress. Epicenter décide avant un envoi."
+        "revenue": "Campagnes. Les agents grandissent dans ce carnet. La voix est Vapi.",
+        "guard": "Brouillon seulement. Fix2 n'y écrit pas. Lovable n'entre pas dans WordPress. Aucun appel ne part. Epicenter décide avant un envoi."
+      },
+      {
+        "id": "fix2",
+        "name": "Fix2",
+        "chief": "operator",
+        "department": "operations",
+        "function": "operator.work",
+        "product": "Evolu-Jeunes/Fix2",
+        "revenue": "Construction. Son carnet est à part. La voix est Vapi.",
+        "guard": "Pas le carnet des agents. Pas WordPress. Pas Lovable. Pas d'appel sans clé. Pas d'envoi, pas de paiement, pas de permis déposé. Epicenter décide."
       },
       {
         "id": "empire",

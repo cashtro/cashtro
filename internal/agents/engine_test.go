@@ -14,7 +14,7 @@ func TestEngineJoinsConstellations(t *testing.T) {
 		t.Fatalf("tax = %+v", got)
 	}
 	items := Constellations()
-	if len(items) != 13 || emptyCount(items) != 0 {
+	if len(items) != 14 || emptyCount(items) != 0 {
 		t.Fatalf("constellations = %d empty %d", len(items), emptyCount(items))
 	}
 	if OneAnchor(items) != OneAnchor(Constellations()) {
@@ -56,7 +56,7 @@ func TestEngineJoinsConstellations(t *testing.T) {
 		t.Fatalf("lens: %+v %v", res, err)
 	}
 	lens := res.Data.(map[string]any)
-	if lens["empty"].(int) != 0 || lens["constellations"].(int) != 13 {
+	if lens["empty"].(int) != 0 || lens["constellations"].(int) != 14 {
 		t.Fatalf("lens = %+v", lens)
 	}
 	if _, err := SaveBlueprint(k); err != nil {

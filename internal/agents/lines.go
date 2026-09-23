@@ -100,10 +100,9 @@ func Lines() []Line {
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",
-			Mandate: "Le seul CRM Lovable est Evolu-Jeunes/CRM (Itercore) : contacts, leads, notes. " +
-				"Pandora mesure une campagne et la range dans ce carnet. Panda et le nom d'un client Proximity peuvent y déposer une note. " +
-				"La copie dans Proximity n'est pas un second CRM. Lovable n'édite pas les thèmes.",
-			Controls: "Explorer lit. Memory dépose un brouillon. Epicenter décide avant un envoi. Stripe encaisse, ce n'est pas un client Proximity.",
+			Mandate: "Pandora mesure une campagne et la range dans Evolu-Jeunes/CRM. " +
+				"Ce carnet sert aux agents. La voix est Vapi. Fix2 n'y dépose pas ses chantiers. Lovable n'édite pas les thèmes.",
+			Controls: "Explorer lit. Memory dépose un brouillon. Vapi est la voix, aucun appel ne part d'ici. Epicenter décide avant un envoi.",
 			Repos:    []string{"Evolu-Jeunes/CRM"},
 		},
 		{
@@ -132,6 +131,14 @@ func Lines() []Line {
 			},
 		},
 		{
+			ID: "fix2", Name: "Fix2", Brain: "Forgeron",
+			Mandate: "Compagnie de construction. Son carnet est le sien, dans Evolu-Jeunes/Fix2. " +
+				"Il ne se mélange pas au carnet des agents. Ce n'est pas un thème WordPress. Lovable n'est pas branché. " +
+				"La voix de ce carnet est Vapi. Quarante agents. Epicenter décide en dernier.",
+			Controls: "Operator tient le site local. Le carnet Fix2 ne reçoit que Fix2. Vapi n'appelle pas sans clé. Rien n'est envoyé, payé ou déposé sans Epicenter.",
+			Repos:    []string{"Evolu-Jeunes/Fix2"},
+		},
+		{
 			ID: "fonds", Name: "Fonds", Brain: "Manager",
 			Mandate: "Grand livre interne, chèques en brouillon, TPS et TVQ. " +
 				"Ce n'est pas une banque et ce n'est pas une déclaration. Rien ne sort sans comms.allow.",
@@ -158,7 +165,7 @@ func UsesStripe(id string, clientRequested bool) bool {
 	switch id {
 	case "proximity":
 		return clientRequested
-	case "scanapp", "control", "trading", "nft-giant", "ecole", "fonds":
+	case "scanapp", "control", "trading", "nft-giant", "ecole", "fonds", "fix2", "wordpress":
 		return false
 	case "marketplace", "propres", "marketing", "panda", "empire":
 		return true
