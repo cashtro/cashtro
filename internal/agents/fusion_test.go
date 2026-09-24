@@ -57,8 +57,28 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatal("the name must mean both GitHubs, and only that name")
 	}
 	book := OpenCongress()
-	if len(book.Laws) != len(Loi().Laws) || len(book.Bills) < 2 {
-		t.Fatalf("congress laws %d bills %d", len(book.Laws), len(book.Bills))
+	if len(book.Laws) != len(Loi().Laws)+2 || len(book.Passed) != 2 {
+		t.Fatalf("congress laws %d passed %d", len(book.Laws), len(book.Passed))
+	}
+	if !strings.Contains(book.Passed[0].Rules[0], "The Eye") || !strings.Contains(book.Passed[1].Rules[0], "sanction nommée") {
+		t.Fatalf("passed %+v", book.Passed)
+	}
+	houses := Houses()
+	if len(houses) != 2 || houses[0].ID != "cia" || !houses[0].Gathers || houses[0].GivesTo[0] != "instinct" || houses[0].GivesTo[1] != "fbi" {
+		t.Fatalf("cia %+v", houses[0])
+	}
+	if houses[1].ID != "fbi" || houses[1].Gathers || len(houses[0].Departments) != len(Chart().Departments) || len(houses[1].Departments) != len(houses[0].Departments) {
+		t.Fatalf("fbi %+v", houses[1])
+	}
+	if houses[0].Opposition.Partner != "fbi-opposition" || houses[1].Opposition.Partner != "cia-opposition" || !houses[0].Opposition.BuildsTogether || !houses[1].Opposition.ScrutinizesOwn {
+		t.Fatalf("opposition %+v %+v", houses[0].Opposition, houses[1].Opposition)
+	}
+	if _, _, okStory := book.Sanction("", "loi-25", "fait", "histoire"); okStory {
+		t.Fatal("a sanction needs a name")
+	}
+	book, told, okStory := book.Sanction("brouillon-sorti", "loi-25", "un build a quitté le local", "Le geste est arrêté. L'histoire s'appelle brouillon-sorti.")
+	if !okStory || !told.Stopped || !told.Traced || len(book.Stories) != 1 {
+		t.Fatalf("story %+v", told)
 	}
 	ok, msg := book.Enforce()
 	if !ok || msg == "" {

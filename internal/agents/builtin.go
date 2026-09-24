@@ -239,6 +239,15 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 				"bill": bill, "laws": len(a.congress.Laws),
 			}}, nil
 		}
+		if name := payloadQuery(call, "sanction"); name != "" {
+			next, told, ok := a.congress.Sanction(name, payloadQuery(call, "law"), payloadQuery(call, "fact"), payloadQuery(call, "story"))
+			if !ok {
+				return kernel.Result{OK: false, Message: "une sanction sans nom ni histoire n'est pas gardée"}, nil
+			}
+			a.congress = next
+			a.k.Remember("sanction", told.Name+": "+told.Story)
+			return kernel.Result{OK: true, Message: "sanction nommée gardée", Data: told}, nil
+		}
 		if id := payloadQuery(call, "bill"); id != "" {
 			next, law, ok := a.congress.Pass(id, payloadQuery(call, "rule"))
 			if !ok {
@@ -253,7 +262,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		ok, msg := a.congress.Enforce()
 		a.k.Remember("fusion", msg)
 		return kernel.Result{OK: ok, Message: msg, Data: map[string]any{
-			"laws": a.congress.Laws, "bills": a.congress.Bills, "memory": a.k.Recall("fusion"),
+			"laws": a.congress.Laws, "bills": a.congress.Bills, "houses": Houses(), "memory": a.k.Recall("fusion"),
 		}}, nil
 
 	case "manager.watch":

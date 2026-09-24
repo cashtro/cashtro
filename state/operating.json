@@ -892,7 +892,7 @@
     {
       "from": "eye",
       "to": "fusion",
-      "via": "La CIA est au-dessus du FBI. Instinct est au-dessus de la CIA. The Fusion applique, punit, trace et sécurise. Le nom dit toujours Evolu-Jeunes et cashtro ensemble.",
+      "via": "La CIA est The Eye. Elle rassemble l'information et la donne à instinct et au FBI. Chaque maison a son opposition. Les deux oppositions construisent ensemble.",
       "agents": [
         "security",
         "investigator",
@@ -1568,7 +1568,7 @@
       "name": "The Fusion",
       "seat": "cia",
       "dept": "controle",
-      "do": "FBI sous la CIA, CIA sous instinct. Appliquer, punir, tracer et sécuriser chaque loi sur Evolu-Jeunes et cashtro. Demander avant d'agir."
+      "do": "FBI sous la CIA. La CIA est The Eye: elle rassemble et donne au cerveau et au FBI. Chaque maison a la même hiérarchie et son opposition."
     }
   ],
   "compliance": {

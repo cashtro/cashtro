@@ -119,7 +119,7 @@ func Links() []Link {
 		},
 		{
 			From: "eye", To: "fusion",
-			Via:    "La CIA est au-dessus du FBI. Instinct est au-dessus de la CIA. The Fusion applique, punit, trace et sécurise. Le nom dit toujours Evolu-Jeunes et cashtro ensemble.",
+			Via:    "La CIA est The Eye. Elle rassemble l'information et la donne à instinct et au FBI. Chaque maison a son opposition. Les deux oppositions construisent ensemble.",
 			Agents: []string{"security", "investigator", "manager"},
 		},
 		{

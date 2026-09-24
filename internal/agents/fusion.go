@@ -8,45 +8,45 @@ import "strings"
 // It asks before it acts. It enforces, punishes, traces, and secures every law.
 // Punish means stop the gesture and write the trace. It does not harm a person.
 type FusionForce struct {
-	Name            string         `json:"name"`
-	Agency          string         `json:"agency"`
-	Peoples         []string       `json:"peoples"`
-	Accounts        []string       `json:"accounts"`
-	BothAlways      bool           `json:"bothAlways"`
-	Under           []string       `json:"under"`
-	Parent          string         `json:"parent"`
-	Verbs           []string       `json:"verbs"`
-	Repo            string         `json:"repo"`
-	Brain           string         `json:"brain"`
-	Agents          int            `json:"agents"`
-	Workers         []FusionAgent  `json:"workers"`
-	Laws            []string       `json:"laws"`
-	LoadsInstinct   bool           `json:"loadsInstinctBrain"`
-	OwnBrain        bool           `json:"ownBrain"`
-	MainBrain       string         `json:"mainBrain"`
-	SameShape       bool           `json:"sameShape"`
-	Niche           string         `json:"niche"`
-	LoadsVoltron    bool           `json:"loadsVoltronBrain"`
-	ReportsTo       string         `json:"reportsTo"`
-	InVoltron       bool           `json:"inVoltron"`
-	Operative       bool           `json:"operative"`
-	Website         bool           `json:"website"`
-	Parallel        bool           `json:"parallel"`
-	ImportsOther    bool           `json:"importsOther"`
-	MarkdownEdges   bool           `json:"markdownEdges"`
-	PathToChains    bool           `json:"pathToChains"`
-	Weapons         bool           `json:"weapons"`
-	Attacks         bool           `json:"attacks"`
-	Illegal         bool           `json:"illegal"`
-	CopiesSecrets   bool           `json:"copiesSecrets"`
-	Surveillance    bool           `json:"surveillance"`
-	Impersonates    bool           `json:"impersonates"`
-	Sent            bool           `json:"sent"`
-	Deployed        bool           `json:"deployed"`
-	OpenedBy        string         `json:"openedBy"`
-	OrderedBy       string         `json:"orderedBy"`
-	DecidedBy       string         `json:"decidedBy"`
-	Graph           FusionGraph    `json:"graph"`
+	Name          string        `json:"name"`
+	Agency        string        `json:"agency"`
+	Peoples       []string      `json:"peoples"`
+	Accounts      []string      `json:"accounts"`
+	BothAlways    bool          `json:"bothAlways"`
+	Under         []string      `json:"under"`
+	Parent        string        `json:"parent"`
+	Verbs         []string      `json:"verbs"`
+	Repo          string        `json:"repo"`
+	Brain         string        `json:"brain"`
+	Agents        int           `json:"agents"`
+	Workers       []FusionAgent `json:"workers"`
+	Laws          []string      `json:"laws"`
+	LoadsInstinct bool          `json:"loadsInstinctBrain"`
+	OwnBrain      bool          `json:"ownBrain"`
+	MainBrain     string        `json:"mainBrain"`
+	SameShape     bool          `json:"sameShape"`
+	Niche         string        `json:"niche"`
+	LoadsVoltron  bool          `json:"loadsVoltronBrain"`
+	ReportsTo     string        `json:"reportsTo"`
+	InVoltron     bool          `json:"inVoltron"`
+	Operative     bool          `json:"operative"`
+	Website       bool          `json:"website"`
+	Parallel      bool          `json:"parallel"`
+	ImportsOther  bool          `json:"importsOther"`
+	MarkdownEdges bool          `json:"markdownEdges"`
+	PathToChains  bool          `json:"pathToChains"`
+	Weapons       bool          `json:"weapons"`
+	Attacks       bool          `json:"attacks"`
+	Illegal       bool          `json:"illegal"`
+	CopiesSecrets bool          `json:"copiesSecrets"`
+	Surveillance  bool          `json:"surveillance"`
+	Impersonates  bool          `json:"impersonates"`
+	Sent          bool          `json:"sent"`
+	Deployed      bool          `json:"deployed"`
+	OpenedBy      string        `json:"openedBy"`
+	OrderedBy     string        `json:"orderedBy"`
+	DecidedBy     string        `json:"decidedBy"`
+	Graph         FusionGraph   `json:"graph"`
 }
 
 // FusionAgent is one officer. Every officer covers both peoples.
@@ -63,23 +63,23 @@ type FusionAgent struct {
 // FusionGraph is the extract this force can stand behind.
 // The two GitHubs are one login and one organization. They are not imported into each other.
 type FusionGraph struct {
-	Login          string  `json:"login"`
-	Organization   string  `json:"organization"`
-	Repos          int     `json:"repos"`
-	CodeFiles      int     `json:"codeFiles"`
-	Nodes          int     `json:"nodes"`
-	Edges          int     `json:"edges"`
-	Communities    int     `json:"communities"`
-	Extracted      string  `json:"extracted"`
-	InferredEdges  int     `json:"inferredEdges"`
-	Inferred       string  `json:"inferred"`
-	Confidence     float64 `json:"confidence"`
-	ImportCycles   int     `json:"importCycles"`
-	EJSUnread      int     `json:"ejsUnread"`
-	SQLUnread      int     `json:"sqlUnread"`
-	SyntaxPartial  int     `json:"syntaxPartial"`
-	ControlPlane   string  `json:"controlPlane"`
-	CrossRepoImport bool   `json:"crossRepoImport"`
+	Login           string  `json:"login"`
+	Organization    string  `json:"organization"`
+	Repos           int     `json:"repos"`
+	CodeFiles       int     `json:"codeFiles"`
+	Nodes           int     `json:"nodes"`
+	Edges           int     `json:"edges"`
+	Communities     int     `json:"communities"`
+	Extracted       string  `json:"extracted"`
+	InferredEdges   int     `json:"inferredEdges"`
+	Inferred        string  `json:"inferred"`
+	Confidence      float64 `json:"confidence"`
+	ImportCycles    int     `json:"importCycles"`
+	EJSUnread       int     `json:"ejsUnread"`
+	SQLUnread       int     `json:"sqlUnread"`
+	SyntaxPartial   int     `json:"syntaxPartial"`
+	ControlPlane    string  `json:"controlPlane"`
+	CrossRepoImport bool    `json:"crossRepoImport"`
 }
 
 // FusionPeoples is the pair the name always carries.
@@ -277,15 +277,51 @@ type Bill struct {
 
 // Congress holds the laws already written and the questions that may become laws.
 type Congress struct {
-	House  string `json:"house"`
-	Laws   []Law  `json:"laws"`
-	Bills  []Bill `json:"bills"`
-	Passed []Law  `json:"passed"`
+	House   string          `json:"house"`
+	Laws    []Law           `json:"laws"`
+	Bills   []Bill          `json:"bills"`
+	Passed  []Law           `json:"passed"`
+	Stories []SanctionStory `json:"stories"`
 }
 
-// OpenCongress seats the statute book. Open questions are bills, not laws.
+// SanctionStory is the named punishment kept with the trace.
+// It stops the gesture. It does not harm a person.
+type SanctionStory struct {
+	Name    string `json:"name"`
+	Law     string `json:"law"`
+	Fact    string `json:"fact"`
+	Story   string `json:"story"`
+	Stopped bool   `json:"stopped"`
+	Traced  bool   `json:"traced"`
+}
+
+// Opposition is the bench inside one agency that goes against its own policy.
+// The two benches scrutinize the CIA and the FBI, and they build the next structure together.
+type Opposition struct {
+	ID                  string `json:"id"`
+	ScrutinizesOwn      bool   `json:"scrutinizesOwn"`
+	ScrutinizesCIA      bool   `json:"scrutinizesCIA"`
+	ScrutinizesFBI      bool   `json:"scrutinizesFBI"`
+	ScrutinizesProjects bool   `json:"scrutinizesProjects"`
+	Partner             string `json:"partner"`
+	BuildsTogether      bool   `json:"buildsTogether"`
+}
+
+// AgencyHouse is the CIA or the FBI. The hierarchy matches the cooperative.
+type AgencyHouse struct {
+	ID          string       `json:"id"`
+	Name        string       `json:"name"`
+	SameChart   bool         `json:"sameChart"`
+	Gathers     bool         `json:"gathers"`
+	GivesTo     []string     `json:"givesTo"`
+	Seats       []Seat       `json:"seats"`
+	Departments []Department `json:"departments"`
+	Opposition  Opposition   `json:"opposition"`
+}
+
+// OpenCongress seats the statute book and the two laws already passed.
 func OpenCongress() Congress {
-	return Congress{
+	c := Congress{
 		House: "congress",
 		Laws:  append([]Law(nil), Loi().Laws...),
 		Bills: []Bill{
@@ -293,6 +329,48 @@ func OpenCongress() Congress {
 			{ID: "sanction", Question: "Quand une loi rate, la punition est-elle seulement d'arrêter le geste et d'écrire la trace, ou une sanction nommée en plus?", Status: "introduced"},
 		},
 	}
+	c, _, _ = c.Pass("cia-seat", "La CIA est The Eye. Elle rassemble l'information et la donne au cerveau instinct. Le FBI reçoit la même information.")
+	c, _, _ = c.Pass("sanction", "Une loi ratée arrête le geste, écrit la trace, et garde une sanction nommée sous forme d'histoire.")
+	return c
+}
+
+// Houses is the CIA and the FBI. Each copies the cooperative hierarchy and keeps its own opposition.
+func Houses() []AgencyHouse {
+	chart := Chart()
+	cia := mirrorHouse("cia", "The Eye", true, []string{"instinct", "fbi"}, chart)
+	fbi := mirrorHouse("fbi", "The Fusion", false, []string{"instinct"}, chart)
+	cia.Opposition.Partner = fbi.Opposition.ID
+	fbi.Opposition.Partner = cia.Opposition.ID
+	return []AgencyHouse{cia, fbi}
+}
+
+func mirrorHouse(id, name string, gathers bool, gives []string, chart Organization) AgencyHouse {
+	seats := append([]Seat(nil), chart.Seats...)
+	depts := make([]Department, len(chart.Departments))
+	for i, d := range chart.Departments {
+		d.ID = id + "-" + d.ID
+		depts[i] = d
+	}
+	return AgencyHouse{
+		ID: id, Name: name, SameChart: true, Gathers: gathers, GivesTo: gives,
+		Seats: seats, Departments: depts,
+		Opposition: Opposition{
+			ID: id + "-opposition", ScrutinizesOwn: true, ScrutinizesCIA: true, ScrutinizesFBI: true,
+			ScrutinizesProjects: true, BuildsTogether: true,
+		},
+	}
+}
+
+// Sanction files a named story. A sanction without a name is not stored.
+func (c Congress) Sanction(name, law, fact, story string) (Congress, SanctionStory, bool) {
+	name = strings.TrimSpace(name)
+	story = strings.TrimSpace(story)
+	if name == "" || story == "" || refusedRule(name+" "+story) {
+		return c, SanctionStory{}, false
+	}
+	told := SanctionStory{Name: name, Law: strings.TrimSpace(law), Fact: strings.TrimSpace(fact), Story: story, Stopped: true, Traced: true}
+	c.Stories = append(c.Stories, told)
+	return c, told, true
 }
 
 // Enforce applies every law already written. A bill is not applied.
@@ -375,4 +453,3 @@ func FusionEnforce(action string, answers map[string]string) (bool, string) {
 	}
 	return true, "FBI sous la CIA, CIA sous instinct. " + itoa(force.Agents) + " agents. " + msg
 }
-
