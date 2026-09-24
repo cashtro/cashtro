@@ -93,6 +93,7 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 			Role: "incident", Summary: "Nomme la ligne, le département et les dépôts voisins. Ne lit pas un secret.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,
 		}, investigatorInvoke),
+		&fusionAgent{},
 		&managerAgent{},
 	}
 }
@@ -138,6 +139,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.check",
 			"manager.lens",
 			"manager.crm",
+			"manager.fusion",
 		},
 		Autostart: true,
 	}
@@ -221,6 +223,9 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.loi":
 		return kernel.Result{OK: true, Message: "quebec and canada gates", Data: a.board.Compliance}, nil
+
+	case "manager.fusion":
+		return kernel.Result{OK: true, Message: "The Fusion", Data: Fusion()}, nil
 
 	case "manager.watch":
 		self := AskSelf("watch", nil)
@@ -405,9 +410,17 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		_, _ = a.k.Post("manager", "explorer", "graphify", query)
 		a.k.Remember("instinct", "graphify query: "+query)
 		return kernel.Result{OK: true, Message: "graphify query: " + query, Data: map[string]any{
-			"query": query,
-			"nodes": 39593,
-			"edges": 99285,
+			"query":              query,
+			"owner":              "cashtro",
+			"repositories":       63,
+			"codeFiles":          7075,
+			"nodes":              52527,
+			"edges":              133783,
+			"communities":        2564,
+			"extractedPercent":   96,
+			"inferredEdges":      5187,
+			"inferredConfidence": 0.89,
+			"importCycles":       0,
 		}}, nil
 
 	case "manager.flow":

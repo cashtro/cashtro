@@ -156,10 +156,11 @@ func boardFromLines() Board {
 
 func agentNames(org Organization) []string {
 	members := org.Members()
-	out := make([]string, 0, len(members))
+	out := make([]string, 0, len(members)+1)
 	for _, m := range members {
 		out = append(out, m.Agent)
 	}
+	out = append(out, "fusion")
 	return out
 }
 

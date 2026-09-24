@@ -122,6 +122,11 @@ func Links() []Link {
 			Via:    "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base.",
 			Agents: []string{"comms", "planner"},
 		},
+		{
+			From: "loi", To: "fusion",
+			Via:    "The Fusion observe les deux GitHub et tient les portes de conformité. Toute remédiation attend une confirmation humaine.",
+			Agents: []string{"fusion", "security", "investigator", "manager"},
+		},
 	}
 }
 

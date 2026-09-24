@@ -60,7 +60,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &about); err != nil {
 		t.Fatal(err)
 	}
-	if about.Agents != 15 || !strings.Contains(about.Manifesto, "under construction") {
+	if about.Agents != 16 || !strings.Contains(about.Manifesto, "under construction") {
 		t.Fatalf("about = %+v", about)
 	}
 
@@ -70,7 +70,7 @@ func TestOSAndAgents(t *testing.T) {
 	if err := json.Unmarshal(res.Body.Bytes(), &procs); err != nil {
 		t.Fatal(err)
 	}
-	if len(procs) != 15 {
+	if len(procs) != 16 {
 		t.Fatalf("agents = %d", len(procs))
 	}
 

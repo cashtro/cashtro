@@ -897,6 +897,17 @@
         "comms",
         "planner"
       ]
+    },
+    {
+      "from": "loi",
+      "to": "fusion",
+      "via": "The Fusion observe les deux GitHub et tient les portes de conformité. Toute remédiation attend une confirmation humaine.",
+      "agents": [
+        "fusion",
+        "security",
+        "investigator",
+        "manager"
+      ]
     }
   ],
   "agents": [
@@ -914,7 +925,8 @@
     "security",
     "investigator",
     "reviewer",
-    "explorer"
+    "explorer",
+    "fusion"
   ],
   "org": {
     "seats": [
@@ -1716,7 +1728,7 @@
     ]
   },
   "graph": {
-    "repoNodes": 57,
+    "repoNodes": 63,
     "bridges": 19
   },
   "gaps": null,

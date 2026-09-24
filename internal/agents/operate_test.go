@@ -80,7 +80,7 @@ func TestBuildBoardSyncsFiches(t *testing.T) {
 	if board.Fiches != 58 {
 		t.Fatalf("fiches = %d, want 58", board.Fiches)
 	}
-	if len(board.Lines) != 14 || len(board.Agents) != 15 || len(board.Links) != 22 {
+	if len(board.Lines) != 14 || len(board.Agents) != 16 || len(board.Links) != 23 {
 		t.Fatalf("lines %d agents %d links %d", len(board.Lines), len(board.Agents), len(board.Links))
 	}
 	if len(board.Gaps) != 0 {

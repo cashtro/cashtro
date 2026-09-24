@@ -15,7 +15,7 @@ func TestWorkersRunAndStayLocal(t *testing.T) {
 		t.Fatal(err)
 	}
 	about := k.About()
-	if about.Live != 14 || about.Resident != 1 || about.Agents != 15 {
+	if about.Live != 15 || about.Resident != 1 || about.Agents != 16 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(Chart().Departments) != 9 {
