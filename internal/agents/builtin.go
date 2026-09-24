@@ -228,14 +228,21 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		if law == "" {
 			law = payloadQuery(call, "id")
 		}
+		answers := payloadAnswers(call)
+		for id, ans := range answers {
+			a.k.Remember("fusion", id+": "+ans)
+		}
+		ok, msg := FusionEnforce(law, answers)
 		force := Fusion()
-		if law != "" && law != "fusion" {
-			ok, msg := FusionEnforce(law)
-			return kernel.Result{OK: ok, Message: msg, Data: map[string]any{
-				"force": force.Name, "peoples": force.Peoples, "bureau": FusionBureau(law),
+		if !ok {
+			return kernel.Result{OK: false, Message: msg, Data: map[string]any{
+				"questions": FusionQuestions(), "peoples": force.Peoples, "under": force.Under,
 			}}, nil
 		}
-		return kernel.Result{OK: true, Message: "The Fusion couvre Evolian et Astro", Data: force}, nil
+		a.k.Remember("fusion", msg)
+		return kernel.Result{OK: true, Message: msg, Data: map[string]any{
+			"force": force, "bureau": FusionBureau(law), "memory": a.k.Recall("fusion"),
+		}}, nil
 
 	case "manager.watch":
 		self := AskSelf("watch", nil)

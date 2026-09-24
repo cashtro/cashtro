@@ -29,7 +29,7 @@ func Brains() []LoadedBrain {
 		{ID: "terrain", Name: "Terrain", Seat: "ops", Dept: "operations", Do: "Tenir soumission, chantier, tournée et facture en brouillon."},
 		{ID: "propriete", Name: "Propriété", Seat: "ops", Dept: "ingenierie", Do: "Posséder OPS et aider les dépôts cashtro et Evolu-Jeunes."},
 		{ID: "hustle", Name: "The Hustle", Seat: "instinct", Dept: "marche", Do: "Lire, tenir les deux métaux, et ne garder que le coup légal. Une offre, une mesure. Epicenter Einstein est l'ami."},
-		{ID: "fusion", Name: "The Fusion", Seat: "eye", Dept: "controle", Do: "Faire appliquer les lois sur Evolian et Astro ensemble. Le nom ne se coupe pas. Pas d'attaque."},
+		{ID: "fusion", Name: "The Fusion", Seat: "cia", Dept: "controle", Do: "FBI sous la CIA, CIA sous instinct. Appliquer, punir, tracer et sécuriser chaque loi sur Evolu-Jeunes et cashtro. Demander avant d'agir."},
 	}
 }
 

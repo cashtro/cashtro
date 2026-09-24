@@ -208,7 +208,7 @@ func NicheBrains() []NicheBrain {
 			d("La Borne", "Remet le mint.", "Remettre mint, ordre, pont et déploiement au cerveau principal."),
 		}, []string{"mint", "ordre", "pont", "déploiement"}),
 		buildNiche("fusion", "application des lois", []NicheDeskSpec{
-			d("La Règle", "Lit le checklist.", "Lire la loi sur Evolian et Astro ensemble."),
+			d("La Règle", "Lit le checklist.", "Lire la loi sur Evolu-Jeunes et cashtro ensemble."),
 			d("Les Deux", "Ne coupe pas le nom.", "Voir les deux peuples dans le même geste."),
 			d("La Porte", "Arrête le raté.", "Arrêter le geste qui rate la règle, sans attaquer."),
 			d("Le Registre", "Note sans secret.", "Tenir la preuve locale sans copier un secret."),

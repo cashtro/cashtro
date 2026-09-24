@@ -1,15 +1,21 @@
 package agents
 
-// FusionForce is The Fusion. The name always means both peoples together:
-// Evolian (Evolu-Jeunes) and Astro (cashtro). It never names one side alone.
-// It sits inside the intelligence watch (The Eye) and enforces the operating
-// checklist. It is not a government agency, and it does not attack.
+import "strings"
+
+// FusionForce is The Fusion, the FBI of this ecosystem.
+// The name always means both GitHubs together: Evolu-Jeunes and cashtro.
+// The FBI sits under the CIA. The CIA sits under instinct.
+// It asks before it acts. It enforces, punishes, traces, and secures every law.
+// Punish means stop the gesture and write the trace. It does not harm a person.
 type FusionForce struct {
 	Name            string         `json:"name"`
+	Agency          string         `json:"agency"`
 	Peoples         []string       `json:"peoples"`
 	Accounts        []string       `json:"accounts"`
 	BothAlways      bool           `json:"bothAlways"`
+	Under           []string       `json:"under"`
 	Parent          string         `json:"parent"`
+	Verbs           []string       `json:"verbs"`
 	Repo            string         `json:"repo"`
 	Brain           string         `json:"brain"`
 	Agents          int            `json:"agents"`
@@ -78,7 +84,17 @@ type FusionGraph struct {
 
 // FusionPeoples is the pair the name always carries.
 func FusionPeoples() []string {
-	return []string{"Evolian", "Astro"}
+	return []string{"Evolu-Jeunes", "cashtro"}
+}
+
+// FusionUnder is the chain of command: FBI under CIA, CIA under instinct.
+func FusionUnder() []string {
+	return []string{"cia", "instinct"}
+}
+
+// FusionVerbs are what the FBI does with every law.
+func FusionVerbs() []string {
+	return []string{"enforce", "punish", "trace", "secure"}
 }
 
 // FusionAccounts is the pair of GitHubs behind those peoples.
@@ -100,10 +116,13 @@ func Fusion() FusionForce {
 	}
 	return FusionForce{
 		Name:          "The Fusion",
+		Agency:        "fbi",
 		Peoples:       FusionPeoples(),
 		Accounts:      FusionAccounts(),
 		BothAlways:    true,
-		Parent:        "eye",
+		Under:         FusionUnder(),
+		Parent:        "cia",
+		Verbs:         FusionVerbs(),
 		Repo:          "cashtro/cashtro",
 		Brain:         "fusion",
 		Agents:        len(workers),
@@ -179,7 +198,11 @@ func FusionWorkers() []FusionAgent {
 		{"preuve", "Noter la réponse, sans copier un secret."},
 		{"limite", "Arrêter le geste qui rate la règle."},
 		{"registre", "Tenir le registre local. Rien ne part."},
-		{"deux-peuples", "Couvrir Evolian et Astro dans le même geste."},
+		{"deux-peuples", "Couvrir Evolu-Jeunes et cashtro dans le même geste."},
+		{"enforce", "Appliquer la loi. Ne pas assumer le fait."},
+		{"punish", "Punir: arrêter le geste qui rate la loi et l'écrire. Ne pas toucher une personne."},
+		{"trace", "Tracer la ligne, le dépôt et la loi. Ne pas lire un secret."},
+		{"secure", "Sécuriser: filtre des secrets et du site déjà en ligne."},
 		{"parallele", "Laisser les cerveaux TypeScript parallèles. Ne pas les importer."},
 		{"secret", "Nommer un secret sans en recopier la valeur."},
 		{"instinct", "Remettre la décision à Epicenter Einstein."},
@@ -209,7 +232,28 @@ func FusionCovers(name string) bool {
 		return false
 	}
 	force := Fusion()
-	return force.BothAlways && len(force.Peoples) == 2 && len(force.Accounts) == 2 && force.Agents >= 80
+	return force.BothAlways && samePair(force.Peoples, FusionPeoples()) && samePair(force.Accounts, FusionAccounts()) && force.Agents >= 80 && force.Agency == "fbi" && force.Parent == "cia"
+}
+
+func samePair(got, want []string) bool {
+	if len(got) != len(want) {
+		return false
+	}
+	for i := range want {
+		if got[i] != want[i] {
+			return false
+		}
+	}
+	return true
+}
+
+// FusionQuestions are asked before any enforcement. The answer is not assumed.
+func FusionQuestions() []Question {
+	return []Question{
+		{ID: "fait", Ask: "Quel fait est devant le FBI, avant d'appliquer, punir, tracer ou sécuriser?", Improves: "on n'assume pas le fait"},
+		{ID: "loi", Ask: "Quelle loi du checklist s'applique à ce fait, sur Evolu-Jeunes et cashtro?", Improves: "la loi est nommée"},
+		{ID: "suite", Ask: "La suite est-elle d'arrêter le geste, de le tracer, ou de le sécuriser?", Improves: "punir, tracer et sécuriser ne sont pas le même geste"},
+	}
 }
 
 // FusionBureau returns the officers of one law. Every officer still covers both peoples.
@@ -223,26 +267,38 @@ func FusionBureau(law string) []FusionAgent {
 	return out
 }
 
-// FusionEnforce applies the checklist. It refuses an attack, a secret copy,
-// surveillance of a person, and a claim that one people is outside the name.
-func FusionEnforce(action string) (bool, string) {
+// FusionEnforce applies every law only after the questions are answered.
+// Without an answer it asks again. It does not assume.
+// Punish stops the gesture and writes the trace. It does not harm a person.
+func FusionEnforce(action string, answers map[string]string) (bool, string) {
 	force := Fusion()
 	if force.Attacks || force.Weapons || force.Illegal || force.Surveillance || force.Impersonates || force.CopiesSecrets {
-		return false, "The Fusion ne frappe pas et ne se fait pas passer pour un État"
+		return false, "The Fusion ne frappe pas une personne et ne se fait pas passer pour un État"
 	}
-	switch action {
-	case "", "loi", "enforce", "fusion":
-		return true, "The Fusion couvre Evolian et Astro. " + itoa(force.Agents) + " agents tiennent les lois."
-	case "evolian", "astro", "cashtro", "Evolu-Jeunes":
-		return true, "Ce nom ne se coupe pas. Evolian et Astro restent ensemble."
-	case "attaque", "attack", "secret", "surveillance", "fbi", "cia":
-		return false, "The Fusion applique le checklist. Il n'attaque pas, ne copie pas un secret, et n'est pas une agence d'État."
-	case "import":
-		return false, "Aucun import entre les deux GitHub. Les cerveaux TypeScript restent parallèles."
-	default:
-		if len(FusionBureau(action)) > 0 {
-			return true, "Bureau " + action + " ouvert sur les deux peuples."
+	if action == "attaque" || action == "attack" || action == "surveillance" {
+		return false, "The Fusion applique, punit le geste, trace et sécurise. Il n'attaque pas une personne."
+	}
+	if action == "import" {
+		return false, "Aucun import entre Evolu-Jeunes et cashtro. Les cerveaux TypeScript restent parallèles."
+	}
+	if action == "secret" {
+		return false, "Un secret se nomme. Sa valeur ne se copie pas."
+	}
+	if open := fusionOpen(answers); len(open) > 0 {
+		return false, askMessage(open)
+	}
+	if action == "cashtro" || action == "Evolu-Jeunes" {
+		return true, "Ce nom ne se coupe pas. Evolu-Jeunes et cashtro restent ensemble."
+	}
+	return true, "FBI sous la CIA, CIA sous instinct. " + itoa(force.Agents) + " agents appliquent, punissent, tracent et sécurisent chaque loi."
+}
+
+func fusionOpen(answers map[string]string) []Question {
+	var open []Question
+	for _, q := range FusionQuestions() {
+		if strings.TrimSpace(answers[q.ID]) == "" {
+			open = append(open, q)
 		}
-		return false, "hors checklist"
 	}
+	return open
 }

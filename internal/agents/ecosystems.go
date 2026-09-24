@@ -119,7 +119,7 @@ func Links() []Link {
 		},
 		{
 			From: "eye", To: "fusion",
-			Via:    "The Eye nomme. The Fusion fait appliquer les lois. Le nom dit toujours Evolian et Astro ensemble. Pas d'attaque, pas d'import entre les deux GitHub.",
+			Via:    "La CIA est au-dessus du FBI. Instinct est au-dessus de la CIA. The Fusion applique, punit, trace et sécurise. Le nom dit toujours Evolu-Jeunes et cashtro ensemble.",
 			Agents: []string{"security", "investigator", "manager"},
 		},
 		{

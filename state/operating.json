@@ -892,7 +892,7 @@
     {
       "from": "eye",
       "to": "fusion",
-      "via": "The Eye nomme. The Fusion fait appliquer les lois. Le nom dit toujours Evolian et Astro ensemble. Pas d'attaque, pas d'import entre les deux GitHub.",
+      "via": "La CIA est au-dessus du FBI. Instinct est au-dessus de la CIA. The Fusion applique, punit, trace et sécurise. Le nom dit toujours Evolu-Jeunes et cashtro ensemble.",
       "agents": [
         "security",
         "investigator",
@@ -1566,9 +1566,9 @@
     {
       "id": "fusion",
       "name": "The Fusion",
-      "seat": "eye",
+      "seat": "cia",
       "dept": "controle",
-      "do": "Faire appliquer les lois sur Evolian et Astro ensemble. Le nom ne se coupe pas. Pas d'attaque."
+      "do": "FBI sous la CIA, CIA sous instinct. Appliquer, punir, tracer et sécuriser chaque loi sur Evolu-Jeunes et cashtro. Demander avant d'agir."
     }
   ],
   "compliance": {
