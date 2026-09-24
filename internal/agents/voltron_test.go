@@ -23,7 +23,7 @@ func TestVoltronHoldsEveryChain(t *testing.T) {
 			t.Fatalf("missing %s", id)
 		}
 	}
-	if len(Lines()) != 14 || len(Links()) != 22 {
+	if len(Lines()) != 14 || len(Links()) != 23 {
 		t.Fatalf("lines %d links %d", len(Lines()), len(Links()))
 	}
 }

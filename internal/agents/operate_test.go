@@ -11,7 +11,7 @@ func TestWordPressLeavesTheOtherDepartment(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(board.Lines) != 14 || len(board.Links) != 22 || len(board.Org.Departments) != 9 {
+	if len(board.Lines) != 14 || len(board.Links) != 23 || len(board.Org.Departments) != 9 {
 		t.Fatalf("lines %d links %d depts %d", len(board.Lines), len(board.Links), len(board.Org.Departments))
 	}
 	if len(board.Brains) != len(Brains()) || len(board.Brains) != 15 {
