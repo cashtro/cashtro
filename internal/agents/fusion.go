@@ -244,10 +244,11 @@ func FusionHolds() (bool, string) {
 func Enforce(repo, task string) Patrol {
 	force := TheFusion()
 	patrol := Patrol{
-		Repo:     repo,
-		Officers: force.Agents,
-		Applied:  false,
-		HandedTo: "instinct",
+		Repo:      repo,
+		Officers:  force.Agents,
+		Citations: []Citation{},
+		Applied:   false,
+		HandedTo:  "instinct",
 	}
 	if repo == "" {
 		patrol.People = "kernel"
