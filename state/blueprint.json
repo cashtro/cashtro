@@ -329,6 +329,17 @@
         "comms",
         "planner"
       ]
+    },
+    {
+      "from": "loi",
+      "to": "fusion",
+      "via": "The Fusion observe les deux GitHub et tient les portes de conformité. Toute remédiation attend une confirmation humaine.",
+      "agents": [
+        "fusion",
+        "security",
+        "investigator",
+        "manager"
+      ]
     }
   ],
   "flows": [
@@ -796,6 +807,11 @@
       "from": "agentics",
       "to": "chains",
       "via": "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base."
+    },
+    {
+      "from": "loi",
+      "to": "fusion",
+      "via": "The Fusion observe les deux GitHub et tient les portes de conformité. Toute remédiation attend une confirmation humaine."
     }
   ],
   "empty": 0
