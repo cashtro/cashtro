@@ -101,9 +101,10 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 // across cashtro + Evolu-Jeunes, reads the project fiches, queries the
 // Graphify map, and coordinates the five brains.
 type managerAgent struct {
-	k     *kernel.Kernel
-	board Board
-	moves []Move
+	k        *kernel.Kernel
+	board    Board
+	moves    []Move
+	congress Congress
 }
 
 func (a *managerAgent) Spec() kernel.Spec {
@@ -224,24 +225,35 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		return kernel.Result{OK: true, Message: "quebec and canada gates", Data: a.board.Compliance}, nil
 
 	case "manager.fusion":
-		law := payloadQuery(call, "law")
-		if law == "" {
-			law = payloadQuery(call, "id")
+		if a.congress.House == "" {
+			a.congress = OpenCongress()
 		}
-		answers := payloadAnswers(call)
-		for id, ans := range answers {
-			a.k.Remember("fusion", id+": "+ans)
-		}
-		ok, msg := FusionEnforce(law, answers)
-		force := Fusion()
-		if !ok {
-			return kernel.Result{OK: false, Message: msg, Data: map[string]any{
-				"questions": FusionQuestions(), "peoples": force.Peoples, "under": force.Under,
+		if q := payloadQuery(call, "question"); q != "" {
+			next, bill, ok := a.congress.Introduce(q)
+			if !ok {
+				return kernel.Result{OK: false, Message: "la question ne devient pas une loi"}, nil
+			}
+			a.congress = next
+			a.k.Remember("congress", "question: "+q)
+			return kernel.Result{OK: true, Message: "projet de loi déposé. pas encore une loi", Data: map[string]any{
+				"bill": bill, "laws": len(a.congress.Laws),
 			}}, nil
 		}
+		if id := payloadQuery(call, "bill"); id != "" {
+			next, law, ok := a.congress.Pass(id, payloadQuery(call, "rule"))
+			if !ok {
+				return kernel.Result{OK: false, Message: "la loi n'est pas passée. la question reste ouverte"}, nil
+			}
+			a.congress = next
+			a.k.Remember("congress", law.ID+": "+law.Rules[0])
+			return kernel.Result{OK: true, Message: "loi passée", Data: map[string]any{
+				"law": law, "laws": len(a.congress.Laws),
+			}}, nil
+		}
+		ok, msg := a.congress.Enforce()
 		a.k.Remember("fusion", msg)
-		return kernel.Result{OK: true, Message: msg, Data: map[string]any{
-			"force": force, "bureau": FusionBureau(law), "memory": a.k.Recall("fusion"),
+		return kernel.Result{OK: ok, Message: msg, Data: map[string]any{
+			"laws": a.congress.Laws, "bills": a.congress.Bills, "memory": a.k.Recall("fusion"),
 		}}, nil
 
 	case "manager.watch":

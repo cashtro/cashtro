@@ -2,6 +2,7 @@ package agents
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	"github.com/cashtro/cashtro/internal/kernel"
@@ -55,19 +56,30 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 	if !FusionCovers("The Fusion") || FusionCovers("Evolu-Jeunes") {
 		t.Fatal("the name must mean both GitHubs, and only that name")
 	}
-	if ok, msg := FusionEnforce("cashtro", nil); ok || msg == "" {
-		t.Fatal("enforcement without an answer must ask")
+	book := OpenCongress()
+	if len(book.Laws) != len(Loi().Laws) || len(book.Bills) < 2 {
+		t.Fatalf("congress laws %d bills %d", len(book.Laws), len(book.Bills))
 	}
-	answers := map[string]string{
-		"fait":  "un build sans version française",
-		"loi":   "charte",
-		"suite": "arrêter le geste",
+	ok, msg := book.Enforce()
+	if !ok || msg == "" {
+		t.Fatal("laws already written must be enforced")
 	}
-	if ok, msg := FusionEnforce("cashtro", answers); !ok || msg == "" {
-		t.Fatalf("answered enforcement: %v %s", ok, msg)
-	}
-	if ok, _ := FusionEnforce("attaque", answers); ok {
+	if ok, _ := FusionEnforce("attaque", nil); ok {
 		t.Fatal("an attack must stay closed")
+	}
+	next, bill, filed := book.Introduce("Faut-il une loi pour le brouillon local?")
+	if !filed || bill.Status != "introduced" || len(next.Laws) != len(book.Laws) {
+		t.Fatalf("bill %+v", bill)
+	}
+	if _, _, passed := next.Pass(bill.ID, " "); passed {
+		t.Fatal("an empty rule must stay a question")
+	}
+	if _, _, passed := next.Pass(bill.ID, "fraude"); passed {
+		t.Fatal("a harmful rule must stay a question")
+	}
+	passed, law, okPass := next.Pass(bill.ID, "Un brouillon local reste local tant qu'instinct n'a pas décidé.")
+	if !okPass || law.Rules[0] == "" || len(passed.Laws) != len(book.Laws)+1 {
+		t.Fatalf("pass %+v", law)
 	}
 	if bureau := FusionBureau("loi-25"); len(bureau) < 10 {
 		t.Fatalf("bureau %d", len(bureau))
@@ -78,17 +90,24 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatal(err)
 	}
 	res, err := k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.fusion"})
-	if err != nil || res.OK {
-		t.Fatalf("fusion must ask first: %+v %v", res, err)
+	if err != nil || !res.OK {
+		t.Fatalf("existing laws: %+v %v", res, err)
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.fusion",
-		Payload:    []byte(`{"law":"charte","answers":{"fait":"un build sans version française","loi":"charte","suite":"arrêter le geste"}}`),
+		Payload:    []byte(`{"question":"Faut-il une loi pour le brouillon local?"}`),
 	})
-	if err != nil || !res.OK {
-		t.Fatalf("fusion after answers: %+v %v", res, err)
+	if err != nil || !res.OK || !strings.Contains(res.Message, "pas encore une loi") {
+		t.Fatalf("bill: %+v %v", res, err)
 	}
-	if len(k.Recall("fusion")) == 0 {
-		t.Fatal("the answer did not grow memory")
+	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
+		Capability: "manager.fusion",
+		Payload:    []byte(`{"bill":"bill-3","rule":"Un brouillon local reste local tant qu'instinct n'a pas décidé."}`),
+	})
+	if err != nil || !res.OK || !strings.Contains(res.Message, "loi passée") {
+		t.Fatalf("pass: %+v %v", res, err)
+	}
+	if len(k.Recall("congress")) == 0 || len(k.Recall("fusion")) == 0 {
+		t.Fatal("the session did not grow memory")
 	}
 }

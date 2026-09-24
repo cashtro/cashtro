@@ -267,8 +267,89 @@ func FusionBureau(law string) []FusionAgent {
 	return out
 }
 
-// FusionEnforce applies every law only after the questions are answered.
-// Without an answer it asks again. It does not assume.
+// Bill is a question in Congress. It is not a law until it is passed.
+type Bill struct {
+	ID       string `json:"id"`
+	Question string `json:"question"`
+	Status   string `json:"status"`
+	Rule     string `json:"rule,omitempty"`
+}
+
+// Congress holds the laws already written and the questions that may become laws.
+type Congress struct {
+	House  string `json:"house"`
+	Laws   []Law  `json:"laws"`
+	Bills  []Bill `json:"bills"`
+	Passed []Law  `json:"passed"`
+}
+
+// OpenCongress seats the statute book. Open questions are bills, not laws.
+func OpenCongress() Congress {
+	return Congress{
+		House: "congress",
+		Laws:  append([]Law(nil), Loi().Laws...),
+		Bills: []Bill{
+			{ID: "cia-seat", Question: "La CIA est-elle The Eye, ou un siège au-dessus de The Eye?", Status: "introduced"},
+			{ID: "sanction", Question: "Quand une loi rate, la punition est-elle seulement d'arrêter le geste et d'écrire la trace, ou une sanction nommée en plus?", Status: "introduced"},
+		},
+	}
+}
+
+// Enforce applies every law already written. A bill is not applied.
+func (c Congress) Enforce() (bool, string) {
+	if len(c.Laws) == 0 {
+		return false, "aucune loi déjà écrite"
+	}
+	return true, itoa(len(c.Laws)) + " lois déjà écrites. Le FBI les applique, punit le geste, trace et sécurise, sur Evolu-Jeunes et cashtro."
+}
+
+// Introduce files a question as a bill. The bill is not yet a law.
+func (c Congress) Introduce(question string) (Congress, Bill, bool) {
+	q := strings.TrimSpace(question)
+	if q == "" || refusedRule(q) {
+		return c, Bill{}, false
+	}
+	bill := Bill{ID: "bill-" + itoa(len(c.Bills)+1), Question: q, Status: "introduced"}
+	c.Bills = append(c.Bills, bill)
+	return c, bill, true
+}
+
+// Pass turns one introduced bill into a law when the rule text is given.
+// An empty rule or a harmful rule stays a question.
+func (c Congress) Pass(id, rule string) (Congress, Law, bool) {
+	rule = strings.TrimSpace(rule)
+	if id == "" || rule == "" || refusedRule(rule) {
+		return c, Law{}, false
+	}
+	for i := range c.Bills {
+		if c.Bills[i].ID != id || c.Bills[i].Status == "passed" {
+			continue
+		}
+		law := Law{
+			ID: "fusion-" + id, Name: c.Bills[i].Question, Where: "Evolu-Jeunes et cashtro",
+			Source: "Congrès de The Fusion", Rules: []string{rule},
+		}
+		c.Bills[i].Status = "passed"
+		c.Bills[i].Rule = rule
+		c.Laws = append(c.Laws, law)
+		c.Passed = append(c.Passed, law)
+		return c, law, true
+	}
+	return c, Law{}, false
+}
+
+func refusedRule(text string) bool {
+	low := strings.ToLower(text)
+	for _, word := range []string{"attaque", "arme", "fraude", "secret"} {
+		if strings.Contains(low, word) {
+			return true
+		}
+	}
+	return false
+}
+
+// FusionEnforce applies every law already written.
+// A missing answer does not block those laws. It stays a bill.
 // Punish stops the gesture and writes the trace. It does not harm a person.
 func FusionEnforce(action string, answers map[string]string) (bool, string) {
 	force := Fusion()
@@ -284,21 +365,14 @@ func FusionEnforce(action string, answers map[string]string) (bool, string) {
 	if action == "secret" {
 		return false, "Un secret se nomme. Sa valeur ne se copie pas."
 	}
-	if open := fusionOpen(answers); len(open) > 0 {
-		return false, askMessage(open)
+	_ = answers
+	book, msg := OpenCongress().Enforce()
+	if !book {
+		return false, msg
 	}
 	if action == "cashtro" || action == "Evolu-Jeunes" {
-		return true, "Ce nom ne se coupe pas. Evolu-Jeunes et cashtro restent ensemble."
+		return true, "Ce nom ne se coupe pas. Evolu-Jeunes et cashtro restent ensemble. " + msg
 	}
-	return true, "FBI sous la CIA, CIA sous instinct. " + itoa(force.Agents) + " agents appliquent, punissent, tracent et sécurisent chaque loi."
+	return true, "FBI sous la CIA, CIA sous instinct. " + itoa(force.Agents) + " agents. " + msg
 }
 
-func fusionOpen(answers map[string]string) []Question {
-	var open []Question
-	for _, q := range FusionQuestions() {
-		if strings.TrimSpace(answers[q.ID]) == "" {
-			open = append(open, q)
-		}
-	}
-	return open
-}
