@@ -11,21 +11,31 @@ type Organ struct {
 	Links []string `json:"links"`
 }
 
-// Body is the conglomerate. Instinct and Voltron run it.
-// The hustler is in it. There is no chair and no dominator.
+// EyeGraphic is the map the eyes keep. It grows, and it shows where the body is going.
+type EyeGraphic struct {
+	Growing bool     `json:"growing"`
+	Files   []string `json:"files"`
+	Knows   bool     `json:"knows"`
+}
+
+// Body is the conglomerate. Instinct chairs it. Voltron keeps it on.
+// The hustler is in it. This body does not smell and does not eat.
 type Body struct {
-	RunBy        []string `json:"runBy"`
-	Hustler      bool     `json:"hustler"`
-	Chair        string   `json:"chair"`
-	Brain        string   `json:"brain"`
-	Spy          string   `json:"spy"`
-	Enforcer     string   `json:"enforcer"`
-	Cyber        string   `json:"cyber"`
-	CyberAttacks bool     `json:"cyberAttacks"`
-	Organs       []Organ  `json:"organs"`
-	Eyes         []string `json:"eyes"`
-	Members      []string `json:"members"`
-	Connected    bool     `json:"connected"`
+	RunBy        []string   `json:"runBy"`
+	Hustler      bool       `json:"hustler"`
+	Chair        string     `json:"chair"`
+	Brain        string     `json:"brain"`
+	Spy          string     `json:"spy"`
+	Enforcer     string     `json:"enforcer"`
+	Cyber        string     `json:"cyber"`
+	CyberAttacks bool       `json:"cyberAttacks"`
+	Smell        bool       `json:"smell"`
+	Eat          bool       `json:"eat"`
+	Organs       []Organ    `json:"organs"`
+	Eyes         []string   `json:"eyes"`
+	Graphic      EyeGraphic `json:"graphic"`
+	Members      []string   `json:"members"`
+	Connected    bool       `json:"connected"`
 }
 
 // FusionBody is the whole conglomerate of agentics, wired as one body.
@@ -37,26 +47,32 @@ func FusionBody() Body {
 		{ID: "subconscious", Name: "Subconscious", Role: "Memory holds what the brain is not looking at.", Agent: "memory", Links: []string{"brain", "eyes"}},
 		{ID: "deep", Name: "Deep conscious", Role: "The Architect thinks underneath. Two ways, then the shorter one.", Agent: "architecte", Links: []string{"brain", "soul"}},
 		{ID: "soul", Name: "Soul", Role: "The inside of the brain. Instinct carries it. It is not a second product.", Agent: "instinct", Links: []string{"brain", "deep"}},
-		{ID: "eyes", Name: "Eyes", Role: "The eyes see every agentic. They are connected to all of them.", Agent: "eye", Links: eyes},
+		{ID: "eyes", Name: "Eyes", Role: "The eyes see every agentic and draw a graphic that keeps growing, so the body knows where it is going.", Agent: "eye", Links: eyes},
 		{ID: "ears", Name: "Ears", Role: "Explorer listens to the graph and the repos.", Agent: "explorer", Links: []string{"eyes", "brain"}},
 		{ID: "mouth", Name: "Mouth", Role: "Comms speaks. Nothing goes out without allow.", Agent: "comms", Links: []string{"brain", "ears"}},
-		{ID: "smell", Name: "Smell", Role: "Security smells a secret or a site already live. It does not attack.", Agent: "security", Links: []string{"eyes", "fbi"}},
 		{ID: "cia", Name: "CIA", Role: "The Eye is the spy. It gathers and gives that to the brain and to the FBI.", Agent: "eye", Links: []string{"brain", "fbi", "eyes"}},
-		{ID: "fbi", Name: "FBI", Role: "The Fusion enforces the laws, punishes with a named story, traces, and secures.", Agent: "fusion", Links: []string{"cia", "brain", "smell"}},
+		{ID: "fbi", Name: "FBI", Role: "The Fusion enforces the laws. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.", Agent: "fusion", Links: []string{"cia", "brain", "eyes"}},
 	}
 	return Body{
 		RunBy:        []string{"instinct", "voltron"},
 		Hustler:      true,
-		Chair:        "",
+		Chair:        "instinct",
 		Brain:        "instinct",
 		Spy:          "eye",
 		Enforcer:     "fusion",
 		Cyber:        "security",
 		CyberAttacks: false,
+		Smell:        false,
+		Eat:          false,
 		Organs:       organs,
-		Eyes:         eyes,
-		Members:      members,
-		Connected:    covers(eyes, members),
+		Graphic: EyeGraphic{
+			Growing: true,
+			Files:   []string{"docs/MAP.md", "inventory/GRAPH.md", "state/blueprint.json"},
+			Knows:   true,
+		},
+		Eyes:      eyes,
+		Members:   members,
+		Connected: covers(eyes, members),
 	}
 }
 
@@ -104,13 +120,14 @@ func FusionResume() string {
 	b.WriteString("# The Fusion\n\n")
 	b.WriteString("Résumé for rapid fire and code. One body. Two GitHubs: Evolu-Jeunes and cashtro.\n\n")
 	b.WriteString("## Who runs it\n\n")
-	b.WriteString("Instinct is the brain. Voltron keeps the chains on. The hustler is in the conglomerate. Nobody chairs it and nobody dominates it.\n\n")
+	b.WriteString("Instinct is the brain and the chair. Voltron keeps the chains on. The hustler is in the conglomerate. The chair is the seat that decides. It does not dominate anyone.\n\n")
 	b.WriteString("## Roles\n\n")
 	b.WriteString("- Brain: instinct. It decides.\n")
 	b.WriteString("- CIA: The Eye. It spies and gathers, then gives that information to instinct and to the FBI.\n")
-	b.WriteString("- FBI: The Fusion. It enforces every law already written. A failed law stops the gesture, writes the trace, and stores a named sanction story.\n")
-	b.WriteString("- Eyes: connected to every agentic. They see the whole conglomerate.\n")
-	b.WriteString("- Cybersecurity: security, already in the kernel. It smells secrets and live sites. It does not attack.\n\n")
+	b.WriteString("- FBI: The Fusion. It enforces every law already written. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.\n")
+	b.WriteString("- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.\n")
+	b.WriteString("- Cybersecurity: security, already in the kernel. It does not attack.\n")
+	b.WriteString("- This body does not smell and does not eat.\n\n")
 	b.WriteString("## Body\n\n")
 	for _, organ := range body.Organs {
 		b.WriteString("- " + organ.Name + " (`" + organ.Agent + "`): " + organ.Role + "\n")

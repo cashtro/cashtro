@@ -287,12 +287,18 @@ type Congress struct {
 // SanctionStory is the named punishment kept with the trace.
 // It stops the gesture. It does not harm a person.
 type SanctionStory struct {
-	Name    string `json:"name"`
-	Law     string `json:"law"`
-	Fact    string `json:"fact"`
-	Story   string `json:"story"`
-	Stopped bool   `json:"stopped"`
-	Traced  bool   `json:"traced"`
+	Name       string   `json:"name"`
+	Law        string   `json:"law"`
+	Fact       string   `json:"fact"`
+	Story      string   `json:"story"`
+	Stopped    bool     `json:"stopped"`
+	Traced     bool     `json:"traced"`
+	Saved      bool     `json:"saved"`
+	Retrain    bool     `json:"retrain"`
+	Skill      string   `json:"skill"`
+	Asks       []string `json:"asks"`
+	Understood bool     `json:"understood"`
+	Rounds     int      `json:"rounds"`
 }
 
 // Opposition is the bench inside one agency that goes against its own policy.
@@ -368,9 +374,36 @@ func (c Congress) Sanction(name, law, fact, story string) (Congress, SanctionSto
 	if name == "" || story == "" || refusedRule(name+" "+story) {
 		return c, SanctionStory{}, false
 	}
-	told := SanctionStory{Name: name, Law: strings.TrimSpace(law), Fact: strings.TrimSpace(fact), Story: story, Stopped: true, Traced: true}
+	told := SanctionStory{
+		Name: name, Law: strings.TrimSpace(law), Fact: strings.TrimSpace(fact), Story: story,
+		Stopped: true, Traced: true, Saved: true, Retrain: true,
+	}
 	c.Stories = append(c.Stories, told)
 	return c, told, true
+}
+
+// Train repeats until the agent holds the law, the skill, and the asks.
+func (c Congress) Train(name, skill string, asks []string) (Congress, SanctionStory, bool) {
+	name = strings.TrimSpace(name)
+	skill = strings.TrimSpace(skill)
+	var kept []string
+	for _, ask := range asks {
+		if strings.TrimSpace(ask) != "" {
+			kept = append(kept, strings.TrimSpace(ask))
+		}
+	}
+	for i := range c.Stories {
+		if c.Stories[i].Name != name {
+			continue
+		}
+		c.Stories[i].Rounds++
+		c.Stories[i].Skill = skill
+		c.Stories[i].Asks = kept
+		c.Stories[i].Understood = c.Stories[i].Law != "" && skill != "" && len(kept) > 0
+		c.Stories[i].Retrain = !c.Stories[i].Understood
+		return c, c.Stories[i], true
+	}
+	return c, SanctionStory{}, false
 }
 
 // Enforce applies every law already written. A bill is not applied.

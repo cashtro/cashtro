@@ -4,15 +4,16 @@ Résumé for rapid fire and code. One body. Two GitHubs: Evolu-Jeunes and cashtr
 
 ## Who runs it
 
-Instinct is the brain. Voltron keeps the chains on. The hustler is in the conglomerate. Nobody chairs it and nobody dominates it.
+Instinct is the brain and the chair. Voltron keeps the chains on. The hustler is in the conglomerate. The chair is the seat that decides. It does not dominate anyone.
 
 ## Roles
 
 - Brain: instinct. It decides.
 - CIA: The Eye. It spies and gathers, then gives that information to instinct and to the FBI.
-- FBI: The Fusion. It enforces every law already written. A failed law stops the gesture, writes the trace, and stores a named sanction story.
-- Eyes: connected to every agentic. They see the whole conglomerate.
-- Cybersecurity: security, already in the kernel. It smells secrets and live sites. It does not attack.
+- FBI: The Fusion. It enforces every law already written. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.
+- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.
+- Cybersecurity: security, already in the kernel. It does not attack.
+- This body does not smell and does not eat.
 
 ## Body
 
@@ -20,12 +21,11 @@ Instinct is the brain. Voltron keeps the chains on. The hustler is in the conglo
 - Subconscious (`memory`): Memory holds what the brain is not looking at.
 - Deep conscious (`architecte`): The Architect thinks underneath. Two ways, then the shorter one.
 - Soul (`instinct`): The inside of the brain. Instinct carries it. It is not a second product.
-- Eyes (`eye`): The eyes see every agentic. They are connected to all of them.
+- Eyes (`eye`): The eyes see every agentic and draw a graphic that keeps growing, so the body knows where it is going.
 - Ears (`explorer`): Explorer listens to the graph and the repos.
 - Mouth (`comms`): Comms speaks. Nothing goes out without allow.
-- Smell (`security`): Security smells a secret or a site already live. It does not attack.
 - CIA (`eye`): The Eye is the spy. It gathers and gives that to the brain and to the FBI.
-- FBI (`fusion`): The Fusion enforces the laws, punishes with a named story, traces, and secures.
+- FBI (`fusion`): The Fusion enforces the laws. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.
 
 ## Conglomerate
 

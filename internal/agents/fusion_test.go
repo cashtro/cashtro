@@ -79,8 +79,16 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatal("a sanction needs a name")
 	}
 	book, told, okStory := book.Sanction("brouillon-sorti", "loi-25", "un build a quitté le local", "Le geste est arrêté. L'histoire s'appelle brouillon-sorti.")
-	if !okStory || !told.Stopped || !told.Traced || len(book.Stories) != 1 {
+	if !okStory || !told.Stopped || !told.Traced || !told.Saved || told.Understood || len(book.Stories) != 1 {
 		t.Fatalf("story %+v", told)
+	}
+	book, told, okStory = book.Train(told.Name, "", nil)
+	if !okStory || told.Understood || told.Rounds != 1 {
+		t.Fatalf("open training %+v", told)
+	}
+	book, told, okStory = book.Train(told.Name, "appliquer la loi", []string{"Quelle loi s'applique?", "Quel geste s'arrête?"})
+	if !okStory || !told.Understood || told.Retrain || told.Rounds != 2 {
+		t.Fatalf("trained %+v", told)
 	}
 	ok, msg := book.Enforce()
 	if !ok || msg == "" {
@@ -133,17 +141,28 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatal("the session did not grow memory")
 	}
 	body := FusionBody()
-	if len(body.RunBy) != 2 || body.RunBy[0] != "instinct" || body.RunBy[1] != "voltron" || !body.Hustler || body.Chair != "" {
+	if len(body.RunBy) != 2 || body.RunBy[0] != "instinct" || body.RunBy[1] != "voltron" || !body.Hustler || body.Chair != "instinct" {
 		t.Fatalf("runners %+v", body)
+	}
+	if body.Smell || body.Eat {
+		t.Fatal("this body does not smell and does not eat")
 	}
 	if body.Brain != "instinct" || body.Spy != "eye" || body.Enforcer != "fusion" || body.Cyber != "security" || body.CyberAttacks || !body.Connected {
 		t.Fatalf("body %+v", body)
 	}
-	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 10 {
+	if !body.Graphic.Growing || !body.Graphic.Knows || len(body.Graphic.Files) != 3 {
+		t.Fatalf("graphic %+v", body.Graphic)
+	}
+	for _, organ := range body.Organs {
+		if organ.ID == "smell" {
+			t.Fatal("smell is not an organ")
+		}
+	}
+	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 9 {
 		t.Fatalf("eyes %d members %d organs %d", len(body.Eyes), len(body.Members), len(body.Organs))
 	}
 	resume := FusionResume()
-	for _, line := range []string{"Instinct is the brain", "The hustler is in the conglomerate", "CIA: The Eye", "FBI: The Fusion", "named sanction story", "security, already in the kernel"} {
+	for _, line := range []string{"Instinct is the brain and the chair", "The hustler is in the conglomerate", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
 		if !strings.Contains(resume, line) {
 			t.Fatalf("resume missing %s", line)
 		}
