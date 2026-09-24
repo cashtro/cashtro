@@ -322,6 +322,16 @@
       ]
     },
     {
+      "from": "eye",
+      "to": "fusion",
+      "via": "The Eye nomme. The Fusion fait appliquer les lois. Le nom dit toujours Evolian et Astro ensemble. Pas d'attaque, pas d'import entre les deux GitHub.",
+      "agents": [
+        "security",
+        "investigator",
+        "manager"
+      ]
+    },
+    {
       "from": "agentics",
       "to": "chains",
       "via": "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base.",
@@ -791,6 +801,11 @@
       "from": "fix2",
       "to": "marketing",
       "via": "Fix Tout tient ses clients sur Evolu-Jeunes/Fix2. Les agents tiennent Evolu-Jeunes/CRM-Agents. Aucune fiche ne passe."
+    },
+    {
+      "from": "eye",
+      "to": "fusion",
+      "via": "The Eye nomme. The Fusion fait appliquer les lois. Le nom dit toujours Evolian et Astro ensemble. Pas d'attaque, pas d'import entre les deux GitHub."
     },
     {
       "from": "agentics",

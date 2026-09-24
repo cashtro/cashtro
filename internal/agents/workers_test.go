@@ -111,10 +111,10 @@ func TestVoltronLayersStayOn(t *testing.T) {
 		t.Fatalf("layers = %+v", res.Data)
 	}
 	layers := res.Data.(map[string]any)["layers"].([]Layer)
-	if len(layers) != 5 {
+	if len(layers) != 6 {
 		t.Fatalf("count = %d", len(layers))
 	}
-	for _, id := range []string{"ops", "hustle", "eye", "forge", "giant"} {
+	for _, id := range []string{"ops", "hustle", "eye", "forge", "giant", "fusion"} {
 		found := false
 		for _, layer := range layers {
 			if layer.ID == id && layer.ReportsTo == "voltron" && layer.InVoltron && layer.Operative && !layer.Website && layer.OptionalThrough == "voltron" {

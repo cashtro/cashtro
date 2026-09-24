@@ -55,7 +55,7 @@ func TestEveryChainAgentAndWorkerUpgrades(t *testing.T) {
 			t.Fatalf("seat %+v", seat)
 		}
 	}
-	for _, id := range []string{"ops", "hustle", "eye", "forge", "giant"} {
+	for _, id := range []string{"ops", "hustle", "eye", "forge", "giant", "fusion"} {
 		seat, ok := seen["chain:"+id]
 		if !ok {
 			t.Fatalf("chain %s missing", id)

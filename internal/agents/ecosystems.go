@@ -118,6 +118,11 @@ func Links() []Link {
 			Agents: []string{"operator", "memory", "manager"},
 		},
 		{
+			From: "eye", To: "fusion",
+			Via:    "The Eye nomme. The Fusion fait appliquer les lois. Le nom dit toujours Evolian et Astro ensemble. Pas d'attaque, pas d'import entre les deux GitHub.",
+			Agents: []string{"security", "investigator", "manager"},
+		},
+		{
 			From: "agentics", To: "chains",
 			Via:    "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base.",
 			Agents: []string{"comms", "planner"},

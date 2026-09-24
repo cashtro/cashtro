@@ -22,6 +22,7 @@ func Layers() []Layer {
 		{ID: "eye", Name: "The Eye", Repo: "Evolu-Jeunes/Forge", ReportsTo: "voltron", InVoltron: true, Operative: true, Website: false, OptionalThrough: "voltron"},
 		{ID: "forge", Name: "Forge", Repo: "Evolu-Jeunes/Forge", ReportsTo: "voltron", InVoltron: true, Operative: true, Website: false, OptionalThrough: "voltron"},
 		{ID: "giant", Name: "Giant", Repo: "Evolu-Jeunes/Giant", ReportsTo: "voltron", InVoltron: true, Operative: true, Website: false, OptionalThrough: "voltron"},
+		{ID: "fusion", Name: "The Fusion", Repo: "cashtro/cashtro", ReportsTo: "voltron", InVoltron: true, Operative: true, Website: false, OptionalThrough: "voltron"},
 	}
 }
 

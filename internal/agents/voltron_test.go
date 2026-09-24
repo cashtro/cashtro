@@ -8,7 +8,7 @@ func TestVoltronHoldsEveryChain(t *testing.T) {
 		t.Fatalf("loose chain %s", loose)
 	}
 	layers := Layers()
-	if len(layers) != 5 {
+	if len(layers) != 6 {
 		t.Fatalf("layers = %d", len(layers))
 	}
 	seen := map[string]bool{}
@@ -18,12 +18,12 @@ func TestVoltronHoldsEveryChain(t *testing.T) {
 			t.Fatalf("%s is a website", layer.ID)
 		}
 	}
-	for _, id := range []string{"ops", "hustle", "eye", "forge", "giant"} {
+	for _, id := range []string{"ops", "hustle", "eye", "forge", "giant", "fusion"} {
 		if !seen[id] {
 			t.Fatalf("missing %s", id)
 		}
 	}
-	if len(Lines()) != 14 || len(Links()) != 22 {
+	if len(Lines()) != 14 || len(Links()) != 23 {
 		t.Fatalf("lines %d links %d", len(Lines()), len(Links()))
 	}
 }

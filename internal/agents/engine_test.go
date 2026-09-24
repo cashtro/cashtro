@@ -56,7 +56,7 @@ func TestEngineJoinsConstellations(t *testing.T) {
 		t.Fatalf("lens: %+v %v", res, err)
 	}
 	lens := res.Data.(map[string]any)
-	if lens["empty"].(int) != 0 || lens["constellations"].(int) != 14 || lens["brains"].(int) != 15 {
+	if lens["empty"].(int) != 0 || lens["constellations"].(int) != 14 || lens["brains"].(int) != 16 {
 		t.Fatalf("lens = %+v", lens)
 	}
 	if data["analyzed"].(int) != len(Subjects()) || data["brains"].(int) != len(Brains()) {

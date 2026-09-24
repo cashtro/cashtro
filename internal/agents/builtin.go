@@ -120,6 +120,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.automate",
 			"manager.org",
 			"manager.loi",
+			"manager.fusion",
 			"manager.contradict",
 			"manager.ask",
 			"manager.improve",
@@ -221,6 +222,20 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.loi":
 		return kernel.Result{OK: true, Message: "quebec and canada gates", Data: a.board.Compliance}, nil
+
+	case "manager.fusion":
+		law := payloadQuery(call, "law")
+		if law == "" {
+			law = payloadQuery(call, "id")
+		}
+		force := Fusion()
+		if law != "" && law != "fusion" {
+			ok, msg := FusionEnforce(law)
+			return kernel.Result{OK: ok, Message: msg, Data: map[string]any{
+				"force": force.Name, "peoples": force.Peoples, "bureau": FusionBureau(law),
+			}}, nil
+		}
+		return kernel.Result{OK: true, Message: "The Fusion couvre Evolian et Astro", Data: force}, nil
 
 	case "manager.watch":
 		self := AskSelf("watch", nil)
@@ -406,8 +421,8 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		a.k.Remember("instinct", "graphify query: "+query)
 		return kernel.Result{OK: true, Message: "graphify query: " + query, Data: map[string]any{
 			"query": query,
-			"nodes": 39593,
-			"edges": 99285,
+			"nodes": 52527,
+			"edges": 133783,
 		}}, nil
 
 	case "manager.flow":

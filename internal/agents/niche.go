@@ -207,6 +207,13 @@ func NicheBrains() []NicheBrain {
 			d("Le Coffre", "Le mint n'est pas une option.", "Tenir la formation. Le mint n'est pas une option."),
 			d("La Borne", "Remet le mint.", "Remettre mint, ordre, pont et déploiement au cerveau principal."),
 		}, []string{"mint", "ordre", "pont", "déploiement"}),
+		buildNiche("fusion", "application des lois", []NicheDeskSpec{
+			d("La Règle", "Lit le checklist.", "Lire la loi sur Evolian et Astro ensemble."),
+			d("Les Deux", "Ne coupe pas le nom.", "Voir les deux peuples dans le même geste."),
+			d("La Porte", "Arrête le raté.", "Arrêter le geste qui rate la règle, sans attaquer."),
+			d("Le Registre", "Note sans secret.", "Tenir la preuve locale sans copier un secret."),
+			d("La Borne", "Remet sans déployer.", "Remettre la décision au cerveau principal. Ne pas importer un cerveau TypeScript."),
+		}, []string{"attaque", "secret", "surveillance", "import"}),
 		buildNiche("pandora", "atelier Pandora", []NicheDeskSpec{
 			d("L'Atelier", "Pense Pandora.", "Penser l'atelier Pandora seulement."),
 			d("La Copie", "Tient le guide.", "Tenir le guide de copie en entier."),
