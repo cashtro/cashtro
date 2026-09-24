@@ -65,6 +65,7 @@ func FusionBody() Body {
 		{ID: "brain", Name: "Brain", Role: "Einstein receives the relay from the hustler and does the rest.", Agent: "instinct", Links: []string{"hustler", "cia", "fbi", "eyes", "soul"}},
 		{ID: "subconscious", Name: "Subconscious", Role: "Memory holds what the brain is not looking at.", Agent: "memory", Links: []string{"brain", "eyes"}},
 		{ID: "deep", Name: "Deep conscious", Role: "The Architect thinks underneath. Two ways, then the shorter one.", Agent: "architecte", Links: []string{"brain", "soul"}},
+		{ID: "heart", Name: "Heart", Role: "The Vault is the heart. Core memory, money, and keys. The chain grows. A key slot stores a name, never a secret.", Agent: "memory", Links: []string{"brain", "eyes", "chair"}},
 		{ID: "soul", Name: "Soul", Role: "The inside of the brain. Instinct carries it. It is not a second product.", Agent: "instinct", Links: []string{"brain", "deep"}},
 		{ID: "eyes", Name: "Eyes", Role: "The eyes see every agentic and draw a graphic that keeps growing, so the body knows where it is going.", Agent: "eye", Links: eyes},
 		{ID: "ears", Name: "Ears", Role: "Explorer listens to the graph and the repos.", Agent: "explorer", Links: []string{"eyes", "brain"}},
@@ -175,6 +176,8 @@ func FusionResume() string {
 	b.WriteString("- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.\n")
 	b.WriteString("- Cybersecurity: security, already in the kernel. It does not attack.\n")
 	b.WriteString("- This body does not smell and does not eat.\n\n")
+	b.WriteString("## The Vault\n\n")
+	b.WriteString("The Vault is the heart. It is the library, chained like a ledger, held in every brain and every cell. Core memory holds the lessons and the book titles. Money holds the internal ledger. Keys hold slot names only. Secret values are not stored. Sections are added slowly.\n\n")
 	b.WriteString("## Veins\n\n")
 	b.WriteString("This knowledge runs through the hustler. The lessons are written here. The books are not copied.\n\n")
 	for _, vein := range body.Veins {

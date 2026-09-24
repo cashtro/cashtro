@@ -2,6 +2,7 @@ package agents
 
 import (
 	"context"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
@@ -161,7 +162,7 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 	if len(body.Relay) != 2 || body.Relay[0] != "hustler" || body.Relay[1] != "instinct" || body.RelayTo != "Einstein" || !body.Vision || body.Profile != "mogul, 50 Cent" || !body.Ground || !body.Contacts || !body.Swarm {
 		t.Fatalf("relay %+v", body.Relay)
 	}
-	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 10 {
+	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 11 {
 		t.Fatalf("eyes %d members %d organs %d", len(body.Eyes), len(body.Members), len(body.Organs))
 	}
 	resume := FusionResume()
@@ -173,7 +174,22 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 			t.Fatalf("vein copied %+v", vein)
 		}
 	}
-	for _, line := range []string{"The hustler is the chair", "relays everything to Einstein", "50 Cent", "Robert Greene", "The 50th Law", "one swarm chain", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
+	vault := OpenVault()
+	if vault.Name != "The Vault" || !vault.Heart || !vault.Intact || len(vault.Brains) != len(Brains()) {
+		t.Fatalf("vault %+v", vault.Name)
+	}
+	if len(vault.Section("core")) < 8 || len(vault.Section("money")) != 1 || len(vault.Section("keys")) != 2 {
+		t.Fatalf("sections core %d money %d keys %d", len(vault.Section("core")), len(vault.Section("money")), len(vault.Section("keys")))
+	}
+	for _, entry := range vault.Section("keys") {
+		if entry.Body != "" {
+			t.Fatal("a key stored a value")
+		}
+	}
+	if _, _, ok := vault.Add("keys", "slot", "stripe", "sk_test_"+"SHOULDNOT"); ok {
+		t.Fatal("a secret must stay out of the vault")
+	}
+	for _, line := range []string{"The hustler is the chair", "relays everything to Einstein", "50 Cent", "Robert Greene", "The 50th Law", "The Vault is the heart", "one swarm chain", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
 		if !strings.Contains(resume, line) {
 			t.Fatalf("resume missing %s", line)
 		}
@@ -183,6 +199,13 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatal(err)
 	}
 	if err := os.WriteFile(filepath.Join(filepath.Dir(root), "docs", "FUSION.md"), []byte(resume), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	raw, err := json.MarshalIndent(OpenVault(), "", "  ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(filepath.Dir(root), "state", "vault.json"), append(raw, '\n'), 0o644); err != nil {
 		t.Fatal(err)
 	}
 }

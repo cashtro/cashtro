@@ -20,6 +20,10 @@ Every agent and every ID sits on one swarm chain together. The hustler's measure
 - Cybersecurity: security, already in the kernel. It does not attack.
 - This body does not smell and does not eat.
 
+## The Vault
+
+The Vault is the heart. It is the library, chained like a ledger, held in every brain and every cell. Core memory holds the lessons and the book titles. Money holds the internal ledger. Keys hold slot names only. Secret values are not stored. Sections are added slowly.
+
 ## Veins
 
 This knowledge runs through the hustler. The lessons are written here. The books are not copied.
@@ -39,6 +43,7 @@ This knowledge runs through the hustler. The lessons are written here. The books
 - Brain (`instinct`): Einstein receives the relay from the hustler and does the rest.
 - Subconscious (`memory`): Memory holds what the brain is not looking at.
 - Deep conscious (`architecte`): The Architect thinks underneath. Two ways, then the shorter one.
+- Heart (`memory`): The Vault is the heart. Core memory, money, and keys. The chain grows. A key slot stores a name, never a secret.
 - Soul (`instinct`): The inside of the brain. Instinct carries it. It is not a second product.
 - Eyes (`eye`): The eyes see every agentic and draw a graphic that keeps growing, so the body knows where it is going.
 - Ears (`explorer`): Explorer listens to the graph and the repos.

@@ -1,0 +1,196 @@
+{
+  "name": "The Vault",
+  "heart": true,
+  "sections": [
+    "core",
+    "money",
+    "keys"
+  ],
+  "entries": [
+    {
+      "index": 0,
+      "section": "core",
+      "kind": "lesson",
+      "title": "Robert Greene",
+      "body": "See the position before the move. Keep the move inside the law.",
+      "prev": "",
+      "hash": "3b8a219ff231a7d7b45f657df5b4c5e15028cb1a361d50fad2bd85ba2a101885"
+    },
+    {
+      "index": 1,
+      "section": "core",
+      "kind": "lesson",
+      "title": "The 50th Law",
+      "body": "Name the fear, then take the move that fear was blocking.",
+      "prev": "3b8a219ff231a7d7b45f657df5b4c5e15028cb1a361d50fad2bd85ba2a101885",
+      "hash": "9d5db1e51ddb5d3663a05ac85e029c63e26950a5f1ceb88bdf63e1a0b9afd713"
+    },
+    {
+      "index": 2,
+      "section": "core",
+      "kind": "lesson",
+      "title": "50 Cent",
+      "body": "The profile is the mogul: vision, ground, contacts, and a long game.",
+      "prev": "9d5db1e51ddb5d3663a05ac85e029c63e26950a5f1ceb88bdf63e1a0b9afd713",
+      "hash": "7590c22c2fae9d6d6df239587b77150db85f6d1e9a6275709e821293fd80a479"
+    },
+    {
+      "index": 3,
+      "section": "core",
+      "kind": "lesson",
+      "title": "strategy",
+      "body": "One aim, the shorter path, and the reply it opens.",
+      "prev": "7590c22c2fae9d6d6df239587b77150db85f6d1e9a6275709e821293fd80a479",
+      "hash": "3765c9a0f859f7c3e15ecafa4fe4bb898f1377f01e04f91cf6ed72dd305eaf99"
+    },
+    {
+      "index": 4,
+      "section": "core",
+      "kind": "lesson",
+      "title": "law",
+      "body": "The checklist is already written. A failed gesture retrains the agent.",
+      "prev": "3765c9a0f859f7c3e15ecafa4fe4bb898f1377f01e04f91cf6ed72dd305eaf99",
+      "hash": "ff5fef82138e559801a265720a44c48b6c7f1bd9a5e2acca2d93e324be3ab3dd"
+    },
+    {
+      "index": 5,
+      "section": "core",
+      "kind": "lesson",
+      "title": "business",
+      "body": "One offer, one measure, then the next step.",
+      "prev": "ff5fef82138e559801a265720a44c48b6c7f1bd9a5e2acca2d93e324be3ab3dd",
+      "hash": "0c477435951fddeb509d3adf95b5d8ebaeadb43dc66a98db346b58bf1128d422"
+    },
+    {
+      "index": 6,
+      "section": "core",
+      "kind": "lesson",
+      "title": "college",
+      "body": "Study the structure until the agent can say it.",
+      "prev": "0c477435951fddeb509d3adf95b5d8ebaeadb43dc66a98db346b58bf1128d422",
+      "hash": "2cdd18a73943d4deef11b08894d788146e26afa359e49760a176d40517ae4f14"
+    },
+    {
+      "index": 7,
+      "section": "core",
+      "kind": "lesson",
+      "title": "streets",
+      "body": "The ground decides what is real. The chair has lived it.",
+      "prev": "2cdd18a73943d4deef11b08894d788146e26afa359e49760a176d40517ae4f14",
+      "hash": "f51f27a3b0191cbb24b4c2f9f9d35bfeb594aae10a3f5a9607f59ebfa45aac9c"
+    },
+    {
+      "index": 8,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The 48 Laws of Power",
+      "body": "Robert Greene. Title only.",
+      "prev": "f51f27a3b0191cbb24b4c2f9f9d35bfeb594aae10a3f5a9607f59ebfa45aac9c",
+      "hash": "4fec19a0548595b396a260a4d4d1cdebe1c6a559bfe3a26d2f8554328ec82e4f"
+    },
+    {
+      "index": 9,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The Art of Seduction",
+      "body": "Robert Greene. Title only.",
+      "prev": "4fec19a0548595b396a260a4d4d1cdebe1c6a559bfe3a26d2f8554328ec82e4f",
+      "hash": "82b3d31e8a68aae1c63f0b2832be8bd220fdfd4a0e638ea9ba025ac928261632"
+    },
+    {
+      "index": 10,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The 33 Strategies of War",
+      "body": "Robert Greene. Title only.",
+      "prev": "82b3d31e8a68aae1c63f0b2832be8bd220fdfd4a0e638ea9ba025ac928261632",
+      "hash": "7f569844a46b40d886f18f3a82687ae98fc0ebcf4456e8f4d0daf7c8ca71964c"
+    },
+    {
+      "index": 11,
+      "section": "core",
+      "kind": "catalog",
+      "title": "Mastery",
+      "body": "Robert Greene. Title only.",
+      "prev": "7f569844a46b40d886f18f3a82687ae98fc0ebcf4456e8f4d0daf7c8ca71964c",
+      "hash": "f8c521bf539bb0f20c5028868ba415c314a0fffe74f9bb65a99e3c5a24301d3a"
+    },
+    {
+      "index": 12,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The Laws of Human Nature",
+      "body": "Robert Greene. Title only.",
+      "prev": "f8c521bf539bb0f20c5028868ba415c314a0fffe74f9bb65a99e3c5a24301d3a",
+      "hash": "15751ac6af325e47bf26f1fe8757915b85e4b3d0e8c7c5b0d124eb1f5e5461a5"
+    },
+    {
+      "index": 13,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The 50th Law",
+      "body": "Robert Greene and 50 Cent. Title only.",
+      "prev": "15751ac6af325e47bf26f1fe8757915b85e4b3d0e8c7c5b0d124eb1f5e5461a5",
+      "hash": "421ba08cc1f9ebf3cf4ea42b1daee62e1a9f9dd27b72b9270aec400c3712db87"
+    },
+    {
+      "index": 14,
+      "section": "money",
+      "kind": "ledger",
+      "title": "fonds",
+      "body": "Grand livre interne. Pas une banque. Rien ne sort sans allow.",
+      "prev": "421ba08cc1f9ebf3cf4ea42b1daee62e1a9f9dd27b72b9270aec400c3712db87",
+      "hash": "a8969245acf63a93ac52c2b85f63cc22ee9abf2dab5b9c56a2f161a03da476e8"
+    },
+    {
+      "index": 15,
+      "section": "keys",
+      "kind": "slot",
+      "title": "OPENROUTER_API_KEY",
+      "body": "",
+      "prev": "a8969245acf63a93ac52c2b85f63cc22ee9abf2dab5b9c56a2f161a03da476e8",
+      "hash": "a7e5e4990564f588c273b3d4786287478948b0f978a1be52e7e9aed3f706281d"
+    },
+    {
+      "index": 16,
+      "section": "keys",
+      "kind": "slot",
+      "title": "DATABASE_URL",
+      "body": "",
+      "prev": "a7e5e4990564f588c273b3d4786287478948b0f978a1be52e7e9aed3f706281d",
+      "hash": "4894328d020ef03dd23c9966397f30f473f3b8b14b5e4f5b68b3e23a30d222ce"
+    }
+  ],
+  "brains": [
+    "instinct",
+    "architecte",
+    "cartographe",
+    "forgeron",
+    "orfevre",
+    "hustler",
+    "voltron",
+    "scrum",
+    "forge",
+    "eye",
+    "giant",
+    "accueil",
+    "terrain",
+    "propriete",
+    "hustle",
+    "fusion"
+  ],
+  "cells": [
+    "chair",
+    "brain",
+    "subconscious",
+    "deep",
+    "heart",
+    "soul",
+    "eyes",
+    "ears",
+    "mouth",
+    "cia",
+    "fbi"
+  ],
+  "intact": true
+}

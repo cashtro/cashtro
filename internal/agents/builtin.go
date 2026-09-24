@@ -105,6 +105,7 @@ type managerAgent struct {
 	board    Board
 	moves    []Move
 	congress Congress
+	vault    Vault
 }
 
 func (a *managerAgent) Spec() kernel.Spec {
@@ -122,6 +123,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.org",
 			"manager.loi",
 			"manager.fusion",
+			"manager.vault",
 			"manager.contradict",
 			"manager.ask",
 			"manager.improve",
@@ -223,6 +225,26 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.loi":
 		return kernel.Result{OK: true, Message: "quebec and canada gates", Data: a.board.Compliance}, nil
+
+	case "manager.vault":
+		if a.vault.Name == "" {
+			a.vault = OpenVault()
+		}
+		if section := payloadQuery(call, "section"); section != "" {
+			next, entry, ok := a.vault.Add(section, payloadQuery(call, "kind"), payloadQuery(call, "title"), payloadQuery(call, "body"))
+			if !ok {
+				return kernel.Result{OK: false, Message: "le vault refuse cette entrée. un secret ne s'écrit pas"}, nil
+			}
+			a.vault = next
+			a.k.Remember("vault", entry.Section+": "+entry.Title)
+			return kernel.Result{OK: true, Message: "entrée chaînée", Data: entry}, nil
+		}
+		for _, entry := range a.vault.Section("core") {
+			if entry.Kind == "lesson" {
+				a.k.Remember("vault", entry.Title+": "+entry.Body)
+			}
+		}
+		return kernel.Result{OK: a.vault.Intact, Message: "The Vault", Data: a.vault}, nil
 
 	case "manager.fusion":
 		if a.congress.House == "" {
