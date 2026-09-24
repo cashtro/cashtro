@@ -262,7 +262,7 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 		ok, msg := a.congress.Enforce()
 		a.k.Remember("fusion", msg)
 		return kernel.Result{OK: ok, Message: msg, Data: map[string]any{
-			"laws": a.congress.Laws, "bills": a.congress.Bills, "houses": Houses(), "memory": a.k.Recall("fusion"),
+			"laws": a.congress.Laws, "bills": a.congress.Bills, "houses": Houses(), "body": FusionBody(), "memory": a.k.Recall("fusion"),
 		}}, nil
 
 	case "manager.watch":

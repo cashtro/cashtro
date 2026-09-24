@@ -2,6 +2,8 @@ package agents
 
 import (
 	"context"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 
@@ -129,5 +131,28 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 	}
 	if len(k.Recall("congress")) == 0 || len(k.Recall("fusion")) == 0 {
 		t.Fatal("the session did not grow memory")
+	}
+	body := FusionBody()
+	if len(body.RunBy) != 2 || body.RunBy[0] != "instinct" || body.RunBy[1] != "voltron" || !body.Hustler || body.Chair != "" {
+		t.Fatalf("runners %+v", body)
+	}
+	if body.Brain != "instinct" || body.Spy != "eye" || body.Enforcer != "fusion" || body.Cyber != "security" || body.CyberAttacks || !body.Connected {
+		t.Fatalf("body %+v", body)
+	}
+	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 10 {
+		t.Fatalf("eyes %d members %d organs %d", len(body.Eyes), len(body.Members), len(body.Organs))
+	}
+	resume := FusionResume()
+	for _, line := range []string{"Instinct is the brain", "The hustler is in the conglomerate", "CIA: The Eye", "FBI: The Fusion", "named sanction story", "security, already in the kernel"} {
+		if !strings.Contains(resume, line) {
+			t.Fatalf("resume missing %s", line)
+		}
+	}
+	root, err := findFile("go.mod")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(filepath.Dir(root), "docs", "FUSION.md"), []byte(resume), 0o644); err != nil {
+		t.Fatal(err)
 	}
 }
