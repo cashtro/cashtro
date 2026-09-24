@@ -122,6 +122,46 @@ func Links() []Link {
 			Via:    "Marketing, Panda et Proximity cloud relient chaque chaîne des deux cerveaux. Les agents s'y parlent et s'y passent les leads. Le CRM Lovable de Fix Tout n'est pas cette base.",
 			Agents: []string{"comms", "planner"},
 		},
+		{
+			From: "Evolu-Jeunes/Pandora", To: "cashtro/PBTM",
+			Via:    "Même arbre. PBTM nomme Evolu-Jeunes/Pandora.git.",
+			Agents: []string{"binder", "memory"},
+		},
+		{
+			From: "Evolu-Jeunes/Panda", To: "Evolu-Jeunes/Pandora",
+			Via:    "Arbre partagé. Panda reste le service white-glove.",
+			Agents: []string{"binder", "architect"},
+		},
+		{
+			From: "Evolu-Jeunes/CRM", To: "Evolu-Jeunes/CRM-Agents",
+			Via:    "Clone. Deux bases. Le carnet agents n'est pas le CRM Fix Tout.",
+			Agents: []string{"binder", "comms"},
+		},
+		{
+			From: "Evolu-Jeunes/CRM", To: "Evolu-Jeunes/Fix2",
+			Via:    "Fix2 tient les clients. Le CRM ne les copie pas.",
+			Agents: []string{"binder", "operator"},
+		},
+		{
+			From: "Evolu-Jeunes/H2oH2o", To: "cashtro/H2OriginTest",
+			Via:    "Même site sur les deux GitHub.",
+			Agents: []string{"binder", "memory"},
+		},
+		{
+			From: "Evolu-Jeunes/AI-BOT", To: "cashtro/trading_bot-main",
+			Via:    "Même bot. Aucun ordre live.",
+			Agents: []string{"binder", "security"},
+		},
+		{
+			From: "Evolu-Jeunes/sigma", To: "Evolu-Jeunes/sigmaNew",
+			Via:    "sigmaNew reprend l'arbre de sigma.",
+			Agents: []string{"binder", "explorer"},
+		},
+		{
+			From: "Evolu-Jeunes/Forge", To: "cashtro/epicenter",
+			Via:    "Forge rapporte. Epicenter Einstein décide en dernier.",
+			Agents: []string{"binder", "manager"},
+		},
 	}
 }
 

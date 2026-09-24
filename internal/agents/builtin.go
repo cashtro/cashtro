@@ -89,6 +89,11 @@ func Builtins(cat *catalog.Catalog, router *model.Bus) []kernel.Agent {
 			Capabilities: []string{"planner.backlog"}, Autostart: true,
 		}, plannerInvoke),
 		resident(kernel.Spec{
+			ID: "binder", Name: "Binder", Kind: kernel.KindUser, Mode: kernel.ModeLive,
+			Role: "relations", Summary: "Relie deux dépôts quand l'arbre ou la fiche le dit. N'invente pas le lien.",
+			Capabilities: []string{"binder.relate"}, Autostart: true,
+		}, binderInvoke),
+		resident(kernel.Spec{
 			ID: "investigator", Name: "Investigator", Kind: kernel.KindUser, Mode: kernel.ModeLive,
 			Role: "incident", Summary: "Nomme la ligne, le département et les dépôts voisins. Ne lit pas un secret.",
 			Capabilities: []string{"investigator.trace"}, Autostart: true,

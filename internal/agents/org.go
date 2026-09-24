@@ -1,7 +1,7 @@
 package agents
 
 // Organization is the cooperative. Three chiefs, nine departments,
-// the 15 real agentics as specialized employees. No extra processes.
+// the 16 real agentics as specialized employees. No extra processes.
 // The central agency is another repo and another prompt. It is not here.
 type Organization struct {
 	Seats       []Seat       `json:"seats"`
@@ -28,7 +28,7 @@ type Department struct {
 	Members   []Member `json:"members"`
 }
 
-// Member is one of the 15 agentics, with a job and skills.
+// Member is one of the 16 agentics, with a job and skills.
 type Member struct {
 	Agent  string   `json:"agent"`
 	Title  string   `json:"title"`
@@ -72,6 +72,7 @@ func Chart() Organization {
 					{Agent: "architect", Title: "CTO", Skills: []string{"conception", "chaînes", "offres"}},
 					{Agent: "router", Title: "employé spécialisé modèles", Skills: []string{"coût des modèles", "Ollama", "Kimi K3", "GLM max"}},
 					{Agent: "memory", Title: "employé spécialisé dossier", Skills: []string{"mémoire", "fiches"}},
+					{Agent: "binder", Title: "employé spécialisé relations", Skills: []string{"lien entre dépôts", "arbre partagé", "fiche"}},
 				},
 			},
 			{

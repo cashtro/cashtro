@@ -139,6 +139,13 @@ func Chain(line string) ([]ChainStep, bool) {
 			{Line: "watch", Order: 1, Agent: "memory", Do: "Nommer le trou sur le tableau. Cette veille ne déploie rien."},
 			{Line: "watch", Order: 2, Agent: "manager", Do: "Epicenter Einstein décide. Le dépôt de l'agence reste hors tableau."},
 		}, true
+	case "voltron":
+		return []ChainStep{
+			{Line: "voltron", Order: 1, Agent: "memory", Do: "Tenir les chaînes déjà allumées. Ajouter un maillon. Ne pas réécrire le maillon d'avant."},
+			{Line: "voltron", Order: 2, Agent: "manager", Do: "Epicenter Einstein lit Voltron et décide. Le coup le plus court reste."},
+			{Line: "voltron", Order: 3, Agent: "binder", Do: "Relier les dépôts qui partagent un arbre, un clone, ou une fiche. Ne pas inventer un lien."},
+			{Line: "voltron", Order: 4, Agent: "init", Do: "Garder OPS, The Hustle, The Eye, Forge et Giant allumés dans Voltron. Aucun n'est un site. Fix Tout et le carnet agents y sont reliés, pas copiés."},
+		}, true
 	default:
 		if steps, ok := brainChain(line); ok {
 			return steps, true

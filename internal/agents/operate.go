@@ -141,7 +141,7 @@ func boardFromLines() Board {
 		Brains:     Brains(),
 		Compliance: Loi(),
 		Rules: []string{
-			"Coopérative : CEO, CTO, CMP. Neuf départements. Quinze employés spécialisés. Le flow stack relie chaque division à une fonction et à un produit.",
+			"Coopérative : CEO, CTO, CMP. Neuf départements. Seize employés spécialisés. Le flow stack relie chaque division à une fonction et à un produit.",
 			"Avant chaque coup : une question, la position, le coup de pouvoir, la réponse adverse.",
 			"La chaîne des coups ne se réécrit pas.",
 			"L'agence centrale rapporte. Epicenter Einstein décide. Elle n'est pas un siège de ce tableau.",

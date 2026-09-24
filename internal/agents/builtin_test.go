@@ -15,11 +15,11 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatal(err)
 	}
 	procs := k.Processes()
-	if len(procs) != 15 {
-		t.Fatalf("processes = %d, want 15", len(procs))
+	if len(procs) != 16 {
+		t.Fatalf("processes = %d, want 16", len(procs))
 	}
 	about := k.About()
-	if about.Running != 15 || about.Live != 14 {
+	if about.Running != 16 || about.Live != 15 {
 		t.Fatalf("about = %+v", about)
 	}
 	if len(k.Notes()) < 5 {
@@ -89,8 +89,8 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if status["version"] != "2" {
 		t.Fatalf("board version = %v", status["version"])
 	}
-	if got := status["agents"]; got != 15 {
-		t.Fatalf("board agents = %v, want 15", got)
+	if got := status["agents"]; got != 16 {
+		t.Fatalf("board agents = %v, want 16", got)
 	}
 	if got := status["lines"]; got != 14 {
 		t.Fatalf("board lines = %v, want 14", got)
@@ -166,8 +166,8 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 	if err != nil || !res.OK {
 		t.Fatalf("generated photo should publish: %+v %v", res, err)
 	}
-	if len(org.Members()) != 15 {
-		t.Fatalf("employees = %d, want 15", len(org.Members()))
+	if len(org.Members()) != 16 {
+		t.Fatalf("employees = %d, want 16", len(org.Members()))
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{
 		Capability: "manager.contradict",
@@ -202,8 +202,8 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.loi: %+v %v", res, err)
 	}
 
-	if len(AgentIDs()) != 15 {
-		t.Fatalf("agentics in ecosystems = %d, want 15 (%v)", len(AgentIDs()), AgentIDs())
+	if len(AgentIDs()) != 16 {
+		t.Fatalf("agentics in ecosystems = %d, want 16 (%v)", len(AgentIDs()), AgentIDs())
 	}
 	res, err = k.Invoke(context.Background(), "manager", kernel.Call{Capability: "manager.ecosystems"})
 	if err != nil || !res.OK {
@@ -217,7 +217,7 @@ func TestBootLoadsAllAgentics(t *testing.T) {
 		t.Fatalf("manager.automate: %+v %v", res, err)
 	}
 	gotAgents := res.Data.(map[string]any)["agents"].([]string)
-	if len(gotAgents) != 15 {
+	if len(gotAgents) != 16 {
 		t.Fatalf("automate agents = %v", gotAgents)
 	}
 	if len(k.Inbox("operator")) == 0 || len(k.Inbox("security")) == 0 || len(k.Inbox("init")) == 0 {
