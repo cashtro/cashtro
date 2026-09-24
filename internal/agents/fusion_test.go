@@ -158,14 +158,22 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 			t.Fatal("smell is not an organ")
 		}
 	}
-	if len(body.Relay) != 2 || body.Relay[0] != "hustler" || body.Relay[1] != "instinct" || !body.Ground || !body.Contacts || !body.Swarm {
+	if len(body.Relay) != 2 || body.Relay[0] != "hustler" || body.Relay[1] != "instinct" || body.RelayTo != "Einstein" || !body.Vision || body.Profile != "mogul, 50 Cent" || !body.Ground || !body.Contacts || !body.Swarm {
 		t.Fatalf("relay %+v", body.Relay)
 	}
 	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 10 {
 		t.Fatalf("eyes %d members %d organs %d", len(body.Eyes), len(body.Members), len(body.Organs))
 	}
 	resume := FusionResume()
-	for _, line := range []string{"The hustler is the chair", "relays that information to instinct", "one swarm chain", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
+	if len(body.Veins) < 8 {
+		t.Fatalf("veins %d", len(body.Veins))
+	}
+	for _, vein := range body.Veins {
+		if vein.Copied || vein.Lesson == "" {
+			t.Fatalf("vein copied %+v", vein)
+		}
+	}
+	for _, line := range []string{"The hustler is the chair", "relays everything to Einstein", "50 Cent", "Robert Greene", "The 50th Law", "one swarm chain", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
 		if !strings.Contains(resume, line) {
 			t.Fatalf("resume missing %s", line)
 		}
