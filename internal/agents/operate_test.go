@@ -14,7 +14,7 @@ func TestWordPressLeavesTheOtherDepartment(t *testing.T) {
 	if len(board.Lines) != 14 || len(board.Links) != 22 || len(board.Org.Departments) != 9 {
 		t.Fatalf("lines %d links %d depts %d", len(board.Lines), len(board.Links), len(board.Org.Departments))
 	}
-	if len(board.Brains) != len(Brains()) || len(board.Brains) != 15 {
+	if len(board.Brains) != len(Brains()) || len(board.Brains) != 16 {
 		t.Fatalf("brains = %d", len(board.Brains))
 	}
 	if gap := Disconnected(); len(gap) != 0 {

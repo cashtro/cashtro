@@ -240,7 +240,8 @@ func investigatorInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, erro
 }
 
 // RunCycle is the autonomous pass. Voltron and Epicenter Einstein both call it.
-// Each worker runs. A secret stops the pass. A release stays behind comms.allow.
+// The Fusion patrols first: a repo outside both peoples or a cited law stops the pass.
+// Then each worker runs. A secret stops the pass. A release stays behind comms.allow.
 func RunCycle(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	line := payloadQuery(call, "id")
 	if line == "" {
@@ -260,6 +261,14 @@ func RunCycle(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 	task := payloadQuery(call, "task")
 	if task == "" {
 		task = "travail local"
+	}
+	patrol := Enforce(repo, task)
+	k.Remember("fusion", line+" "+patrol.Message)
+	if patrol.Stopped {
+		_, _ = k.Post("manager", "security", "fusion", patrol.Message)
+		return kernel.Result{OK: false, Message: patrol.Message, Data: map[string]any{
+			"line": line, "directedBy": []string{"voltron", "instinct"}, "patrol": patrol,
+		}}, nil
 	}
 	done := make([]map[string]any, 0, len(steps))
 	for _, step := range steps {

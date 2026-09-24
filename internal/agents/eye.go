@@ -27,6 +27,9 @@ type Eye struct {
 	Corporation     []Desk   `json:"corporation"`
 	Workers         int      `json:"workers"`
 	SameBrain       bool     `json:"sameBrain"`
+	// Police is The Fusion: the force inside this intelligence that
+	// enforces the laws across both peoples. The Eye watches, the Fusion cites.
+	Police FusionForce `json:"police"`
 }
 
 // SubBrain is one hemisphere inside a desk.
@@ -121,7 +124,7 @@ func TheEye() Eye {
 		Repo:            "Evolu-Jeunes/Forge",
 		Brain:           "eye",
 		Gate:            "cashtro/epicenter",
-		Scope:           []string{"cashtro", "Evolu-Jeunes"},
+		Scope:           Fusion(),
 		Steps:           []string{"veille", "menace", "faille", "recherche", "garde", "instinct", "rustine", "preuve", "sceau"},
 		Attacks:         false,
 		Flood:           false,
@@ -139,6 +142,7 @@ func TheEye() Eye {
 		Corporation:     own.Desks,
 		Workers:         own.Workers,
 		SameBrain:       false,
+		Police:          TheFusion(),
 	}
 }
 

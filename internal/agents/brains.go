@@ -11,7 +11,7 @@ type LoadedBrain struct {
 }
 
 // Brains is the set that must be analyzed, not only named.
-// Epicenter Einstein's five, Voltron, Scrum, Forge, The Eye, Giant, the three OPS chains, and The Hustle.
+// Epicenter Einstein's five, Voltron, Scrum, Forge, The Eye, Giant, the three OPS chains, The Hustle, and The Fusion.
 func Brains() []LoadedBrain {
 	return []LoadedBrain{
 		{ID: "instinct", Name: "Epicenter Einstein", Seat: "instinct", Dept: "direction", Do: "Charger les cinq cerveaux et trancher en dernier."},
@@ -29,6 +29,7 @@ func Brains() []LoadedBrain {
 		{ID: "terrain", Name: "Terrain", Seat: "ops", Dept: "operations", Do: "Tenir soumission, chantier, tournée et facture en brouillon."},
 		{ID: "propriete", Name: "Propriété", Seat: "ops", Dept: "ingenierie", Do: "Posséder OPS et aider les dépôts cashtro et Evolu-Jeunes."},
 		{ID: "hustle", Name: "The Hustle", Seat: "instinct", Dept: "marche", Do: "Lire, tenir les deux métaux, et ne garder que le coup légal. Une offre, une mesure. Epicenter Einstein est l'ami."},
+		{ID: "fusion", Name: "The Fusion", Seat: "eye", Dept: "controle", Do: "La police dans l'intelligence de The Eye. Au moins 80 agents. Faire respecter les lois chez les deux peuples, Astro et Evolian, ensemble à chaque fois. Citer la règle, arrêter le coup. Epicenter Einstein juge."},
 	}
 }
 

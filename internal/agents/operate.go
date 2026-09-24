@@ -150,6 +150,7 @@ func boardFromLines() Board {
 			"Les sites clients déjà en production se lisent, ils ne se déploient pas.",
 			"Chaque division a un revenu et une garde. On ne pousse pas le volume sans mesure.",
 			"Un build n'est pas fini tant que les portes de manager.loi ne sont pas passées.",
+			"La Fusion veut dire les deux peuples, Astro et Evolian, à chaque fois. Sa police siège dans The Eye, au moins 80 agents : elle cite la loi et arrête le coup. Epicenter Einstein juge.",
 		},
 	}
 }

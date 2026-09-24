@@ -138,6 +138,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.check",
 			"manager.lens",
 			"manager.crm",
+			"manager.fusion",
 		},
 		Autostart: true,
 	}
@@ -436,6 +437,9 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 
 	case "manager.crm":
 		return CRMInvoke(a.k, call)
+
+	case "manager.fusion":
+		return FusionInvoke(a.k, call)
 
 	default:
 		return kernel.Result{}, fmt.Errorf("%w: %s", kernel.ErrUnknownCapability, call.Capability)
