@@ -18,12 +18,19 @@ type EyeGraphic struct {
 	Knows   bool     `json:"knows"`
 }
 
-// Body is the conglomerate. Instinct chairs it. Voltron keeps it on.
-// The hustler is in it. This body does not smell and does not eat.
+// Body is the conglomerate. The hustler chairs it. That chair is the person.
+// The hustler relays the ground to instinct. Instinct does the rest.
+// Voltron keeps the chains on. This body does not smell and does not eat.
 type Body struct {
 	RunBy        []string   `json:"runBy"`
 	Hustler      bool       `json:"hustler"`
+	Person       bool       `json:"person"`
 	Chair        string     `json:"chair"`
+	Decision     string     `json:"decision"`
+	Relay        []string   `json:"relay"`
+	Ground       bool       `json:"ground"`
+	Contacts     bool       `json:"contacts"`
+	Swarm        bool       `json:"swarm"`
 	Brain        string     `json:"brain"`
 	Spy          string     `json:"spy"`
 	Enforcer     string     `json:"enforcer"`
@@ -43,7 +50,8 @@ func FusionBody() Body {
 	members := conglomerate()
 	eyes := append([]string(nil), members...)
 	organs := []Organ{
-		{ID: "brain", Name: "Brain", Role: "Instinct decides.", Agent: "instinct", Links: []string{"cia", "fbi", "eyes", "soul"}},
+		{ID: "chair", Name: "Chair", Role: "The hustler is the person. He has lived the ground, he knows every corner, and he holds the contacts. He decides, then relays that to instinct.", Agent: "hustler", Links: []string{"instinct", "eyes"}},
+		{ID: "brain", Name: "Brain", Role: "Instinct receives the relay from the hustler and does the rest.", Agent: "instinct", Links: []string{"hustler", "cia", "fbi", "eyes", "soul"}},
 		{ID: "subconscious", Name: "Subconscious", Role: "Memory holds what the brain is not looking at.", Agent: "memory", Links: []string{"brain", "eyes"}},
 		{ID: "deep", Name: "Deep conscious", Role: "The Architect thinks underneath. Two ways, then the shorter one.", Agent: "architecte", Links: []string{"brain", "soul"}},
 		{ID: "soul", Name: "Soul", Role: "The inside of the brain. Instinct carries it. It is not a second product.", Agent: "instinct", Links: []string{"brain", "deep"}},
@@ -56,7 +64,13 @@ func FusionBody() Body {
 	return Body{
 		RunBy:        []string{"instinct", "voltron"},
 		Hustler:      true,
-		Chair:        "instinct",
+		Person:       true,
+		Chair:        "hustler",
+		Decision:     "hustler",
+		Relay:        []string{"hustler", "instinct"},
+		Ground:       true,
+		Contacts:     true,
+		Swarm:        true,
 		Brain:        "instinct",
 		Spy:          "eye",
 		Enforcer:     "fusion",
@@ -120,9 +134,12 @@ func FusionResume() string {
 	b.WriteString("# The Fusion\n\n")
 	b.WriteString("Résumé for rapid fire and code. One body. Two GitHubs: Evolu-Jeunes and cashtro.\n\n")
 	b.WriteString("## Who runs it\n\n")
-	b.WriteString("Instinct is the brain and the chair. Voltron keeps the chains on. The hustler is in the conglomerate. The chair is the seat that decides. It does not dominate anyone.\n\n")
+	b.WriteString("The hustler is the chair. The hustler is the person. He decides from the ground: every corner, every contact. He relays that information to instinct. Instinct does the rest. Voltron keeps the chains on.\n\n")
+	b.WriteString("The person talks to the hustler. The hustler talks back and relays to instinct.\n\n")
+	b.WriteString("Every agent and every ID sits on one swarm chain together. The hustler's measure of that swarm is the Miller Research Institute in Silicon Valley, times 3,000 years, at light speed.\n\n")
 	b.WriteString("## Roles\n\n")
-	b.WriteString("- Brain: instinct. It decides.\n")
+	b.WriteString("- Chair: hustler. The person. He decides.\n")
+	b.WriteString("- Brain: instinct. It receives the relay and does the rest.\n")
 	b.WriteString("- CIA: The Eye. It spies and gathers, then gives that information to instinct and to the FBI.\n")
 	b.WriteString("- FBI: The Fusion. It enforces every law already written. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.\n")
 	b.WriteString("- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.\n")

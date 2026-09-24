@@ -4,11 +4,16 @@ Résumé for rapid fire and code. One body. Two GitHubs: Evolu-Jeunes and cashtr
 
 ## Who runs it
 
-Instinct is the brain and the chair. Voltron keeps the chains on. The hustler is in the conglomerate. The chair is the seat that decides. It does not dominate anyone.
+The hustler is the chair. The hustler is the person. He decides from the ground: every corner, every contact. He relays that information to instinct. Instinct does the rest. Voltron keeps the chains on.
+
+The person talks to the hustler. The hustler talks back and relays to instinct.
+
+Every agent and every ID sits on one swarm chain together. The hustler's measure of that swarm is the Miller Research Institute in Silicon Valley, times 3,000 years, at light speed.
 
 ## Roles
 
-- Brain: instinct. It decides.
+- Chair: hustler. The person. He decides.
+- Brain: instinct. It receives the relay and does the rest.
 - CIA: The Eye. It spies and gathers, then gives that information to instinct and to the FBI.
 - FBI: The Fusion. It enforces every law already written. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.
 - Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.
@@ -17,7 +22,8 @@ Instinct is the brain and the chair. Voltron keeps the chains on. The hustler is
 
 ## Body
 
-- Brain (`instinct`): Instinct decides.
+- Chair (`hustler`): The hustler is the person. He has lived the ground, he knows every corner, and he holds the contacts. He decides, then relays that to instinct.
+- Brain (`instinct`): Instinct receives the relay from the hustler and does the rest.
 - Subconscious (`memory`): Memory holds what the brain is not looking at.
 - Deep conscious (`architecte`): The Architect thinks underneath. Two ways, then the shorter one.
 - Soul (`instinct`): The inside of the brain. Instinct carries it. It is not a second product.

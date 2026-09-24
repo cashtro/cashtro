@@ -141,7 +141,7 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatal("the session did not grow memory")
 	}
 	body := FusionBody()
-	if len(body.RunBy) != 2 || body.RunBy[0] != "instinct" || body.RunBy[1] != "voltron" || !body.Hustler || body.Chair != "instinct" {
+	if len(body.RunBy) != 2 || body.RunBy[0] != "instinct" || body.RunBy[1] != "voltron" || !body.Hustler || !body.Person || body.Chair != "hustler" || body.Decision != "hustler" {
 		t.Fatalf("runners %+v", body)
 	}
 	if body.Smell || body.Eat {
@@ -158,11 +158,14 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 			t.Fatal("smell is not an organ")
 		}
 	}
-	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 9 {
+	if len(body.Relay) != 2 || body.Relay[0] != "hustler" || body.Relay[1] != "instinct" || !body.Ground || !body.Contacts || !body.Swarm {
+		t.Fatalf("relay %+v", body.Relay)
+	}
+	if len(body.Eyes) != len(body.Members) || len(body.Organs) != 10 {
 		t.Fatalf("eyes %d members %d organs %d", len(body.Eyes), len(body.Members), len(body.Organs))
 	}
 	resume := FusionResume()
-	for _, line := range []string{"Instinct is the brain and the chair", "The hustler is in the conglomerate", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
+	for _, line := range []string{"The hustler is the chair", "relays that information to instinct", "one swarm chain", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
 		if !strings.Contains(resume, line) {
 			t.Fatalf("resume missing %s", line)
 		}
