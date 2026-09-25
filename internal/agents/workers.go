@@ -75,6 +75,8 @@ func initInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 		}
 		k.Publish("init", "voltron", "moteur branché avec instinct", nil)
 		return res, nil
+	case "os.core":
+		return CoreInvoke(k, call)
 	case "os.layers":
 		ok, loose := VoltronHolds()
 		if !ok {

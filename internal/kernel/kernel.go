@@ -155,6 +155,7 @@ type Kernel struct {
 	factSeq  int
 	confirms []Confirm
 	confSeq  int
+	core     *Core
 }
 
 // Option configures the kernel.
