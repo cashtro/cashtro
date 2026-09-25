@@ -16,7 +16,7 @@ Every agent and every ID sits on one swarm chain together. The hustler's measure
 - Brain: instinct. It receives the relay and does the rest.
 - CIA: The Eye. It spies and gathers, then gives that information to instinct and to the FBI.
 - FBI: The Fusion. It enforces every law already written. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.
-- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.
+- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, state/blueprint.json, and docs/CRM.md, so the body knows where it is going.
 - Cybersecurity: security, already in the kernel. It does not attack.
 - This body does not smell and does not eat.
 

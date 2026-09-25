@@ -18,3 +18,28 @@ flowchart LR
   end
   manager -.-> catalog
 ```
+
+## CRM books
+
+```mermaid
+flowchart TB
+  subgraph agency [Agency leads]
+    marketing[Marketing]
+    panda[Panda]
+    proximity[Proximity cloud]
+  end
+  agents["Evolu-Jeunes/CRM-Agents<br/>db:agentics"]
+  copy["Evolu-Jeunes/CRM"]
+  fix["Evolu-Jeunes/Fix2<br/>Lovable"]
+  wp[WordPress themes]
+  clones["useAuth · cn · Button"]
+  marketing --> agents
+  panda --> agents
+  proximity --> agents
+  agents --- copy
+  fix -. no fiche .-> agents
+  agents -. Lovable stays out .-> wp
+  clones --- wp
+```
+
+The critique is `docs/CRM.md`.

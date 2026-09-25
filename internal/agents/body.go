@@ -97,7 +97,7 @@ func FusionBody() Body {
 		Organs:       organs,
 		Graphic: EyeGraphic{
 			Growing: true,
-			Files:   []string{"docs/MAP.md", "inventory/GRAPH.md", "state/blueprint.json"},
+			Files:   []string{"docs/MAP.md", "inventory/GRAPH.md", "state/blueprint.json", "docs/CRM.md"},
 			Knows:   true,
 		},
 		Eyes:      eyes,
@@ -194,7 +194,7 @@ func FusionResume() string {
 	b.WriteString("- Brain: instinct. It receives the relay and does the rest.\n")
 	b.WriteString("- CIA: The Eye. It spies and gathers, then gives that information to instinct and to the FBI.\n")
 	b.WriteString("- FBI: The Fusion. It enforces every law already written. A failed gesture writes the trace, stores the name, saves the story, and retrains the agent until the law, the skill, and the asks are understood.\n")
-	b.WriteString("- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.\n")
+	b.WriteString("- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, state/blueprint.json, and docs/CRM.md, so the body knows where it is going.\n")
 	b.WriteString("- Cybersecurity: security, already in the kernel. It does not attack.\n")
 	b.WriteString("- This body does not smell and does not eat.\n\n")
 	b.WriteString("## Trinity\n\n")

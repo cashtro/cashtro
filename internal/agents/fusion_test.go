@@ -151,7 +151,7 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 	if body.Brain != "instinct" || body.Spy != "eye" || body.Enforcer != "fusion" || body.Cyber != "security" || body.CyberAttacks || !body.Connected {
 		t.Fatalf("body %+v", body)
 	}
-	if !body.Graphic.Growing || !body.Graphic.Knows || len(body.Graphic.Files) != 3 {
+	if !body.Graphic.Growing || !body.Graphic.Knows || len(body.Graphic.Files) != 4 || body.Graphic.Files[3] != "docs/CRM.md" {
 		t.Fatalf("graphic %+v", body.Graphic)
 	}
 	for _, organ := range body.Organs {
