@@ -65,100 +65,280 @@
       "index": 6,
       "section": "core",
       "kind": "lesson",
-      "title": "college",
-      "body": "Study the structure until the agent can say it.",
+      "title": "The Lean Startup",
+      "body": "State the bet, measure it, then keep or cut it.",
       "prev": "0c477435951fddeb509d3adf95b5d8ebaeadb43dc66a98db346b58bf1128d422",
-      "hash": "2cdd18a73943d4deef11b08894d788146e26afa359e49760a176d40517ae4f14"
+      "hash": "9a4637cb549f94a6060c32fa5a42f8ac569f6c6c4018d7720262320992264056"
     },
     {
       "index": 7,
       "section": "core",
       "kind": "lesson",
-      "title": "streets",
-      "body": "The ground decides what is real. The chair has lived it.",
-      "prev": "2cdd18a73943d4deef11b08894d788146e26afa359e49760a176d40517ae4f14",
-      "hash": "f51f27a3b0191cbb24b4c2f9f9d35bfeb594aae10a3f5a9607f59ebfa45aac9c"
+      "title": "Good to Great",
+      "body": "Name the one thing this body can be best at, and stop the rest.",
+      "prev": "9a4637cb549f94a6060c32fa5a42f8ac569f6c6c4018d7720262320992264056",
+      "hash": "5d26c693c7f9813d91c3008cf1ec91f04333deda95c9a0720cafa9f3aab258a2"
     },
     {
       "index": 8,
       "section": "core",
-      "kind": "catalog",
-      "title": "The 48 Laws of Power",
-      "body": "Robert Greene. Title only.",
-      "prev": "f51f27a3b0191cbb24b4c2f9f9d35bfeb594aae10a3f5a9607f59ebfa45aac9c",
-      "hash": "4fec19a0548595b396a260a4d4d1cdebe1c6a559bfe3a26d2f8554328ec82e4f"
+      "kind": "lesson",
+      "title": "Zero to One",
+      "body": "Build a step nobody else has, then defend it.",
+      "prev": "5d26c693c7f9813d91c3008cf1ec91f04333deda95c9a0720cafa9f3aab258a2",
+      "hash": "dc637cb1e5fb01f67ede1815e63022352c2f4b1b0589b669b90ab7b87c182b81"
     },
     {
       "index": 9,
       "section": "core",
-      "kind": "catalog",
-      "title": "The Art of Seduction",
-      "body": "Robert Greene. Title only.",
-      "prev": "4fec19a0548595b396a260a4d4d1cdebe1c6a559bfe3a26d2f8554328ec82e4f",
-      "hash": "82b3d31e8a68aae1c63f0b2832be8bd220fdfd4a0e638ea9ba025ac928261632"
+      "kind": "lesson",
+      "title": "Competitive Strategy",
+      "body": "Know the field, the cost, and the position before the price.",
+      "prev": "dc637cb1e5fb01f67ede1815e63022352c2f4b1b0589b669b90ab7b87c182b81",
+      "hash": "898784a76d92f1bbb93e90ff1e2a33e391ce7441313c93011ec2d322002fbc93"
     },
     {
       "index": 10,
       "section": "core",
-      "kind": "catalog",
-      "title": "The 33 Strategies of War",
-      "body": "Robert Greene. Title only.",
-      "prev": "82b3d31e8a68aae1c63f0b2832be8bd220fdfd4a0e638ea9ba025ac928261632",
-      "hash": "7f569844a46b40d886f18f3a82687ae98fc0ebcf4456e8f4d0daf7c8ca71964c"
+      "kind": "lesson",
+      "title": "Profit First",
+      "body": "Set the margin aside before the spend.",
+      "prev": "898784a76d92f1bbb93e90ff1e2a33e391ce7441313c93011ec2d322002fbc93",
+      "hash": "e2331859973c88ec77c7e37cd099c728da8f980484b19f777120850036b3e2fe"
     },
     {
       "index": 11,
       "section": "core",
-      "kind": "catalog",
-      "title": "Mastery",
-      "body": "Robert Greene. Title only.",
-      "prev": "7f569844a46b40d886f18f3a82687ae98fc0ebcf4456e8f4d0daf7c8ca71964c",
-      "hash": "f8c521bf539bb0f20c5028868ba415c314a0fffe74f9bb65a99e3c5a24301d3a"
+      "kind": "lesson",
+      "title": "college",
+      "body": "Study the structure until the agent can say it.",
+      "prev": "e2331859973c88ec77c7e37cd099c728da8f980484b19f777120850036b3e2fe",
+      "hash": "bee56c2a7fc3b451085378c655cab25704ccc2c7add24bedd12c3394630b7757"
     },
     {
       "index": 12,
       "section": "core",
-      "kind": "catalog",
-      "title": "The Laws of Human Nature",
-      "body": "Robert Greene. Title only.",
-      "prev": "f8c521bf539bb0f20c5028868ba415c314a0fffe74f9bb65a99e3c5a24301d3a",
-      "hash": "15751ac6af325e47bf26f1fe8757915b85e4b3d0e8c7c5b0d124eb1f5e5461a5"
+      "kind": "lesson",
+      "title": "streets",
+      "body": "The ground decides what is real. The chair has lived it.",
+      "prev": "bee56c2a7fc3b451085378c655cab25704ccc2c7add24bedd12c3394630b7757",
+      "hash": "0566ed12a6d828cca56fa7ff72a2466c57f3f9db77da952a086700e4aaf5a05b"
     },
     {
       "index": 13,
       "section": "core",
-      "kind": "catalog",
-      "title": "The 50th Law",
-      "body": "Robert Greene and 50 Cent. Title only.",
-      "prev": "15751ac6af325e47bf26f1fe8757915b85e4b3d0e8c7c5b0d124eb1f5e5461a5",
-      "hash": "421ba08cc1f9ebf3cf4ea42b1daee62e1a9f9dd27b72b9270aec400c3712db87"
+      "kind": "lesson",
+      "title": "math",
+      "body": "Count the rate, the expected value, and the tax before the move.",
+      "prev": "0566ed12a6d828cca56fa7ff72a2466c57f3f9db77da952a086700e4aaf5a05b",
+      "hash": "4c548a5a33577f4c6f1d0376bd6b5fdc3f11405e3043cbeccf5528648df2810b"
     },
     {
       "index": 14,
+      "section": "core",
+      "kind": "lesson",
+      "title": "How to Solve It",
+      "body": "Name the unknown, list what is known, then take one step.",
+      "prev": "4c548a5a33577f4c6f1d0376bd6b5fdc3f11405e3043cbeccf5528648df2810b",
+      "hash": "e54d4211c49a871b9891d8ac3c07a99bd11ff2084d9857166a7b62a3393560e9"
+    },
+    {
+      "index": 15,
+      "section": "core",
+      "kind": "lesson",
+      "title": "ai-agentic",
+      "body": "An agent has a role, a tool, a memory, and a human gate. It does not invent a second product.",
+      "prev": "e54d4211c49a871b9891d8ac3c07a99bd11ff2084d9857166a7b62a3393560e9",
+      "hash": "5ad1c738b988f8b1bb09c0f7dc92ef7804184720a62094bc2e454ae5aa0f2398"
+    },
+    {
+      "index": 16,
+      "section": "core",
+      "kind": "lesson",
+      "title": "market",
+      "body": "Read the market in public. No live order and no token sale without the written AMF answer.",
+      "prev": "5ad1c738b988f8b1bb09c0f7dc92ef7804184720a62094bc2e454ae5aa0f2398",
+      "hash": "f4b73796814e4624acc1656b39ffb694c4508a124012065e0bb62a06789f42cf"
+    },
+    {
+      "index": 17,
+      "section": "core",
+      "kind": "lesson",
+      "title": "The Psychology of Money",
+      "body": "Time in the position beats a clever trade. The ledger stays internal.",
+      "prev": "f4b73796814e4624acc1656b39ffb694c4508a124012065e0bb62a06789f42cf",
+      "hash": "2cec96b4b8692fe9b14ca475b608b14b7abb8c08c2bd84c6f8003ad7384bcf5a"
+    },
+    {
+      "index": 18,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The 48 Laws of Power",
+      "body": "Robert Greene. Title only.",
+      "prev": "2cec96b4b8692fe9b14ca475b608b14b7abb8c08c2bd84c6f8003ad7384bcf5a",
+      "hash": "ade838311688b65693461c33ead6ecabee3bf6caa2d3e5a5c38a142f8f5dd3d5"
+    },
+    {
+      "index": 19,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The Art of Seduction",
+      "body": "Robert Greene. Title only.",
+      "prev": "ade838311688b65693461c33ead6ecabee3bf6caa2d3e5a5c38a142f8f5dd3d5",
+      "hash": "48a55998b76825a9f26a5d65be9123b1cdd86c3a96d71b1afde38faee0769701"
+    },
+    {
+      "index": 20,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The 33 Strategies of War",
+      "body": "Robert Greene. Title only.",
+      "prev": "48a55998b76825a9f26a5d65be9123b1cdd86c3a96d71b1afde38faee0769701",
+      "hash": "4bbf8f3d7ea04e2e8780a91df66afda6e7da9f2196b17bade7d51f05934a0912"
+    },
+    {
+      "index": 21,
+      "section": "core",
+      "kind": "catalog",
+      "title": "Mastery",
+      "body": "Robert Greene. Title only.",
+      "prev": "4bbf8f3d7ea04e2e8780a91df66afda6e7da9f2196b17bade7d51f05934a0912",
+      "hash": "cd017b58b45e8f37ea2a9a6146a2f35b4ec600390b4b9a4298aa1b3a9564fc94"
+    },
+    {
+      "index": 22,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The Laws of Human Nature",
+      "body": "Robert Greene. Title only.",
+      "prev": "cd017b58b45e8f37ea2a9a6146a2f35b4ec600390b4b9a4298aa1b3a9564fc94",
+      "hash": "b41579836191301309337e60caec69145b9ab704bf72d143fc11879d5b5027aa"
+    },
+    {
+      "index": 23,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The 50th Law",
+      "body": "Robert Greene and 50 Cent. Title only.",
+      "prev": "b41579836191301309337e60caec69145b9ab704bf72d143fc11879d5b5027aa",
+      "hash": "4c8ea260b5605e3d8be7ed6255786bcda6192b248f74a3be264d3468a52f8f2e"
+    },
+    {
+      "index": 24,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The Lean Startup",
+      "body": "Eric Ries. Title only.",
+      "prev": "4c8ea260b5605e3d8be7ed6255786bcda6192b248f74a3be264d3468a52f8f2e",
+      "hash": "195690133b0303dd90058fb0ee5fbc33f619e5158602841eda7c40cb809cc79d"
+    },
+    {
+      "index": 25,
+      "section": "core",
+      "kind": "catalog",
+      "title": "Good to Great",
+      "body": "Jim Collins. Title only.",
+      "prev": "195690133b0303dd90058fb0ee5fbc33f619e5158602841eda7c40cb809cc79d",
+      "hash": "c81187f9aa6a018023c87ffd0fceae6c0a44432bfd446461f0a5a8d9cff89f04"
+    },
+    {
+      "index": 26,
+      "section": "core",
+      "kind": "catalog",
+      "title": "Zero to One",
+      "body": "Peter Thiel. Title only.",
+      "prev": "c81187f9aa6a018023c87ffd0fceae6c0a44432bfd446461f0a5a8d9cff89f04",
+      "hash": "2fbd5ef07c21698beadf2d44f1e70556afb66c49dd24f608ed3ca31e18db6bbe"
+    },
+    {
+      "index": 27,
+      "section": "core",
+      "kind": "catalog",
+      "title": "Competitive Strategy",
+      "body": "Michael Porter. Title only.",
+      "prev": "2fbd5ef07c21698beadf2d44f1e70556afb66c49dd24f608ed3ca31e18db6bbe",
+      "hash": "bec54a67118a344811abf395b53e0a61f1803155476a6e686bf526a5cc07275e"
+    },
+    {
+      "index": 28,
+      "section": "core",
+      "kind": "catalog",
+      "title": "Profit First",
+      "body": "Mike Michalowicz. Title only.",
+      "prev": "bec54a67118a344811abf395b53e0a61f1803155476a6e686bf526a5cc07275e",
+      "hash": "df06c74207a020d52e6ee19cb849be6e2f9f2b9499281a6afc30d98c81bc3391"
+    },
+    {
+      "index": 29,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The E-Myth Revisited",
+      "body": "Michael Gerber. Title only.",
+      "prev": "df06c74207a020d52e6ee19cb849be6e2f9f2b9499281a6afc30d98c81bc3391",
+      "hash": "cd5581bcebb7736ca170aa70b81ef55a3b8e31c80bed300d47e62a9185f781e4"
+    },
+    {
+      "index": 30,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The Hard Thing About Hard Things",
+      "body": "Ben Horowitz. Title only.",
+      "prev": "cd5581bcebb7736ca170aa70b81ef55a3b8e31c80bed300d47e62a9185f781e4",
+      "hash": "5b29ad0b30d8e2bbd93637be001d0501136a261c7ca491babf06839d4e02e531"
+    },
+    {
+      "index": 31,
+      "section": "core",
+      "kind": "catalog",
+      "title": "How to Solve It",
+      "body": "George Polya. Title only.",
+      "prev": "5b29ad0b30d8e2bbd93637be001d0501136a261c7ca491babf06839d4e02e531",
+      "hash": "38e1e0a11be9f69f0362afd7c9336f2e5f192759fb0e25f96ff2fc4b970248cb"
+    },
+    {
+      "index": 32,
+      "section": "core",
+      "kind": "catalog",
+      "title": "The Psychology of Money",
+      "body": "Morgan Housel. Title only.",
+      "prev": "38e1e0a11be9f69f0362afd7c9336f2e5f192759fb0e25f96ff2fc4b970248cb",
+      "hash": "a10c02d5db3ad32b594b2e239d0f0c9545d1fe0fc61f9a19aa7a73aab03a5e89"
+    },
+    {
+      "index": 33,
+      "section": "core",
+      "kind": "catalog",
+      "title": "Market Wizards",
+      "body": "Jack Schwager. Title only.",
+      "prev": "a10c02d5db3ad32b594b2e239d0f0c9545d1fe0fc61f9a19aa7a73aab03a5e89",
+      "hash": "036a452b892a20f256011add80ce5b81d76241b50633eb0fb30a5cd80a8edc17"
+    },
+    {
+      "index": 34,
       "section": "money",
       "kind": "ledger",
       "title": "fonds",
       "body": "Grand livre interne. Pas une banque. Rien ne sort sans allow.",
-      "prev": "421ba08cc1f9ebf3cf4ea42b1daee62e1a9f9dd27b72b9270aec400c3712db87",
-      "hash": "a8969245acf63a93ac52c2b85f63cc22ee9abf2dab5b9c56a2f161a03da476e8"
+      "prev": "036a452b892a20f256011add80ce5b81d76241b50633eb0fb30a5cd80a8edc17",
+      "hash": "038c5dbf6483e20cb7e9d897aae20768caef087dbf42aecbe5a1181fe37b6b64"
     },
     {
-      "index": 15,
+      "index": 35,
       "section": "keys",
       "kind": "slot",
       "title": "OPENROUTER_API_KEY",
       "body": "",
-      "prev": "a8969245acf63a93ac52c2b85f63cc22ee9abf2dab5b9c56a2f161a03da476e8",
-      "hash": "a7e5e4990564f588c273b3d4786287478948b0f978a1be52e7e9aed3f706281d"
+      "prev": "038c5dbf6483e20cb7e9d897aae20768caef087dbf42aecbe5a1181fe37b6b64",
+      "hash": "0fb18d232839f83637712e700487cd371d3ca19ad25cfe520384c5a83f919b34"
     },
     {
-      "index": 16,
+      "index": 36,
       "section": "keys",
       "kind": "slot",
       "title": "DATABASE_URL",
       "body": "",
-      "prev": "a7e5e4990564f588c273b3d4786287478948b0f978a1be52e7e9aed3f706281d",
-      "hash": "4894328d020ef03dd23c9966397f30f473f3b8b14b5e4f5b68b3e23a30d222ce"
+      "prev": "0fb18d232839f83637712e700487cd371d3ca19ad25cfe520384c5a83f919b34",
+      "hash": "523cc97c506bfa037da1aed880ea6411d36fa09f8b525c2642e25155506943f1"
     }
   ],
   "brains": [

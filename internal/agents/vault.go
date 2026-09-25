@@ -70,6 +70,16 @@ func bookCatalog() [][2]string {
 		{"Mastery", "Robert Greene. Title only."},
 		{"The Laws of Human Nature", "Robert Greene. Title only."},
 		{"The 50th Law", "Robert Greene and 50 Cent. Title only."},
+		{"The Lean Startup", "Eric Ries. Title only."},
+		{"Good to Great", "Jim Collins. Title only."},
+		{"Zero to One", "Peter Thiel. Title only."},
+		{"Competitive Strategy", "Michael Porter. Title only."},
+		{"Profit First", "Mike Michalowicz. Title only."},
+		{"The E-Myth Revisited", "Michael Gerber. Title only."},
+		{"The Hard Thing About Hard Things", "Ben Horowitz. Title only."},
+		{"How to Solve It", "George Polya. Title only."},
+		{"The Psychology of Money", "Morgan Housel. Title only."},
+		{"Market Wizards", "Jack Schwager. Title only."},
 	}
 }
 

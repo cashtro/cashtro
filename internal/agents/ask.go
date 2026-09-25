@@ -15,6 +15,7 @@ func StrategyQuestions() []Question {
 	return []Question{
 		{ID: "position", Ask: "Quelle est la position sur le tableau, avant ce coup?", Improves: "on ne joue pas sans voir la pièce"},
 		{ID: "coup", Ask: "Quel est le coup de pouvoir, et quelle réponse adverse il ouvre?", Improves: "un coup sans réponse adverse n'est pas un coup"},
+		{ID: "vault", Ask: "Quel savoir du vault porte ce coup?", Improves: "un coup sans livre ni leçon n'est pas un coup"},
 	}
 }
 
@@ -22,6 +23,7 @@ func strategyKnown() map[string]string {
 	return map[string]string{
 		"position": "Le tableau est lu avant le coup. Les sites clients déjà en ligne ne bougent pas. Le marketplace n'est pas déployé. Le scanner reste interne.",
 		"coup":     "Le coup de pouvoir est le plus court : moins d'étapes, moins de coût, moins de risque. La réponse adverse est nommée avant de jouer. Une seule option n'est pas un coup.",
+		"vault":    "Le coup s'appuie sur le vault: " + VaultLesson("strategy"),
 	}
 }
 

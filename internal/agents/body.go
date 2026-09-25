@@ -137,9 +137,29 @@ func HustlerVeins() []Vein {
 		{Source: "strategy", Lesson: "One aim, the shorter path, and the reply it opens.", Copied: false},
 		{Source: "law", Lesson: "The checklist is already written. A failed gesture retrains the agent.", Copied: false},
 		{Source: "business", Lesson: "One offer, one measure, then the next step.", Copied: false},
+		{Source: "The Lean Startup", Lesson: "State the bet, measure it, then keep or cut it.", Copied: false},
+		{Source: "Good to Great", Lesson: "Name the one thing this body can be best at, and stop the rest.", Copied: false},
+		{Source: "Zero to One", Lesson: "Build a step nobody else has, then defend it.", Copied: false},
+		{Source: "Competitive Strategy", Lesson: "Know the field, the cost, and the position before the price.", Copied: false},
+		{Source: "Profit First", Lesson: "Set the margin aside before the spend.", Copied: false},
 		{Source: "college", Lesson: "Study the structure until the agent can say it.", Copied: false},
 		{Source: "streets", Lesson: "The ground decides what is real. The chair has lived it.", Copied: false},
+		{Source: "math", Lesson: "Count the rate, the expected value, and the tax before the move.", Copied: false},
+		{Source: "How to Solve It", Lesson: "Name the unknown, list what is known, then take one step.", Copied: false},
+		{Source: "ai-agentic", Lesson: "An agent has a role, a tool, a memory, and a human gate. It does not invent a second product.", Copied: false},
+		{Source: "market", Lesson: "Read the market in public. No live order and no token sale without the written AMF answer.", Copied: false},
+		{Source: "The Psychology of Money", Lesson: "Time in the position beats a clever trade. The ledger stays internal.", Copied: false},
 	}
+}
+
+// VaultLesson returns our sentence for one source. The book page is not returned.
+func VaultLesson(source string) string {
+	for _, vein := range HustlerVeins() {
+		if vein.Source == source && !vein.Copied {
+			return vein.Lesson
+		}
+	}
+	return ""
 }
 
 func covers(eyes, members []string) bool {
@@ -179,7 +199,7 @@ func FusionResume() string {
 	b.WriteString("## The Vault\n\n")
 	b.WriteString("The Vault is the heart. It is the library, chained like a ledger, held in every brain and every cell. Core memory holds the lessons and the book titles. Money holds the internal ledger. Keys hold slot names only. Secret values are not stored. Sections are added slowly.\n\n")
 	b.WriteString("## Veins\n\n")
-	b.WriteString("This knowledge runs through the hustler. The lessons are written here. The books are not copied.\n\n")
+	b.WriteString("This knowledge runs through the hustler. Every strategy and every move has to stand on a vault lesson: business, math, agentic AI, and the market, with the books already named. The lessons are written here. The books are not copied.\n\n")
 	for _, vein := range body.Veins {
 		b.WriteString("- " + vein.Source + ": " + vein.Lesson + "\n")
 	}

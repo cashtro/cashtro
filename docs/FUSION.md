@@ -26,7 +26,7 @@ The Vault is the heart. It is the library, chained like a ledger, held in every 
 
 ## Veins
 
-This knowledge runs through the hustler. The lessons are written here. The books are not copied.
+This knowledge runs through the hustler. Every strategy and every move has to stand on a vault lesson: business, math, agentic AI, and the market, with the books already named. The lessons are written here. The books are not copied.
 
 - Robert Greene: See the position before the move. Keep the move inside the law.
 - The 50th Law: Name the fear, then take the move that fear was blocking.
@@ -34,8 +34,18 @@ This knowledge runs through the hustler. The lessons are written here. The books
 - strategy: One aim, the shorter path, and the reply it opens.
 - law: The checklist is already written. A failed gesture retrains the agent.
 - business: One offer, one measure, then the next step.
+- The Lean Startup: State the bet, measure it, then keep or cut it.
+- Good to Great: Name the one thing this body can be best at, and stop the rest.
+- Zero to One: Build a step nobody else has, then defend it.
+- Competitive Strategy: Know the field, the cost, and the position before the price.
+- Profit First: Set the margin aside before the spend.
 - college: Study the structure until the agent can say it.
 - streets: The ground decides what is real. The chair has lived it.
+- math: Count the rate, the expected value, and the tax before the move.
+- How to Solve It: Name the unknown, list what is known, then take one step.
+- ai-agentic: An agent has a role, a tool, a memory, and a human gate. It does not invent a second product.
+- market: Read the market in public. No live order and no token sale without the written AMF answer.
+- The Psychology of Money: Time in the position beats a clever trade. The ledger stays internal.
 
 ## Body
 

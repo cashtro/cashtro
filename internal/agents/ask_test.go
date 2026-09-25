@@ -7,11 +7,11 @@ import (
 
 func TestQuestionsBlockUntilAnswered(t *testing.T) {
 	open := OpenQuestions("scanapp", nil)
-	if len(open) != 3 || open[0].ID != "position" || open[2].ID != "catalogue" {
+	if len(open) != 4 || open[0].ID != "position" || open[3].ID != "catalogue" {
 		t.Fatalf("open = %+v", open)
 	}
 	filled := OpenQuestions("scanapp", map[string]string{"catalogue": "tout le stock"})
-	if len(filled) != 2 {
+	if len(filled) != 3 {
 		t.Fatalf("strategy questions should remain: %+v", filled)
 	}
 	self := AskSelf("marketplace", nil)
@@ -26,18 +26,18 @@ func TestQuestionsBlockUntilAnswered(t *testing.T) {
 		t.Fatalf("scan self = %+v", scan)
 	}
 	shop := OpenQuestions("marketplace", nil)
-	if len(shop) != 5 {
+	if len(shop) != 6 {
 		t.Fatalf("marketplace questions = %d", len(shop))
 	}
 	filled = OpenQuestions("marketplace", map[string]string{
-		"position": "vue", "coup": "court",
+		"position": "vue", "coup": "court", "vault": "strategy",
 		"marge": "à préciser", "url": "pas déployé", "stripe": "site seulement",
 	})
 	if len(filled) != 0 {
 		t.Fatalf("still open: %+v", filled)
 	}
-	if len(OpenQuestions("assign", map[string]string{"pourquoi": "Forgeron"})) != 3 {
-		t.Fatal("live question and the two strategy questions should remain")
+	if len(OpenQuestions("assign", map[string]string{"pourquoi": "Forgeron"})) != 4 {
+		t.Fatal("live question and the strategy questions should remain")
 	}
 }
 

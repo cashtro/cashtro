@@ -166,6 +166,12 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatalf("eyes %d members %d organs %d", len(body.Eyes), len(body.Members), len(body.Organs))
 	}
 	resume := FusionResume()
+	if VaultLesson("math") == "" || VaultLesson("ai-agentic") == "" || VaultLesson("market") == "" || VaultLesson("The Lean Startup") == "" {
+		t.Fatal("a move has no vault lesson")
+	}
+	if AskSelf("fusion", nil).Answered["vault"] == "" {
+		t.Fatal("a strategy move is not based in the vault")
+	}
 	if len(body.Veins) < 8 {
 		t.Fatalf("veins %d", len(body.Veins))
 	}
