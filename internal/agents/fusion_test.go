@@ -166,7 +166,11 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 		t.Fatalf("eyes %d members %d organs %d", len(body.Eyes), len(body.Members), len(body.Organs))
 	}
 	resume := FusionResume()
-	if VaultLesson("math") == "" || VaultLesson("ai-agentic") == "" || VaultLesson("market") == "" || VaultLesson("The Lean Startup") == "" {
+	tri := TheTrinity()
+	if tri.Name != "Trinity" || tri.SharedBrain != "instinct" || tri.Orchestrator != "voltron" || len(tri.Chapters) != 6 {
+		t.Fatalf("trinity %+v", tri)
+	}
+	if VaultLesson("Trinity") == "" || VaultLesson("math") == "" || VaultLesson("ai-agentic") == "" || VaultLesson("market") == "" || VaultLesson("The Lean Startup") == "" {
 		t.Fatal("a move has no vault lesson")
 	}
 	if AskSelf("fusion", nil).Answered["vault"] == "" {
@@ -195,7 +199,7 @@ func TestTheFusionCoversBothPeoples(t *testing.T) {
 	if _, _, ok := vault.Add("keys", "slot", "stripe", "sk_test_"+"SHOULDNOT"); ok {
 		t.Fatal("a secret must stay out of the vault")
 	}
-	for _, line := range []string{"The hustler is the chair", "relays everything to Einstein", "50 Cent", "Robert Greene", "The 50th Law", "The Vault is the heart", "one swarm chain", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
+	for _, line := range []string{"The hustler is the chair", "relays everything to Einstein", "50 Cent", "Robert Greene", "The 50th Law", "The Vault is the heart", "Trinity is this kernel", "one swarm chain", "CIA: The Eye", "FBI: The Fusion", "retrains the agent", "does not smell and does not eat", "docs/MAP.md"} {
 		if !strings.Contains(resume, line) {
 			t.Fatalf("resume missing %s", line)
 		}

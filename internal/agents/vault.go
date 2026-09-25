@@ -48,6 +48,9 @@ func OpenVault() Vault {
 	for _, book := range bookCatalog() {
 		v = v.append("core", "catalog", book[0], book[1])
 	}
+	for _, chapter := range TheTrinity().Chapters {
+		v = v.append("core", "trinity", chapter.Title, chapter.Here)
+	}
 	v = v.append("money", "ledger", "fonds", "Grand livre interne. Pas une banque. Rien ne sort sans allow.")
 	for _, slot := range []string{"OPENROUTER_API_KEY", "DATABASE_URL"} {
 		v = v.append("keys", "slot", slot, "")

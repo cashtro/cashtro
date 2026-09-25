@@ -148,6 +148,7 @@ func HustlerVeins() []Vein {
 		{Source: "How to Solve It", Lesson: "Name the unknown, list what is known, then take one step.", Copied: false},
 		{Source: "ai-agentic", Lesson: "An agent has a role, a tool, a memory, and a human gate. It does not invent a second product.", Copied: false},
 		{Source: "market", Lesson: "Read the market in public. No live order and no token sale without the written AMF answer.", Copied: false},
+		{Source: "Trinity", Lesson: "Bring the agents that already exist, then the departments. One shared brain. One runner. One desk. One commercial model.", Copied: false},
 		{Source: "The Psychology of Money", Lesson: "Time in the position beats a clever trade. The ledger stays internal.", Copied: false},
 	}
 }
@@ -196,6 +197,8 @@ func FusionResume() string {
 	b.WriteString("- Eyes: connected to every agentic. They draw a graphic that keeps growing, from docs/MAP.md, inventory/GRAPH.md, and state/blueprint.json, so the body knows where it is going.\n")
 	b.WriteString("- Cybersecurity: security, already in the kernel. It does not attack.\n")
 	b.WriteString("- This body does not smell and does not eat.\n\n")
+	b.WriteString("## Trinity\n\n")
+	b.WriteString("Trinity is this kernel, one local instance. Existing agents come first, then the departments. Einstein is the one shared brain. Voltron is the one runner. The desk is the workspace. OPS holds the commercial model.\n\n")
 	b.WriteString("## The Vault\n\n")
 	b.WriteString("The Vault is the heart. It is the library, chained like a ledger, held in every brain and every cell. Core memory holds the lessons and the book titles. Money holds the internal ledger. Keys hold slot names only. Secret values are not stored. Sections are added slowly.\n\n")
 	b.WriteString("## Veins\n\n")

@@ -20,6 +20,10 @@ Every agent and every ID sits on one swarm chain together. The hustler's measure
 - Cybersecurity: security, already in the kernel. It does not attack.
 - This body does not smell and does not eat.
 
+## Trinity
+
+Trinity is this kernel, one local instance. Existing agents come first, then the departments. Einstein is the one shared brain. Voltron is the one runner. The desk is the workspace. OPS holds the commercial model.
+
 ## The Vault
 
 The Vault is the heart. It is the library, chained like a ledger, held in every brain and every cell. Core memory holds the lessons and the book titles. Money holds the internal ledger. Keys hold slot names only. Secret values are not stored. Sections are added slowly.
@@ -45,6 +49,7 @@ This knowledge runs through the hustler. Every strategy and every move has to st
 - How to Solve It: Name the unknown, list what is known, then take one step.
 - ai-agentic: An agent has a role, a tool, a memory, and a human gate. It does not invent a second product.
 - market: Read the market in public. No live order and no token sale without the written AMF answer.
+- Trinity: Bring the agents that already exist, then the departments. One shared brain. One runner. One desk. One commercial model.
 - The Psychology of Money: Time in the position beats a clever trade. The ledger stays internal.
 
 ## Body

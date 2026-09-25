@@ -14,12 +14,13 @@ import (
 
 // Constellation is one ecosystem with its own infrastructure.
 type Constellation struct {
-	ID             string `json:"id"`
-	Name           string `json:"name"`
-	Infrastructure string `json:"infrastructure"`
-	Function       string `json:"function"`
-	Product        string `json:"product"`
-	Agent          string `json:"agent"`
+	ID             string   `json:"id"`
+	Name           string   `json:"name"`
+	Infrastructure string   `json:"infrastructure"`
+	Function       string   `json:"function"`
+	Product        string   `json:"product"`
+	Agent          string   `json:"agent"`
+	Trinity        []string `json:"trinity"`
 }
 
 // GraphNode is one point on the blueprint map.
@@ -47,39 +48,50 @@ type Blueprint struct {
 	Empty          int             `json:"empty"`
 }
 
+func trinityBuild() string {
+	parts := make([]string, 0, 6)
+	for _, chapter := range TheTrinity().Chapters {
+		parts = append(parts, chapter.Title)
+	}
+	return "Trinity: " + strings.Join(parts, " · ")
+}
+
 func infrastructureOf(id string) string {
+	base := ""
 	switch id {
 	case "control":
-		return "kernel, Voltron, Epicenter Einstein, Graphify"
+		base = "kernel, Voltron, Epicenter Einstein, Graphify"
 	case "wordpress":
-		return "XAMPP, PHP, ACF Pro"
+		base = "XAMPP, PHP, ACF Pro"
 	case "proximity":
-		return "comptes hors thème"
+		base = "comptes hors thème"
 	case "scanapp":
-		return "scanner interne"
+		base = "scanner interne"
 	case "marketplace":
-		return "MCP, Stripe, fiche"
+		base = "MCP, Stripe, fiche"
 	case "panda":
-		return "offre white-glove"
+		base = "offre white-glove"
 	case "nft-giant":
-		return "cerveau propre de Giant, art, token, lecture de marché"
+		base = "cerveau propre de Giant, art, token, lecture de marché"
 	case "ecole":
-		return "programme de cours"
+		base = "programme de cours"
 	case "marketing":
-		return "agence, Panda, Proximity cloud, carnet des agents"
+		base = "agence, Panda, Proximity cloud, carnet des agents"
 	case "fix2":
-		return "site Fix Tout, sa base, école de skills"
+		base = "site Fix Tout, sa base, école de skills"
 	case "empire":
-		return "studio live"
+		base = "studio live"
 	case "propres":
-		return "Stripe des projets propres"
+		base = "Stripe des projets propres"
 	case "trading":
-		return "modèle, aucun ordre live"
+		base = "modèle, aucun ordre live"
 	case "fonds":
-		return "grand livre, chèque interne, TPS et TVQ"
-	default:
+		base = "grand livre, chèque interne, TPS et TVQ"
+	}
+	if base == "" {
 		return ""
 	}
+	return base + " · " + trinityBuild()
 }
 
 // Constellations gives every line its own infrastructure.
@@ -107,6 +119,10 @@ func Constellations() []Constellation {
 		if agent == "" {
 			agent = "manager"
 		}
+		chapters := make([]string, 0, 6)
+		for _, chapter := range TheTrinity().Chapters {
+			chapters = append(chapters, chapter.ID)
+		}
 		out = append(out, Constellation{
 			ID:             ln.ID,
 			Name:           ln.Name,
@@ -114,6 +130,7 @@ func Constellations() []Constellation {
 			Function:       fn,
 			Product:        product,
 			Agent:          agent,
+			Trinity:        chapters,
 		})
 	}
 	return out
@@ -132,7 +149,7 @@ func OneAnchor(items []Constellation) string {
 func emptyCount(items []Constellation) int {
 	n := 0
 	for _, item := range items {
-		if item.ID == "" || item.Infrastructure == "" || item.Function == "" || item.Product == "" || item.Agent == "" {
+		if item.ID == "" || item.Infrastructure == "" || item.Function == "" || item.Product == "" || item.Agent == "" || len(item.Trinity) != 6 {
 			n++
 		}
 	}

@@ -14,7 +14,7 @@ func TestEngineJoinsConstellations(t *testing.T) {
 		t.Fatalf("tax = %+v", got)
 	}
 	items := Constellations()
-	if len(items) != 14 || emptyCount(items) != 0 {
+	if len(items) != 14 || emptyCount(items) != 0 || !strings.Contains(items[0].Infrastructure, "Trinity") || len(items[0].Trinity) != 6 {
 		t.Fatalf("constellations = %d empty %d", len(items), emptyCount(items))
 	}
 	if OneAnchor(items) != OneAnchor(Constellations()) {
