@@ -29,12 +29,12 @@ func TheTrinity() Trinity {
 		Workspace:    "http://localhost:8080",
 		Commercial:   "ops",
 		Chapters: []TrinityChapter{
-			{ID: "what", Title: "What Trinity is, and your own instance running", Here: "This kernel. One local instance. go run ./cmd/cashtro."},
+			{ID: "what", Title: "What Trinity is, and your own instance running by the end", Here: "This kernel. One local instance. WATCH reads /health."},
 			{ID: "agents", Title: "Bring your existing agents, then build the departments", Here: "The registered agentics come first. Chart departments come after."},
 			{ID: "brain", Title: "Give your agency one shared brain", Here: "Einstein is the one shared brain. The hustler relays to him."},
 			{ID: "orchestration", Title: "Orchestration: one agent to run them all", Here: "Voltron keeps every chain on."},
 			{ID: "workspace", Title: "Workspace: the interface for your team", Here: "The desk at http://localhost:8080."},
-			{ID: "operations", Title: "Operations and the commercial model", Here: "OPS runs the work. Each division has a product, a revenue, and a guard."},
+			{ID: "operations", Title: "Operations & the commercial model", Here: "OPS runs the work. Each division has a product, a revenue, and a guard."},
 		},
 	}
 }

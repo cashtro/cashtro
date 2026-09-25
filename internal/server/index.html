@@ -207,15 +207,16 @@
       <div class="stats" id="stats"></div>
     </header>
     <main class="desk">
-      <section class="panel">
-        <h2>Trinity</h2>
+      <section class="panel" id="trinity">
+        <h2>What Trinity is, and your own instance running by the end</h2>
+        <button type="button" id="trinity-watch">WATCH</button>
+        <p id="trinity-status"></p>
         <ol>
-          <li>What Trinity is, and this instance</li>
           <li>Bring your existing agents, then build the departments</li>
           <li>Give your agency one shared brain</li>
           <li>Orchestration: one agent to run them all</li>
           <li>Workspace: the interface for your team</li>
-          <li>Operations and the commercial model</li>
+          <li>Operations &amp; the commercial model</li>
         </ol>
       </section>
       <section class="panel">
@@ -288,6 +289,16 @@
       planner: { name: "Steward", color: "#3dffa6" },
       investigator: { name: "Seeker", color: "#ffb020" }
     };
+    document.getElementById("trinity-watch").addEventListener("click", async () => {
+      const el = document.getElementById("trinity-status");
+      el.textContent = "watching";
+      try {
+        const health = await j("/health");
+        el.textContent = "Instance running · " + health.agents + " agents · " + health.kernel;
+      } catch (err) {
+        el.textContent = err.message;
+      }
+    });
     async function j(url, opts) {
       const res = await fetch(url, Object.assign({ headers: { "Accept": "application/json" } }, opts));
       const body = await res.json();

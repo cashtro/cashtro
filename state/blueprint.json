@@ -1,10 +1,10 @@
 {
-  "anchor": "67cc13616ea658bedbc0c0a2d2e9669d324a5f1a65250ac560483a866099de19",
+  "anchor": "59eec9468ce379ee89248be83bedc80c5f17ca20b60852ba567503b9abd46546",
   "constellations": [
     {
       "id": "control",
       "name": "Cerveau principal",
-      "infrastructure": "kernel, Voltron, Epicenter Einstein, Graphify · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "kernel, Voltron, Epicenter Einstein, Graphify · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "memory.store",
       "product": "cashtro/cashtro",
       "agent": "manager",
@@ -20,7 +20,7 @@
     {
       "id": "wordpress",
       "name": "WordPress Proximity",
-      "infrastructure": "XAMPP, PHP, ACF Pro · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "XAMPP, PHP, ACF Pro · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "operator.work",
       "product": "Sites WordPress, Proximity, Next Proximity, Proximity App, Api-Proximity",
       "agent": "operator",
@@ -36,7 +36,7 @@
     {
       "id": "proximity",
       "name": "Proximity Agency",
-      "infrastructure": "comptes hors thème · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "comptes hors thème · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "manager.line",
       "product": "Comptes hors WordPress et hors produits Proximity nommés",
       "agent": "deploy",
@@ -52,7 +52,7 @@
     {
       "id": "scanapp",
       "name": "Scan App",
-      "infrastructure": "scanner interne · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "scanner interne · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "operator.work",
       "product": "Stock du scanner interne",
       "agent": "comms",
@@ -68,7 +68,7 @@
     {
       "id": "marketplace",
       "name": "Scan App Marketplace",
-      "infrastructure": "MCP, Stripe, fiche · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "MCP, Stripe, fiche · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "memory.store",
       "product": "Evolu-Jeunes/ScanApp",
       "agent": "manager",
@@ -84,7 +84,7 @@
     {
       "id": "panda",
       "name": "Panda White Glove",
-      "infrastructure": "offre white-glove · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "offre white-glove · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "architect.plan",
       "product": "Evolu-Jeunes/Panda",
       "agent": "architect",
@@ -100,7 +100,7 @@
     {
       "id": "nft-giant",
       "name": "NFT + token Giant",
-      "infrastructure": "cerveau propre de Giant, art, token, lecture de marché · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "cerveau propre de Giant, art, token, lecture de marché · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "manager.run",
       "product": "Evolu-Jeunes/Giant brain",
       "agent": "manager",
@@ -116,7 +116,7 @@
     {
       "id": "ecole",
       "name": "École tech",
-      "infrastructure": "programme de cours · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "programme de cours · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "research.ingest",
       "product": "Evolu-Jeunes/educonnexion",
       "agent": "research",
@@ -132,7 +132,7 @@
     {
       "id": "marketing",
       "name": "Marketing digital corporate",
-      "infrastructure": "agence, Panda, Proximity cloud, carnet des agents · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "agence, Panda, Proximity cloud, carnet des agents · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "manager.crm",
       "product": "Evolu-Jeunes/CRM-Agents",
       "agent": "planner",
@@ -148,7 +148,7 @@
     {
       "id": "empire",
       "name": "Empire Media",
-      "infrastructure": "studio live · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "studio live · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "delivery.advance",
       "product": "Evolu-Jeunes/EmpireMedia",
       "agent": "delivery",
@@ -164,7 +164,7 @@
     {
       "id": "propres",
       "name": "Projets propres",
-      "infrastructure": "Stripe des projets propres · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "Stripe des projets propres · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "memory.store",
       "product": "cashtro/PBTM",
       "agent": "manager",
@@ -180,7 +180,7 @@
     {
       "id": "trading",
       "name": "Crypto et AI bot",
-      "infrastructure": "modèle, aucun ordre live · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "modèle, aucun ordre live · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "investigator.trace",
       "product": "Bots et Giant",
       "agent": "investigator",
@@ -196,7 +196,7 @@
     {
       "id": "fix2",
       "name": "Fix Tout",
-      "infrastructure": "site Fix Tout, sa base, école de skills · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "site Fix Tout, sa base, école de skills · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "operator.work",
       "product": "Evolu-Jeunes/Fix2",
       "agent": "operator",
@@ -212,7 +212,7 @@
     {
       "id": "fonds",
       "name": "Fonds",
-      "infrastructure": "grand livre, chèque interne, TPS et TVQ · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model",
+      "infrastructure": "grand livre, chèque interne, TPS et TVQ · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "manager.tax",
       "product": "Grand livre interne",
       "agent": "planner",
@@ -525,7 +525,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "67cc13616ea658bedbc0c0a2d2e9669d324a5f1a65250ac560483a866099de19"
+      "name": "59eec9468ce379ee89248be83bedc80c5f17ca20b60852ba567503b9abd46546"
     },
     {
       "id": "const:control",
@@ -672,7 +672,7 @@
     {
       "from": "const:control",
       "to": "anchor",
-      "via": "kernel, Voltron, Epicenter Einstein, Graphify · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "kernel, Voltron, Epicenter Einstein, Graphify · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:control",
@@ -682,7 +682,7 @@
     {
       "from": "const:wordpress",
       "to": "anchor",
-      "via": "XAMPP, PHP, ACF Pro · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "XAMPP, PHP, ACF Pro · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:wordpress",
@@ -692,7 +692,7 @@
     {
       "from": "const:proximity",
       "to": "anchor",
-      "via": "comptes hors thème · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "comptes hors thème · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:proximity",
@@ -702,7 +702,7 @@
     {
       "from": "const:scanapp",
       "to": "anchor",
-      "via": "scanner interne · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "scanner interne · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:scanapp",
@@ -712,7 +712,7 @@
     {
       "from": "const:marketplace",
       "to": "anchor",
-      "via": "MCP, Stripe, fiche · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "MCP, Stripe, fiche · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:marketplace",
@@ -722,7 +722,7 @@
     {
       "from": "const:panda",
       "to": "anchor",
-      "via": "offre white-glove · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "offre white-glove · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:panda",
@@ -732,7 +732,7 @@
     {
       "from": "const:nft-giant",
       "to": "anchor",
-      "via": "cerveau propre de Giant, art, token, lecture de marché · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "cerveau propre de Giant, art, token, lecture de marché · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:nft-giant",
@@ -742,7 +742,7 @@
     {
       "from": "const:ecole",
       "to": "anchor",
-      "via": "programme de cours · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "programme de cours · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:ecole",
@@ -752,7 +752,7 @@
     {
       "from": "const:marketing",
       "to": "anchor",
-      "via": "agence, Panda, Proximity cloud, carnet des agents · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "agence, Panda, Proximity cloud, carnet des agents · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:marketing",
@@ -762,7 +762,7 @@
     {
       "from": "const:empire",
       "to": "anchor",
-      "via": "studio live · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "studio live · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:empire",
@@ -772,7 +772,7 @@
     {
       "from": "const:propres",
       "to": "anchor",
-      "via": "Stripe des projets propres · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "Stripe des projets propres · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:propres",
@@ -782,7 +782,7 @@
     {
       "from": "const:trading",
       "to": "anchor",
-      "via": "modèle, aucun ordre live · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "modèle, aucun ordre live · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:trading",
@@ -792,7 +792,7 @@
     {
       "from": "const:fix2",
       "to": "anchor",
-      "via": "site Fix Tout, sa base, école de skills · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "site Fix Tout, sa base, école de skills · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:fix2",
@@ -802,7 +802,7 @@
     {
       "from": "const:fonds",
       "to": "anchor",
-      "via": "grand livre, chèque interne, TPS et TVQ · Trinity: What Trinity is, and your own instance running · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations and the commercial model"
+      "via": "grand livre, chèque interne, TPS et TVQ · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:fonds",

@@ -326,10 +326,10 @@
       "index": 35,
       "section": "core",
       "kind": "trinity",
-      "title": "What Trinity is, and your own instance running",
-      "body": "This kernel. One local instance. go run ./cmd/cashtro.",
+      "title": "What Trinity is, and your own instance running by the end",
+      "body": "This kernel. One local instance. WATCH reads /health.",
       "prev": "d96cc092ed56a8a7d84bff20d6e622bdeb34bae690b5062220f05cf5d2d55d72",
-      "hash": "34d529b26ff67ad8229f590ac0369dc078e421ab4c23209313f798a3371a2d82"
+      "hash": "1aee2a2bcaf6e2b5ef1c3037f6a8cb04b52e1ba3ab9f0748029cf5723cb2a4dd"
     },
     {
       "index": 36,
@@ -337,8 +337,8 @@
       "kind": "trinity",
       "title": "Bring your existing agents, then build the departments",
       "body": "The registered agentics come first. Chart departments come after.",
-      "prev": "34d529b26ff67ad8229f590ac0369dc078e421ab4c23209313f798a3371a2d82",
-      "hash": "3dbc35014f6ae7f343dd44d8c47cb29b3fdec4190d0ec88ca22bf03b4080261c"
+      "prev": "1aee2a2bcaf6e2b5ef1c3037f6a8cb04b52e1ba3ab9f0748029cf5723cb2a4dd",
+      "hash": "1005efcc44a18b21accc17d03ef2be010a7a62409b5df0fbfa62f176f5d8efa8"
     },
     {
       "index": 37,
@@ -346,8 +346,8 @@
       "kind": "trinity",
       "title": "Give your agency one shared brain",
       "body": "Einstein is the one shared brain. The hustler relays to him.",
-      "prev": "3dbc35014f6ae7f343dd44d8c47cb29b3fdec4190d0ec88ca22bf03b4080261c",
-      "hash": "29520cdafd3ce342f84b665e67e9bcdeaec424b14a96dadefa90e2d0326ecdf6"
+      "prev": "1005efcc44a18b21accc17d03ef2be010a7a62409b5df0fbfa62f176f5d8efa8",
+      "hash": "4d8efb5c1335096c83d972bc112d8aaa90027166218098f2d414f1eb8efde030"
     },
     {
       "index": 38,
@@ -355,8 +355,8 @@
       "kind": "trinity",
       "title": "Orchestration: one agent to run them all",
       "body": "Voltron keeps every chain on.",
-      "prev": "29520cdafd3ce342f84b665e67e9bcdeaec424b14a96dadefa90e2d0326ecdf6",
-      "hash": "ce883791f220fd8645df202e3ad4c02c8cf049be99d36377bf76a456ad00d2a3"
+      "prev": "4d8efb5c1335096c83d972bc112d8aaa90027166218098f2d414f1eb8efde030",
+      "hash": "d80a5205da1e6ab1ad8602a13fe77ee6673db40ec91f74ff18210c924c076c4d"
     },
     {
       "index": 39,
@@ -364,17 +364,17 @@
       "kind": "trinity",
       "title": "Workspace: the interface for your team",
       "body": "The desk at http://localhost:8080.",
-      "prev": "ce883791f220fd8645df202e3ad4c02c8cf049be99d36377bf76a456ad00d2a3",
-      "hash": "1e4078f8a90fcbc83a1159b438868ca80d55e5dee24ebed4e1d9835f60c93a50"
+      "prev": "d80a5205da1e6ab1ad8602a13fe77ee6673db40ec91f74ff18210c924c076c4d",
+      "hash": "1f9712a20ec3c28c7c8cb84fcccaa3a11cf709f6b847635c694aa23c14a18158"
     },
     {
       "index": 40,
       "section": "core",
       "kind": "trinity",
-      "title": "Operations and the commercial model",
+      "title": "Operations \u0026 the commercial model",
       "body": "OPS runs the work. Each division has a product, a revenue, and a guard.",
-      "prev": "1e4078f8a90fcbc83a1159b438868ca80d55e5dee24ebed4e1d9835f60c93a50",
-      "hash": "114bd2713e9f3e2babd332d0f0bbb5e3a0aa1640ddc9838795d46da09b302110"
+      "prev": "1f9712a20ec3c28c7c8cb84fcccaa3a11cf709f6b847635c694aa23c14a18158",
+      "hash": "5ed76830338aa7e8c89f75bd985478cb85b3b3473609dde7a150963cfb12ce52"
     },
     {
       "index": 41,
@@ -382,8 +382,8 @@
       "kind": "ledger",
       "title": "fonds",
       "body": "Grand livre interne. Pas une banque. Rien ne sort sans allow.",
-      "prev": "114bd2713e9f3e2babd332d0f0bbb5e3a0aa1640ddc9838795d46da09b302110",
-      "hash": "dbf0820a3c8c26d934c0239e6613adabdcbc53e819ac8a6e40a307fae1042c88"
+      "prev": "5ed76830338aa7e8c89f75bd985478cb85b3b3473609dde7a150963cfb12ce52",
+      "hash": "7327fcb7e7c75c60bf345009e5f90b4ae44a0b40e4c4282ca5ab4ed9aeada2f2"
     },
     {
       "index": 42,
@@ -391,8 +391,8 @@
       "kind": "slot",
       "title": "OPENROUTER_API_KEY",
       "body": "",
-      "prev": "dbf0820a3c8c26d934c0239e6613adabdcbc53e819ac8a6e40a307fae1042c88",
-      "hash": "3a2c07724a181de6fb654b919b43aa51c86993b7731b98514eeacce90d2ffa7d"
+      "prev": "7327fcb7e7c75c60bf345009e5f90b4ae44a0b40e4c4282ca5ab4ed9aeada2f2",
+      "hash": "96f60b08795b4fe24c8790a66fe488ebeda4adb48745789df95a1cf42a214b0e"
     },
     {
       "index": 43,
@@ -400,8 +400,8 @@
       "kind": "slot",
       "title": "DATABASE_URL",
       "body": "",
-      "prev": "3a2c07724a181de6fb654b919b43aa51c86993b7731b98514eeacce90d2ffa7d",
-      "hash": "f4d3365bff9b0809eff4983ca89e13ed7c47c0521c5101ee136997e7985820dc"
+      "prev": "96f60b08795b4fe24c8790a66fe488ebeda4adb48745789df95a1cf42a214b0e",
+      "hash": "2ada71ec8391ff889fe7cea1d7d343eaa07a2b8a1471ed74ab382a8c4cb61c06"
     }
   ],
   "brains": [
