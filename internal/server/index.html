@@ -138,6 +138,8 @@
       gap: 16px;
       padding-top: 16px;
     }
+    #panda-school { margin-top: 16px; }
+    #class-form { margin-top: 12px; }
     .guide details { border-top: 1px solid var(--line); padding: 8px 0; }
     .guide summary { cursor: pointer; font-family: Syne, sans-serif; font-weight: 700; }
     .guide .item, .guide .rule, .guide li { color: var(--muted); font-size: 13px; line-height: 1.45; margin: 4px 0; }
@@ -319,7 +321,21 @@
         <div id="guide-bad"></div>
         <h3>Plan · not applied</h3>
         <ol id="guide-plan"></ol>
+        <h3>Roadmap · not built</h3>
+        <div id="guide-roadmap"></div>
       </div>
+    </section>
+    <section class="panel" id="panda-school">
+      <h2>Panda school · V1</h2>
+      <p id="panda-lead" class="lede"></p>
+      <div id="panda-breaks"></div>
+      <form id="class-form">
+        <label>Class <input name="name" required placeholder="A class sold on the Panda site"></label>
+        <label>Draft price <input name="price" placeholder="120 CAD"></label>
+        <button class="primary" type="submit">Park the class</button>
+        <div class="err" id="class-error"></div>
+      </form>
+      <div id="panda-classes"></div>
     </section>
     <main class="desk">
       <section class="panel" id="trinity">
@@ -584,13 +600,42 @@
         row.textContent = cut.do;
         plan.appendChild(row);
       });
+      const road = document.getElementById("guide-roadmap");
+      road.replaceChildren();
+      (guide.roadmap || []).forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.textContent = item.name + " — " + item.do;
+        road.appendChild(row);
+      });
+    }
+    function paintPanda(report) {
+      const lead = document.getElementById("panda-lead");
+      lead.textContent = "V1 parks a class and a draft price on this desk. No charge. No call. " + report.repo + ".";
+      const breaks = document.getElementById("panda-breaks");
+      breaks.replaceChildren();
+      (report.breaks || []).forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.textContent = item.fact + (item.file ? " · " + item.file : "");
+        breaks.appendChild(row);
+      });
+      const list = document.getElementById("panda-classes");
+      list.replaceChildren();
+      (report.classes || []).forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "item";
+        row.textContent = item.name + (item.price ? " · " + item.price : "") + " · draft";
+        list.appendChild(row);
+      });
     }
     async function render() {
-      const [os, voltron, categories, guide, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/voltron"), j("/api/categories"), j("/api/guide"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, voltron, categories, guide, panda, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
+        j("/api/os"), j("/api/voltron"), j("/api/categories"), j("/api/guide"), j("/api/panda"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
       ]);
       paintVoltron(voltron);
       paintGuide(categories, guide);
+      paintPanda(panda);
       document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";
       document.getElementById("contact").textContent = profile.email;
       const stats = document.getElementById("stats");
@@ -670,6 +715,23 @@
         }
       });
     }
+    document.getElementById("class-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const err = document.getElementById("class-error");
+      err.textContent = "";
+      const data = new FormData(event.target);
+      try {
+        await j("/api/panda/classes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({ name: data.get("name"), price: data.get("price") })
+        });
+        event.target.reset();
+        await render();
+      } catch (e) {
+        err.textContent = e.message;
+      }
+    });
     document.getElementById("form").addEventListener("submit", async (event) => {
       event.preventDefault();
       const err = document.getElementById("form-error");

@@ -16,7 +16,7 @@ const maxBody = 1 << 20
 
 // New returns the Cashtro OS HTTP shell.
 func New(k *kernel.Kernel) http.Handler {
-	s := &api{k: k, cat: k.Catalog()}
+	s := &api{k: k, cat: k.Catalog(), school: agents.NewSchool()}
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /{$}", s.index)
 	mux.HandleFunc("GET /favicon.ico", s.favicon)
@@ -26,6 +26,8 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /api/voltron", s.voltron)
 	mux.HandleFunc("GET /api/categories", s.categories)
 	mux.HandleFunc("GET /api/guide", s.guide)
+	mux.HandleFunc("GET /api/panda", s.panda)
+	mux.HandleFunc("POST /api/panda/classes", s.addClass)
 	mux.HandleFunc("GET /api/agents", s.listAgents)
 	mux.HandleFunc("GET /api/agents/{id}", s.getAgent)
 	mux.HandleFunc("POST /api/agents/{id}/spawn", s.spawnAgent)
@@ -50,8 +52,9 @@ func New(k *kernel.Kernel) http.Handler {
 }
 
 type api struct {
-	k   *kernel.Kernel
-	cat *catalog.Catalog
+	k      *kernel.Kernel
+	cat    *catalog.Catalog
+	school *agents.SchoolV1
 }
 
 func (s *api) index(w http.ResponseWriter, r *http.Request) {
@@ -92,6 +95,29 @@ func (s *api) categories(w http.ResponseWriter, r *http.Request) {
 
 func (s *api) guide(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, agents.CorrectChain())
+}
+
+func (s *api) panda(w http.ResponseWriter, r *http.Request) {
+	report := agents.ReadPandaScan()
+	report.Classes = s.school.List()
+	writeJSON(w, http.StatusOK, report)
+}
+
+func (s *api) addClass(w http.ResponseWriter, r *http.Request) {
+	var in struct {
+		Name  string `json:"name"`
+		Price string `json:"price"`
+	}
+	if err := decodeJSON(r, &in); err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	class, err := s.school.Add(in.Name, in.Price)
+	if err != nil {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+	writeJSON(w, http.StatusCreated, class)
 }
 
 func (s *api) listAgents(w http.ResponseWriter, r *http.Request) {

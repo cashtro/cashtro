@@ -76,13 +76,14 @@ type Cut struct {
 }
 
 // AgentGuide explains how to build an agent and reads the chain.
-// The plan is the list of cuts. This desk does not apply them.
+// The plan is the list of cuts. The roadmap is later. This desk does not apply either.
 type AgentGuide struct {
-	How     string   `json:"how"`
-	Rules   []string `json:"rules"`
-	Marks   []Mark   `json:"marks"`
-	Plan    []Cut    `json:"plan"`
-	Applied bool     `json:"applied"`
+	How     string     `json:"how"`
+	Rules   []string   `json:"rules"`
+	Marks   []Mark     `json:"marks"`
+	Plan    []Cut      `json:"plan"`
+	Roadmap []RoadItem `json:"roadmap"`
+	Applied bool       `json:"applied"`
 }
 
 // CorrectChain reads the roster and separates what holds from the plan.
@@ -136,22 +137,34 @@ func CorrectChain() AgentGuide {
 		{ID: "voltron-starts", Fact: "Voltron starts the agentic chains and does not start a website.", Good: loose == "" && starts["maitre"] && starts["trading"] && !starts["educonnexion"] && !starts["ecole"] && !starts["wordpress"] && !starts["fix2"]},
 		{ID: "vapi-panda", Fact: "Vapi is Panda customer service.", Good: Vapi().Project == "panda" && Vapi().Database == "db:panda"},
 		{ID: "repos-apart", Fact: "Giant and the trading bot keep two repos.", Good: !giantOnTrading && !GiantSync().Mixed && GiantSync().Together},
-		{ID: "panda-pages", Fact: "The course pages inside Evolu-Jeunes/Panda are not in this checkout, so they were not read here.", Good: false},
+		{ID: "panda-pages", Fact: "The extracted Panda backend connects achatRoutes and has no school route. The course pages were not read from the repo.", Good: false},
+	}
+	scan := ReadPandaScan()
+	schoolRoute := false
+	for _, section := range scan.Sections {
+		if section.ID == "school" && section.Connected {
+			schoolRoute = true
+		}
+	}
+	for i := range marks {
+		if marks[i].ID == "panda-pages" {
+			marks[i].Good = schoolRoute
+		}
 	}
 	plan := []Cut{
-		{1, "panda-pages", "Read the course pages in Evolu-Jeunes/Panda before the school line is folded into that website.", false},
-		{2, "school", "The school still has its own line, while the teaching lives in the Panda website. The next cut folds that line into Panda. Éduconnexion stays a WordPress website.", false},
+		{1, "panda-pages", "The Panda catalog connects purchases in server.js and a demo admin. It does not connect a school route or a price drawer. V1 classes stay on this desk. The repo read waits until the Panda source is here.", false},
+		{2, "school", "The school still has its own line, while the teaching lives in the Panda website. Éduconnexion stays a WordPress website. The fold waits until the school route is in the repo.", false},
 	}
 	if fix2Still {
-		plan = append(plan, Cut{len(plan) + 1, "fix2", "Fix Tout is still a line and still has work steps. It is a website with a plug. The next cut leaves the website and takes it off the agentic.", false})
+		plan = append(plan, Cut{len(plan) + 1, "fix2", "Fix Tout keeps its own CRM in its repo. The agent CRM is the other book: knowledge, booking, closing, and a call that stays off. Dashboards land in the Fix Tout repo later.", false})
 	}
 	if crmOnFix2 {
-		plan = append(plan, Cut{len(plan) + 1, "crm", "Evolu-Jeunes/CRM is the copy named on the agent book and also a repo on the Fix Tout line. The next cut gives that name one meaning.", false})
+		plan = append(plan, Cut{len(plan) + 1, "crm", "Evolu-Jeunes/CRM is the copy named on the agent book and also a repo on the Fix Tout line. The agent workflow and the Fix Tout CRM stay two books.", false})
 	}
 	if projectSteps > 0 {
 		plan = append(plan, Cut{len(plan) + 1, "project-steps", "Project lines still carry work steps. They are not seats. The next cut keeps them as project work, or takes them off, when you say which.", false})
 	}
-	plan = append(plan, Cut{len(plan) + 1, "einstein", "Einstein receives the relay and does not send the decision back down the chain that asked.", false})
+	plan = append(plan, Cut{len(plan) + 1, "einstein", "Einstein auto-learns when the analysis goes back to the other agents, through the agent CRM or a direct read. He writes his input after that. The return is on the roadmap and is not called.", false})
 	return AgentGuide{
 		How: "An agentic is a seat with one job. Name the job, name what it refuses, and name who decides. Einstein decides. Voltron starts a chain that has tasks. A website is not that chain. The fifteen kernel processes stay fifteen at boot. This desk reads the roster, marks what holds, and writes the cuts that do not. It does not apply the plan.",
 		Rules: []string{
@@ -165,6 +178,7 @@ func CorrectChain() AgentGuide {
 		},
 		Marks:   marks,
 		Plan:    plan,
+		Roadmap: Roadmap(),
 		Applied: false,
 	}
 }

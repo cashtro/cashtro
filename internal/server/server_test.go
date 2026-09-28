@@ -127,7 +127,7 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(body, "OS of the agentics") || !strings.Contains(body, `id="os-brain"`) || !strings.Contains(body, "Three layers") {
 		t.Fatalf("index missing Voltron OS bar")
 	}
-	if !strings.Contains(body, "Categories") || !strings.Contains(body, "How to build an agent") {
+	if !strings.Contains(body, "Categories") || !strings.Contains(body, "How to build an agent") || !strings.Contains(body, "Panda school") {
 		t.Fatalf("index missing the category desk")
 	}
 }
@@ -157,8 +157,20 @@ func TestCategoriesAndGuide(t *testing.T) {
 	}
 	res = httptest.NewRecorder()
 	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/guide", nil))
-	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"applied":false`) {
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"applied":false`) || !strings.Contains(res.Body.String(), `"called":false`) {
 		t.Fatalf("guide %d %s", res.Code, res.Body.String())
+	}
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/panda", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), "school-route") || !strings.Contains(res.Body.String(), "achatRoutes") {
+		t.Fatalf("panda %d %s", res.Code, res.Body.String())
+	}
+	res = httptest.NewRecorder()
+	req := httptest.NewRequest(http.MethodPost, "/api/panda/classes", strings.NewReader(`{"name":"Intro class","price":"120 CAD"}`))
+	req.Header.Set("Content-Type", "application/json")
+	h.ServeHTTP(res, req)
+	if res.Code != http.StatusCreated || !strings.Contains(res.Body.String(), `"charged":false`) || !strings.Contains(res.Body.String(), `"called":false`) {
+		t.Fatalf("class %d %s", res.Code, res.Body.String())
 	}
 }
 

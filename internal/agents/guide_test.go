@@ -42,4 +42,12 @@ func TestCategoriesAndCorrector(t *testing.T) {
 	if good["panda-pages"] {
 		t.Fatal("course pages were marked as read")
 	}
+	if len(guide.Roadmap) < 6 {
+		t.Fatalf("roadmap %d", len(guide.Roadmap))
+	}
+	for _, item := range guide.Roadmap {
+		if item.Built || item.Called || item.Do == "" {
+			t.Fatalf("roadmap item %+v", item)
+		}
+	}
 }
