@@ -87,8 +87,8 @@ func Lines() []Line {
 		},
 		{
 			ID: "nft-giant", Name: "NFT + token Giant", Brain: "Hustler",
-			Mandate: "Giant a son propre cerveau crypto et il est en formation. Le mint n'est pas une option. Voltron ouvre le cycle, Giant le fait tourner, Epicenter Einstein décide en dernier. " +
-				"NFT pour l'art utile, token GNT, lecture de marché, gems en note, modèles de bots. Aucun ordre live.",
+			Mandate: "Giant est un écosystème et un environnement. Il a son propre cerveau crypto et il est en formation. Le mint n'est pas une option. Voltron ouvre le cycle, Giant le fait tourner, Epicenter Einstein décide en dernier. " +
+				"NFT pour l'art utile, token GNT, lecture de marché, gems en note. Aucun ordre live. Le dépôt du bot de trading n'est pas ce dépôt.",
 			Controls: "Le cerveau de Giant tient les agents crypto. Epicenter Einstein est le dernier mot. Pas de mint, pas d'ordre, pas de pont.",
 			Repos:    []string{"Evolu-Jeunes/Nft", "Evolu-Jeunes/Giant"},
 		},
@@ -122,13 +122,12 @@ func Lines() []Line {
 		},
 		{
 			ID: "trading", Name: "Crypto et AI bot", Brain: "Architecte",
-			Mandate: "Trader et automatiser plusieurs méthodes : exchanges, blockchain, coins, gems, Web3. " +
-				"Branché sur l'écosystème token Giant pour voir comment automatiser l'ensemble.",
-			Controls: "Architecte modélise. Hustler suit ce qui rapporte. Giant est le pont token.",
+			Mandate: "Trader et automatiser sur la blockchain : exchanges, coins, gems, Web3. " +
+				"Le bot est son propre dépôt. Giant est un autre dépôt. La synchronie les relie sans les mélanger.",
+			Controls: "Architecte modélise. Hustler suit ce qui rapporte. Aucun ordre live sans réponse AMF écrite. Le dépôt Giant n'est pas dans cette liste.",
 			Repos: []string{
 				"Evolu-Jeunes/AI-BOT", "Evolu-Jeunes/bot", "Evolu-Jeunes/Blockchain-Trading-",
 				"Evolu-Jeunes/TradingBotCodex", "cashtro/trading_bot-main",
-				"Evolu-Jeunes/Giant",
 			},
 		},
 		{

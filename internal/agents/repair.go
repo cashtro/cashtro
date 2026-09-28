@@ -73,14 +73,15 @@ func OnChain(id string) bool {
 }
 
 // SurveyChain is the agentic chain, built on its own.
-// It does not read a project, and it does not split Giant from the trading bot.
+// Giant and the trading bot keep their own chains and their own repos.
 func SurveyChain() ChainReport {
 	crew := RepairCrew()
 	repair := []ChainFix{
-		{1, "separee", "La chaîne est ces vingt sièges. Elle ne contient aucun projet."},
-		{2, "sites", "Un site reste un site. Éduconnexion n'est pas une chaîne et n'est pas un siège."},
-		{3, "giant", "Giant et le bot de trading restent ensemble. On ne les sépare pas."},
-		{4, "maitre", "Le maître tient cette chaîne à part. Einstein tranche. Ce rapport ne déploie rien et ne réécrit aucun projet."},
+		{1, "separee", "La chaîne des vingt sièges reste à part des projets."},
+		{2, "sites", "Un site reste un site. Éduconnexion n'est pas une chaîne."},
+		{3, "giant", "Giant est un écosystème. Son dépôt est Evolu-Jeunes/Giant. Sa chaîne reste."},
+		{4, "bot", "Le bot de trading est cashtro/trading_bot-main. Sa chaîne reste. Les deux dépôts ne sont pas mélangés."},
+		{5, "synchronie", "Une chaîne à part les fait travailler ensemble, y compris le trade blockchain. Un ordre live attend la réponse AMF écrite."},
 	}
 	return ChainReport{
 		Lead:    crew[0].ID,

@@ -661,7 +661,6 @@
       "repos": [
         "Evolu-Jeunes/AI-BOT",
         "Evolu-Jeunes/Blockchain-Trading-",
-        "Evolu-Jeunes/Giant",
         "Evolu-Jeunes/TradingBotCodex",
         "Evolu-Jeunes/bot",
         "cashtro/trading_bot-main"
@@ -743,7 +742,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live.",
+      "via": "Deux dépôts, deux chaînes. La synchronie les fait travailler ensemble. Aucun ordre live. Les dépôts ne sont pas mélangés.",
       "agents": [
         "architect",
         "security",
@@ -1441,9 +1440,9 @@
         "chief": "investigator",
         "department": "controle",
         "function": "investigator.trace",
-        "product": "Bots et Giant",
-        "revenue": "Bots sur exchanges, Web3, liés à Giant.",
-        "guard": "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow."
+        "product": "cashtro/trading_bot-main",
+        "revenue": "Bots sur exchanges et blockchain.",
+        "guard": "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow. Le dépôt Giant reste à part."
       },
       {
         "id": "fonds",

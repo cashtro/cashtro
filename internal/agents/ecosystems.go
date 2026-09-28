@@ -44,7 +44,7 @@ func Links() []Link {
 		},
 		{
 			From: "nft-giant", To: "trading",
-			Via:    "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live.",
+			Via:    "Deux dépôts, deux chaînes. La synchronie les fait travailler ensemble. Aucun ordre live. Les dépôts ne sont pas mélangés.",
 			Agents: []string{"architect", "security", "investigator", "router"},
 		},
 		{

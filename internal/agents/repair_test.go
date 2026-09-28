@@ -29,7 +29,7 @@ func TestRepairCrewReadsTheWholeChain(t *testing.T) {
 		t.Fatal("Éduconnexion is a website, not a chain")
 	}
 
-	var school, wordpress, giant, trading bool
+	var school, wordpress, giant, bot bool
 	for _, ln := range Lines() {
 		for _, repo := range ln.Repos {
 			if repo == "Evolu-Jeunes/educonnexion" && ln.ID == "ecole" {
@@ -42,19 +42,32 @@ func TestRepairCrewReadsTheWholeChain(t *testing.T) {
 				giant = true
 			}
 			if repo == "Evolu-Jeunes/Giant" && ln.ID == "trading" {
-				trading = true
+				t.Fatal("the Giant repo is on the trading list")
+			}
+			if repo == "cashtro/trading_bot-main" && ln.ID == "trading" {
+				bot = true
 			}
 		}
 	}
 	if !school || !wordpress {
 		t.Fatal("Éduconnexion must stay on its website projects")
 	}
-	if !giant || !trading {
-		t.Fatal("Giant and the trading bot stay together")
+	if !giant || !bot {
+		t.Fatal("Giant and the trading bot each keep their repo")
+	}
+	sync := GiantSync()
+	if sync.Mixed || !sync.Together || sync.GiantRepo == sync.BotRepo || sync.LiveOrder || sync.Trade != "blockchain" {
+		t.Fatalf("sync %+v", sync)
+	}
+	if _, ok := Chain(sync.GiantChain); !ok {
+		t.Fatal("Giant chain removed")
+	}
+	if _, ok := Chain(sync.BotChain); !ok {
+		t.Fatal("trading bot chain removed")
 	}
 
 	report := SurveyChain()
-	if report.Lead != "maitre" || report.Decided != "instinct" || report.Applied || len(report.Agents) != 20 || len(report.Repair) != 4 {
+	if report.Lead != "maitre" || report.Decided != "instinct" || report.Applied || len(report.Agents) != 20 || len(report.Repair) != 5 {
 		t.Fatalf("report %+v", report)
 	}
 	if len(report.Breaks) != 0 {

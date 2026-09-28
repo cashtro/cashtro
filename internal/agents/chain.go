@@ -125,7 +125,7 @@ func Chain(line string) ([]ChainStep, bool) {
 	case "trading":
 		return []ChainStep{
 			{Line: "trading", Order: 1, Agent: "investigator", Do: "Aucun ordre live sans réponse AMF écrite."},
-			{Line: "trading", Order: 2, Agent: "architect", Do: "Le modèle reste un modèle. Giant n'est pas un ordre."},
+			{Line: "trading", Order: 2, Agent: "architect", Do: "Le modèle reste un modèle sur cashtro/trading_bot-main. Le dépôt Giant n'est pas ce dépôt. La synchronie est une chaîne à part."},
 		}, true
 	case "fonds":
 		return []ChainStep{

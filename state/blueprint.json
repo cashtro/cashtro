@@ -1,5 +1,5 @@
 {
-  "anchor": "59eec9468ce379ee89248be83bedc80c5f17ca20b60852ba567503b9abd46546",
+  "anchor": "8bdf29098f1f7bed49742a10fca230aa06f2a94afc676358ee007c222df33e58",
   "constellations": [
     {
       "id": "control",
@@ -182,7 +182,7 @@
       "name": "Crypto et AI bot",
       "infrastructure": "modèle, aucun ordre live · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "investigator.trace",
-      "product": "Bots et Giant",
+      "product": "cashtro/trading_bot-main",
       "agent": "investigator",
       "trinity": [
         "what",
@@ -287,7 +287,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live.",
+      "via": "Deux dépôts, deux chaînes. La synchronie les fait travailler ensemble. Aucun ordre live. Les dépôts ne sont pas mélangés.",
       "agents": [
         "architect",
         "security",
@@ -511,7 +511,7 @@
     {
       "division": "trading",
       "function": "investigator.trace",
-      "product": "Bots et Giant",
+      "product": "cashtro/trading_bot-main",
       "agent": "investigator"
     },
     {
@@ -525,7 +525,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "59eec9468ce379ee89248be83bedc80c5f17ca20b60852ba567503b9abd46546"
+      "name": "8bdf29098f1f7bed49742a10fca230aa06f2a94afc676358ee007c222df33e58"
     },
     {
       "id": "const:control",
@@ -842,7 +842,7 @@
     {
       "from": "nft-giant",
       "to": "trading",
-      "via": "Giant a son cerveau. Les bots restent des modèles. Epicenter Einstein décide en dernier. Aucun ordre live."
+      "via": "Deux dépôts, deux chaînes. La synchronie les fait travailler ensemble. Aucun ordre live. Les dépôts ne sont pas mélangés."
     },
     {
       "from": "empire",
