@@ -128,6 +128,7 @@ func (a *managerAgent) Spec() kernel.Spec {
 			"manager.ask",
 			"manager.improve",
 			"manager.chain",
+			"manager.repair",
 			"manager.fiche",
 			"manager.assign",
 			"manager.graphify",
@@ -425,6 +426,11 @@ func (a *managerAgent) Invoke(ctx context.Context, call kernel.Call) (kernel.Res
 			"line": id, "steps": steps, "posted": posted, "specialized": specialized,
 			"asked": self.Asked, "verdict": verdict,
 		}}, nil
+
+	case "manager.repair":
+		report := SurveyChain()
+		a.k.Remember("instinct", "réparation de chaîne: "+report.Lead)
+		return kernel.Result{OK: true, Message: "vingt agents ont lu la chaîne", Data: report}, nil
 
 	case "manager.fiche":
 		var fiche Fiche
