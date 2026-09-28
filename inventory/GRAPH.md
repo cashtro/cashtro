@@ -90,3 +90,41 @@ flowchart TB
   extract --> unread
   fix2 -. outside the agentic .-> carnet
 ```
+
+## The whole system
+
+Gems on the Giant line are market notes. They are not games.
+
+```mermaid
+flowchart TB
+  hustler[Hustler chair] --> einstein[Einstein]
+  einstein --> voltron[Voltron]
+  voltron --> layers["OPS · Hustle · Eye · Forge · Giant · Fusion"]
+
+  subgraph chain [Agentic chain · twenty seats]
+    maitre[Maître] --> einstein2[Einstein decides]
+  end
+  voltron -.-> chain
+
+  subgraph projects [Projects · not seats on that chain]
+    wp[WordPress sites]
+    edu["Éduconnexion website<br/>school line and WordPress list"]
+    panda["Panda<br/>Vapi customer service · db:panda"]
+    carnet["CRM-Agents<br/>agent carnet"]
+    fix["Fix Tout website<br/>its own CRM"]
+  end
+
+  subgraph pair [Two repos · two chains]
+    giant["Evolu-Jeunes/Giant<br/>ecosystem and environment<br/>its own chain"]
+    bot["cashtro/trading_bot-main<br/>its own chain"]
+    sync["Sync chain<br/>together · repos not mixed<br/>blockchain trade waits on a written AMF answer"]
+  end
+
+  giant --> sync
+  bot --> sync
+  chain -.-> giant
+  chain -.-> bot
+  wp --- edu
+  panda --> carnet
+  fix -. no fiche .-> carnet
+```
