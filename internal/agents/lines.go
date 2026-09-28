@@ -124,7 +124,7 @@ func Lines() []Line {
 			ID: "trading", Name: "Crypto et AI bot", Brain: "Architecte",
 			Mandate: "Trader et automatiser sur la blockchain : exchanges, coins, gems, Web3. " +
 				"Le bot est son propre dépôt. Giant est un autre dépôt. La synchronie les relie sans les mélanger.",
-			Controls: "Architecte modélise. Hustler suit ce qui rapporte. Aucun ordre live sans réponse AMF écrite. Le dépôt Giant n'est pas dans cette liste.",
+			Controls: "Architecte modélise. Hustler suit ce qui rapporte. L'AMF est traitée hors de ce kernel. Le dépôt Giant n'est pas dans cette liste.",
 			Repos: []string{
 				"Evolu-Jeunes/AI-BOT", "Evolu-Jeunes/bot", "Evolu-Jeunes/Blockchain-Trading-",
 				"Evolu-Jeunes/TradingBotCodex", "cashtro/trading_bot-main",

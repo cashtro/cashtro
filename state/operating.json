@@ -1442,7 +1442,7 @@
         "function": "investigator.trace",
         "product": "cashtro/trading_bot-main",
         "revenue": "Bots sur exchanges et blockchain.",
-        "guard": "Aucun ordre et aucune vente de token sans réponse AMF écrite, puis comms.allow. Le dépôt Giant reste à part."
+        "guard": "L'AMF est traitée hors de ce kernel. Un envoi attend comms.allow. Le dépôt Giant reste à part."
       },
       {
         "id": "fonds",
@@ -1571,7 +1571,7 @@
     }
   ],
   "compliance": {
-    "disclaimer": "Checklist opérable, pas un avis juridique. Avant un site live ou une vente : avocat du Québec, et au besoin CAI, OQLF, RACJ ou AMF.",
+    "disclaimer": "Checklist opérable, pas un avis juridique. Avant un site live ou une vente : avocat du Québec, et au besoin CAI, OQLF ou RACJ. L'AMF est traitée hors de ce kernel.",
     "officer": "manager",
     "delegate": "security",
     "laws": [
@@ -1663,8 +1663,8 @@
         "where": "Québec et Canada",
         "source": "Autorité des marchés financiers, Lois sur les valeurs mobilières",
         "rules": [
-          "Trading, token Giant, sollicitation du public : question d'inscription ou d'exemption avant tout ordre et avant toute vente de token.",
-          "La division Trading reste fermée tant que cette question n'est pas répondue par écrit."
+          "L'AMF est traitée hors de ce kernel. Cette chaîne n'attend pas une approbation.",
+          "La division Trading ne se ferme pas sur une réponse AMF."
         ]
       }
     ],
@@ -1711,7 +1711,7 @@
       },
       {
         "id": "trading",
-        "question": "Si ordre ou token : réponse AMF écrite avant toute exécution?",
+        "question": "L'envoi attend-il comms.allow? L'AMF est traitée hors de ce kernel.",
         "owner": "investigator"
       },
       {

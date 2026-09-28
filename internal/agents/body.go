@@ -147,7 +147,7 @@ func HustlerVeins() []Vein {
 		{Source: "math", Lesson: "Count the rate, the expected value, and the tax before the move.", Copied: false},
 		{Source: "How to Solve It", Lesson: "Name the unknown, list what is known, then take one step.", Copied: false},
 		{Source: "ai-agentic", Lesson: "An agent has a role, a tool, a memory, and a human gate. It does not invent a second product.", Copied: false},
-		{Source: "market", Lesson: "Read the market in public. No live order and no token sale without the written AMF answer.", Copied: false},
+		{Source: "market", Lesson: "Read the market in public. AMF approval is handled outside this kernel.", Copied: false},
 		{Source: "Trinity", Lesson: "Bring the agents that already exist, then the departments. One shared brain. One runner. One desk. One commercial model.", Copied: false},
 		{Source: "The Psychology of Money", Lesson: "Time in the position beats a clever trade. The ledger stays internal.", Copied: false},
 	}
@@ -213,7 +213,7 @@ func FusionResume() string {
 	b.WriteString("\n## Conglomerate\n\n")
 	b.WriteString(strings.Join(body.Members, ", ") + "\n\n")
 	b.WriteString("## Laws\n\n")
-	b.WriteString("The FBI enforces the checklist already built: Loi 25, PIPEDA, CASL, Charte, consumer protection, image, RACJ, AMF. A question becomes a bill. A bill becomes a law only when a rule is passed. The CIA and the FBI each copy the cooperative hierarchy and keep an opposition. The two oppositions scrutinize their own house and build the next structure together.\n\n")
+	b.WriteString("The FBI enforces the checklist already built: Loi 25, PIPEDA, CASL, Charte, consumer protection, image, RACJ. AMF approval is handled outside this kernel. A question becomes a bill. A bill becomes a law only when a rule is passed. The CIA and the FBI each copy the cooperative hierarchy and keep an opposition. The two oppositions scrutinize their own house and build the next structure together.\n\n")
 	b.WriteString("## Code\n\n")
 	b.WriteString("The control plane is the Go kernel in `cashtro/cashtro`. Call `manager.fusion`. The TypeScript brains stay parallel. There is no import between the two GitHubs.\n")
 	return b.String()

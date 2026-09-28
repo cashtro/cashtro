@@ -31,7 +31,7 @@ type Gate struct {
 // Loi returns the Quebec and Canada working rules.
 func Loi() Compliance {
 	return Compliance{
-		Disclaimer: "Checklist opérable, pas un avis juridique. Avant un site live ou une vente : avocat du Québec, et au besoin CAI, OQLF, RACJ ou AMF.",
+		Disclaimer: "Checklist opérable, pas un avis juridique. Avant un site live ou une vente : avocat du Québec, et au besoin CAI, OQLF ou RACJ. L'AMF est traitée hors de ce kernel.",
 		Officer:    "manager",
 		Delegate:   "security",
 		Laws: []Law{
@@ -107,8 +107,8 @@ func Loi() Compliance {
 				ID: "amf", Name: "Valeurs mobilières", Where: "Québec et Canada",
 				Source: "Autorité des marchés financiers, Lois sur les valeurs mobilières",
 				Rules: []string{
-					"Trading, token Giant, sollicitation du public : question d'inscription ou d'exemption avant tout ordre et avant toute vente de token.",
-					"La division Trading reste fermée tant que cette question n'est pas répondue par écrit.",
+					"L'AMF est traitée hors de ce kernel. Cette chaîne n'attend pas une approbation.",
+					"La division Trading ne se ferme pas sur une réponse AMF.",
 				},
 			},
 		},
@@ -121,7 +121,7 @@ func Loi() Compliance {
 			{ID: "casl", Question: "Courriel commercial : consentement, identité, désabonnement?", Owner: "comms"},
 			{ID: "photos", Question: "Droits sur les photos réglés, aucune personne identifiable vendue sans consentement?", Owner: "reviewer"},
 			{ID: "tirage", Question: "Si tirage : concours publicitaire classé, pas une loterie?", Owner: "security"},
-			{ID: "trading", Question: "Si ordre ou token : réponse AMF écrite avant toute exécution?", Owner: "investigator"},
+			{ID: "trading", Question: "L'envoi attend-il comms.allow? L'AMF est traitée hors de ce kernel.", Owner: "investigator"},
 			{ID: "incident", Question: "Registre d'incidents et chemin d'avis à la CAI connus?", Owner: "security"},
 			{ID: "question", Question: "Une question est posée, et la position est lue, avant ce coup?", Owner: "memory"},
 			{ID: "coup", Question: "Le coup de pouvoir nomme la réponse adverse?", Owner: "reviewer"},

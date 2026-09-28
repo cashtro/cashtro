@@ -19,7 +19,7 @@ type SyncChain struct {
 }
 
 // GiantSync is the chain between Giant and the trading bot.
-// The two GitHub repos stay apart. Blockchain trade waits on a written AMF answer.
+// The two GitHub repos stay apart. AMF approval is handled outside this kernel.
 func GiantSync() SyncChain {
 	return SyncChain{
 		ID:         "giant-trading",

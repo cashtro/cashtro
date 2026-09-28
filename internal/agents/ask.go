@@ -167,9 +167,9 @@ func lineKnown(id string) map[string]string {
 		}
 	case "trading":
 		return map[string]string{
-			"situation":   "Modèles et bots. Pas d'ordre live.",
-			"manque":      "La réponse AMF écrite.",
-			"intouchable": "Un ordre ou une vente de token sans cette réponse.",
+			"situation":   "Modèles et bots. Le trade blockchain se prépare ici.",
+			"manque":      "La décision d'Epicenter Einstein avant un envoi.",
+			"intouchable": "Le dépôt Giant, et un envoi sans comms.allow.",
 		}
 	case "fonds":
 		return map[string]string{

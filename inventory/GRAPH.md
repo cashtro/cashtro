@@ -117,7 +117,7 @@ flowchart TB
   subgraph pair [Two repos · two chains]
     giant["Evolu-Jeunes/Giant<br/>ecosystem and environment<br/>its own chain"]
     bot["cashtro/trading_bot-main<br/>its own chain"]
-    sync["Sync chain<br/>together · repos not mixed<br/>blockchain trade waits on a written AMF answer"]
+    sync["Sync chain<br/>together · repos not mixed<br/>AMF handled outside the kernel"]
   end
 
   giant --> sync

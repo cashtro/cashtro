@@ -188,7 +188,7 @@ func FusionWorkers() []FusionAgent {
 		{"lpc", "consommateur", "Tenir les divulgations et refuser un prix caché ou une urgence fausse."},
 		{"image", "image", "Garder les droits photo. Une personne identifiable ne sort pas sans consentement."},
 		{"racj", "concours", "Classer un tirage avant publication. Pas une loterie."},
-		{"amf", "marches", "Tenir la question AMF écrite avant un ordre ou une vente de token."},
+		{"amf", "marches", "L'AMF est traitée hors de ce kernel. Cette chaîne n'attend pas une approbation."},
 	}
 	roles := []struct {
 		id, duty string

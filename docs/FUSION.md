@@ -48,7 +48,7 @@ This knowledge runs through the hustler. Every strategy and every move has to st
 - math: Count the rate, the expected value, and the tax before the move.
 - How to Solve It: Name the unknown, list what is known, then take one step.
 - ai-agentic: An agent has a role, a tool, a memory, and a human gate. It does not invent a second product.
-- market: Read the market in public. No live order and no token sale without the written AMF answer.
+- market: Read the market in public. AMF approval is handled outside this kernel.
 - Trinity: Bring the agents that already exist, then the departments. One shared brain. One runner. One desk. One commercial model.
 - The Psychology of Money: Time in the position beats a clever trade. The ledger stays internal.
 
@@ -72,7 +72,7 @@ instinct, architecte, cartographe, forgeron, orfevre, hustler, voltron, scrum, f
 
 ## Laws
 
-The FBI enforces the checklist already built: Loi 25, PIPEDA, CASL, Charte, consumer protection, image, RACJ, AMF. A question becomes a bill. A bill becomes a law only when a rule is passed. The CIA and the FBI each copy the cooperative hierarchy and keep an opposition. The two oppositions scrutinize their own house and build the next structure together.
+The FBI enforces the checklist already built: Loi 25, PIPEDA, CASL, Charte, consumer protection, image, RACJ. AMF approval is handled outside this kernel. A question becomes a bill. A bill becomes a law only when a rule is passed. The CIA and the FBI each copy the cooperative hierarchy and keep an opposition. The two oppositions scrutinize their own house and build the next structure together.
 
 ## Code
 

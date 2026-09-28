@@ -156,9 +156,9 @@
       "section": "core",
       "kind": "lesson",
       "title": "market",
-      "body": "Read the market in public. No live order and no token sale without the written AMF answer.",
+      "body": "Read the market in public. AMF approval is handled outside this kernel.",
       "prev": "5ad1c738b988f8b1bb09c0f7dc92ef7804184720a62094bc2e454ae5aa0f2398",
-      "hash": "f4b73796814e4624acc1656b39ffb694c4508a124012065e0bb62a06789f42cf"
+      "hash": "2d528d38a3cebd0f065202d5fe23aff408af0c7fd389b0c3f6dabad690930a76"
     },
     {
       "index": 17,
@@ -166,8 +166,8 @@
       "kind": "lesson",
       "title": "Trinity",
       "body": "Bring the agents that already exist, then the departments. One shared brain. One runner. One desk. One commercial model.",
-      "prev": "f4b73796814e4624acc1656b39ffb694c4508a124012065e0bb62a06789f42cf",
-      "hash": "f5935ae3e78bf35f890c5e4e9083af029fee4ab90f5c72ccf7529a7010fe2050"
+      "prev": "2d528d38a3cebd0f065202d5fe23aff408af0c7fd389b0c3f6dabad690930a76",
+      "hash": "14e88d351a55c26b1edddd3f7d00d8592644e43f2cbd22a22005410b302b5aa7"
     },
     {
       "index": 18,
@@ -175,8 +175,8 @@
       "kind": "lesson",
       "title": "The Psychology of Money",
       "body": "Time in the position beats a clever trade. The ledger stays internal.",
-      "prev": "f5935ae3e78bf35f890c5e4e9083af029fee4ab90f5c72ccf7529a7010fe2050",
-      "hash": "012813b566dc15d698312746797a109ea75b07b894f4718898a92748d476d816"
+      "prev": "14e88d351a55c26b1edddd3f7d00d8592644e43f2cbd22a22005410b302b5aa7",
+      "hash": "211d066704ecce25e894f337597a2b8dc6f67012e23d9dc6ceabfb1998f00794"
     },
     {
       "index": 19,
@@ -184,8 +184,8 @@
       "kind": "catalog",
       "title": "The 48 Laws of Power",
       "body": "Robert Greene. Title only.",
-      "prev": "012813b566dc15d698312746797a109ea75b07b894f4718898a92748d476d816",
-      "hash": "caa50e81310ea89604babc9ffc3eb3a416e960429a84f17e7745534f43fcabfd"
+      "prev": "211d066704ecce25e894f337597a2b8dc6f67012e23d9dc6ceabfb1998f00794",
+      "hash": "bc030dea76c8b268b8abfaad5e7ed8c6c1aed2f2d21336fe584c15f3d87f3097"
     },
     {
       "index": 20,
@@ -193,8 +193,8 @@
       "kind": "catalog",
       "title": "The Art of Seduction",
       "body": "Robert Greene. Title only.",
-      "prev": "caa50e81310ea89604babc9ffc3eb3a416e960429a84f17e7745534f43fcabfd",
-      "hash": "58b652575a67b2027ab0bd316bff81b5db6222ec4206398ffd63027516c2939c"
+      "prev": "bc030dea76c8b268b8abfaad5e7ed8c6c1aed2f2d21336fe584c15f3d87f3097",
+      "hash": "329ebb40f9f318ecf22871801d73687f6bc34b579ebdb65a1ef52edc8f855b4a"
     },
     {
       "index": 21,
@@ -202,8 +202,8 @@
       "kind": "catalog",
       "title": "The 33 Strategies of War",
       "body": "Robert Greene. Title only.",
-      "prev": "58b652575a67b2027ab0bd316bff81b5db6222ec4206398ffd63027516c2939c",
-      "hash": "26a773851983c59dba446bcd23d72640aeb798eb5e9626ff7454c454296a3626"
+      "prev": "329ebb40f9f318ecf22871801d73687f6bc34b579ebdb65a1ef52edc8f855b4a",
+      "hash": "b81c7eb0196b22de2fdb9a04e2cae9307d4015857d60dd59d5ddb34f23293092"
     },
     {
       "index": 22,
@@ -211,8 +211,8 @@
       "kind": "catalog",
       "title": "Mastery",
       "body": "Robert Greene. Title only.",
-      "prev": "26a773851983c59dba446bcd23d72640aeb798eb5e9626ff7454c454296a3626",
-      "hash": "9caf7e16bd4e9f2bed7ea28b070ffd0f414238135be22c9693b75ed56199dac3"
+      "prev": "b81c7eb0196b22de2fdb9a04e2cae9307d4015857d60dd59d5ddb34f23293092",
+      "hash": "c915b14aa375126977922ad5c67dfcedf2612cd0fb848573c27643024bc46a8c"
     },
     {
       "index": 23,
@@ -220,8 +220,8 @@
       "kind": "catalog",
       "title": "The Laws of Human Nature",
       "body": "Robert Greene. Title only.",
-      "prev": "9caf7e16bd4e9f2bed7ea28b070ffd0f414238135be22c9693b75ed56199dac3",
-      "hash": "c59cd9c11496323e04cd88964fb31e711dcac3c667660802733af93f78b5b5d1"
+      "prev": "c915b14aa375126977922ad5c67dfcedf2612cd0fb848573c27643024bc46a8c",
+      "hash": "a6c2c57902964a6bcddfcd96a8cdaf8a68385eb170f8ba29752035e7f64edfa4"
     },
     {
       "index": 24,
@@ -229,8 +229,8 @@
       "kind": "catalog",
       "title": "The 50th Law",
       "body": "Robert Greene and 50 Cent. Title only.",
-      "prev": "c59cd9c11496323e04cd88964fb31e711dcac3c667660802733af93f78b5b5d1",
-      "hash": "7380a2e43ec392411ad7736294b7f408fe9a7c09e0ec33849f28f04840ddf601"
+      "prev": "a6c2c57902964a6bcddfcd96a8cdaf8a68385eb170f8ba29752035e7f64edfa4",
+      "hash": "bf655383ad2f4356d6a244ad1a20daa161cf1dd502dd24cecad4290b0dab7191"
     },
     {
       "index": 25,
@@ -238,8 +238,8 @@
       "kind": "catalog",
       "title": "The Lean Startup",
       "body": "Eric Ries. Title only.",
-      "prev": "7380a2e43ec392411ad7736294b7f408fe9a7c09e0ec33849f28f04840ddf601",
-      "hash": "9adb1fd376b3c8624d73a19fc368d6695a0e60e4bce554243be6a52c0bab2aa7"
+      "prev": "bf655383ad2f4356d6a244ad1a20daa161cf1dd502dd24cecad4290b0dab7191",
+      "hash": "b4904aba3c79a2ca2122505f552081e1858ef639a581000a9fe7524b4c83d609"
     },
     {
       "index": 26,
@@ -247,8 +247,8 @@
       "kind": "catalog",
       "title": "Good to Great",
       "body": "Jim Collins. Title only.",
-      "prev": "9adb1fd376b3c8624d73a19fc368d6695a0e60e4bce554243be6a52c0bab2aa7",
-      "hash": "388be95b4eca2d6d7b6955406fdb9dd0e83a28de4c5f503370e2a62358e7078a"
+      "prev": "b4904aba3c79a2ca2122505f552081e1858ef639a581000a9fe7524b4c83d609",
+      "hash": "057048fe808c516744898b5c9765a59fdc09cf82bbaf41e926907a57411018b2"
     },
     {
       "index": 27,
@@ -256,8 +256,8 @@
       "kind": "catalog",
       "title": "Zero to One",
       "body": "Peter Thiel. Title only.",
-      "prev": "388be95b4eca2d6d7b6955406fdb9dd0e83a28de4c5f503370e2a62358e7078a",
-      "hash": "f15701234cd1b86ee573d5a4b10098b856c6f5d3c4c3a6a9da208c7c34a5ef82"
+      "prev": "057048fe808c516744898b5c9765a59fdc09cf82bbaf41e926907a57411018b2",
+      "hash": "452ead0d4c3481a2cf120e468e922efdc17742e800b3946f817f86f23fd350de"
     },
     {
       "index": 28,
@@ -265,8 +265,8 @@
       "kind": "catalog",
       "title": "Competitive Strategy",
       "body": "Michael Porter. Title only.",
-      "prev": "f15701234cd1b86ee573d5a4b10098b856c6f5d3c4c3a6a9da208c7c34a5ef82",
-      "hash": "cd3599e84d661db9cfddb02b1c9837fb1dca511150651f1679e7600b0c76d0ec"
+      "prev": "452ead0d4c3481a2cf120e468e922efdc17742e800b3946f817f86f23fd350de",
+      "hash": "48bffa6fcfb83293dd22316a0639b4d65557fa85a9bfe859780280af31b7fdee"
     },
     {
       "index": 29,
@@ -274,8 +274,8 @@
       "kind": "catalog",
       "title": "Profit First",
       "body": "Mike Michalowicz. Title only.",
-      "prev": "cd3599e84d661db9cfddb02b1c9837fb1dca511150651f1679e7600b0c76d0ec",
-      "hash": "1fa71fe38ee3bced76a0aa515b87a56aec936788f96a423747e5de2e278300e1"
+      "prev": "48bffa6fcfb83293dd22316a0639b4d65557fa85a9bfe859780280af31b7fdee",
+      "hash": "73d5aaa043030cee7bcb7c929ddd73d665163d151e77315358cd4a125b20f3df"
     },
     {
       "index": 30,
@@ -283,8 +283,8 @@
       "kind": "catalog",
       "title": "The E-Myth Revisited",
       "body": "Michael Gerber. Title only.",
-      "prev": "1fa71fe38ee3bced76a0aa515b87a56aec936788f96a423747e5de2e278300e1",
-      "hash": "36e9b38b91d0fb443109249eaf52d40e666d546dae43b5a7b59a8677d28cdcf5"
+      "prev": "73d5aaa043030cee7bcb7c929ddd73d665163d151e77315358cd4a125b20f3df",
+      "hash": "c02f6be5e7a430b54679247897536774c94f3358b3399761f279d837f1dcbb0f"
     },
     {
       "index": 31,
@@ -292,8 +292,8 @@
       "kind": "catalog",
       "title": "The Hard Thing About Hard Things",
       "body": "Ben Horowitz. Title only.",
-      "prev": "36e9b38b91d0fb443109249eaf52d40e666d546dae43b5a7b59a8677d28cdcf5",
-      "hash": "577033f2fb30460791b9ed02389c5435957b83ae02ce4e0de649ef62eb6f0585"
+      "prev": "c02f6be5e7a430b54679247897536774c94f3358b3399761f279d837f1dcbb0f",
+      "hash": "9c2855cdcecbb0b30f395c0ac84cf2dc8ece69e090f991c3a0e895b932952b16"
     },
     {
       "index": 32,
@@ -301,8 +301,8 @@
       "kind": "catalog",
       "title": "How to Solve It",
       "body": "George Polya. Title only.",
-      "prev": "577033f2fb30460791b9ed02389c5435957b83ae02ce4e0de649ef62eb6f0585",
-      "hash": "4cf88d27851562ef9616dc81d834ef574a8c45405465c8f33ae974d43fee6f6e"
+      "prev": "9c2855cdcecbb0b30f395c0ac84cf2dc8ece69e090f991c3a0e895b932952b16",
+      "hash": "7f0d8cb110ff858fc6720c1420bda7b4836ebe235a3adc57956ca9ce1f751319"
     },
     {
       "index": 33,
@@ -310,8 +310,8 @@
       "kind": "catalog",
       "title": "The Psychology of Money",
       "body": "Morgan Housel. Title only.",
-      "prev": "4cf88d27851562ef9616dc81d834ef574a8c45405465c8f33ae974d43fee6f6e",
-      "hash": "0971700814dd8869ef6ec83d2b2feb5dc1b61b7ba6ea151262b19d13686f6aa4"
+      "prev": "7f0d8cb110ff858fc6720c1420bda7b4836ebe235a3adc57956ca9ce1f751319",
+      "hash": "651ac3ac7e8deedd716e224e4a6c2d4370b1b2d9ea30588c17dae04063d463f7"
     },
     {
       "index": 34,
@@ -319,8 +319,8 @@
       "kind": "catalog",
       "title": "Market Wizards",
       "body": "Jack Schwager. Title only.",
-      "prev": "0971700814dd8869ef6ec83d2b2feb5dc1b61b7ba6ea151262b19d13686f6aa4",
-      "hash": "d96cc092ed56a8a7d84bff20d6e622bdeb34bae690b5062220f05cf5d2d55d72"
+      "prev": "651ac3ac7e8deedd716e224e4a6c2d4370b1b2d9ea30588c17dae04063d463f7",
+      "hash": "f09fea64d9320e15a0780640e15f97d9f8bfd42597fefbcdf2a78074b6cac142"
     },
     {
       "index": 35,
@@ -328,8 +328,8 @@
       "kind": "trinity",
       "title": "What Trinity is, and your own instance running by the end",
       "body": "This kernel. One local instance. WATCH reads /health.",
-      "prev": "d96cc092ed56a8a7d84bff20d6e622bdeb34bae690b5062220f05cf5d2d55d72",
-      "hash": "1aee2a2bcaf6e2b5ef1c3037f6a8cb04b52e1ba3ab9f0748029cf5723cb2a4dd"
+      "prev": "f09fea64d9320e15a0780640e15f97d9f8bfd42597fefbcdf2a78074b6cac142",
+      "hash": "bf504ad46710c8eda6082ce4db03c39d7f2325e115fee102a082e2c14c56c6de"
     },
     {
       "index": 36,
@@ -337,8 +337,8 @@
       "kind": "trinity",
       "title": "Bring your existing agents, then build the departments",
       "body": "The registered agentics come first. Chart departments come after.",
-      "prev": "1aee2a2bcaf6e2b5ef1c3037f6a8cb04b52e1ba3ab9f0748029cf5723cb2a4dd",
-      "hash": "1005efcc44a18b21accc17d03ef2be010a7a62409b5df0fbfa62f176f5d8efa8"
+      "prev": "bf504ad46710c8eda6082ce4db03c39d7f2325e115fee102a082e2c14c56c6de",
+      "hash": "0fb7de622fb7eda38e1ec05d02a75c944ea404196b3a4ff28aea35743934cbb0"
     },
     {
       "index": 37,
@@ -346,8 +346,8 @@
       "kind": "trinity",
       "title": "Give your agency one shared brain",
       "body": "Einstein is the one shared brain. The hustler relays to him.",
-      "prev": "1005efcc44a18b21accc17d03ef2be010a7a62409b5df0fbfa62f176f5d8efa8",
-      "hash": "4d8efb5c1335096c83d972bc112d8aaa90027166218098f2d414f1eb8efde030"
+      "prev": "0fb7de622fb7eda38e1ec05d02a75c944ea404196b3a4ff28aea35743934cbb0",
+      "hash": "25a230c94d383617a174ce17f5758036363ca88f128ec2f526eafdb7c6544c9f"
     },
     {
       "index": 38,
@@ -355,8 +355,8 @@
       "kind": "trinity",
       "title": "Orchestration: one agent to run them all",
       "body": "Voltron keeps every chain on.",
-      "prev": "4d8efb5c1335096c83d972bc112d8aaa90027166218098f2d414f1eb8efde030",
-      "hash": "d80a5205da1e6ab1ad8602a13fe77ee6673db40ec91f74ff18210c924c076c4d"
+      "prev": "25a230c94d383617a174ce17f5758036363ca88f128ec2f526eafdb7c6544c9f",
+      "hash": "127b4fb2bc4e98d1b6dd9c754319a88a3407ea69fbe05aeb34927e5098e47a93"
     },
     {
       "index": 39,
@@ -364,8 +364,8 @@
       "kind": "trinity",
       "title": "Workspace: the interface for your team",
       "body": "The desk at http://localhost:8080.",
-      "prev": "d80a5205da1e6ab1ad8602a13fe77ee6673db40ec91f74ff18210c924c076c4d",
-      "hash": "1f9712a20ec3c28c7c8cb84fcccaa3a11cf709f6b847635c694aa23c14a18158"
+      "prev": "127b4fb2bc4e98d1b6dd9c754319a88a3407ea69fbe05aeb34927e5098e47a93",
+      "hash": "910c8487097f8a40fe734ef3d712a733f6b5f64d3f6a39537b361b6d84b5208f"
     },
     {
       "index": 40,
@@ -373,8 +373,8 @@
       "kind": "trinity",
       "title": "Operations \u0026 the commercial model",
       "body": "OPS runs the work. Each division has a product, a revenue, and a guard.",
-      "prev": "1f9712a20ec3c28c7c8cb84fcccaa3a11cf709f6b847635c694aa23c14a18158",
-      "hash": "5ed76830338aa7e8c89f75bd985478cb85b3b3473609dde7a150963cfb12ce52"
+      "prev": "910c8487097f8a40fe734ef3d712a733f6b5f64d3f6a39537b361b6d84b5208f",
+      "hash": "fc01889abdad230e74916dc99d5fc46173a7db7b7cd569273b78fb53860e9ccf"
     },
     {
       "index": 41,
@@ -382,8 +382,8 @@
       "kind": "ledger",
       "title": "fonds",
       "body": "Grand livre interne. Pas une banque. Rien ne sort sans allow.",
-      "prev": "5ed76830338aa7e8c89f75bd985478cb85b3b3473609dde7a150963cfb12ce52",
-      "hash": "7327fcb7e7c75c60bf345009e5f90b4ae44a0b40e4c4282ca5ab4ed9aeada2f2"
+      "prev": "fc01889abdad230e74916dc99d5fc46173a7db7b7cd569273b78fb53860e9ccf",
+      "hash": "b1b6ee8097d0b6039cfe2c483c08668f74da2808799eba9ee561948c30362baa"
     },
     {
       "index": 42,
@@ -391,8 +391,8 @@
       "kind": "slot",
       "title": "OPENROUTER_API_KEY",
       "body": "",
-      "prev": "7327fcb7e7c75c60bf345009e5f90b4ae44a0b40e4c4282ca5ab4ed9aeada2f2",
-      "hash": "96f60b08795b4fe24c8790a66fe488ebeda4adb48745789df95a1cf42a214b0e"
+      "prev": "b1b6ee8097d0b6039cfe2c483c08668f74da2808799eba9ee561948c30362baa",
+      "hash": "d9e385736ba1d5de2f58a5b604e08daaab72dfdfda32d17b6d1295efbc3fc995"
     },
     {
       "index": 43,
@@ -400,8 +400,8 @@
       "kind": "slot",
       "title": "DATABASE_URL",
       "body": "",
-      "prev": "96f60b08795b4fe24c8790a66fe488ebeda4adb48745789df95a1cf42a214b0e",
-      "hash": "2ada71ec8391ff889fe7cea1d7d343eaa07a2b8a1471ed74ab382a8c4cb61c06"
+      "prev": "d9e385736ba1d5de2f58a5b604e08daaab72dfdfda32d17b6d1295efbc3fc995",
+      "hash": "65c5790704fda29dced71b2380d066cdc11f1691905bd911a279c897bc8e66c9"
     }
   ],
   "brains": [
