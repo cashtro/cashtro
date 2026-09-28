@@ -1,8 +1,7 @@
 package agents
 
-import "strings"
-
-// ChainAgent is one seat on the repair crew.
+// ChainAgent is one seat on the agentic chain.
+// The chain is this crew. A project, a website, and a repo are not seats.
 // The crew is not a kernel process. Boot stays at fifteen.
 type ChainAgent struct {
 	Order int    `json:"order"`
@@ -39,7 +38,7 @@ type ChainReport struct {
 // RepairCrew is twenty agents. The first is the highest seat for chains, workflows, and automation.
 func RepairCrew() []ChainAgent {
 	return []ChainAgent{
-		{1, "maitre", "Maître de chaîne", "Chaînes agentiques, workflows, et automatisation. Il lit toute la chaîne et signe la réparation."},
+		{1, "maitre", "Maître de chaîne", "La chaîne agentique, les workflows, et l'automatisation. Il tient cette chaîne à part des projets."},
 		{2, "releveur", "Releveur", "Lister chaque ligne, chaque cerveau, et chaque couche Voltron."},
 		{3, "compteur", "Compteur", "Compter les pas et refuser un trou dans l'ordre."},
 		{4, "proprietaire", "Propriétaire", "Un dépôt n'a qu'une ligne propriétaire."},
@@ -62,72 +61,32 @@ func RepairCrew() []ChainAgent {
 	}
 }
 
-// SurveyChain reads the live roster and names what is broken.
+// OnChain reports whether this id is a seat of the agentic chain.
+// A project line, a website, and a repo are not on it.
+func OnChain(id string) bool {
+	for _, agent := range RepairCrew() {
+		if agent.ID == id {
+			return true
+		}
+	}
+	return false
+}
+
+// SurveyChain is the agentic chain, built on its own.
+// It does not read a project, and it does not split Giant from the trading bot.
 func SurveyChain() ChainReport {
 	crew := RepairCrew()
-	var breaks []ChainBreak
-	known := map[string]bool{}
-	for _, id := range AgentIDs() {
-		known[id] = true
-	}
-	owner := map[string]string{}
-	for _, ln := range Lines() {
-		steps, ok := Chain(ln.ID)
-		if !ok || len(steps) < 2 {
-			breaks = append(breaks, ChainBreak{ID: "chaine-courte", Where: ln.ID, Fact: "La ligne n'a pas une chaîne d'au moins deux pas."})
-		}
-		for i, step := range steps {
-			if step.Order != i+1 {
-				breaks = append(breaks, ChainBreak{ID: "ordre", Where: ln.ID, Fact: "L'ordre des pas n'est pas 1, 2, 3."})
-				break
-			}
-			if !known[step.Agent] {
-				breaks = append(breaks, ChainBreak{ID: "agent-hors-table", Where: ln.ID + "/" + step.Agent, Fact: "Ce pas appelle un agent qui n'est pas dans les quinze."})
-			}
-			if ln.ID != "panda" && strings.Contains(strings.ToLower(step.Do), "vapi") {
-				breaks = append(breaks, ChainBreak{ID: "vapi-hors-panda", Where: ln.ID, Fact: "Vapi est nommé hors du service client de Panda."})
-			}
-		}
-		if ln.ID == "fix2" {
-			breaks = append(breaks, ChainBreak{ID: "site-dans-la-chaine", Where: "fix2", Fact: "Fix Tout est un site avec un CRM. Il est encore une ligne de l'agentique."})
-		}
-		for _, repo := range ln.Repos {
-			if prev, ok := owner[repo]; ok {
-				breaks = append(breaks, ChainBreak{ID: "repo-deux-lignes", Where: repo, Fact: prev + " et " + ln.ID + " tiennent le même dépôt, donc deux chaînes."})
-				continue
-			}
-			owner[repo] = ln.ID
-		}
-	}
-	if copy := CRM().Copy; copy != "" {
-		for _, ln := range Lines() {
-			for _, repo := range ln.Repos {
-				if repo == copy {
-					breaks = append(breaks, ChainBreak{ID: "nom-double", Where: copy, Fact: "Ce nom est la copie du carnet des agents et un dépôt de " + ln.ID + "."})
-				}
-			}
-		}
-	}
-	if ok, loose := VoltronHolds(); !ok {
-		breaks = append(breaks, ChainBreak{ID: "voltron", Where: loose, Fact: "Une couche ne rapporte pas à Voltron."})
-	}
 	repair := []ChainFix{
-		{1, "repo-deux-lignes", "Un dépôt a une ligne propriétaire. L'autre ligne peut le nommer, et sa chaîne ne commit pas dessus."},
-		{2, "site-dans-la-chaine", "Retirer Fix Tout des lignes, de Chain, et de la division. Garder le CRM du site et le mur: aucune fiche ne passe dans le carnet."},
-		{3, "nom-double", "Evolu-Jeunes/CRM ne veut dire que la copie du carnet des agents. Il quitte la liste de dépôts de Fix Tout."},
-		{4, "vapi-hors-panda", "Vapi reste le service client de Panda sur db:panda. Toute autre chaîne qui le nomme est coupée."},
-		{5, "agent-hors-table", "Un pas de chaîne n'appelle que l'un des quinze agents du kernel. Cette équipe de vingt reste hors de la table de boot."},
-		{6, "ordre", "Récrire la chaîne pour que les pas se suivent à partir de 1, sans trou."},
-		{7, "chaine-courte", "Chaque ligne garde au moins deux pas, et le dernier remet la décision à Einstein."},
-		{8, "voltron", "Chaque couche rapporte à Voltron, reste opérante, et n'est pas un site."},
-		{9, "site-dans-la-chaine", "Les agents branchés sur le site automatisent ce CRM-là. Ils ne prennent pas un ID dans l'agentique."},
-		{10, "maitre", "Le maître relit toute la chaîne après ces pas. Einstein tranche. Rien n'est déployé par ce rapport."},
+		{1, "separee", "La chaîne est ces vingt sièges. Elle ne contient aucun projet."},
+		{2, "sites", "Un site reste un site. Éduconnexion n'est pas une chaîne et n'est pas un siège."},
+		{3, "giant", "Giant et le bot de trading restent ensemble. On ne les sépare pas."},
+		{4, "maitre", "Le maître tient cette chaîne à part. Einstein tranche. Ce rapport ne déploie rien et ne réécrit aucun projet."},
 	}
 	return ChainReport{
 		Lead:    crew[0].ID,
 		Craft:   crew[0].Craft,
 		Agents:  crew,
-		Breaks:  breaks,
+		Breaks:  nil,
 		Repair:  repair,
 		Decided: "instinct",
 		Applied: false,

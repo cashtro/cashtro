@@ -16,23 +16,49 @@ func TestRepairCrewReadsTheWholeChain(t *testing.T) {
 		if agent.Order != i+1 || agent.Craft == "" || agent.Name == "" {
 			t.Fatalf("seat %+v", agent)
 		}
+		if !OnChain(agent.ID) {
+			t.Fatalf("%s is not on the chain", agent.ID)
+		}
 	}
+	for _, ln := range Lines() {
+		if OnChain(ln.ID) {
+			t.Fatalf("project %s is on the chain", ln.ID)
+		}
+	}
+	if OnChain("educonnexion") || OnChain("Evolu-Jeunes/educonnexion") || OnChain("chain-1") {
+		t.Fatal("Éduconnexion is a website, not a chain")
+	}
+
+	var school, wordpress, giant, trading bool
+	for _, ln := range Lines() {
+		for _, repo := range ln.Repos {
+			if repo == "Evolu-Jeunes/educonnexion" && ln.ID == "ecole" {
+				school = true
+			}
+			if repo == "Evolu-Jeunes/educonnexion" && ln.ID == "wordpress" {
+				wordpress = true
+			}
+			if repo == "Evolu-Jeunes/Giant" && ln.ID == "nft-giant" {
+				giant = true
+			}
+			if repo == "Evolu-Jeunes/Giant" && ln.ID == "trading" {
+				trading = true
+			}
+		}
+	}
+	if !school || !wordpress {
+		t.Fatal("Éduconnexion must stay on its website projects")
+	}
+	if !giant || !trading {
+		t.Fatal("Giant and the trading bot stay together")
+	}
+
 	report := SurveyChain()
-	if report.Lead != "maitre" || report.Decided != "instinct" || report.Applied || len(report.Repair) < 8 {
+	if report.Lead != "maitre" || report.Decided != "instinct" || report.Applied || len(report.Agents) != 20 || len(report.Repair) != 4 {
 		t.Fatalf("report %+v", report)
 	}
-	found := map[string]bool{}
-	for _, br := range report.Breaks {
-		if br.Fact == "" || br.Where == "" {
-			t.Fatalf("empty break %+v", br)
-		}
-		found[br.ID] = true
-	}
-	if !found["site-dans-la-chaine"] || !found["repo-deux-lignes"] || !found["nom-double"] {
-		t.Fatalf("breaks = %+v", report.Breaks)
-	}
-	if found["vapi-hors-panda"] || found["agent-hors-table"] || found["ordre"] || found["voltron"] {
-		t.Fatalf("false break %+v", report.Breaks)
+	if len(report.Breaks) != 0 {
+		t.Fatalf("the chain must not file a project as a break: %+v", report.Breaks)
 	}
 
 	k, err := Boot()
@@ -47,7 +73,7 @@ func TestRepairCrewReadsTheWholeChain(t *testing.T) {
 		t.Fatalf("repair: %+v %v", res, err)
 	}
 	got := res.Data.(ChainReport)
-	if len(got.Agents) != 20 || got.Lead != "maitre" {
-		t.Fatalf("invoke %+v", got.Lead)
+	if len(got.Agents) != 20 || got.Lead != "maitre" || len(got.Breaks) != 0 {
+		t.Fatalf("invoke lead %s breaks %d", got.Lead, len(got.Breaks))
 	}
 }
