@@ -137,7 +137,7 @@ func lineKnown(id string) map[string]string {
 		}
 	case "ecole":
 		return map[string]string{
-			"situation":   "Cours tech. Éduconnexion.",
+			"situation":   "Cours tech. Éduconnexion est Chain 1 et reste hors de cette ligne.",
 			"manque":      "Le cours décrit, sans promesse de gain.",
 			"intouchable": "La promesse d'un gain de trading.",
 		}

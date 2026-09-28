@@ -1,5 +1,5 @@
 {
-  "anchor": "59eec9468ce379ee89248be83bedc80c5f17ca20b60852ba567503b9abd46546",
+  "anchor": "796f5a37b22e08a62834bef9b1977d9a54eb90ec55df8130de423d6baf542835",
   "constellations": [
     {
       "id": "control",
@@ -118,7 +118,7 @@
       "name": "École tech",
       "infrastructure": "programme de cours · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "research.ingest",
-      "product": "Evolu-Jeunes/educonnexion",
+      "product": "cours tech",
       "agent": "research",
       "trinity": [
         "what",
@@ -359,7 +359,7 @@
     {
       "from": "ecole",
       "to": "proximity",
-      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
+      "via": "Le cours reste à l'école. Éduconnexion est Chain 1, un projet Proximity pour un autre organisme. Il n'est pas une chaîne agentique.",
       "agents": [
         "research",
         "operator",
@@ -487,7 +487,7 @@
     {
       "division": "ecole",
       "function": "research.ingest",
-      "product": "Evolu-Jeunes/educonnexion",
+      "product": "cours tech",
       "agent": "research"
     },
     {
@@ -525,7 +525,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "59eec9468ce379ee89248be83bedc80c5f17ca20b60852ba567503b9abd46546"
+      "name": "796f5a37b22e08a62834bef9b1977d9a54eb90ec55df8130de423d6baf542835"
     },
     {
       "id": "const:control",
@@ -877,7 +877,7 @@
     {
       "from": "ecole",
       "to": "proximity",
-      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress."
+      "via": "Le cours reste à l'école. Éduconnexion est Chain 1, un projet Proximity pour un autre organisme. Il n'est pas une chaîne agentique."
     },
     {
       "from": "ecole",

@@ -34,6 +34,17 @@ func TestRepairCrewReadsTheWholeChain(t *testing.T) {
 	if found["vapi-hors-panda"] || found["agent-hors-table"] || found["ordre"] || found["voltron"] {
 		t.Fatalf("false break %+v", report.Breaks)
 	}
+	one := Chain1()
+	if one.Name != "Chain 1" || one.ID != "chain-1" || one.Agentic || one.Repo != "Evolu-Jeunes/educonnexion" || one.Owner == "" || one.With != "Proximity agency" {
+		t.Fatalf("chain 1 %+v", one)
+	}
+	for _, ln := range Lines() {
+		for _, repo := range ln.Repos {
+			if repo == one.Repo {
+				t.Fatalf("%s still holds Chain 1", ln.ID)
+			}
+		}
+	}
 
 	k, err := Boot()
 	if err != nil {

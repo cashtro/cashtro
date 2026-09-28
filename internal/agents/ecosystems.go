@@ -79,7 +79,7 @@ func Links() []Link {
 		},
 		{
 			From: "ecole", To: "proximity",
-			Via:    "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
+			Via:    "Le cours reste à l'école. Éduconnexion est Chain 1, un projet Proximity pour un autre organisme. Il n'est pas une chaîne agentique.",
 			Agents: []string{"research", "operator", "memory"},
 		},
 		{
