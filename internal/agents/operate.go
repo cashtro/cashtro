@@ -249,12 +249,6 @@ func rosterOwner(full string) (Line, bool) {
 func retargetCards(cards []RepoCard) []RepoCard {
 	out := append([]RepoCard(nil), cards...)
 	for i, c := range out {
-		if c.FullName == Chain1().Repo {
-			out[i].Line = Chain1().Name
-			out[i].LineID = Chain1().ID
-			out[i].Brain = Chain1().With
-			continue
-		}
 		ln, ok := rosterOwner(c.FullName)
 		if !ok {
 			continue
@@ -282,7 +276,7 @@ func tally(cards []RepoCard) []LineView {
 		}
 	}
 	for _, c := range cards {
-		if c.LineID == Chain1().ID || onRoster[c.FullName] || c.LineID == "" {
+		if onRoster[c.FullName] || c.LineID == "" {
 			continue
 		}
 		buckets[c.LineID] = append(buckets[c.LineID], c.FullName)

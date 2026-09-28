@@ -36,7 +36,7 @@ func Lines() []Line {
 				"Evolu-Jeunes/h20", "Evolu-Jeunes/h20landing", "Evolu-Jeunes/H2oH2o", "cashtro/H2OriginTest",
 				"Evolu-Jeunes/Proximity", "Evolu-Jeunes/ProximityApp", "Evolu-Jeunes/Api-Proximity",
 				"Evolu-Jeunes/Proxy", "Evolu-Jeunes/Plugin",
-				"Evolu-Jeunes/sigma", "Evolu-Jeunes/sigmaNew",
+				"Evolu-Jeunes/educonnexion", "Evolu-Jeunes/sigma", "Evolu-Jeunes/sigmaNew",
 			},
 		},
 		{
@@ -94,9 +94,9 @@ func Lines() []Line {
 		},
 		{
 			ID: "ecole", Name: "École tech", Brain: "Cartographe",
-			Mandate:  "Enseigner tout ce qui est tech. Éduconnexion n'est pas cette ligne.",
-			Controls: "Cartographe tient le programme. Éduconnexion est Chain 1, hors de l'agentique.",
-			Repos:    []string{},
+			Mandate:  "Enseigner tout ce qui est tech. Éduconnexion est le côté école.",
+			Controls: "Cartographe tient le programme. Le thème Éduconnexion est au département WordPress.",
+			Repos:    []string{"Evolu-Jeunes/educonnexion"},
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",

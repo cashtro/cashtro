@@ -375,9 +375,9 @@
       "fullName": "Evolu-Jeunes/educonnexion",
       "org": "Evolu-Jeunes",
       "language": "PHP",
-      "brain": "Proximity agency",
-      "line": "Chain 1",
-      "lineId": "chain-1",
+      "brain": "Cartographe",
+      "line": "WordPress Proximity",
+      "lineId": "wordpress",
       "status": "production"
     },
     {
@@ -557,6 +557,7 @@
         "Evolu-Jeunes/Proxy",
         "Evolu-Jeunes/bubbles",
         "Evolu-Jeunes/clic",
+        "Evolu-Jeunes/educonnexion",
         "Evolu-Jeunes/h20",
         "Evolu-Jeunes/h20landing",
         "Evolu-Jeunes/hypotheque",
@@ -624,7 +625,9 @@
       "id": "ecole",
       "name": "École tech",
       "brain": "Cartographe",
-      "repos": null
+      "repos": [
+        "Evolu-Jeunes/educonnexion"
+      ]
     },
     {
       "id": "marketing",
@@ -812,7 +815,7 @@
     {
       "from": "ecole",
       "to": "proximity",
-      "via": "Le cours reste à l'école. Éduconnexion est Chain 1, un projet Proximity pour un autre organisme. Il n'est pas une chaîne agentique.",
+      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
       "agents": [
         "research",
         "operator",
@@ -1398,9 +1401,9 @@
         "chief": "research",
         "department": "marche",
         "function": "research.ingest",
-        "product": "cours tech",
+        "product": "Evolu-Jeunes/educonnexion",
         "revenue": "Cours tech (WordPress, Web3).",
-        "guard": "Le cours décrit. Il ne promet pas un gain de trading. Éduconnexion est Chain 1 et n'entre pas ici."
+        "guard": "Le cours décrit. Il ne promet pas un gain de trading."
       },
       {
         "id": "marketing",

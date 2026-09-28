@@ -2,8 +2,6 @@
 
 Graphify reste la map vivante. Ce schema Mermaid nomme les deux voies (Ollama interne, Kimi K3 et GLM 5.3 max), les 5 cerveaux, leurs sous-cerveaux et les 58 projets.
 
-Chain 1 is Éduconnexion. Another organism owns it. The project was done with Proximity agency. It is not an agentic chain.
-
 ```mermaid
 %%{init: {'theme':'dark','flowchart':{'htmlLabels':true,'nodeSpacing':18,'rankSpacing':28}}}%%
 flowchart TB
@@ -48,6 +46,7 @@ flowchart TB
     cashtro_epicenter["instinct<br/>cashtro"]
     Evolu_Jeunes_Api_Proximity["Api-Proximity<br/>Evolu"]
     Evolu_Jeunes_demo_repository["demo-repository<br/>Evolu"]
+    Evolu_Jeunes_educonnexion["educonnexion<br/>Evolu"]
     Evolu_Jeunes_Proximity_Agentic["Proximity-Agentic<br/>Evolu"]
   end
   cartographe --> cashtro_cashtro
