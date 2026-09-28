@@ -111,7 +111,7 @@ func NicheBrains() []NicheBrain {
 		}, []string{"stock interne", "encaissement"}),
 		buildNiche("panda", "service white-glove", []NicheDeskSpec{
 			d("Le Service", "Pense le white-glove.", "Penser le service white-glove seulement."),
-			d("Le Besoin", "Voit le client Panda.", "Voir le besoin du client Panda."),
+			d("Le Service Client", "Vapi pour Panda.", "Tenir Vapi comme service client de Panda. Aucun appel ne part."),
 			d("Le Brouillon", "Prépare le geste.", "Préparer installation, cours ou IA en brouillon."),
 			d("L'Offre", "Ne déploie pas.", "Tenir l'offre sans déployer chez le client."),
 			d("La Borne", "Remet le déploiement.", "Remettre le déploiement au cerveau principal."),
@@ -162,7 +162,7 @@ func NicheBrains() []NicheBrain {
 			d("Le Chantier", "Pense Fix Tout.", "Penser le chantier Fix Tout seulement."),
 			d("Le Carnet", "Voit ce carnet-là.", "Voir le carnet Evolu-Jeunes/Fix2, pas l'autre CRM."),
 			d("La Soumission", "Compte la taxe.", "Préparer la soumission et la taxe du Québec."),
-			d("La Voix", "N'appelle pas.", "Tenir la voix Vapi sans appeler."),
+			d("La Tenue", "N'appelle pas.", "Tenir le site sans appeler."),
 			d("La Borne", "Remet l'envoi.", "Remettre l'envoi et l'encaissement au cerveau principal."),
 		}, []string{"envoi", "encaissement", "autre CRM"}),
 		buildNiche("fonds", "notes de fonds", []NicheDeskSpec{
@@ -217,7 +217,7 @@ func NicheBrains() []NicheBrain {
 		buildNiche("pandora", "atelier Pandora", []NicheDeskSpec{
 			d("L'Atelier", "Pense Pandora.", "Penser l'atelier Pandora seulement."),
 			d("La Copie", "Tient le guide.", "Tenir le guide de copie en entier."),
-			d("La Voix", "Ne réécrit pas Vapi.", "Décrire la voix Vapi sans la réécrire."),
+			d("La Voix", "Ne réécrit pas la voix.", "Décrire la voix de Pandora sans la réécrire."),
 			d("La Base", "Reste sur db:pandora.", "Rester sur db:pandora."),
 			d("La Borne", "Remet la réécriture.", "Remettre l'appel, l'envoi et la réécriture au cerveau principal."),
 		}, []string{"appel", "envoi", "réécriture"}),

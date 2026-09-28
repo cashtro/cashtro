@@ -8,13 +8,11 @@ import (
 )
 
 // CRMBook is one book. The agent book and the Fix Tout book are not the same database.
-// Voice is Vapi. A call is not placed from this process.
 type CRMBook struct {
 	Repo     string   `json:"repo"`
 	App      string   `json:"app"`
 	Host     string   `json:"host"`
 	Copy     string   `json:"copy"`
-	Voice    string   `json:"voice"`
 	Database string   `json:"database"`
 	Gathers  []string `json:"gathers"`
 	Modules  []string `json:"modules"`
@@ -71,7 +69,6 @@ func CRM() CRMBook {
 		App:      "Agentics",
 		Host:     "local",
 		Copy:     "Evolu-Jeunes/CRM",
-		Voice:    "vapi",
 		Database: "db:agentics",
 		Gathers:  []string{"contact", "lead", "note"},
 		Modules:  []string{"messages", "leads", "marketing"},
@@ -81,8 +78,7 @@ func CRM() CRMBook {
 			"Les agents se parlent ici et s'y passent les leads.",
 			"L'agence est marketing, Panda et Proximity cloud. Elle relie chaque chaîne.",
 			"Les clients Fix Tout restent sur le site Evolu-Jeunes/Fix2. Ils n'entrent pas ici.",
-			"Vapi ouvre un projet à la fois. Chaque projet a sa propre base.",
-			"Un envoi ou un appel attend Epicenter Einstein.",
+			"Un envoi attend Epicenter Einstein.",
 		},
 		Writes: false,
 		Sent:   false,
@@ -97,10 +93,9 @@ func Fix2CRM() CRMBook {
 		App:      "Fix Tout",
 		Host:     "local",
 		Copy:     "Evolu-Jeunes/CRM-Agents",
-		Voice:    "vapi",
 		Database: "Evolu-Jeunes/Fix2",
 		Gathers:  []string{"contact", "lead", "note"},
-		Modules:  []string{"contacts", "leads", "estimates", "voix"},
+		Modules:  []string{"contacts", "leads", "estimates"},
 		Lines:    []string{"fix2"},
 		Parked:   []string{"carnet des agents", "autre projet", "envoi", "appel"},
 		Next: []string{

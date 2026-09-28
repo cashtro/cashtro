@@ -11,7 +11,7 @@ Two GitHubs, three named books, and one clone field that Graphify counted as mos
 | Fix Tout | `Evolu-Jeunes/Fix2` | `Evolu-Jeunes/Fix2` | Residential handyman clients | A Fix Tout line is refused by `CRMGrow`. |
 | Clone field | repeated across client sites | unread | `useAuth`, `cn`, `Button`, plus WordPress | Graphify nodes. Not a fourth customer book. |
 
-Voice on the two live books is Vapi. A call is not placed from this process. `Writes`, `Sent`, and `Dialed` are false on both.
+`Writes`, `Sent`, and `Dialed` are false on both. Vapi is the customer service of Panda, on `db:panda`. A call is not placed from this process.
 
 ## Graphic
 
@@ -52,7 +52,7 @@ This repo is the `Copy` of the agent carnet. The Fix Tout line also lists `Evolu
 
 ## Fix Tout
 
-`Fix2CRM()` is the Lovable book. One line: `fix2`. Modules: contacts, leads, estimates, voice. The mandate says the site keeps every client, Vapi reads only that base, and forty agents sit on that voice. Those forty are not among the fifteen kernel processes. `CRMGrow` refuses the line with "Fix Tout tient le CRM Lovable". The link `fix2 → marketing` says no fiche crosses.
+`Fix2CRM()` is the Lovable book. One line: `fix2`. Modules: contacts, leads, estimates. The mandate says the site keeps every client. `CRMGrow` refuses the line with "Fix Tout tient le CRM Lovable". The link `fix2 → marketing` says no fiche crosses. Vapi is not on this site.
 
 ## The clone field
 

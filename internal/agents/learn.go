@@ -41,7 +41,7 @@ func LoadLessons(path string) ([]Lesson, error) {
 }
 
 // Learn gives every agent a new skill and a multitask skill.
-// An idle crew, including Vapi when no call is open, is in this list on purpose.
+// An idle crew is in this list on purpose. Vapi is Panda's customer service only.
 func Learn(lessons []Lesson, held map[string][]string, round int) []Gain {
 	if round < 1 {
 		round = 1
@@ -87,13 +87,7 @@ func pupils(byRepo map[string][]Lesson) []pupil {
 	for _, member := range Chart().Members() {
 		add(member.Agent, "cashtro/cashtro")
 	}
-	for _, desk := range VapiDesks() {
-		home := "cashtro/cashtro"
-		if desk.Project == "fix2" {
-			home = "evolu/Fix2"
-		}
-		add("vapi:"+desk.Project, home)
-	}
+	add("vapi:panda", "Evolu-Jeunes/Panda")
 	for repo := range byRepo {
 		add("repo:"+repo, repo)
 	}

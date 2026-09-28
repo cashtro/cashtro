@@ -81,8 +81,8 @@ func Lines() []Line {
 		},
 		{
 			ID: "panda", Name: "Panda White Glove", Brain: "Hustler",
-			Mandate:  "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers.",
-			Controls: "Hustler vend. Architecte conçoit l'offre IA. Forgeron installe. Stripe encaisse, ce n'est pas un client.",
+			Mandate:  "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers. Vapi est le service client de Panda, sur db:panda.",
+			Controls: "Hustler vend. Vapi tient le service client. Architecte conçoit l'offre IA. Forgeron installe. Stripe encaisse, ce n'est pas un client. Aucun appel ne part.",
 			Repos:    []string{"Evolu-Jeunes/Panda"},
 		},
 		{
@@ -135,7 +135,7 @@ func Lines() []Line {
 			ID: "fix2", Name: "Fix Tout", Brain: "Forgeron",
 			Mandate: "Homme à tout faire, résidentiel. Fix Tout est son propre site et sa propre base, Evolu-Jeunes/Fix2. " +
 				"Il garde tous les clients. Le carnet des agents est Evolu-Jeunes/CRM-Agents. Ce n'est pas un thème WordPress. " +
-				"La voix Vapi de ce CRM ne lit que cette base. Quarante agents. Epicenter Einstein décide en dernier.",
+				"Epicenter Einstein décide en dernier.",
 			Controls: "Le site est Evolu-Jeunes/Fix2. Les clients restent sur le site de Fix Tout. Rien n'est envoyé, payé ou déposé sans Epicenter Einstein.",
 			Repos:    []string{"Evolu-Jeunes/Fix2", "Evolu-Jeunes/CRM"},
 		},

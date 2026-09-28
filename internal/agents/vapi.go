@@ -7,17 +7,17 @@ import (
 	"github.com/cashtro/cashtro/internal/kernel"
 )
 
-// VapiDesk is one voice agent for one project. Each project has its own database.
-// Vapi does not read or write a second database on the same call.
+// VapiDesk is Panda's customer service. It files a draft on db:panda.
+// A call is not placed. No other line has this desk.
 type VapiDesk struct {
 	Project  string `json:"project"`
 	Database string `json:"database"`
+	Role     string `json:"role"`
 	Voice    string `json:"voice"`
-	Shared   bool   `json:"shared"`
 	Prompt   string `json:"prompt"`
 }
 
-// VapiNote is one draft kept in that project's database only.
+// VapiNote is one customer-service draft on Panda's database.
 type VapiNote struct {
 	Project  string `json:"project"`
 	Database string `json:"database"`
@@ -28,51 +28,26 @@ type VapiNote struct {
 	Dialed   bool   `json:"dialed"`
 }
 
-// VapiDesks gives every line its own database. None of them are shared.
-func VapiDesks() []VapiDesk {
-	lines := Lines()
-	out := make([]VapiDesk, 0, len(lines))
-	for _, ln := range lines {
-		db := vapiDatabase(ln.ID)
-		out = append(out, VapiDesk{
-			Project:  ln.ID,
-			Database: db,
-			Voice:    "vapi",
-			Shared:   false,
-			Prompt:   "Tu es Vapi pour le projet " + ln.ID + " seulement. Ta seule base est " + db + ". Chaque projet a sa propre base. Tu ne lis pas une autre base et tu n'y écris pas.",
-		})
+// Vapi is the customer service of Panda.
+func Vapi() VapiDesk {
+	return VapiDesk{
+		Project:  "panda",
+		Database: "db:panda",
+		Role:     "service client",
+		Voice:    "vapi",
+		Prompt:   "Tu es le service client de Panda. Ta seule base est db:panda. Tu ne lis pas une autre base et tu n'y écris pas. Aucun appel ne part.",
 	}
-	return out
 }
 
-// VapiDeskBy returns the voice desk for one project.
-func VapiDeskBy(project string) (VapiDesk, bool) {
-	project = strings.TrimSpace(project)
-	for _, desk := range VapiDesks() {
-		if desk.Project == project {
-			return desk, true
-		}
-	}
-	return VapiDesk{}, false
-}
-
-func vapiDatabase(project string) string {
-	if project == "fix2" {
-		return "Evolu-Jeunes/Fix2"
-	}
-	return "db:" + project
-}
-
-// VapiFile stores a voice draft in that project's database and nowhere else.
-// A call is not placed.
+// VapiFile stores a customer-service draft for Panda and nowhere else.
 func VapiFile(k *kernel.Kernel, project, kind, title, body string) (VapiNote, error) {
 	project = strings.TrimSpace(project)
 	kind = strings.TrimSpace(kind)
 	title = strings.TrimSpace(title)
 	body = strings.TrimSpace(body)
-	desk, ok := VapiDeskBy(project)
-	if !ok {
-		return VapiNote{}, fmt.Errorf("projet inconnu")
+	desk := Vapi()
+	if project != desk.Project {
+		return VapiNote{}, fmt.Errorf("Vapi est le service client de Panda")
 	}
 	if !crmKinds[kind] {
 		return VapiNote{}, fmt.Errorf("kind requis: contact, lead, note")
@@ -84,13 +59,8 @@ func VapiFile(k *kernel.Kernel, project, kind, title, body string) (VapiNote, er
 		return VapiNote{}, fmt.Errorf("secret filtré: %s", strings.Join(names, ", "))
 	}
 	text := strings.ToLower(title + "\n" + body)
-	for _, other := range VapiDesks() {
-		if other.Project == project {
-			continue
-		}
-		if strings.Contains(text, strings.ToLower(other.Database)) || strings.Contains(text, "projet "+other.Project) {
-			return VapiNote{}, fmt.Errorf("autre base refusée")
-		}
+	if strings.Contains(text, "db:") && !strings.Contains(text, desk.Database) {
+		return VapiNote{}, fmt.Errorf("autre base refusée")
 	}
 	note := VapiNote{
 		Project:  desk.Project,

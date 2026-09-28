@@ -42,9 +42,12 @@ func TestEveryAgentLearnsASkillAndAMultitask(t *testing.T) {
 			t.Fatalf("%s learned %+v", agent, got)
 		}
 	}
-	voice, ok := kinds["vapi:fix2"]
+	voice, ok := kinds["vapi:panda"]
 	if !ok || !voice["multitache"] {
-		t.Fatal("vapi fixtool did not learn a multitask skill")
+		t.Fatal("Panda customer service did not learn a multitask skill")
+	}
+	if _, ok := kinds["vapi:fix2"]; ok {
+		t.Fatal("Vapi must not sit on Fix Tout")
 	}
 	second := Learn(lessons, held, 2)
 	seen := map[string]bool{}
