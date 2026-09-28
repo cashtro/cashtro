@@ -90,10 +90,18 @@ func initInvoke(k *kernel.Kernel, call kernel.Call) (kernel.Result, error) {
 				marketing++
 			}
 		}
-		return kernel.Result{OK: true, Message: "chaînes dans Voltron", Data: map[string]any{
-			"layers": Layers(), "operative": true, "website": false,
+		return kernel.Result{OK: true, Message: "Voltron starts the agentic chains", Data: map[string]any{
+			"layers": Layers(), "operative": true, "website": false, "os": TheOS(),
 			"copyUpgrade": map[string]any{"seats": len(upgrade), "marketing": marketing, "inHand": true, "copied": false},
 		}}, nil
+	case "os.start":
+		id := payloadQuery(call, "id")
+		start, ok := VoltronStartBy(id)
+		if !ok {
+			return kernel.Result{OK: false, Message: "Voltron does not start " + id}, nil
+		}
+		k.Publish("init", "voltron", "start "+start.ID, map[string]any{"task": start.Task})
+		return kernel.Result{OK: true, Message: start.Task, Data: start}, nil
 	}
 	return kernel.Result{OK: true, Message: "about", Data: k.About()}, nil
 }

@@ -124,6 +124,25 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(body, "VOLTR") || !strings.Contains(body, "Crew") || !strings.Contains(body, "WATCH") || !strings.Contains(body, "one shared brain") {
 		t.Fatalf("index missing Voltron desk")
 	}
+	if !strings.Contains(body, "OS of the agentics") || !strings.Contains(body, `id="os-brain"`) || !strings.Contains(body, "Three layers") {
+		t.Fatalf("index missing Voltron OS bar")
+	}
+}
+
+func TestVoltronRoute(t *testing.T) {
+	h := handler(t)
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/voltron", nil))
+	if res.Code != http.StatusOK {
+		t.Fatalf("voltron status = %d body=%s", res.Code, res.Body.String())
+	}
+	var os agents.VoltronOS
+	if err := json.Unmarshal(res.Body.Bytes(), &os); err != nil {
+		t.Fatal(err)
+	}
+	if os.Role != "OS of the agentics" || os.Brain != "instinct" || len(os.Stages) != 3 || len(os.Starts) < 9 {
+		t.Fatalf("voltron %+v", os)
+	}
 }
 
 func TestShipLifecycleHTTP(t *testing.T) {

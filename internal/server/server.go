@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/cashtro/cashtro/internal/agents"
 	"github.com/cashtro/cashtro/internal/catalog"
 	"github.com/cashtro/cashtro/internal/kernel"
 )
@@ -22,6 +23,7 @@ func New(k *kernel.Kernel) http.Handler {
 	mux.HandleFunc("GET /favicon.svg", s.favicon)
 	mux.HandleFunc("GET /health", s.health)
 	mux.HandleFunc("GET /api/os", s.osAbout)
+	mux.HandleFunc("GET /api/voltron", s.voltron)
 	mux.HandleFunc("GET /api/agents", s.listAgents)
 	mux.HandleFunc("GET /api/agents/{id}", s.getAgent)
 	mux.HandleFunc("POST /api/agents/{id}/spawn", s.spawnAgent)
@@ -76,6 +78,10 @@ func (s *api) health(w http.ResponseWriter, r *http.Request) {
 
 func (s *api) osAbout(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, s.k.About())
+}
+
+func (s *api) voltron(w http.ResponseWriter, r *http.Request) {
+	writeJSON(w, http.StatusOK, agents.TheOS())
 }
 
 func (s *api) listAgents(w http.ResponseWriter, r *http.Request) {

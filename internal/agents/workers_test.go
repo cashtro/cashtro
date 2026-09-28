@@ -125,4 +125,14 @@ func TestVoltronLayersStayOn(t *testing.T) {
 			t.Fatalf("missing %s in %+v", id, layers)
 		}
 	}
+	raw, _ := json.Marshal(map[string]string{"id": "ops"})
+	res, err = k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.start", Payload: raw})
+	if err != nil || !res.OK || !strings.Contains(res.Message, "OPS") {
+		t.Fatalf("os.start ops: %+v %v", res, err)
+	}
+	raw, _ = json.Marshal(map[string]string{"id": "educonnexion"})
+	res, err = k.Invoke(context.Background(), "init", kernel.Call{Capability: "os.start", Payload: raw})
+	if err != nil || res.OK {
+		t.Fatalf("os.start website: %+v %v", res, err)
+	}
 }

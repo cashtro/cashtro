@@ -76,11 +76,67 @@
     }
     .chip.live { color: var(--live); border-color: rgba(61,255,166,0.35); }
     .chip.unbound { color: var(--danger); border-color: rgba(255,77,61,0.4); }
+    .osbar {
+      margin-top: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+    }
+    .osbar-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+    .osbar h2 {
+      margin: 0;
+      font-family: Syne, sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    #os-role {
+      margin: 4px 0 0;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .os-brain { text-align: right; }
+    .os-brain span {
+      display: block;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    #os-brain { font-family: Syne, sans-serif; font-size: 22px; font-weight: 700; color: var(--gold); }
+    .os-stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .os-stage {
+      border: 1px solid var(--line);
+      background: var(--void);
+      padding: 10px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .os-stage.idea { color: var(--idea); }
+    .os-stage.concept { color: var(--concept); }
+    .os-stage.production { color: var(--production); }
+    .os-starts { display: flex; flex-wrap: wrap; gap: 8px; }
+    .os-starts button { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12px; }
+    .os-act {
+      margin: 0;
+      min-height: 1.2em;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 12px;
+      color: var(--live);
+    }
     .desk {
       display: grid;
       grid-template-columns: 340px minmax(0, 1.2fr) 320px;
       gap: 16px;
-      padding: 20px 0 28px;
+      padding: 16px 0 28px;
     }
     .panel {
       background: var(--panel);
@@ -181,6 +237,8 @@
       .stats { justify-content: flex-start; }
     }
     @media (max-width: 700px) {
+      .os-stages { display: block; }
+      .os-stage { margin-bottom: 8px; }
       .board { display: block; }
       .col { margin-bottom: 8px; min-height: 0; }
     }
@@ -206,6 +264,25 @@
       </div>
       <div class="stats" id="stats"></div>
     </header>
+    <section class="osbar" id="voltron-os" aria-label="Voltron OS">
+      <div class="osbar-top">
+        <div>
+          <h2>Voltron</h2>
+          <p id="os-role">OS of the agentics</p>
+        </div>
+        <div class="os-brain">
+          <span>Brain</span>
+          <strong id="os-brain">instinct</strong>
+        </div>
+      </div>
+      <div class="os-stages" id="os-stages" aria-label="Three layers">
+        <div class="os-stage idea">idea</div>
+        <div class="os-stage concept">concept</div>
+        <div class="os-stage production">production</div>
+      </div>
+      <div class="os-starts" id="os-starts"></div>
+      <p class="os-act" id="os-act"></p>
+    </section>
     <main class="desk">
       <section class="panel" id="trinity">
         <h2>What Trinity is, and your own instance running by the end</h2>
@@ -225,7 +302,7 @@
       </section>
       <section class="stack">
         <div class="panel">
-          <h2>Delivery line</h2>
+          <h2>Delivery line · <span id="board-brain">instinct</span></h2>
           <div class="board" id="board" aria-label="Delivery board"></div>
         </div>
         <div class="panel">
@@ -383,10 +460,50 @@
         box.appendChild(hint);
       }
     }
+    function paintVoltron(voltron) {
+      document.getElementById("os-role").textContent = voltron.role || "OS of the agentics";
+      document.getElementById("os-brain").textContent = voltron.brain || "instinct";
+      const boardBrain = document.getElementById("board-brain");
+      if (boardBrain) boardBrain.textContent = voltron.brain || "instinct";
+      const stageBox = document.getElementById("os-stages");
+      stageBox.replaceChildren();
+      (voltron.stages || []).forEach((stage) => {
+        const el = document.createElement("div");
+        el.className = "os-stage " + stage;
+        el.textContent = stage;
+        stageBox.appendChild(el);
+      });
+      const starts = document.getElementById("os-starts");
+      starts.replaceChildren();
+      (voltron.starts || []).forEach((start) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = start.name;
+        b.title = start.task;
+        b.addEventListener("click", async () => {
+          b.disabled = true;
+          const act = document.getElementById("os-act");
+          act.textContent = "starting " + start.id;
+          try {
+            const res = await j("/api/agents/init/invoke", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+              body: JSON.stringify({ capability: "os.start", payload: { id: start.id } })
+            });
+            await render();
+            document.getElementById("os-act").textContent = res.message;
+          } catch (err) {
+            act.textContent = err.message;
+          }
+        });
+        starts.appendChild(b);
+      });
+    }
     async function render() {
-      const [os, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, voltron, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
+        j("/api/os"), j("/api/voltron"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
       ]);
+      paintVoltron(voltron);
       document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";
       document.getElementById("contact").textContent = profile.email;
       const stats = document.getElementById("stats");
