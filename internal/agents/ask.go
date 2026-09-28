@@ -125,7 +125,7 @@ func lineKnown(id string) map[string]string {
 		}
 	case "panda":
 		return map[string]string{
-			"situation":   "Offre white-glove : IA, installation, cours.",
+			"situation":   "Offre white-glove : IA, installation, cours. L'école qui enseigne est dans ce site.",
 			"manque":      "L'accord avant d'installer chez quelqu'un.",
 			"intouchable": "Le site du client.",
 		}
@@ -137,9 +137,9 @@ func lineKnown(id string) map[string]string {
 		}
 	case "ecole":
 		return map[string]string{
-			"situation":   "Cours tech. Éduconnexion.",
+			"situation":   "L'école enseigne dans le site Panda.",
 			"manque":      "Le cours décrit, sans promesse de gain.",
-			"intouchable": "La promesse d'un gain de trading.",
+			"intouchable": "Éduconnexion, et la promesse d'un gain de trading.",
 		}
 	case "marketing":
 		return map[string]string{

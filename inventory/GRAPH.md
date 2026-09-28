@@ -108,8 +108,8 @@ flowchart TB
 
   subgraph projects [Projects · not seats on that chain]
     wp[WordPress sites]
-    edu["Éduconnexion website<br/>school line and WordPress list"]
-    panda["Panda<br/>Vapi customer service · db:panda"]
+    edu["Éduconnexion website<br/>WordPress list · not the school"]
+    panda["Panda website<br/>the school teaches here · Vapi · db:panda"]
     carnet["CRM-Agents<br/>agent carnet"]
     fix["Fix Tout website<br/>its own CRM"]
   end

@@ -124,7 +124,7 @@ func NicheBrains() []NicheBrain {
 			d("La Borne", "Remet le mint.", "Remettre le mint au cerveau principal."),
 		}, []string{"mint", "ordre"}),
 		buildNiche("ecole", "cours tech", []NicheDeskSpec{
-			d("Le Cours", "Pense la leçon.", "Penser le cours tech seulement."),
+			d("Le Cours", "Pense la leçon.", "Penser le cours dans le site Panda seulement."),
 			d("Le Programme", "Voit le programme.", "Voir le programme, pas une promesse de gain."),
 			d("La Leçon", "Écrit la leçon.", "Rédiger la leçon."),
 			d("La Tenue", "Décrit le cours.", "Tenir le cours décrit."),

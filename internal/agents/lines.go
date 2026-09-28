@@ -81,7 +81,7 @@ func Lines() []Line {
 		},
 		{
 			ID: "panda", Name: "Panda White Glove", Brain: "Hustler",
-			Mandate:  "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers. Vapi est le service client de Panda, sur db:panda.",
+			Mandate:  "Vente white-glove mondiale : IA, conception automatisée, installation et cours, aux entreprises et aux particuliers. L'école qui enseigne est dans ce site. Vapi est le service client de Panda, sur db:panda.",
 			Controls: "Hustler vend. Vapi tient le service client. Architecte conçoit l'offre IA. Forgeron installe. Stripe encaisse, ce n'est pas un client. Aucun appel ne part.",
 			Repos:    []string{"Evolu-Jeunes/Panda"},
 		},
@@ -93,10 +93,10 @@ func Lines() []Line {
 			Repos:    []string{"Evolu-Jeunes/Nft", "Evolu-Jeunes/Giant"},
 		},
 		{
-			ID: "ecole", Name: "École tech", Brain: "Cartographe",
-			Mandate:  "Enseigner tout ce qui est tech. Éduconnexion est le côté école.",
-			Controls: "Cartographe tient le programme. Le thème Éduconnexion est au département WordPress.",
-			Repos:    []string{"Evolu-Jeunes/educonnexion"},
+			ID: "ecole", Name: "École", Brain: "Cartographe",
+			Mandate:  "L'école enseigne. Elle vit dans le site Panda, Evolu-Jeunes/Panda. Éduconnexion n'est pas l'école.",
+			Controls: "Le cours est dans le site Panda. Il décrit. Il ne promet pas un gain. Éduconnexion reste un site WordPress à part.",
+			Repos:    []string{},
 		},
 		{
 			ID: "marketing", Name: "Marketing digital corporate", Brain: "Hustler",

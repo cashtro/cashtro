@@ -78,13 +78,13 @@ func Links() []Link {
 			Agents: []string{"comms", "research"},
 		},
 		{
-			From: "ecole", To: "proximity",
-			Via:    "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
+			From: "ecole", To: "panda",
+			Via:    "L'école enseigne dans le site Panda. Éduconnexion n'est pas l'école.",
 			Agents: []string{"research", "operator", "memory"},
 		},
 		{
 			From: "ecole", To: "trading",
-			Via:    "l'école enseigne le Web3 que les bots exécutent",
+			Via:    "L'école n'exécute pas le trade. Le bot a sa propre chaîne.",
 			Agents: []string{"research", "memory", "architect"},
 		},
 		{

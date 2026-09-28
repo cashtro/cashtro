@@ -1,5 +1,5 @@
 {
-  "anchor": "8bdf29098f1f7bed49742a10fca230aa06f2a94afc676358ee007c222df33e58",
+  "anchor": "08e3279ea52370e25610eace3a95d693742685e791b0499471a6d512e56e9dbb",
   "constellations": [
     {
       "id": "control",
@@ -115,10 +115,10 @@
     },
     {
       "id": "ecole",
-      "name": "École tech",
-      "infrastructure": "programme de cours · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
+      "name": "École",
+      "infrastructure": "cours dans le site Panda · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model",
       "function": "research.ingest",
-      "product": "Evolu-Jeunes/educonnexion",
+      "product": "École dans Evolu-Jeunes/Panda",
       "agent": "research",
       "trinity": [
         "what",
@@ -358,8 +358,8 @@
     },
     {
       "from": "ecole",
-      "to": "proximity",
-      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
+      "to": "panda",
+      "via": "L'école enseigne dans le site Panda. Éduconnexion n'est pas l'école.",
       "agents": [
         "research",
         "operator",
@@ -369,7 +369,7 @@
     {
       "from": "ecole",
       "to": "trading",
-      "via": "l'école enseigne le Web3 que les bots exécutent",
+      "via": "L'école n'exécute pas le trade. Le bot a sa propre chaîne.",
       "agents": [
         "research",
         "memory",
@@ -487,7 +487,7 @@
     {
       "division": "ecole",
       "function": "research.ingest",
-      "product": "Evolu-Jeunes/educonnexion",
+      "product": "École dans Evolu-Jeunes/Panda",
       "agent": "research"
     },
     {
@@ -525,7 +525,7 @@
     {
       "id": "anchor",
       "kind": "anchor",
-      "name": "8bdf29098f1f7bed49742a10fca230aa06f2a94afc676358ee007c222df33e58"
+      "name": "08e3279ea52370e25610eace3a95d693742685e791b0499471a6d512e56e9dbb"
     },
     {
       "id": "const:control",
@@ -600,7 +600,7 @@
     {
       "id": "const:ecole",
       "kind": "constellation",
-      "name": "École tech"
+      "name": "École"
     },
     {
       "id": "agent:research",
@@ -742,7 +742,7 @@
     {
       "from": "const:ecole",
       "to": "anchor",
-      "via": "programme de cours · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
+      "via": "cours dans le site Panda · Trinity: What Trinity is, and your own instance running by the end · Bring your existing agents, then build the departments · Give your agency one shared brain · Orchestration: one agent to run them all · Workspace: the interface for your team · Operations \u0026 the commercial model"
     },
     {
       "from": "const:ecole",
@@ -876,13 +876,13 @@
     },
     {
       "from": "ecole",
-      "to": "proximity",
-      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress."
+      "to": "panda",
+      "via": "L'école enseigne dans le site Panda. Éduconnexion n'est pas l'école."
     },
     {
       "from": "ecole",
       "to": "trading",
-      "via": "l'école enseigne le Web3 que les bots exécutent"
+      "via": "L'école n'exécute pas le trade. Le bot a sa propre chaîne."
     },
     {
       "from": "marketplace",

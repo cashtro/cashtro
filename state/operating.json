@@ -623,11 +623,9 @@
     },
     {
       "id": "ecole",
-      "name": "École tech",
+      "name": "École",
       "brain": "Cartographe",
-      "repos": [
-        "Evolu-Jeunes/educonnexion"
-      ]
+      "repos": null
     },
     {
       "id": "marketing",
@@ -813,8 +811,8 @@
     },
     {
       "from": "ecole",
-      "to": "proximity",
-      "via": "Le cours reste à l'école. La structure du thème Éduconnexion est au département WordPress.",
+      "to": "panda",
+      "via": "L'école enseigne dans le site Panda. Éduconnexion n'est pas l'école.",
       "agents": [
         "research",
         "operator",
@@ -824,7 +822,7 @@
     {
       "from": "ecole",
       "to": "trading",
-      "via": "l'école enseigne le Web3 que les bots exécutent",
+      "via": "L'école n'exécute pas le trade. Le bot a sa propre chaîne.",
       "agents": [
         "research",
         "memory",
@@ -1381,8 +1379,8 @@
         "department": "ingenierie",
         "function": "architect.plan",
         "product": "Evolu-Jeunes/Panda",
-        "revenue": "White-glove : IA, installation, cours, entreprises et particuliers.",
-        "guard": "On vend le service. On ne déploie pas chez le client sans allow."
+        "revenue": "White-glove : IA, installation, cours. L'école qui enseigne est dans ce site.",
+        "guard": "On vend le service. On ne déploie pas chez le client sans allow. Éduconnexion n'est pas cette école."
       },
       {
         "id": "nft-giant",
@@ -1400,9 +1398,9 @@
         "chief": "research",
         "department": "marche",
         "function": "research.ingest",
-        "product": "Evolu-Jeunes/educonnexion",
-        "revenue": "Cours tech (WordPress, Web3).",
-        "guard": "Le cours décrit. Il ne promet pas un gain de trading."
+        "product": "École dans Evolu-Jeunes/Panda",
+        "revenue": "Cours dans le site Panda.",
+        "guard": "Le cours décrit. Il ne promet pas un gain. Éduconnexion n'est pas cette école."
       },
       {
         "id": "marketing",

@@ -93,8 +93,8 @@ func Chain(line string) ([]ChainStep, bool) {
 		}, true
 	case "ecole":
 		return []ChainStep{
-			{Line: "ecole", Order: 1, Agent: "research", Do: "Décrire le cours tech. Ne pas promettre un gain."},
-			{Line: "ecole", Order: 2, Agent: "planner", Do: "Ranger le programme. Le cours n'exécute pas un ordre."},
+			{Line: "ecole", Order: 1, Agent: "research", Do: "Décrire le cours qui est dans le site Panda. Éduconnexion n'est pas ce cours. Ne pas promettre un gain."},
+			{Line: "ecole", Order: 2, Agent: "planner", Do: "Ranger le programme dans le site Panda. Le cours n'exécute pas un ordre."},
 		}, true
 	case "marketing":
 		return []ChainStep{

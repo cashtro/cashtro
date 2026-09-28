@@ -247,7 +247,7 @@ func (c *Catalog) seed() {
 			Sector: "education",
 			Stage:  StageProduction,
 			Stack:  []string{"WordPress"},
-			Notes:  "École tech. Enseigne tout ce qui est tech. Site WordPress de la ligne école.",
+			Notes:  "Site WordPress. Ce n'est pas l'école. L'école qui enseigne est dans le site Panda.",
 		},
 		{
 			ID:     "proximity",

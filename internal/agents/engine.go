@@ -74,7 +74,7 @@ func infrastructureOf(id string) string {
 	case "nft-giant":
 		base = "cerveau propre de Giant, art, token, lecture de marché"
 	case "ecole":
-		base = "programme de cours"
+		base = "cours dans le site Panda"
 	case "marketing":
 		base = "agence, Panda, Proximity cloud, carnet des agents"
 	case "fix2":

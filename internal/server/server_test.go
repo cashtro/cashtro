@@ -127,6 +127,9 @@ func TestIndexHTML(t *testing.T) {
 	if !strings.Contains(body, "OS of the agentics") || !strings.Contains(body, `id="os-brain"`) || !strings.Contains(body, "Three layers") {
 		t.Fatalf("index missing Voltron OS bar")
 	}
+	if !strings.Contains(body, "Categories") || !strings.Contains(body, "How to build an agent") {
+		t.Fatalf("index missing the category desk")
+	}
 }
 
 func TestVoltronRoute(t *testing.T) {
@@ -142,6 +145,20 @@ func TestVoltronRoute(t *testing.T) {
 	}
 	if os.Role != "OS of the agentics" || os.Brain != "instinct" || len(os.Stages) != 3 || len(os.Starts) < 9 {
 		t.Fatalf("voltron %+v", os)
+	}
+}
+
+func TestCategoriesAndGuide(t *testing.T) {
+	h := handler(t)
+	res := httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/categories", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"id":"brain"`) || !strings.Contains(res.Body.String(), `"id":"hustler"`) {
+		t.Fatalf("categories %d %s", res.Code, res.Body.String())
+	}
+	res = httptest.NewRecorder()
+	h.ServeHTTP(res, httptest.NewRequest(http.MethodGet, "/api/guide", nil))
+	if res.Code != http.StatusOK || !strings.Contains(res.Body.String(), `"applied":false`) {
+		t.Fatalf("guide %d %s", res.Code, res.Body.String())
 	}
 }
 

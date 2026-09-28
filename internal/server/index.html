@@ -132,6 +132,26 @@
       font-size: 12px;
       color: var(--live);
     }
+    .guide {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 16px;
+      padding-top: 16px;
+    }
+    .guide details { border-top: 1px solid var(--line); padding: 8px 0; }
+    .guide summary { cursor: pointer; font-family: Syne, sans-serif; font-weight: 700; }
+    .guide .item, .guide .rule, .guide li { color: var(--muted); font-size: 13px; line-height: 1.45; margin: 4px 0; }
+    .mark { font-size: 13px; line-height: 1.4; margin: 0 0 8px; }
+    .mark.good { color: var(--live); }
+    .mark.bad { color: var(--danger); }
+    .guide h3 {
+      margin: 12px 0 6px;
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
     .desk {
       display: grid;
       grid-template-columns: 340px minmax(0, 1.2fr) 320px;
@@ -231,6 +251,7 @@
       text-transform: uppercase;
     }
     @media (max-width: 1100px) {
+      .guide { grid-template-columns: 1fr; }
       .desk { grid-template-columns: 1fr; }
       .agents { max-height: none; }
       header.top { flex-direction: column; align-items: flex-start; }
@@ -282,6 +303,23 @@
       </div>
       <div class="os-starts" id="os-starts"></div>
       <p class="os-act" id="os-act"></p>
+    </section>
+    <section class="guide" id="guide" aria-label="Categories and the chain corrector">
+      <div class="panel">
+        <h2>Categories</h2>
+        <div id="cats"></div>
+      </div>
+      <div class="panel">
+        <h2>How to build an agent</h2>
+        <p id="guide-how" class="lede"></p>
+        <div id="guide-rules"></div>
+        <h3>Holds</h3>
+        <div id="guide-good"></div>
+        <h3>Does not hold</h3>
+        <div id="guide-bad"></div>
+        <h3>Plan · not applied</h3>
+        <ol id="guide-plan"></ol>
+      </div>
     </section>
     <main class="desk">
       <section class="panel" id="trinity">
@@ -499,11 +537,60 @@
         starts.appendChild(b);
       });
     }
+    function paintGuide(categories, guide) {
+      const cats = document.getElementById("cats");
+      cats.replaceChildren();
+      (categories || []).forEach((cat) => {
+        const details = document.createElement("details");
+        if (cat.id === "brain" || cat.id === "hustler" || cat.id === "school") details.open = true;
+        const summary = document.createElement("summary");
+        summary.textContent = cat.name + " · " + (cat.items || []).length;
+        details.appendChild(summary);
+        const what = document.createElement("p");
+        what.className = "item";
+        what.textContent = cat.what;
+        details.appendChild(what);
+        (cat.items || []).forEach((item) => {
+          const row = document.createElement("div");
+          row.className = "item";
+          row.textContent = item.name + " — " + item.does;
+          details.appendChild(row);
+        });
+        cats.appendChild(details);
+      });
+      document.getElementById("guide-how").textContent = guide.how || "";
+      const rules = document.getElementById("guide-rules");
+      rules.replaceChildren();
+      (guide.rules || []).forEach((rule) => {
+        const row = document.createElement("div");
+        row.className = "rule";
+        row.textContent = rule;
+        rules.appendChild(row);
+      });
+      const good = document.getElementById("guide-good");
+      const bad = document.getElementById("guide-bad");
+      good.replaceChildren();
+      bad.replaceChildren();
+      (guide.marks || []).forEach((mark) => {
+        const row = document.createElement("p");
+        row.className = "mark " + (mark.good ? "good" : "bad");
+        row.textContent = mark.fact;
+        (mark.good ? good : bad).appendChild(row);
+      });
+      const plan = document.getElementById("guide-plan");
+      plan.replaceChildren();
+      (guide.plan || []).forEach((cut) => {
+        const row = document.createElement("li");
+        row.textContent = cut.do;
+        plan.appendChild(row);
+      });
+    }
     async function render() {
-      const [os, voltron, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
-        j("/api/os"), j("/api/voltron"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
+      const [os, voltron, categories, guide, agents, ships, events, model, profile, notes, confirms] = await Promise.all([
+        j("/api/os"), j("/api/voltron"), j("/api/categories"), j("/api/guide"), j("/api/agents"), j("/api/ships"), j("/api/events"), j("/api/model"), j("/api/profile"), j("/api/notes"), j("/api/confirms")
       ]);
       paintVoltron(voltron);
+      paintGuide(categories, guide);
       document.getElementById("lede").textContent = os.motto || "Fourteen seats. One body. idea → concept → production.";
       document.getElementById("contact").textContent = profile.email;
       const stats = document.getElementById("stats");

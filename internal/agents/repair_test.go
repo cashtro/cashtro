@@ -49,8 +49,15 @@ func TestRepairCrewReadsTheWholeChain(t *testing.T) {
 			}
 		}
 	}
-	if !school || !wordpress {
-		t.Fatal("Éduconnexion must stay on its website projects")
+	if school || !wordpress {
+		t.Fatal("Éduconnexion stays a WordPress website and is not the school")
+	}
+	ecole, ok := LineByID("ecole")
+	if !ok || len(ecole.Repos) != 0 {
+		t.Fatal("the school is not a separate repo")
+	}
+	if !repoOn("panda", "Evolu-Jeunes/Panda") {
+		t.Fatal("the school teaches inside the Panda website")
 	}
 	if !giant || !bot {
 		t.Fatal("Giant and the trading bot each keep their repo")

@@ -78,7 +78,7 @@ func SurveyChain() ChainReport {
 	crew := RepairCrew()
 	repair := []ChainFix{
 		{1, "separee", "La chaîne des vingt sièges reste à part des projets."},
-		{2, "sites", "Un site reste un site. Éduconnexion n'est pas une chaîne."},
+		{2, "sites", "Un site reste un site. Éduconnexion n'est pas une chaîne et n'est pas l'école. L'école enseigne dans le site Panda."},
 		{3, "giant", "Giant est un écosystème. Son dépôt est Evolu-Jeunes/Giant. Sa chaîne reste."},
 		{4, "bot", "Le bot de trading est cashtro/trading_bot-main. Sa chaîne reste. Les deux dépôts ne sont pas mélangés."},
 		{5, "synchronie", "Une chaîne à part les fait travailler ensemble, y compris le trade blockchain. L'approbation AMF n'est pas une porte. Elle est traitée hors de ce kernel."},
