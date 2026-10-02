@@ -1,0 +1,23 @@
+const { chromium } = require('/opt/node-tools/node_modules/playwright'); const fs = require('fs');
+(async () => { const html = fs.readFileSync('centre-pandora.html', 'utf8');
+ const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
+ const errs = []; p.on('pageerror', (e) => errs.push(e.message));
+ await p.setContent(`<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><script>${fs.readFileSync('mock2.js','utf8')}</script></head><body>${html}</body></html>`);
+ await p.evaluate(() => window.__seed()); await p.waitForTimeout(500); await p.click('#g-skip', { timeout: 3000 }).catch(() => console.log('no guide'));
+ await p.click('nav a[href="#console"]:visible'); await p.waitForTimeout(300);
+ await (await p.$('.net')).screenshot({ path: 'net26.png' });
+ await p.fill('#c-topic', 'Quel concept lancer ?'); await p.click('text=Ouvrir le Conseil');
+ await p.waitForTimeout(400); await p.screenshot({ path: 'council-live.png' });
+ await p.waitForFunction(() => S.debates[0] && ['consensus','sans consensus','erreur'].includes(S.debates[0].status), null, { timeout: 30000 });
+ const d = await p.evaluate(() => ({ st: S.debates[0].status, rounds: S.debates[0].run.rounds.map((r) => Math.round(r.accord*100)), props: S.debates[0].run.propositions.length, obj: S.debates[0].run.objections.length, tasks: S.tasks.length, err: S.debates[0].run.error, busy: S.agents.filter(a=>a.status==='travail').length }));
+ console.log(JSON.stringify(d));
+ await p.click('.card details.deliv >> nth=0').catch(()=>{});
+ await p.screenshot({ path: 'council-done.png', fullPage: true });
+ // auto queue order
+ await p.selectOption('#o-when', 'auto'); await p.fill('#o-text', 'Test file'); await p.click('text=Envoyer l\'ordre'); await p.waitForTimeout(300);
+ console.log('queued', await p.evaluate(() => S.orders.filter(o=>o.status==='en file').length));
+ await p.click('nav a[href="#accueil"]:visible'); await p.waitForTimeout(300); await p.screenshot({ path: 'home2.png', fullPage: true });
+ await p.setViewportSize({ width: 390, height: 800 }); await p.click('nav a[href="#console"]:visible'); await p.waitForTimeout(400);
+ console.log('scrollW', await p.evaluate(() => document.documentElement.scrollWidth));
+ await (await p.$('.net')).screenshot({ path: 'net26m.png' });
+ console.log('errors', JSON.stringify(errs)); await b.close(); })();

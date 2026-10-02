@@ -1,0 +1,707 @@
+<title>Pandora · Nouvelle identité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Serif:ital@0;1&amp;family=Manrope:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Unbounded:wght@400;500;600&amp;display=swap">
+<style>
+/* Mise en page : une planche blanche, trois sections pleine largeur qui portent chacune leur propre monde (couleurs, polices, reflets), puis une comparaison. */
+:root{
+  color-scheme: light;
+  --page-bg:#FFFFFF;
+  --page-ink:#0A0A0A;
+  --page-muted:#54565C;
+  --page-line:#E4E6EB;
+  --page-soft:#F6F7F9;
+  --focus:#2F5BFF;
+  --f-page:"Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --champagne:#C8A96A;
+  --champagne-light:#F4E9CF;
+  --silver:#C0C4CC;
+  --ink:#0A0A0A;
+  --navy:#0B1220;
+  --cobalt:#2F5BFF;
+  --teal:#10B5A6;
+  --teal-ink:#0B7A70;
+  --violet:#7C5CFF;
+  --cyan:#22D3EE;
+  --rose:#FF6AD5;
+  --mint:#5EEAD4;
+  --white:#FFFFFF;
+  --holo: linear-gradient(110deg, var(--violet) 0%, var(--cyan) 25%, var(--rose) 50%, var(--mint) 75%, var(--violet) 100%);
+
+  --f-serif:"Instrument Serif", "Fraunces", Georgia, "Times New Roman", serif;
+  --f-manrope:"Manrope", "Segoe UI", system-ui, sans-serif;
+  --f-jakarta:"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --f-unb:"Unbounded", "Syne", "Arial Black", system-ui, sans-serif;
+  --f-dm:"DM Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+/* Jetons propres à chaque direction */
+.d1{
+  --bg:var(--white); --ink-c:var(--ink); --muted:#55565B; --line:var(--silver); --line-soft:#E6E7EA;
+  --accent:var(--champagne); --ok:#2F7A53; --ok-bg:#EEF5F0; --warn:#B3422E;
+  --f-display:var(--f-serif); --f-text:var(--f-manrope); --f-num:var(--f-serif);
+  --r:2px;
+}
+.d2{
+  --bg:var(--white); --ink-c:var(--navy); --muted:#4A5468; --line:var(--silver); --line-soft:#E3E7EF;
+  --accent:var(--cobalt); --ok:var(--teal-ink); --ok-bg:#E3F6F4; --warn:#D7373F;
+  --f-display:var(--f-jakarta); --f-text:var(--f-jakarta); --f-num:var(--f-mono);
+  --r:14px;
+}
+.d3{
+  --bg:var(--white); --ink-c:var(--ink); --muted:#4F5058; --line:var(--ink); --line-soft:#E7E7EA;
+  --accent:var(--violet); --ok:var(--ink); --ok-bg:var(--mint); --warn:#E11D48;
+  --f-display:var(--f-unb); --f-text:var(--f-dm); --f-num:var(--f-unb);
+  --r:18px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--page-bg);color:var(--page-ink);font-family:var(--f-page);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,p,ul,figure{margin:0}
+ul{padding:0;list-style:none}
+h1,h2,h3{text-wrap:balance}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:16px}
+@media (min-width:720px){.wrap{padding-inline:32px}}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--page-muted)}
+
+/* ---------- Haut de page ---------- */
+.top{padding-block:56px 64px;border-bottom:1px solid var(--page-line)}
+.top-meta{display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;align-items:baseline;padding-bottom:40px}
+.top h1{font-size:clamp(40px,7.4vw,88px);line-height:1;letter-spacing:-.04em;font-weight:600;max-width:14ch}
+.top h1 .nw{white-space:nowrap}
+.top h1 span{color:var(--page-muted);font-weight:400}
+.lede{margin-top:20px;font-size:clamp(17px,1.6vw,20px);max-width:58ch;color:#2A2B30}
+.cards{margin-top:44px;display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:860px){.cards{grid-template-columns:repeat(3,1fr)}}
+.card{min-width:0;display:flex;flex-direction:column;text-decoration:none;border:1px solid var(--page-line);border-radius:6px;background:var(--page-bg);transition:border-color .25s, transform .25s, box-shadow .25s}
+.card:hover{border-color:var(--page-ink);transform:translateY(-3px);box-shadow:0 18px 40px -24px rgba(10,10,10,.35)}
+.card-art{position:relative;height:180px;display:flex;align-items:center;justify-content:center;gap:14px;border-bottom:1px solid var(--page-line);overflow:hidden;color:var(--ink-c)}
+.card-art svg{width:52px;height:52px;flex:none}
+.card-word{font-family:var(--f-display);font-size:34px;line-height:1;color:var(--ink-c)}
+.d1 .card-word{font-size:44px}
+.d2 .card-word{font-weight:700;letter-spacing:-.03em}
+.d3 .card-word{font-weight:500;letter-spacing:-.02em;font-size:28px;text-transform:lowercase}
+.card-strip{position:absolute;left:0;right:0;bottom:0;height:4px;display:flex}
+.card-strip i{flex:1}
+.card-body{padding:20px 20px 22px;display:grid;gap:6px}
+.card-num{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--page-muted)}
+.card-name{font-size:24px;font-weight:600;letter-spacing:-.02em}
+.card-desc{color:#3A3B40;font-size:15px}
+.card-go{margin-top:10px;font-size:14px;font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.card-go b{transition:transform .25s}
+.card:hover .card-go b{transform:translateX(4px)}
+
+/* ---------- Sections ---------- */
+.dir{padding-block:72px 80px;border-bottom:1px solid var(--page-line);background:var(--bg);color:var(--ink-c);font-family:var(--f-text);scroll-margin-top:0}
+.dir h3.sub{font-family:var(--f-page);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:18px}
+.dir-head{display:grid;gap:40px;grid-template-columns:1fr;align-items:stretch}
+@media (min-width:920px){.dir-head{grid-template-columns:1.05fr 1fr}}
+.dir-head>*,.dir-specs>*,.ui-row>*{min-width:0}
+.dir-num{font-family:var(--f-page);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.dir-name{margin-top:10px;font-family:var(--f-display);font-size:clamp(48px,8vw,96px);line-height:.95;font-weight:400;letter-spacing:-.02em}
+.d2 .dir-name{font-weight:700;letter-spacing:-.045em}
+.d3 .dir-name{font-weight:500;letter-spacing:-.04em;font-size:clamp(44px,7.4vw,88px)}
+.dir-line{margin-top:14px;font-size:clamp(18px,1.8vw,22px);color:var(--muted)}
+.moods{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
+.moods li{font-size:14px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg)}
+.d1 .moods li{border-radius:0;letter-spacing:.06em;text-transform:uppercase;font-size:12px;padding:7px 12px}
+.d3 .moods li{border-color:var(--ink)}
+.why{margin-top:30px;padding-top:22px;border-top:1px solid var(--line);max-width:60ch}
+.d1 .why{border-top:0;position:relative}
+.why h3{font-size:17px;font-weight:700;margin-bottom:8px;font-family:var(--f-text)}
+.d1 .why h3{font-family:var(--f-serif);font-weight:400;font-size:24px;font-style:italic}
+.why p{color:#2C2D33}
+.d2 .why p{color:#26304A}
+
+/* Filet signature (or champagne qui brille doucement) */
+.sheen{display:block;height:1px;background:linear-gradient(90deg,var(--champagne) 0 42%,var(--champagne-light) 50%,var(--champagne) 58% 100%);background-size:260% 100%;animation:sheen 7s ease-in-out infinite}
+@keyframes sheen{0%{background-position:100% 0}60%,100%{background-position:0 0}}
+.holo-line{display:block;height:2px;background:var(--holo);background-size:300% 100%;animation:holo 9s linear infinite}
+@keyframes holo{to{background-position:300% 0}}
+
+/* Logo */
+.logo-panel{position:relative;border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;justify-content:space-between;min-height:340px;background:var(--bg);overflow:hidden}
+.d2 .logo-panel{border-color:var(--line-soft);background:linear-gradient(180deg,#F7F9FD,var(--white))}
+.d3 .logo-panel{border-color:var(--ink)}
+.logo{flex:1;display:flex;align-items:center;justify-content:center;gap:20px;padding:40px 24px;flex-wrap:wrap;cursor:default}
+.logo svg.sym{width:96px;height:96px;flex:none;overflow:visible}
+.lockup{display:grid;gap:8px;min-width:0}
+.wordmark{font-family:var(--f-display);color:var(--ink-c);line-height:.9}
+.d1 .wordmark{font-size:clamp(56px,7vw,80px);letter-spacing:-.01em}
+.d2 .wordmark{font-size:clamp(44px,5.6vw,64px);font-weight:700;letter-spacing:-.045em}
+.d3 .wordmark{font-size:clamp(34px,4.6vw,52px);font-weight:500;letter-spacing:-.03em;text-transform:lowercase}
+.tagline{font-family:var(--f-page);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.d1 .tagline{display:flex;align-items:center;gap:10px}
+.d1 .tagline::before{content:"";width:28px;height:1px;background:var(--champagne)}
+.d2 .tagline{letter-spacing:.06em;text-transform:none;font-size:13px;font-family:var(--f-jakarta);font-weight:500}
+.d3 .tagline{letter-spacing:.08em;font-family:var(--f-dm);font-size:12px}
+.logo-panel figcaption{padding:14px 18px;border-top:1px solid var(--line-soft);font-size:13.5px;color:var(--muted);font-family:var(--f-page)}
+.d3 .logo-panel figcaption{border-color:var(--ink)}
+
+/* animations de symbole au survol */
+.sym *{transition:transform .7s cubic-bezier(.2,.8,.2,1), opacity .5s}
+.s1-lid{transform-origin:9px 26px}
+.logo:hover .s1-lid,.card:hover .s1-lid{transform:rotate(-14deg)}
+.s1-light{opacity:.85}
+.logo:hover .s1-light,.card:hover .s1-light{transform:translateY(-4px);opacity:1}
+.s1-ray{opacity:0}
+.logo:hover .s1-ray,.card:hover .s1-ray{opacity:1}
+.s2-dot{transform-origin:35px 35px}
+.logo:hover .s2-dot,.card:hover .s2-dot{transform:translate(-2px,-3px) scale(1.35)}
+.s2-p{transform-origin:24px 24px}
+.logo:hover .s2-p,.card:hover .s2-p{transform:translateX(-1px)}
+.s3-orb{transform-origin:24px 14px}
+.logo:hover .s3-orb,.card:hover .s3-orb{transform:translateY(-4px) scale(1.08)}
+.s3-flap-l{transform-origin:12px 26px}
+.s3-flap-r{transform-origin:36px 26px}
+.logo:hover .s3-flap-l,.card:hover .s3-flap-l{transform:rotate(-12deg)}
+.logo:hover .s3-flap-r,.card:hover .s3-flap-r{transform:rotate(12deg)}
+.s3-anim{animation:hue 10s ease-in-out infinite alternate}
+@keyframes hue{from{filter:hue-rotate(-25deg)}to{filter:hue-rotate(35deg)}}
+
+/* Palette + typo */
+.dir-specs{margin-top:56px;display:grid;gap:40px;grid-template-columns:1fr}
+@media (min-width:920px){.dir-specs{grid-template-columns:1.05fr 1fr}}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{display:grid;gap:4px;font-size:13.5px;min-width:0}
+.chip{height:72px;border-radius:var(--r);border:1px solid var(--line-soft);margin-bottom:8px;position:relative;overflow:hidden}
+.d1 .chip{border-color:var(--silver)}
+.d3 .chip{border-color:var(--ink)}
+.chip.line::after{content:"";position:absolute;left:12px;right:12px;top:50%;height:1px;background:var(--c)}
+.sw-role{font-weight:700;font-family:var(--f-page);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sw-name{font-weight:600}
+.sw-hex{font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.specimen{border:1px solid var(--line);border-radius:var(--r);padding:28px;display:grid;gap:18px;background:var(--bg)}
+.d2 .specimen{border-color:var(--line-soft)}
+.spec-aa{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.spec-aa b{font-family:var(--f-display);font-size:96px;line-height:.8;font-weight:400}
+.d2 .spec-aa b{font-weight:800;letter-spacing:-.05em}
+.d3 .spec-aa b{font-weight:500;font-size:84px}
+.spec-meta{font-family:var(--f-page);font-size:13px;color:var(--muted);display:grid;gap:2px}
+.spec-meta strong{color:var(--ink-c);font-weight:600}
+.spec-h{font-family:var(--f-display);font-size:30px;line-height:1.1;letter-spacing:-.01em}
+.d2 .spec-h{font-weight:700;letter-spacing:-.03em;font-size:27px}
+.d3 .spec-h{font-weight:500;letter-spacing:-.03em;font-size:24px}
+.spec-p{font-size:16px;color:#2C2D33;max-width:52ch}
+.spec-num{font-family:var(--f-num);font-size:22px;padding-top:16px;border-top:1px solid var(--line-soft);display:flex;flex-wrap:wrap;gap:6px 22px;font-variant-numeric:tabular-nums}
+.d1 .spec-num{font-size:28px}
+.d3 .spec-num{font-size:18px;font-weight:500}
+
+/* ---------- Aperçu d'interface ---------- */
+.dir-ui{margin-top:64px}
+.ui-row{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.screen{flex:1 1 560px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg);box-shadow:0 30px 60px -40px rgba(10,10,20,.35)}
+.d2 .screen{border-color:var(--line-soft)}
+.d3 .screen{border-color:var(--ink);border-radius:20px}
+.screen-bar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line-soft);background:#FAFAFB}
+.screen-bar i{width:9px;height:9px;border-radius:50%;background:#DADCE1}
+.screen-bar span{margin-left:10px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);background:var(--white);border:1px solid var(--line-soft);border-radius:6px;padding:2px 10px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.phone{flex:0 1 414px;width:100%;max-width:414px;border:1px solid #1C1D22;border-radius:50px;padding:11px;background:var(--white);box-shadow:0 30px 60px -36px rgba(10,10,20,.45)}
+.phone-in{border-radius:39px;overflow:hidden;border:1px solid var(--line-soft);background:var(--bg)}
+.phone-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 26px 4px;font-family:var(--f-page);font-size:13px;font-weight:700;color:var(--ink-c)}
+.phone-bar .notch{width:96px;height:26px;border-radius:999px;background:#0A0A0A}
+.phone-bar .sig{display:flex;gap:3px;align-items:flex-end}
+.phone-bar .sig i{width:3px;background:var(--ink-c);border-radius:1px}
+.ui-caption{margin-top:14px;font-size:13.5px;color:var(--muted);font-family:var(--f-page)}
+
+.ui{container-type:inline-size;font-family:var(--f-text);color:var(--ink-c);background:var(--bg)}
+.ui p{margin:0}
+.ui-nav{position:relative;display:flex;align-items:center;gap:18px;padding:14px 20px}
+.ui-nav-line{position:absolute;left:0;right:0;bottom:0}
+.d2 .ui-nav{border-bottom:1px solid var(--line-soft)}
+.ui-brand{display:flex;align-items:center;gap:9px;font-family:var(--f-display);font-size:20px;line-height:1}
+.ui-mark svg{width:26px;height:26px;display:block;overflow:visible}
+.d1 .ui-brand{font-size:24px}
+.d2 .ui-brand{font-weight:700;letter-spacing:-.03em}
+.d3 .ui-brand{font-weight:500;font-size:16px;text-transform:lowercase;letter-spacing:-.02em}
+.ui-links{display:flex;gap:18px;margin-left:12px;font-size:13.5px;color:var(--muted)}
+.ui-links span{padding-block:4px}
+.ui-links .is-on{color:var(--ink-c);font-weight:600}
+.d1 .ui-links .is-on{border-bottom:1px solid var(--ink)}
+.d2 .ui-links .is-on{color:var(--cobalt)}
+.d3 .ui-links .is-on{border-bottom:2px solid var(--ink)}
+.ui-avatar{margin-left:auto;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:700;border:1px solid var(--line);font-family:var(--f-page)}
+.d2 .ui-avatar{background:#EEF2FF;border-color:#D7DFFF;color:var(--navy)}
+.ui-burger{display:none;width:32px;height:32px;border:1px solid var(--line);border-radius:var(--r);flex-direction:column;justify-content:center;align-items:center;gap:5px}
+.ui-burger i{width:14px;height:1.5px;background:var(--ink-c);display:block}
+@container (max-width:520px){
+  .ui-links,.ui-avatar{display:none}
+  .ui-burger{display:flex;margin-left:auto}
+}
+.ui-body{padding:22px 20px 26px;display:grid;gap:14px;grid-template-columns:1fr;grid-template-areas:"hello" "kpi" "gauge" "agent" "cta"}
+@container (min-width:560px){
+  .ui-body{grid-template-columns:1.1fr 1fr;grid-template-areas:"hello hello" "kpi agent" "kpi gauge" "cta cta";padding:28px 28px 30px;gap:16px}
+}
+.ui-hello{grid-area:hello;padding-bottom:4px}
+.ui-kpi{grid-area:kpi}.ui-agent{grid-area:agent}.ui-gauge{grid-area:gauge}.ui-cta{grid-area:cta}
+.ui-eyebrow{font-size:12px;color:var(--muted);letter-spacing:.04em}
+.ui-h{font-family:var(--f-display);font-size:26px;line-height:1.1;margin-top:4px;letter-spacing:-.01em}
+.d2 .ui-h{font-weight:700;letter-spacing:-.03em;font-size:23px}
+.d3 .ui-h{font-weight:500;font-size:19px;letter-spacing:-.03em;line-height:1.2}
+.ui-card{min-width:0;position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--r);padding:18px;background:var(--bg)}
+.d2 .ui-card{border-color:var(--line-soft);box-shadow:0 1px 2px rgba(11,18,32,.05),0 10px 28px -16px rgba(11,18,32,.18)}
+.d3 .ui-card{border-color:var(--ink)}
+.ui-label{font-size:12.5px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.d1 .ui-label{letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.ui-badge{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--champagne);color:#7A5F2B;border-radius:999px;font-weight:700}
+.d1 .ui-badge{border-radius:0}
+.d3 .ui-badge{display:none}
+.ui-value{font-family:var(--f-num);font-size:44px;line-height:1.05;margin-top:10px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.ui-value small{font-size:.42em;color:var(--muted);font-family:var(--f-text);letter-spacing:0}
+.d2 .ui-value{font-size:34px;font-weight:500;letter-spacing:-.03em}
+.d3 .ui-value{font-size:32px;font-weight:500;letter-spacing:-.04em}
+.ui-sub{font-size:13px;color:var(--muted);margin-top:6px}
+.ui-kpi{display:flex;flex-direction:column}
+.ui-spark{margin-top:auto;padding-top:16px;width:100%;flex:1 1 64px;height:auto;min-height:64px;display:block;overflow:visible}
+.ui-spark path{fill:none;stroke:var(--ink-c);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.ui-spark .area{stroke:none}
+.d1 .ui-spark .area{fill:none}
+.d1 .ui-spark path.ln{stroke:var(--ink)}
+.d2 .ui-spark path.ln{stroke:var(--cobalt);stroke-width:2}
+.d2 .ui-spark .area{fill:rgba(47,91,255,.08)}
+.d3 .ui-spark path.ln{stroke:url(#holo-stroke);stroke-width:2.5}
+.d3 .ui-spark .area{fill:none}
+.ui-agent{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ui-ava{width:44px;height:44px;flex:none;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:20px;border:1px solid var(--line)}
+.d1 .ui-ava{font-size:24px;border-color:var(--champagne)}
+.d2 .ui-ava{border:0;background:var(--navy);color:var(--white);font-weight:700;border-radius:12px}
+.d3 .ui-ava{border:0;background:var(--holo);background-size:300% 100%;animation:holo 9s linear infinite;color:var(--ink);font-weight:600;font-size:17px}
+.ui-agent-txt{flex:1 1 140px;min-width:0}
+.ui-agent-name{font-weight:600;font-size:15px}
+.d1 .ui-agent-name{font-family:var(--f-serif);font-weight:400;font-size:20px}
+.ui-agent-txt .ui-sub{margin-top:2px}
+.ui-status{font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--ok-bg);color:var(--ok);white-space:nowrap}
+.d1 .ui-status{border-radius:0;background:transparent;border:1px solid #BFD6C7}
+.d3 .ui-status{border:1px solid var(--ink)}
+.ui-gauge-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ui-gauge-val{font-family:var(--f-num);font-size:22px;font-variant-numeric:tabular-nums}
+.d1 .ui-gauge-val{font-size:26px}
+.d2 .ui-gauge-val{font-size:18px;font-weight:500;color:var(--navy)}
+.d3 .ui-gauge-val{font-size:16px;font-weight:500}
+.ui-track{margin-top:14px;height:8px;border-radius:999px;background:#EDEFF3;position:relative;overflow:hidden}
+.ui-fill{position:absolute;inset:0 auto 0 0;border-radius:inherit;background:var(--ink-c)}
+.d1 .ui-track{height:1px;background:var(--silver);overflow:visible;border-radius:0;margin-top:22px}
+.d1 .ui-fill{height:3px;top:-1px;background:var(--ink);border-radius:0}
+.d1 .ui-fill::after{content:"";position:absolute;right:-1px;top:-7px;width:1px;height:17px;background:var(--champagne)}
+.d2 .ui-fill{background:linear-gradient(90deg,var(--cobalt),#4C74FF)}
+.d2 .ui-fill::after{content:"";position:absolute;right:3px;top:2px;width:4px;height:4px;border-radius:50%;background:var(--champagne)}
+.d3 .ui-track{height:12px;background:var(--white);border:1px solid var(--ink)}
+.d3 .ui-fill{background:var(--holo);background-size:300% 100%;animation:holo 9s linear infinite;inset:1px auto 1px 1px}
+.ui-cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:4px}
+.ui-btn{font:inherit;font-size:15px;font-weight:600;cursor:pointer;border:0;padding:14px 22px;position:relative;overflow:hidden;transition:transform .2s, box-shadow .25s}
+.ui-btn:active{transform:translateY(1px)}
+.d1 .ui-btn{background:var(--ink);color:var(--white);border-radius:0;letter-spacing:.06em;font-size:13px;text-transform:uppercase;padding:16px 26px}
+.d1 .ui-btn::after{content:"";position:absolute;left:14px;right:14px;bottom:7px;height:1px;background:var(--champagne);transform:scaleX(.25);transform-origin:left;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.d1 .ui-btn:hover::after{transform:scaleX(1)}
+.d2 .ui-btn{background:var(--cobalt);color:var(--white);border-radius:10px;box-shadow:0 8px 20px -10px rgba(47,91,255,.7)}
+.d2 .ui-btn:hover{box-shadow:0 12px 26px -10px rgba(47,91,255,.8);background:#2450F0}
+.d3 .ui-btn{background:var(--holo);background-size:300% 100%;animation:holo 9s linear infinite;color:var(--ink);border-radius:999px;font-weight:700;padding:14px 26px;box-shadow:inset 0 0 0 1px rgba(10,10,10,.85)}
+.d3 .ui-btn:hover{transform:translateY(-1px);box-shadow:inset 0 0 0 1px var(--ink),0 10px 24px -12px rgba(124,92,255,.7)}
+.ui-ghost{font-size:14px;color:var(--ink-c);text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line)}
+.d2 .ui-ghost{color:var(--cobalt);text-decoration:none;font-weight:600}
+
+/* reflet Confiance Tech : un passage de lumière très doux sur la carte KPI */
+.d2 .ui-kpi::before{content:"";position:absolute;inset:-20% -60%;background:linear-gradient(105deg,transparent 42%,rgba(47,91,255,.07) 50%,rgba(16,181,166,.06) 54%,transparent 62%);animation:sweep 8s ease-in-out infinite;pointer-events:none}
+@keyframes sweep{0%{transform:translateX(-40%)}55%,100%{transform:translateX(40%)}}
+.pulse{animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+
+/* ---------- Comparaison ---------- */
+.compare{padding-block:80px}
+.compare h2,.choose h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.03em;font-weight:600;line-height:1.05}
+.compare .intro{margin-top:12px;color:var(--page-muted);max-width:60ch}
+.table-scroll{margin-top:32px;overflow-x:auto;border:1px solid var(--page-line);border-radius:6px}
+table{width:100%;border-collapse:collapse;min-width:720px;font-size:15px}
+th,td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--page-line)}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+thead th{font-size:15px;background:var(--page-soft)}
+thead th small{display:block;font-weight:500;color:var(--page-muted);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+tbody th{font-weight:600;width:18%;color:var(--page-ink)}
+.dots{display:inline-flex;gap:4px;vertical-align:middle;margin-right:8px}
+.dots i{width:9px;height:9px;border-radius:50%;border:1px solid var(--page-ink)}
+.dots i.on{background:var(--page-ink)}
+.reco{margin-top:40px;display:grid;gap:10px;padding:28px;border:1px solid var(--page-ink);border-radius:6px;position:relative}
+.reco p.big{font-size:clamp(19px,2vw,24px);font-weight:600;letter-spacing:-.015em;line-height:1.35;max-width:60ch}
+.choose{margin-top:20px;padding:28px;border-radius:6px;background:var(--page-soft);display:grid;gap:14px}
+.choose h2{font-size:clamp(24px,3vw,30px)}
+.say{font-size:clamp(18px,2vw,22px);font-weight:500}
+.say q{font-weight:700;quotes:"« " " »"}
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pill-btn{font:inherit;font-size:14px;font-weight:600;padding:10px 16px;border-radius:999px;border:1px solid var(--page-ink);background:var(--page-bg);color:var(--page-ink);cursor:pointer}
+.pill-btn:hover{background:var(--page-ink);color:var(--page-bg)}
+.copied{font-size:14px;color:var(--page-muted);min-height:1.5em}
+footer{padding-block:28px 40px;color:var(--page-muted);font-size:13px;border-top:1px solid var(--page-line)}
+
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="holo-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7C5CFF"/><stop offset=".35" stop-color="#22D3EE"/><stop offset=".7" stop-color="#FF6AD5"/><stop offset="1" stop-color="#5EEAD4"/>
+    </linearGradient>
+    <linearGradient id="holo-stroke" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#7C5CFF"/><stop offset=".35" stop-color="#22D3EE"/><stop offset=".7" stop-color="#FF6AD5"/><stop offset="1" stop-color="#5EEAD4"/>
+    </linearGradient>
+    <linearGradient id="holo-beam" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity=".55"/><stop offset="1" stop-color="#FF6AD5" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- Symboles (source unique, recopiés par le script dans les cartes et les aperçus) -->
+<template id="sym-1">
+  <svg class="sym" viewBox="0 0 48 48" aria-hidden="true">
+    <g class="s1-ray" stroke="#C8A96A" stroke-width=".75" fill="none"><path d="M24 7 V3"/><path d="M17 10 L15 7"/><path d="M31 10 L33 7"/></g>
+    <path class="s1-light" d="M24 11 L25.4 16.6 L31 18 L25.4 19.4 L24 25 L22.6 19.4 L17 18 L22.6 16.6 Z" fill="#C8A96A"/>
+    <rect x="9" y="26" width="30" height="16" fill="#FFFFFF" stroke="#0A0A0A" stroke-width="1.25"/>
+    <path d="M9 31 H39" stroke="#C0C4CC" stroke-width=".75"/>
+    <path class="s1-lid" d="M7 26 H41" stroke="#0A0A0A" stroke-width="1.25" stroke-linecap="square"/>
+  </svg>
+</template>
+<template id="sym-2">
+  <svg class="sym" viewBox="0 0 48 48" aria-hidden="true">
+    <rect x="2" y="2" width="44" height="44" rx="12" fill="#0B1220"/>
+    <rect x="2.5" y="2.5" width="43" height="43" rx="11.5" fill="none" stroke="#2F5BFF" stroke-opacity=".9"/>
+    <path class="s2-p" d="M16 36 V13 H25.5 A7.5 7.5 0 0 1 25.5 28 H16" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="s2-dot" cx="34" cy="35" r="3.4" fill="#10B5A6"/>
+    <circle cx="38.5" cy="9.5" r="1.3" fill="#C8A96A"/>
+  </svg>
+</template>
+<template id="sym-3">
+  <svg class="sym s3-anim" viewBox="0 0 48 48" aria-hidden="true">
+    <path d="M15 25 L24 6 L33 25 Z" fill="url(#holo-beam)"/>
+    <circle class="s3-orb" cx="24" cy="14" r="7" fill="url(#holo-g)"/>
+    <path d="M12 26 L24 32 L36 26 V38 L24 44 L12 38 Z" fill="#FFFFFF" stroke="#0A0A0A" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M24 32 V44" stroke="#0A0A0A" stroke-width="1.5"/>
+    <path class="s3-flap-l" d="M12 26 L24 32 L18 36 L6 30 Z" fill="#FFFFFF" stroke="#0A0A0A" stroke-width="1.5" stroke-linejoin="round"/>
+    <path class="s3-flap-r" d="M36 26 L24 32 L30 36 L42 30 Z" fill="#FFFFFF" stroke="#0A0A0A" stroke-width="1.5" stroke-linejoin="round"/>
+  </svg>
+</template>
+
+<!-- Aperçu d'interface (même contenu, habillé par chaque direction) -->
+<template id="tpl-ui">
+  <div class="ui">
+    <div class="ui-nav">
+      <span class="ui-brand"><span class="ui-mark" data-mark></span><span>Pandora</span></span>
+      <span class="ui-links"><span class="is-on">Accueil</span><span>Agents</span><span>Conseil</span><span>Factures</span></span>
+      <span class="ui-avatar" aria-hidden="true">MB</span>
+      <span class="ui-burger" aria-hidden="true"><i></i><i></i></span>
+      <span class="ui-nav-line" data-navline></span>
+    </div>
+    <div class="ui-body">
+      <div class="ui-hello"><p class="ui-eyebrow">Jeudi 2 octobre</p><p class="ui-h">Bonjour ! Votre équipe IA est prête.</p></div>
+      <div class="ui-kpi ui-card">
+        <p class="ui-label">Votre forfait <span class="ui-badge">Premium</span></p>
+        <p class="ui-value">1 490 $ <small>/ mois</small></p>
+        <p class="ui-sub">4 agents actifs · 38 h gagnées ce mois-ci</p>
+        <svg class="ui-spark" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true">
+          <path class="area" d="M0 33 L15 31 L30 32 L45 25 L60 26 L75 19 L90 16 L105 11 L120 6 V40 H0 Z"/>
+          <path class="ln" d="M0 33 L15 31 L30 32 L45 25 L60 26 L75 19 L90 16 L105 11 L120 6"/>
+        </svg>
+      </div>
+      <div class="ui-agent ui-card">
+        <span class="ui-ava" aria-hidden="true">A</span>
+        <div class="ui-agent-txt"><p class="ui-agent-name">Atlas · Architecte cloud</p><p class="ui-sub">Répond en moins de 2 minutes</p></div>
+        <span class="ui-status"><span aria-hidden="true">😊</span> Disponible</span>
+      </div>
+      <div class="ui-gauge ui-card">
+        <div class="ui-gauge-top"><p class="ui-label">Accord du Conseil</p><p class="ui-gauge-val">91 % d'accord</p></div>
+        <div class="ui-track" role="img" aria-label="Jauge : 91 % d'accord"><span class="ui-fill" style="width:91%"></span></div>
+        <p class="ui-sub">11 agents sur 12 approuvent le plan</p>
+      </div>
+      <div class="ui-cta"><button type="button" class="ui-btn">Ouvrir le Conseil</button><span class="ui-ghost">Voir le détail</span></div>
+    </div>
+  </div>
+</template>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-meta"><p class="eyebrow">Pandora Business Technology &amp; Marketing</p><p class="eyebrow">pandorabrains.com · Planche de marque · Octobre 2026</p></div>
+    <h1>Pandora <span>·</span> nouvelle identité</h1>
+    <p class="lede">Voici trois façons de présenter Pandora à vos clients. Toutes restent blanches et lumineuses. Regardez chaque direction, puis choisissez celle qui vous ressemble.</p>
+    <nav class="cards" aria-label="Les trois directions">
+      <a class="card d1" href="#signature">
+        <span class="card-art"><span data-sym="1"></span><span class="card-word">Pandora</span>
+          <span class="card-strip" aria-hidden="true"><i style="background:#0A0A0A"></i><i style="background:#C0C4CC"></i><i style="background:#C8A96A;flex:.4"></i><i style="background:#FFFFFF"></i></span></span>
+        <span class="card-body"><span class="card-num">Direction 1</span><span class="card-name">Signature</span><span class="card-desc">L'héritage Pandora, modernisé. Du blanc, des lignes fines noires et argent, une touche d'or.</span><span class="card-go">Voir la direction <b aria-hidden="true">→</b></span></span>
+      </a>
+      <a class="card d2" href="#confiance">
+        <span class="card-art"><span data-sym="2"></span><span class="card-word">Pandora</span>
+          <span class="card-strip" aria-hidden="true"><i style="background:#0B1220"></i><i style="background:#2F5BFF"></i><i style="background:#10B5A6"></i><i style="background:#C0C4CC"></i><i style="background:#C8A96A;flex:.25"></i></span></span>
+        <span class="card-body"><span class="card-num">Direction 2</span><span class="card-name">Confiance Tech</span><span class="card-desc">La crédibilité d'une banque en ligne. Bleu rassurant, chiffres nets, une pointe d'or.</span><span class="card-go">Voir la direction <b aria-hidden="true">→</b></span></span>
+      </a>
+      <a class="card d3" href="#aurora">
+        <span class="card-art"><span data-sym="3"></span><span class="card-word">Pandora</span>
+          <span class="card-strip holo-line" aria-hidden="true"></span></span>
+        <span class="card-body"><span class="card-num">Direction 3</span><span class="card-name">Aurora</span><span class="card-desc">Jeune, tech, en avance. Des lignes noires fines et un reflet holographique qui bouge.</span><span class="card-go">Voir la direction <b aria-hidden="true">→</b></span></span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ============ DIRECTION 1 ============ -->
+<section class="dir d1" id="signature" aria-labelledby="d1-t">
+  <div class="wrap">
+    <div class="dir-head">
+      <div>
+        <p class="dir-num">Direction 1 sur 3</p>
+        <h2 class="dir-name" id="d1-t">Signature</h2>
+        <p class="dir-line">L'héritage Pandora, modernisé.</p>
+        <ul class="moods" aria-label="Ambiance"><li>Sobre</li><li>Éditorial</li><li>Précis</li><li>Feutré</li><li>Durable</li></ul>
+        <div class="why">
+          <span class="sheen" aria-hidden="true" style="width:64px;margin-bottom:20px"></span>
+          <h3>Pourquoi ça inspire confiance</h3>
+          <p>Les maisons de confiance, comme les banques privées et les grands cabinets, parlent doucement. Beaucoup de blanc, des lignes fines et un peu d'or montrent que Pandora n'a rien à prouver. Le client sent le sérieux avant même de lire.</p>
+        </div>
+      </div>
+      <figure class="logo-panel">
+        <div class="logo"><span data-sym="1"></span>
+          <span class="lockup"><span class="wordmark">Pandora</span><span class="tagline">Business Technology &amp; Marketing</span></span>
+        </div>
+        <span class="sheen" aria-hidden="true"></span>
+        <figcaption>Le symbole : une boîte dont le couvercle s'ouvre et laisse sortir une étoile d'or. Passez la souris dessus.</figcaption>
+      </figure>
+    </div>
+
+    <div class="dir-specs">
+      <div>
+        <h3 class="sub">Palette</h3>
+        <ul class="swatches">
+          <li class="sw"><span class="chip" style="background:#FFFFFF"></span><span class="sw-role">Fond</span><span class="sw-name">Blanc pur</span><span class="sw-hex">#FFFFFF</span></li>
+          <li class="sw"><span class="chip" style="background:#0A0A0A"></span><span class="sw-role">Texte</span><span class="sw-name">Noir encre</span><span class="sw-hex">#0A0A0A</span></li>
+          <li class="sw"><span class="chip line" style="--c:#C0C4CC;background:#FFFFFF"></span><span class="sw-role">Filet</span><span class="sw-name">Argent</span><span class="sw-hex">#C0C4CC</span></li>
+          <li class="sw"><span class="chip line" style="--c:#C8A96A;background:#FFFFFF"></span><span class="sw-role">Accent</span><span class="sw-name">Champagne (filets seulement)</span><span class="sw-hex">#C8A96A</span></li>
+          <li class="sw"><span class="chip" style="background:#2F7A53"></span><span class="sw-role">Succès</span><span class="sw-name">Vert sapin</span><span class="sw-hex">#2F7A53</span></li>
+          <li class="sw"><span class="chip" style="background:#B3422E"></span><span class="sw-role">Alerte</span><span class="sw-name">Brique</span><span class="sw-hex">#B3422E</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Typographie</h3>
+        <div class="specimen">
+          <div class="spec-aa"><b>Aa</b><span class="spec-meta"><span><strong>Titres</strong> · Instrument Serif</span><span><strong>Texte</strong> · Manrope</span></span></div>
+          <p class="spec-h">Des agents IA qui travaillent pendant que vous dormez.</p>
+          <p class="spec-p">Pandora conçoit vos agents, automatise vos tâches répétitives et écrit votre contenu. Vous gardez le contrôle, nous faisons le travail.</p>
+          <p class="spec-num"><span>1 490 $</span><span>91 %</span><span>38 h</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dir-ui">
+      <h3 class="sub">Aperçu de l'interface</h3>
+      <div class="ui-row">
+        <div class="screen"><div class="screen-bar"><i></i><i></i><i></i><span>app.pandorabrains.com</span></div><div data-ui="1"></div></div>
+        <div class="phone"><div class="phone-in"><div class="phone-bar"><span>9:41</span><span class="notch"></span><span class="sig"><i style="height:5px"></i><i style="height:8px"></i><i style="height:11px"></i></span></div><div data-ui="1"></div></div></div>
+      </div>
+      <p class="ui-caption">Le reflet : un éclat de lumière glisse lentement le long du filet doré. Au survol, le bouton se souligne d'or.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIRECTION 2 ============ -->
+<section class="dir d2" id="confiance" aria-labelledby="d2-t">
+  <div class="wrap">
+    <div class="dir-head">
+      <div>
+        <p class="dir-num">Direction 2 sur 3</p>
+        <h2 class="dir-name" id="d2-t">Confiance Tech</h2>
+        <p class="dir-line">La crédibilité d'une fintech, la chaleur d'une PME d'ici.</p>
+        <ul class="moods" aria-label="Ambiance"><li>Clair</li><li>Rassurant</li><li>Fiable</li><li>Chaleureux</li><li>Net</li></ul>
+        <div class="why">
+          <h3>Pourquoi ça inspire confiance</h3>
+          <p>Ce sont les codes des banques en ligne et des outils de paiement que vos clients utilisent déjà chaque jour. Le bleu rassure et les chiffres sont faciles à lire. On comprend tout de suite où cliquer et combien ça coûte.</p>
+        </div>
+      </div>
+      <figure class="logo-panel">
+        <div class="logo"><span data-sym="2"></span>
+          <span class="lockup"><span class="wordmark">Pandora</span><span class="tagline">Technologie et marketing pour les entreprises</span></span>
+        </div>
+        <figcaption>Le symbole : un « P » construit dans un carré marine. Le point sarcelle, c'est l'idée qui sort. Le petit point d'or signe le côté premium.</figcaption>
+      </figure>
+    </div>
+
+    <div class="dir-specs">
+      <div>
+        <h3 class="sub">Palette</h3>
+        <ul class="swatches">
+          <li class="sw"><span class="chip" style="background:#FFFFFF"></span><span class="sw-role">Fond</span><span class="sw-name">Blanc</span><span class="sw-hex">#FFFFFF</span></li>
+          <li class="sw"><span class="chip" style="background:#0B1220"></span><span class="sw-role">Texte</span><span class="sw-name">Encre marine</span><span class="sw-hex">#0B1220</span></li>
+          <li class="sw"><span class="chip line" style="--c:#C0C4CC;background:#FFFFFF"></span><span class="sw-role">Filet</span><span class="sw-name">Argent</span><span class="sw-hex">#C0C4CC</span></li>
+          <li class="sw"><span class="chip" style="background:#2F5BFF"></span><span class="sw-role">Accent</span><span class="sw-name">Bleu cobalt</span><span class="sw-hex">#2F5BFF</span></li>
+          <li class="sw"><span class="chip" style="background:#10B5A6"></span><span class="sw-role">Succès</span><span class="sw-name">Sarcelle</span><span class="sw-hex">#10B5A6</span></li>
+          <li class="sw"><span class="chip" style="background:#D7373F"></span><span class="sw-role">Alerte</span><span class="sw-name">Rouge clair</span><span class="sw-hex">#D7373F</span></li>
+          <li class="sw"><span class="chip line" style="--c:#C8A96A;background:#FFFFFF"></span><span class="sw-role">Premium</span><span class="sw-name">Pointe d'or</span><span class="sw-hex">#C8A96A</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Typographie</h3>
+        <div class="specimen">
+          <div class="spec-aa"><b>Aa</b><span class="spec-meta"><span><strong>Titres et texte</strong> · Plus Jakarta Sans</span><span><strong>Chiffres</strong> · IBM Plex Mono</span></span></div>
+          <p class="spec-h">Vos agents IA, vos chiffres, sans surprise.</p>
+          <p class="spec-p">Pandora conçoit vos agents, automatise vos tâches répétitives et écrit votre contenu. Un prix clair chaque mois, un suivi en temps réel.</p>
+          <p class="spec-num"><span>1 490,00 $</span><span>91 %</span><span>38 h</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dir-ui">
+      <h3 class="sub">Aperçu de l'interface</h3>
+      <div class="ui-row">
+        <div class="screen"><div class="screen-bar"><i></i><i></i><i></i><span>app.pandorabrains.com</span></div><div data-ui="2"></div></div>
+        <div class="phone"><div class="phone-in"><div class="phone-bar"><span>9:41</span><span class="notch"></span><span class="sig"><i style="height:5px"></i><i style="height:8px"></i><i style="height:11px"></i></span></div><div data-ui="2"></div></div></div>
+      </div>
+      <p class="ui-caption">Le reflet : un voile de lumière bleue passe lentement sur la carte du forfait, comme sur une carte bancaire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIRECTION 3 ============ -->
+<section class="dir d3" id="aurora" aria-labelledby="d3-t">
+  <div class="wrap">
+    <div class="dir-head">
+      <div>
+        <p class="dir-num">Direction 3 sur 3</p>
+        <h2 class="dir-name" id="d3-t">Aurora</h2>
+        <p class="dir-line">Jeune, tech et un pas en avance.</p>
+        <ul class="moods" aria-label="Ambiance"><li>Vif</li><li>Lumineux</li><li>Joueur</li><li>Audacieux</li><li>Futur</li></ul>
+        <div class="why">
+          <h3>Pourquoi ça inspire confiance</h3>
+          <p>Ici, la confiance vient de la clarté : un fond blanc, des lignes noires précises et une seule touche de couleur vivante. Le reflet en mouvement montre que Pandora vit déjà dans le futur de l'IA. Le sérieux reste, et on a envie de sourire.</p>
+        </div>
+      </div>
+      <figure class="logo-panel">
+        <div class="logo"><span data-sym="3"></span>
+          <span class="lockup"><span class="wordmark">Pandora</span><span class="tagline">Agents IA · Contenu · Web · Formation</span></span>
+        </div>
+        <span class="holo-line" aria-hidden="true"></span>
+        <figcaption>Le symbole : la boîte s'ouvre et une lumière holographique s'en échappe. Ses couleurs changent doucement.</figcaption>
+      </figure>
+    </div>
+
+    <div class="dir-specs">
+      <div>
+        <h3 class="sub">Palette</h3>
+        <ul class="swatches">
+          <li class="sw"><span class="chip" style="background:#FFFFFF"></span><span class="sw-role">Fond</span><span class="sw-name">Blanc</span><span class="sw-hex">#FFFFFF</span></li>
+          <li class="sw"><span class="chip" style="background:#0A0A0A"></span><span class="sw-role">Texte</span><span class="sw-name">Noir</span><span class="sw-hex">#0A0A0A</span></li>
+          <li class="sw"><span class="chip line" style="--c:#0A0A0A;background:#FFFFFF"></span><span class="sw-role">Filet</span><span class="sw-name">Noir fin</span><span class="sw-hex">#0A0A0A</span></li>
+          <li class="sw" style="grid-column:span 2"><span class="chip holo-line" style="height:72px"></span><span class="sw-role">Accent holographique</span><span class="sw-name">Violet → cyan → rose → menthe</span><span class="sw-hex">#7C5CFF · #22D3EE · #FF6AD5 · #5EEAD4</span></li>
+          <li class="sw"><span class="chip" style="background:#5EEAD4"></span><span class="sw-role">Succès</span><span class="sw-name">Menthe</span><span class="sw-hex">#5EEAD4</span></li>
+          <li class="sw"><span class="chip" style="background:#E11D48"></span><span class="sw-role">Alerte</span><span class="sw-name">Framboise</span><span class="sw-hex">#E11D48</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="sub">Typographie</h3>
+        <div class="specimen">
+          <div class="spec-aa"><b>Aa</b><span class="spec-meta"><span><strong>Titres</strong> · Unbounded</span><span><strong>Texte</strong> · DM Sans</span></span></div>
+          <p class="spec-h">Ouvrez la boîte. L'IA s'occupe du reste.</p>
+          <p class="spec-p">Pandora conçoit vos agents, automatise vos tâches répétitives et écrit votre contenu. Vous gagnez du temps et vous avez l'air d'avoir dix ans d'avance.</p>
+          <p class="spec-num"><span>1 490 $</span><span>91 %</span><span>38 h</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dir-ui">
+      <h3 class="sub">Aperçu de l'interface</h3>
+      <div class="ui-row">
+        <div class="screen"><div class="screen-bar"><i></i><i></i><i></i><span>app.pandorabrains.com</span></div><div data-ui="3"></div></div>
+        <div class="phone"><div class="phone-in"><div class="phone-bar"><span>9:41</span><span class="notch"></span><span class="sig"><i style="height:5px"></i><i style="height:8px"></i><i style="height:11px"></i></span></div><div data-ui="3"></div></div></div>
+      </div>
+      <p class="ui-caption">Le reflet : un dégradé holographique qui glisse lentement, seulement sur le logo, le bouton principal, la jauge et un filet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARAISON ============ -->
+<section class="compare" id="comparer" aria-labelledby="cmp-t">
+  <div class="wrap">
+    <p class="eyebrow">Comparer</p>
+    <h2 id="cmp-t" style="margin-top:10px">Les trois directions côte à côte</h2>
+    <p class="intro">Les points vont de 1 à 5. Plus il y en a, plus la direction est forte sur ce critère.</p>
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau comparatif">
+      <table>
+        <thead><tr><th scope="col">Critère</th><th scope="col"><small>Direction 1</small>Signature</th><th scope="col"><small>Direction 2</small>Confiance Tech</th><th scope="col"><small>Direction 3</small>Aurora</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Confiance</th>
+            <td><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>5 sur 5. Classique et rassurant.</td>
+            <td><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>5 sur 5. Codes connus des banques.</td>
+            <td><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span>3 sur 5. Plus audacieux.</td></tr>
+          <tr><th scope="row">Jeunesse et tech</th>
+            <td><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span>2 sur 5. Plutôt chic que tech.</td>
+            <td><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span>4 sur 5. Moderne et actuel.</td>
+            <td><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>5 sur 5. Très dans l'air du temps.</td></tr>
+          <tr><th scope="row">Coût de mise en place</th>
+            <td>Similaire</td><td>Similaire</td><td>Similaire</td></tr>
+          <tr><th scope="row">Risque</th>
+            <td>Faible. Peut sembler un peu sage.</td>
+            <td>Faible. Ressemble à d'autres entreprises tech, il faut soigner les détails.</td>
+            <td>Moyen. Peut paraître trop jeune pour certains clients et vieillir plus vite.</td></tr>
+          <tr><th scope="row">À qui ça parle</th>
+            <td>Dirigeants établis, professions libérales, clients haut de gamme.</td>
+            <td>PME, directeurs financiers, responsables TI. Le cœur de votre clientèle.</td>
+            <td>Startups, agences, jeunes entrepreneurs, créateurs de contenu.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="reco">
+      <p class="eyebrow">La recommandation de l'équipe</p>
+      <p class="big">Nous recommandons la direction 2, Confiance Tech : elle rassure vos clients d'affaires, fait plus jeune et plus tech que l'or seul, et garde une pointe d'or qui rappelle Pandora.</p>
+    </div>
+
+    <div class="choose" aria-labelledby="ch-t">
+      <h2 id="ch-t">Comment choisir</h2>
+      <p class="say">Dites simplement à Claude : <q>Direction 1, 2 ou 3</q>. Un mélange marche aussi, par exemple <q>Direction 2 avec le reflet d'Aurora</q>.</p>
+      <div class="pills" role="group" aria-label="Copier une réponse">
+        <button type="button" class="pill-btn" data-copy="Direction 1">Copier « Direction 1 »</button>
+        <button type="button" class="pill-btn" data-copy="Direction 2">Copier « Direction 2 »</button>
+        <button type="button" class="pill-btn" data-copy="Direction 3">Copier « Direction 3 »</button>
+      </div>
+      <p class="copied" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">Planche de marque préparée pour Pandora Business Technology &amp; Marketing · pandorabrains.com · Les écrans sont des exemples.</div></footer>
+
+<script>
+(function(){
+  function sym(n){var t=document.getElementById('sym-'+n);return t?t.content.firstElementChild.cloneNode(true):null;}
+  document.querySelectorAll('[data-sym]').forEach(function(el){var s=sym(el.getAttribute('data-sym'));if(s)el.replaceWith(s);});
+  var tpl=document.getElementById('tpl-ui');
+  document.querySelectorAll('[data-ui]').forEach(function(slot){
+    var n=slot.getAttribute('data-ui');
+    var ui=tpl.content.firstElementChild.cloneNode(true);
+    var mark=ui.querySelector('[data-mark]');var s=sym(n);if(s&&mark)mark.appendChild(s);
+    var line=ui.querySelector('[data-navline]');
+    if(line){
+      if(n==='1'){line.className='ui-nav-line sheen';}
+      else if(n==='3'){line.className='ui-nav-line holo-line';}
+      else{line.remove();}
+    }
+    if(n==='2'){var st=ui.querySelector('.ui-status');if(st){var d=document.createElement('span');d.className='pulse';d.setAttribute('aria-hidden','true');d.style.cssText='display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B5A6;margin-right:6px;vertical-align:1px';st.insertBefore(d,st.firstChild);}}
+    slot.replaceWith(ui);
+  });
+  var out=document.querySelector('.copied');
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var txt=b.getAttribute('data-copy');
+      function ok(){out.textContent='« '+txt+' » est copié. Collez-le dans votre message à Claude.';}
+      function fail(){out.textContent='Écrivez simplement « '+txt+' » à Claude.';}
+      try{navigator.clipboard.writeText(txt).then(ok,fail);}catch(e){fail();}
+    });
+  });
+})();
+</script>
