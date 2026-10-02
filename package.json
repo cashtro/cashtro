@@ -6,6 +6,7 @@
     "recon": "pnpm --filter @cashtro/recon start",
     "api": "pnpm --filter @cashtro/api start",
     "api:dev": "pnpm --filter @cashtro/api dev",
+    "hive": "pnpm --filter @cashtro/hive start",
     "db:migrate": "pnpm --filter @cashtro/api prisma:migrate",
     "db:seed": "pnpm --filter @cashtro/api prisma:seed",
     "test": "pnpm -r --if-present test",

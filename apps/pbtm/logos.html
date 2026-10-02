@@ -1,0 +1,1615 @@
+<title>Panda · Logos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Outfit:wght@400;500;600&display=swap">
+<style>
+/* Layout: one column of option "spreads"; each spread = 3 stages, then lockup+sizes, then nav+neon card. Single light theme. */
+:root{
+  color-scheme: light;
+  --bg:#F4F3F7; --surface:#FFFFFF; --ink:#0A0910; --muted:#5B566A; --line:#E2E0EA;
+  --black:#000000; --white:#FFFFFF;
+  --indigo:#2A0D50; --indigo2:#2C2668; --violet:#5B1090; --volt:#8F0FC5; --orchid:#B967C4;
+  --magenta:#FF4FD8; --blue:#2E639F; --cyan1:#378DBC; --cyan2:#56AED4; --cyan:#3CE0FF; --gold:#F2B632;
+  --neon-bg: radial-gradient(120% 90% at 12% 8%, rgba(255,79,216,.38), transparent 52%),
+             radial-gradient(110% 90% at 92% 96%, rgba(60,224,255,.34), transparent 50%),
+             linear-gradient(150deg, var(--indigo) 0%, var(--violet) 55%, var(--indigo2) 100%);
+  --f-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --f-body: "Outfit", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --r: 22px;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:40px 64px;display:grid;gap:56px}
+.intro{display:grid;gap:14px;max-width:760px}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,5vw,52px);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--magenta),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.intro p{margin:0;color:var(--muted);max-width:62ch}
+.typenote{font-size:14px;color:var(--muted)}
+.typenote b{color:var(--ink);font-weight:600}
+.opt{display:grid;gap:16px}
+.opt-head{display:flex;gap:16px;align-items:flex-start;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.opt-letter{flex:none;width:48px;height:48px;border-radius:50%;background:var(--black);color:var(--white);display:grid;place-items:center;font-family:var(--f-display);font-weight:700;font-size:20px}
+.opt-title{min-width:0}
+.opt-title h2{font-family:var(--f-display);font-weight:500;font-size:22px;margin:2px 0 4px;text-wrap:balance}
+.opt-title p{margin:0;color:var(--muted);max-width:70ch}
+.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+figure{margin:0}
+.stage{border-radius:var(--r);aspect-ratio:1/1;max-width:100%;display:grid;place-items:center;position:relative;overflow:hidden}
+.stage .big{width:62%;height:auto;display:block;transition:filter .3s}
+.stage figcaption,.panel>figcaption{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.stage figcaption{position:absolute;left:16px;bottom:12px}
+.s-white{background:var(--white);border:1px solid var(--line)}
+.s-white figcaption{color:var(--muted)}
+.s-black{background:var(--black)}
+.s-black figcaption{color:rgba(255,255,255,.6)}
+.s-neon{background:var(--neon-bg)}
+.s-neon figcaption{color:rgba(255,255,255,.75)}
+.row{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;align-content:start;min-width:0}
+.panel>figcaption{color:var(--muted)}
+.lk>svg{display:block;width:100%;height:auto}
+.lk-light{padding:8px 4px}
+.lk-dark{background:var(--black);border-radius:14px;padding:14px 12px}
+.sizes{align-content:center}
+.size-row{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.sz{display:grid;justify-items:center;gap:6px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tile{display:grid;place-items:center;border-radius:12px;width:88px;height:88px}
+.tile svg{display:block}
+.t-white{background:var(--white);border:1px solid var(--line)}
+.t-black{background:var(--black)}
+.appicon{width:88px;height:88px;display:grid;place-items:center}
+.appicon>svg{display:block}
+.appicon{position:relative}
+.appicon::before{content:"";position:absolute;inset:12px;border-radius:16px;background:var(--black);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 8px 20px rgba(42,13,80,.35)}
+.appicon svg{position:relative}
+#opt-c .appicon::before{background:transparent;box-shadow:none}
+.navdemo{gap:12px}
+.nav{display:flex;align-items:center;gap:16px;padding:10px 12px 10px 14px;border-radius:999px;background:var(--white);border:1px solid #DAD8E2;min-width:0}
+.nav-dark{background:var(--black);border-color:var(--black);color:var(--white)}
+.nav-brand{display:flex;align-items:center;gap:9px;flex:none}
+.nav-brand svg{display:block}
+.nav-brand b{font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:.06em}
+.nav-links{display:flex;gap:16px;font-size:14px;color:var(--muted);flex:1;min-width:0;overflow:hidden;white-space:nowrap}
+.nav-dark .nav-links{color:rgba(255,255,255,.7)}
+.nav-cta{margin-left:auto;flex:none;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;background:var(--black);color:var(--white)}
+.nav-dark .nav-cta{background:var(--white);color:var(--black)}
+.ncard-wrap{padding:16px}
+.ncard{border-radius:18px;padding:20px;background:var(--neon-bg);color:var(--white);display:grid;gap:10px;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 0 0 3px var(--black)}
+.ncard-top{display:flex;align-items:center;justify-content:space-between}
+.ncard-top svg{display:block}
+.chip{font-size:12px;font-weight:600;letter-spacing:.06em;padding:4px 10px;border-radius:999px;color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.ncard h3{margin:0;font-family:var(--f-display);font-weight:500;font-size:19px;background:linear-gradient(90deg,#FFC1F2,var(--white) 40%,#BDF5FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ncard p{margin:0;font-size:14px;color:rgba(255,255,255,.8)}
+.ncard-cta{justify-self:start;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;background:var(--white);color:var(--black)}
+.final{background:var(--black);color:var(--white);border-radius:28px;padding:28px 24px;display:grid;gap:10px;position:relative;overflow:hidden}
+.final::after{content:"";position:absolute;inset:auto -10% -60% 40%;height:120%;background:radial-gradient(closest-side,rgba(60,224,255,.25),transparent),radial-gradient(closest-side at 30% 40%,rgba(255,79,216,.22),transparent);pointer-events:none}
+.final h2{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(20px,3.4vw,30px);text-wrap:balance;position:relative}
+.final p{margin:0;color:rgba(255,255,255,.75);position:relative;max-width:64ch}
+.final .pick{display:flex;flex-wrap:wrap;gap:8px;position:relative}
+.final .pick span{font-family:var(--f-display);font-weight:500;font-size:14px;padding:6px 14px;border-radius:999px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4)}
+.prev-head{display:grid;gap:4px;padding-top:24px;border-top:2px solid var(--ink)}
+.prev-head h2{margin:0;font-family:var(--f-display);font-weight:700;font-size:24px}
+.prev-head p{margin:0;color:var(--muted)}
+.opt-new .opt-letter{background:linear-gradient(135deg,var(--magenta),var(--cyan));color:var(--black)}
+.vpair{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+.vpair .lk{display:grid;place-items:center;border-radius:14px}
+.app-c::before{display:none}
+.pd-eye{transform-box:fill-box;transform-origin:center}
+@keyframes wink{0%,100%{transform:scaleY(1)}45%,55%{transform:scaleY(.08)}}
+@keyframes pulse{0%,100%{filter:drop-shadow(0 0 0 rgba(60,224,255,0))}50%{filter:drop-shadow(0 0 18px rgba(60,224,255,.55)) drop-shadow(0 0 30px rgba(255,79,216,.35))}}
+@media (prefers-reduced-motion: no-preference){
+  .stage:hover .big,.ncard:hover svg{animation:pulse 1.8s ease-in-out infinite}
+  .stage:hover .pd-eye:last-of-type,.nav:hover .pd-eye:last-of-type{animation:wink .55s ease-in-out 1}
+}
+@media (max-width: 760px){
+  .stages{grid-template-columns:1fr 1fr}
+  .stages .stage:first-child{grid-column:1 / -1;aspect-ratio:16/10}
+  .stages .stage:first-child .big{width:44%}
+  .row{grid-template-columns:minmax(0,1fr)}
+  .nav-links{display:none}
+  .wrap{gap:44px;padding-block:28px 48px}
+}
+</style>
+<main class="wrap">
+  <header class="intro">
+    <span class="eyebrow">PBTM · Panda Business Tech &amp; Marketing · Planche de logos v3</span>
+    <h1>Un panda affirmé, <em>un cadre noir et blanc</em>, une lueur néon.</h1>
+    <p>En haut, la version retenue : le logo A pour le site et l’emblème C comme badge. Les quatre pistes de départ restent plus bas. Passe la souris sur un symbole pour voir la lueur et le clin d’œil.</p>
+    <p class="typenote">Logotype : <b>Unbounded 800</b>, une géométrique ronde et large, en très gras. Sous-titre et texte : <b>Outfit</b>.</p>
+  </header>
+  
+<section class="opt opt-new" id="pbtm" aria-labelledby="h-pbtm">
+  <header class="opt-head">
+    <span class="opt-letter">✓</span>
+    <div class="opt-title"><h2 id="h-pbtm">PBTM · version retenue</h2><p>Logo A pour le site, emblème C pour les NFT, les tirages et l’icône d’app. Le panda est le même dans les deux : taches effilées vers le nez, regard en demi-lune, petit nez, pas de sourire.</p></div>
+  </header>
+  <div class="stages">
+    <figure class="stage s-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="PBTM A sur blanc"><defs><linearGradient id="a21_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#a21_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#a21_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><figcaption>A · sur blanc</figcaption></figure>
+    <figure class="stage s-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="PBTM A sur noir"><defs><linearGradient id="a22_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#a22_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#a22_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><figcaption>A · sur noir</figcaption></figure>
+    <figure class="stage s-neon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="PBTM A sur néon"><defs><linearGradient id="a23_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#a23_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#a23_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><figcaption>A · intérieur néon</figcaption></figure>
+  </div>
+  <div class="stages">
+    <figure class="stage s-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Badge PBTM C sur blanc"><defs><linearGradient id="c24_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c24_bg" cx="256" cy="200" r="230" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c24_hc" cx="390" cy="410" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c24_hm" cx="120" cy="130" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c24_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c24_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c24_cl"><circle cx="256" cy="256" r="196"/></clipPath>
+<path id="c24_arc" d="M42 256A214 214 0 0 1 470 256"/></defs>
+<circle cx="256" cy="256" r="255" fill="#000000"/>
+<circle cx="256" cy="256" r="247" fill="none" stroke="#F2B632" stroke-width="5"/>
+<text font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="40" letter-spacing="20" fill="#FFFFFF"><textPath href="#c24_arc" startOffset="50%" text-anchor="middle">PBTM</textPath></text>
+<circle cx="99.61637218390402" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<circle cx="412.383627816096" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<g clip-path="url(#c24_cl)"><circle cx="256" cy="256" r="196" fill="url(#c24_bg)"/><rect width="512" height="512" fill="url(#c24_hc)"/><rect width="512" height="512" fill="url(#c24_hm)"/></g>
+<g class="pd-glow" filter="url(#c24_gl)">
+<circle cx="256" cy="256" r="197" fill="none" stroke="url(#c24_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="374" rx="118" ry="25" fill="#2C2668" stroke="url(#c24_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 246) scale(.54) translate(-256 -266)">
+<circle cx="114" cy="124" r="68" fill="#000000"/><circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#c24_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#c24_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><figcaption>C · badge sur blanc</figcaption></figure>
+    <figure class="stage s-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Badge PBTM C sur noir"><defs><linearGradient id="c25_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c25_bg" cx="256" cy="200" r="230" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c25_hc" cx="390" cy="410" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c25_hm" cx="120" cy="130" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c25_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c25_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c25_cl"><circle cx="256" cy="256" r="196"/></clipPath>
+<path id="c25_arc" d="M42 256A214 214 0 0 1 470 256"/></defs>
+<circle cx="256" cy="256" r="255" fill="#000000"/>
+<circle cx="256" cy="256" r="247" fill="none" stroke="#F2B632" stroke-width="5"/>
+<text font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="40" letter-spacing="20" fill="#FFFFFF"><textPath href="#c25_arc" startOffset="50%" text-anchor="middle">PBTM</textPath></text>
+<circle cx="99.61637218390402" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<circle cx="412.383627816096" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<g clip-path="url(#c25_cl)"><circle cx="256" cy="256" r="196" fill="url(#c25_bg)"/><rect width="512" height="512" fill="url(#c25_hc)"/><rect width="512" height="512" fill="url(#c25_hm)"/></g>
+<g class="pd-glow" filter="url(#c25_gl)">
+<circle cx="256" cy="256" r="197" fill="none" stroke="url(#c25_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="374" rx="118" ry="25" fill="#2C2668" stroke="url(#c25_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 246) scale(.54) translate(-256 -266)">
+<circle cx="114" cy="124" r="68" fill="#000000"/><circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#c25_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#c25_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><figcaption>C · badge sur noir</figcaption></figure>
+    <figure class="stage s-neon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Badge PBTM C sur néon"><defs><linearGradient id="c26_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c26_bg" cx="256" cy="200" r="230" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c26_hc" cx="390" cy="410" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c26_hm" cx="120" cy="130" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c26_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c26_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c26_cl"><circle cx="256" cy="256" r="196"/></clipPath>
+<path id="c26_arc" d="M42 256A214 214 0 0 1 470 256"/></defs>
+<circle cx="256" cy="256" r="255" fill="#000000"/>
+<circle cx="256" cy="256" r="247" fill="none" stroke="#F2B632" stroke-width="5"/>
+<text font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="40" letter-spacing="20" fill="#FFFFFF"><textPath href="#c26_arc" startOffset="50%" text-anchor="middle">PBTM</textPath></text>
+<circle cx="99.61637218390402" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<circle cx="412.383627816096" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<g clip-path="url(#c26_cl)"><circle cx="256" cy="256" r="196" fill="url(#c26_bg)"/><rect width="512" height="512" fill="url(#c26_hc)"/><rect width="512" height="512" fill="url(#c26_hm)"/></g>
+<g class="pd-glow" filter="url(#c26_gl)">
+<circle cx="256" cy="256" r="197" fill="none" stroke="url(#c26_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="374" rx="118" ry="25" fill="#2C2668" stroke="url(#c26_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 246) scale(.54) translate(-256 -266)">
+<circle cx="114" cy="124" r="68" fill="#000000"/><circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#c26_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#c26_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><figcaption>C · badge sur néon</figcaption></figure>
+  </div>
+  <div class="row">
+    <figure class="panel lockups">
+      <div class="lk lk-light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 360" role="img" aria-label="Lockup horizontal PBTM">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="h7_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#h7_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#h7_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg>
+<text x="372" y="212" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="164" letter-spacing="2" fill="#000000">PBTM</text>
+<text x="378" y="272" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="31" letter-spacing="1.4" fill="#4A4458">Panda Business Tech <tspan fill="#FF4FD8">&amp;</tspan> Marketing</text></svg></div>
+      <div class="lk lk-dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 360" role="img" aria-label="Lockup horizontal PBTM sur noir">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="h8_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#h8_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#h8_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg>
+<text x="372" y="212" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="164" letter-spacing="2" fill="#FFFFFF">PBTM</text>
+<text x="378" y="272" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="31" letter-spacing="1.4" fill="rgba(255,255,255,.74)">Panda Business Tech <tspan fill="#FF4FD8">&amp;</tspan> Marketing</text></svg></div>
+      <figcaption>Lockup horizontal</figcaption>
+    </figure>
+    <figure class="panel lockups-v">
+      <div class="vpair">
+        <div class="lk lk-light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-label="Lockup empilé PBTM">
+<svg x="170" y="24" width="300" height="300" viewBox="0 0 512 512"><defs><linearGradient id="v9_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#v9_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#v9_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg>
+<text x="320" y="478" text-anchor="middle" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="132" letter-spacing="2" fill="#000000">PBTM</text>
+<text x="320" y="534" text-anchor="middle" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="28" letter-spacing="1.2" fill="#4A4458">Panda Business Tech <tspan fill="#FF4FD8">&amp;</tspan> Marketing</text></svg></div>
+        <div class="lk lk-dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-label="Lockup empilé PBTM sur noir">
+<svg x="170" y="24" width="300" height="300" viewBox="0 0 512 512"><defs><linearGradient id="v10_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#v10_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#v10_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg>
+<text x="320" y="478" text-anchor="middle" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="132" letter-spacing="2" fill="#FFFFFF">PBTM</text>
+<text x="320" y="534" text-anchor="middle" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="28" letter-spacing="1.2" fill="rgba(255,255,255,.74)">Panda Business Tech <tspan fill="#FF4FD8">&amp;</tspan> Marketing</text></svg></div>
+      </div>
+      <figcaption>Lockup empilé</figcaption>
+    </figure>
+  </div>
+  <div class="row">
+    <figure class="panel sizes">
+      <div class="size-row">
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" aria-hidden="true"><defs><linearGradient id="f11_fv" x1="8" y1="14" x2="24" y2="19" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="7" cy="7.5" r="4.5" fill="#000000"/><circle cx="25" cy="7.5" r="4.5" fill="#000000"/>
+<circle cx="16" cy="16.8" r="12" fill="#FFFFFF" stroke="#000000" stroke-width="2.2"/>
+<ellipse cx="11.6" cy="17.4" rx="3.3" ry="4.8" transform="rotate(-40 11.6 17.4)" fill="#000000"/>
+<ellipse cx="20.4" cy="17.4" rx="3.3" ry="4.8" transform="rotate(40 20.4 17.4)" fill="#000000"/>
+<circle cx="11.9" cy="17" r="1.5" fill="url(#f11_fv)"/><circle cx="20.1" cy="17" r="1.5" fill="url(#f11_fv)"/>
+<ellipse cx="16" cy="22.4" rx="1.6" ry="1.1" fill="#000000"/></svg></div><span>Favicon 16</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><defs><linearGradient id="f12_fv" x1="8" y1="14" x2="24" y2="19" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="7" cy="7.5" r="4.5" fill="#000000"/><circle cx="25" cy="7.5" r="4.5" fill="#000000"/>
+<circle cx="16" cy="16.8" r="12" fill="#FFFFFF" stroke="#000000" stroke-width="2.2"/>
+<ellipse cx="11.6" cy="17.4" rx="3.3" ry="4.8" transform="rotate(-40 11.6 17.4)" fill="#000000"/>
+<ellipse cx="20.4" cy="17.4" rx="3.3" ry="4.8" transform="rotate(40 20.4 17.4)" fill="#000000"/>
+<circle cx="11.9" cy="17" r="1.5" fill="url(#f12_fv)"/><circle cx="20.1" cy="17" r="1.5" fill="url(#f12_fv)"/>
+<ellipse cx="16" cy="22.4" rx="1.6" ry="1.1" fill="#000000"/></svg></div><span>Favicon 32</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="a213_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#a213_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#a213_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg></div><span>A 64</span></div>
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="c214_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c214_bg" cx="256" cy="200" r="230" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c214_hc" cx="390" cy="410" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c214_hm" cx="120" cy="130" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c214_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c214_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c214_cl"><circle cx="256" cy="256" r="196"/></clipPath>
+<path id="c214_arc" d="M42 256A214 214 0 0 1 470 256"/></defs>
+<circle cx="256" cy="256" r="255" fill="#000000"/>
+<circle cx="256" cy="256" r="247" fill="none" stroke="#F2B632" stroke-width="5"/>
+<text font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="40" letter-spacing="20" fill="#FFFFFF"><textPath href="#c214_arc" startOffset="50%" text-anchor="middle">PBTM</textPath></text>
+<circle cx="99.61637218390402" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<circle cx="412.383627816096" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<g clip-path="url(#c214_cl)"><circle cx="256" cy="256" r="196" fill="url(#c214_bg)"/><rect width="512" height="512" fill="url(#c214_hc)"/><rect width="512" height="512" fill="url(#c214_hm)"/></g>
+<g class="pd-glow" filter="url(#c214_gl)">
+<circle cx="256" cy="256" r="197" fill="none" stroke="url(#c214_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="374" rx="118" ry="25" fill="#2C2668" stroke="url(#c214_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 246) scale(.54) translate(-256 -266)">
+<circle cx="114" cy="124" r="68" fill="#000000"/><circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#c214_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#c214_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg></div><span>C 32</span></div>
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="c215_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c215_bg" cx="256" cy="200" r="230" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c215_hc" cx="390" cy="410" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c215_hm" cx="120" cy="130" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c215_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c215_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c215_cl"><circle cx="256" cy="256" r="196"/></clipPath>
+<path id="c215_arc" d="M42 256A214 214 0 0 1 470 256"/></defs>
+<circle cx="256" cy="256" r="255" fill="#000000"/>
+<circle cx="256" cy="256" r="247" fill="none" stroke="#F2B632" stroke-width="5"/>
+<text font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="40" letter-spacing="20" fill="#FFFFFF"><textPath href="#c215_arc" startOffset="50%" text-anchor="middle">PBTM</textPath></text>
+<circle cx="99.61637218390402" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<circle cx="412.383627816096" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<g clip-path="url(#c215_cl)"><circle cx="256" cy="256" r="196" fill="url(#c215_bg)"/><rect width="512" height="512" fill="url(#c215_hc)"/><rect width="512" height="512" fill="url(#c215_hm)"/></g>
+<g class="pd-glow" filter="url(#c215_gl)">
+<circle cx="256" cy="256" r="197" fill="none" stroke="url(#c215_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="374" rx="118" ry="25" fill="#2C2668" stroke="url(#c215_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 246) scale(.54) translate(-256 -266)">
+<circle cx="114" cy="124" r="68" fill="#000000"/><circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#c215_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#c215_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg></div><span>C 64</span></div>
+        <div class="sz"><div class="appicon app-c"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="72" height="72" aria-hidden="true"><defs><linearGradient id="c216_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c216_bg" cx="256" cy="200" r="230" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c216_hc" cx="390" cy="410" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c216_hm" cx="120" cy="130" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c216_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c216_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c216_cl"><circle cx="256" cy="256" r="196"/></clipPath>
+<path id="c216_arc" d="M42 256A214 214 0 0 1 470 256"/></defs>
+<circle cx="256" cy="256" r="255" fill="#000000"/>
+<circle cx="256" cy="256" r="247" fill="none" stroke="#F2B632" stroke-width="5"/>
+<text font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="40" letter-spacing="20" fill="#FFFFFF"><textPath href="#c216_arc" startOffset="50%" text-anchor="middle">PBTM</textPath></text>
+<circle cx="99.61637218390402" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<circle cx="412.383627816096" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<g clip-path="url(#c216_cl)"><circle cx="256" cy="256" r="196" fill="url(#c216_bg)"/><rect width="512" height="512" fill="url(#c216_hc)"/><rect width="512" height="512" fill="url(#c216_hm)"/></g>
+<g class="pd-glow" filter="url(#c216_gl)">
+<circle cx="256" cy="256" r="197" fill="none" stroke="url(#c216_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="374" rx="118" ry="25" fill="#2C2668" stroke="url(#c216_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 246) scale(.54) translate(-256 -266)">
+<circle cx="114" cy="124" r="68" fill="#000000"/><circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#c216_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#c216_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg></div><span>App</span></div>
+      </div>
+      <figcaption>Favicon, icône d’app et badge</figcaption>
+    </figure>
+    <figure class="panel ncard-wrap">
+      <div class="ncard">
+        <div class="ncard-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="c217_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c217_bg" cx="256" cy="200" r="230" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c217_hc" cx="390" cy="410" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c217_hm" cx="120" cy="130" r="190" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c217_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c217_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c217_cl"><circle cx="256" cy="256" r="196"/></clipPath>
+<path id="c217_arc" d="M42 256A214 214 0 0 1 470 256"/></defs>
+<circle cx="256" cy="256" r="255" fill="#000000"/>
+<circle cx="256" cy="256" r="247" fill="none" stroke="#F2B632" stroke-width="5"/>
+<text font-family="Unbounded, 'Arial Black', sans-serif" font-weight="800" font-size="40" letter-spacing="20" fill="#FFFFFF"><textPath href="#c217_arc" startOffset="50%" text-anchor="middle">PBTM</textPath></text>
+<circle cx="99.61637218390402" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<circle cx="412.383627816096" cy="96.11793736231795" r="5" fill="#F2B632"/>
+<g clip-path="url(#c217_cl)"><circle cx="256" cy="256" r="196" fill="url(#c217_bg)"/><rect width="512" height="512" fill="url(#c217_hc)"/><rect width="512" height="512" fill="url(#c217_hm)"/></g>
+<g class="pd-glow" filter="url(#c217_gl)">
+<circle cx="256" cy="256" r="197" fill="none" stroke="url(#c217_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="374" rx="118" ry="25" fill="#2C2668" stroke="url(#c217_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 246) scale(.54) translate(-256 -266)">
+<circle cx="114" cy="124" r="68" fill="#000000"/><circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#c217_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#c217_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><span class="chip">Tirage #042</span></div>
+        <h3>Collection Panda Pass</h3>
+        <p>Le badge C certifie chaque NFT et chaque tirage PBTM.</p>
+        <span class="ncard-cta">Participer →</span>
+      </div>
+      <figcaption>Carte intérieur néon</figcaption>
+    </figure>
+  </div>
+  <figure class="panel navdemo">
+    <nav class="nav" aria-label="Navigation PBTM">
+      <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="a218_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#a218_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#a218_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><b>PBTM</b></span>
+      <span class="nav-links"><span>Solutions IA</span><span>Agents</span><span>Marketing</span><span>Formation</span><span>NFT</span></span>
+      <span class="nav-cta">Démarrer</span>
+    </nav>
+    <nav class="nav nav-dark" aria-label="Navigation PBTM sombre">
+      <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="a219_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g transform="translate(0 -10)">
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(182 264) rotate(-34)" fill="#000000"/>
+<path d="M-46 0A46 46 0 0 1 46 0C46 28 26 52 0 72C-26 52 -46 28 -46 0Z" transform="translate(330 264) rotate(34)" fill="#000000"/>
+<g class="pd-eye"><circle cx="186" cy="268" r="19" fill="url(#a219_vc)"/><circle cx="180" cy="270" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="326" cy="268" r="19" fill="url(#a219_vc)"/><circle cx="320" cy="270" r="6" fill="#fff"/></g>
+<path d="M160 236H212V259L160 253Z" fill="#000000"/>
+<path d="M352 236H300V259L352 253Z" fill="#000000"/>
+<path d="M238 354c0-6 8-9 18-9s18 3 18 9c0 8-10 15-18 15s-18-7-18-15z" fill="#000000"/></g></svg><b>PBTM</b></span>
+      <span class="nav-links"><span>Tirages</span><span>Éducation</span><span>Contact</span></span>
+      <span class="nav-cta">Connexion</span>
+    </nav>
+    <figcaption>Barre de navigation</figcaption>
+  </figure>
+</section>
+  <header class="prev-head"><h2>Versions précédentes</h2><p>Les quatre pistes de la planche v2, gardées pour comparaison.</p></header>
+  
+<section class="opt" id="opt-a" aria-labelledby="h-a">
+  <header class="opt-head">
+    <span class="opt-letter">A</span>
+    <div class="opt-title"><h2 id="h-a">Géométrique minimal</h2><p>Cercles purs, noir et blanc stricts. Le néon vit seulement dans le regard : deux yeux en dégradé violet → magenta → cyan.</p></div>
+  </header>
+  <div class="stages">
+    <figure class="stage s-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole A sur blanc"><defs><linearGradient id="a20_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a20_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a20_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg><figcaption>Sur blanc</figcaption></figure>
+    <figure class="stage s-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole A sur noir"><defs><linearGradient id="a21_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a21_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a21_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg><figcaption>Sur noir</figcaption></figure>
+    <figure class="stage s-neon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole A sur néon"><defs><linearGradient id="a22_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a22_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a22_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg><figcaption>Intérieur néon</figcaption></figure>
+  </div>
+  <div class="row">
+    <figure class="panel lockups">
+      <div class="lk lk-light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup A">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="a23_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a23_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a23_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#000000">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="#4A4458">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <div class="lk lk-dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup A sur noir">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="a24_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a24_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a24_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#FFFFFF">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="rgba(255,255,255,.72)">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <figcaption>Lockup horizontal</figcaption>
+    </figure>
+    <figure class="panel sizes">
+      <div class="size-row">
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="a25_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a25_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a25_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="a26_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a26_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a26_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg></div><span>32</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="a27_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a27_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a27_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg></div><span>64</span></div>
+      </div>
+      <div class="size-row">
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="a28_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a28_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a28_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="a29_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a29_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a29_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg></div><span>32</span></div>
+        <div class="sz"><div class="appicon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50" aria-hidden="true"><defs><linearGradient id="a30_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a30_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a30_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg></div><span>App 64</span></div>
+      </div>
+      <figcaption>Favicon et icône d’app</figcaption>
+    </figure>
+  </div>
+  <div class="row">
+    <figure class="panel navdemo">
+      <nav class="nav" aria-label="Exemple de navigation A">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="a31_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a31_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a31_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>Solutions IA</span><span>Agents</span><span>Marketing</span><span>Formation</span></span>
+        <span class="nav-cta">Démarrer</span>
+      </nav>
+      <nav class="nav nav-dark" aria-label="Exemple de navigation A sombre">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="a32_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a32_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a32_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>NFT</span><span>Tirages</span><span>Éducation</span></span>
+        <span class="nav-cta">Connexion</span>
+      </nav>
+      <figcaption>Barre de navigation</figcaption>
+    </figure>
+    <figure class="panel ncard-wrap">
+      <div class="ncard">
+        <div class="ncard-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="56" height="56" aria-hidden="true"><defs><linearGradient id="a33_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="28"><circle cx="114" cy="124" r="68"/><circle cx="398" cy="124" r="68"/><circle cx="256" cy="268" r="208"/></g>
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF" stroke="#000000" stroke-width="24"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#a33_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#a33_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/></svg><span class="chip">Tirage #042</span></div>
+        <h3>Agents IA en équipe</h3>
+        <p>Trois agents qui rédigent, analysent et publient vos campagnes, pendant que vous gérez la business.</p>
+        <span class="ncard-cta">Voir la démo →</span>
+      </div>
+      <figcaption>Carte intérieur néon</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="opt" id="opt-b" aria-labelledby="h-b">
+  <header class="opt-head">
+    <span class="opt-letter">B</span>
+    <div class="opt-title"><h2 id="h-b">Panda réseau</h2><p>La tête est un circuit en orbite avec deux bornes. Les yeux et le nez sont trois nœuds reliés : une équipe d’agents IA.</p></div>
+  </header>
+  <div class="stages">
+    <figure class="stage s-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole B sur blanc"><defs><linearGradient id="b34_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b34_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b34_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b34_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg><figcaption>Sur blanc</figcaption></figure>
+    <figure class="stage s-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole B sur noir"><defs><linearGradient id="b35_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b35_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b35_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b35_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg><figcaption>Sur noir</figcaption></figure>
+    <figure class="stage s-neon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole B sur néon"><defs><linearGradient id="b36_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b36_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b36_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b36_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg><figcaption>Intérieur néon</figcaption></figure>
+  </div>
+  <div class="row">
+    <figure class="panel lockups">
+      <div class="lk lk-light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup B">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="b37_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b37_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b37_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b37_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#000000">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="#4A4458">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <div class="lk lk-dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup B sur noir">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="b38_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b38_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b38_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b38_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#FFFFFF">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="rgba(255,255,255,.72)">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <figcaption>Lockup horizontal</figcaption>
+    </figure>
+    <figure class="panel sizes">
+      <div class="size-row">
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="b39_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b39_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b39_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b39_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="b40_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b40_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b40_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b40_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg></div><span>32</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="b41_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b41_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b41_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b41_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg></div><span>64</span></div>
+      </div>
+      <div class="size-row">
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="b42_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b42_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b42_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b42_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="b43_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b43_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b43_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b43_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg></div><span>32</span></div>
+        <div class="sz"><div class="appicon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50" aria-hidden="true"><defs><linearGradient id="b44_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b44_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b44_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b44_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg></div><span>App 64</span></div>
+      </div>
+      <figcaption>Favicon et icône d’app</figcaption>
+    </figure>
+  </div>
+  <div class="row">
+    <figure class="panel navdemo">
+      <nav class="nav" aria-label="Exemple de navigation B">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="b45_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b45_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b45_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b45_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>Solutions IA</span><span>Agents</span><span>Marketing</span><span>Formation</span></span>
+        <span class="nav-cta">Démarrer</span>
+      </nav>
+      <nav class="nav nav-dark" aria-label="Exemple de navigation B sombre">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="b46_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b46_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b46_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b46_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>NFT</span><span>Tirages</span><span>Éducation</span></span>
+        <span class="nav-cta">Connexion</span>
+      </nav>
+      <figcaption>Barre de navigation</figcaption>
+    </figure>
+    <figure class="panel ncard-wrap">
+      <div class="ncard">
+        <div class="ncard-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="56" height="56" aria-hidden="true"><defs><linearGradient id="b47_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs><g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="26"><circle cx="128.7" cy="120.3" r="62"/><circle cx="383.3" cy="120.3" r="62"/><circle cx="256" cy="272" r="209"/></g>
+<circle cx="256" cy="272" r="174" fill="#FFFFFF"/>
+<path d="M383.3 423.7A198 198 0 1 1 439.6 346.2" fill="none" stroke="#000000" stroke-width="24" stroke-linecap="round"/>
+<circle cx="416.2" cy="388.4" r="15" fill="#000000"/><circle cx="416.2" cy="388.4" r="6" fill="#3CE0FF"/>
+<circle cx="128.7" cy="120.3" r="62" fill="#000000"/><circle cx="383.3" cy="120.3" r="62" fill="#000000"/>
+<rect x="128" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<rect x="272" y="218" width="112" height="112" rx="56" fill="#000000"/>
+<path d="M190 268L256 362L322 268" fill="none" stroke="url(#b47_vc)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+<g class="pd-eye"><circle cx="190" cy="268" r="24" fill="url(#b47_vc)"/><circle cx="190" cy="268" r="9" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="322" cy="268" r="24" fill="url(#b47_vc)"/><circle cx="322" cy="268" r="9" fill="#fff"/></g>
+<circle cx="256" cy="364" r="26" fill="#000000"/><circle cx="256" cy="364" r="9" fill="#3CE0FF"/></svg><span class="chip">Tirage #042</span></div>
+        <h3>Agents IA en équipe</h3>
+        <p>Trois agents qui rédigent, analysent et publient vos campagnes, pendant que vous gérez la business.</p>
+        <span class="ncard-cta">Voir la démo →</span>
+      </div>
+      <figcaption>Carte intérieur néon</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="opt" id="opt-c" aria-labelledby="h-c">
+  <header class="opt-head">
+    <span class="opt-letter">C</span>
+    <div class="opt-title"><h2 id="h-c">Emblème néon</h2><p>Badge rond inspiré du podium de l’affiche : cadre noir, liseré or, anneau rose → cyan et intérieur indigo.</p></div>
+  </header>
+  <div class="stages">
+    <figure class="stage s-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole C sur blanc"><defs><linearGradient id="c48_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c48_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c48_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c48_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c48_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c48_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c48_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c48_cl)"><circle cx="256" cy="256" r="214" fill="url(#c48_bg)"/><rect width="512" height="512" fill="url(#c48_hc)"/><rect width="512" height="512" fill="url(#c48_hm)"/></g>
+<g class="pd-glow" filter="url(#c48_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c48_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c48_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c48_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c48_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg><figcaption>Sur blanc</figcaption></figure>
+    <figure class="stage s-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole C sur noir"><defs><linearGradient id="c49_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c49_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c49_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c49_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c49_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c49_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c49_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c49_cl)"><circle cx="256" cy="256" r="214" fill="url(#c49_bg)"/><rect width="512" height="512" fill="url(#c49_hc)"/><rect width="512" height="512" fill="url(#c49_hm)"/></g>
+<g class="pd-glow" filter="url(#c49_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c49_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c49_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c49_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c49_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg><figcaption>Sur noir</figcaption></figure>
+    <figure class="stage s-neon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole C sur néon"><defs><linearGradient id="c50_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c50_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c50_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c50_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c50_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c50_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c50_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c50_cl)"><circle cx="256" cy="256" r="214" fill="url(#c50_bg)"/><rect width="512" height="512" fill="url(#c50_hc)"/><rect width="512" height="512" fill="url(#c50_hm)"/></g>
+<g class="pd-glow" filter="url(#c50_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c50_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c50_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c50_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c50_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg><figcaption>Intérieur néon</figcaption></figure>
+  </div>
+  <div class="row">
+    <figure class="panel lockups">
+      <div class="lk lk-light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup C">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="c51_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c51_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c51_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c51_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c51_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c51_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c51_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c51_cl)"><circle cx="256" cy="256" r="214" fill="url(#c51_bg)"/><rect width="512" height="512" fill="url(#c51_hc)"/><rect width="512" height="512" fill="url(#c51_hm)"/></g>
+<g class="pd-glow" filter="url(#c51_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c51_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c51_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c51_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c51_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#000000">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="#4A4458">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <div class="lk lk-dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup C sur noir">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="c52_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c52_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c52_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c52_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c52_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c52_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c52_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c52_cl)"><circle cx="256" cy="256" r="214" fill="url(#c52_bg)"/><rect width="512" height="512" fill="url(#c52_hc)"/><rect width="512" height="512" fill="url(#c52_hm)"/></g>
+<g class="pd-glow" filter="url(#c52_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c52_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c52_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c52_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c52_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#FFFFFF">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="rgba(255,255,255,.72)">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <figcaption>Lockup horizontal</figcaption>
+    </figure>
+    <figure class="panel sizes">
+      <div class="size-row">
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="c53_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c53_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c53_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c53_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c53_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c53_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c53_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c53_cl)"><circle cx="256" cy="256" r="214" fill="url(#c53_bg)"/><rect width="512" height="512" fill="url(#c53_hc)"/><rect width="512" height="512" fill="url(#c53_hm)"/></g>
+<g class="pd-glow" filter="url(#c53_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c53_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c53_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c53_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c53_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="c54_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c54_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c54_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c54_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c54_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c54_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c54_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c54_cl)"><circle cx="256" cy="256" r="214" fill="url(#c54_bg)"/><rect width="512" height="512" fill="url(#c54_hc)"/><rect width="512" height="512" fill="url(#c54_hm)"/></g>
+<g class="pd-glow" filter="url(#c54_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c54_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c54_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c54_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c54_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg></div><span>32</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="c55_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c55_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c55_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c55_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c55_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c55_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c55_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c55_cl)"><circle cx="256" cy="256" r="214" fill="url(#c55_bg)"/><rect width="512" height="512" fill="url(#c55_hc)"/><rect width="512" height="512" fill="url(#c55_hm)"/></g>
+<g class="pd-glow" filter="url(#c55_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c55_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c55_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c55_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c55_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg></div><span>64</span></div>
+      </div>
+      <div class="size-row">
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="c56_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c56_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c56_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c56_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c56_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c56_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c56_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c56_cl)"><circle cx="256" cy="256" r="214" fill="url(#c56_bg)"/><rect width="512" height="512" fill="url(#c56_hc)"/><rect width="512" height="512" fill="url(#c56_hm)"/></g>
+<g class="pd-glow" filter="url(#c56_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c56_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c56_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c56_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c56_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="c57_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c57_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c57_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c57_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c57_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c57_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c57_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c57_cl)"><circle cx="256" cy="256" r="214" fill="url(#c57_bg)"/><rect width="512" height="512" fill="url(#c57_hc)"/><rect width="512" height="512" fill="url(#c57_hm)"/></g>
+<g class="pd-glow" filter="url(#c57_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c57_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c57_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c57_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c57_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg></div><span>32</span></div>
+        <div class="sz"><div class="appicon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="c58_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c58_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c58_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c58_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c58_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c58_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c58_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c58_cl)"><circle cx="256" cy="256" r="214" fill="url(#c58_bg)"/><rect width="512" height="512" fill="url(#c58_hc)"/><rect width="512" height="512" fill="url(#c58_hm)"/></g>
+<g class="pd-glow" filter="url(#c58_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c58_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c58_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c58_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c58_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg></div><span>App 64</span></div>
+      </div>
+      <figcaption>Favicon et icône d’app</figcaption>
+    </figure>
+  </div>
+  <div class="row">
+    <figure class="panel navdemo">
+      <nav class="nav" aria-label="Exemple de navigation C">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="c59_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c59_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c59_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c59_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c59_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c59_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c59_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c59_cl)"><circle cx="256" cy="256" r="214" fill="url(#c59_bg)"/><rect width="512" height="512" fill="url(#c59_hc)"/><rect width="512" height="512" fill="url(#c59_hm)"/></g>
+<g class="pd-glow" filter="url(#c59_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c59_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c59_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c59_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c59_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>Solutions IA</span><span>Agents</span><span>Marketing</span><span>Formation</span></span>
+        <span class="nav-cta">Démarrer</span>
+      </nav>
+      <nav class="nav nav-dark" aria-label="Exemple de navigation C sombre">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="c60_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c60_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c60_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c60_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c60_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c60_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c60_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c60_cl)"><circle cx="256" cy="256" r="214" fill="url(#c60_bg)"/><rect width="512" height="512" fill="url(#c60_hc)"/><rect width="512" height="512" fill="url(#c60_hm)"/></g>
+<g class="pd-glow" filter="url(#c60_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c60_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c60_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c60_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c60_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>NFT</span><span>Tirages</span><span>Éducation</span></span>
+        <span class="nav-cta">Connexion</span>
+      </nav>
+      <figcaption>Barre de navigation</figcaption>
+    </figure>
+    <figure class="panel ncard-wrap">
+      <div class="ncard">
+        <div class="ncard-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="56" height="56" aria-hidden="true"><defs><linearGradient id="c61_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<radialGradient id="c61_bg" cx="256" cy="210" r="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".45" stop-color="#5B1090"/><stop offset="1" stop-color="#2A0D50"/></radialGradient>
+<radialGradient id="c61_hc" cx="400" cy="420" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3CE0FF" stop-opacity=".55"/><stop offset="1" stop-color="#3CE0FF" stop-opacity="0"/></radialGradient>
+<radialGradient id="c61_hm" cx="110" cy="120" r="200" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8" stop-opacity=".45"/><stop offset="1" stop-color="#FF4FD8" stop-opacity="0"/></radialGradient>
+<linearGradient id="c61_rg" x1="60" y1="60" x2="452" y2="452" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FF4FD8"/><stop offset=".5" stop-color="#B967C4"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient>
+<filter id="c61_gl" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<clipPath id="c61_cl"><circle cx="256" cy="256" r="214"/></clipPath></defs>
+<circle cx="256" cy="256" r="254" fill="#000000"/>
+<circle cx="256" cy="256" r="240" fill="none" stroke="#F2B632" stroke-width="6"/>
+<g clip-path="url(#c61_cl)"><circle cx="256" cy="256" r="214" fill="url(#c61_bg)"/><rect width="512" height="512" fill="url(#c61_hc)"/><rect width="512" height="512" fill="url(#c61_hm)"/></g>
+<g class="pd-glow" filter="url(#c61_gl)">
+<circle cx="256" cy="256" r="216" fill="none" stroke="url(#c61_rg)" stroke-width="7"/>
+<ellipse cx="256" cy="394" rx="132" ry="28" fill="#2C2668" stroke="url(#c61_rg)" stroke-width="6"/>
+</g>
+<g transform="translate(256 254) scale(.62) translate(-256 -268)">
+<circle cx="114" cy="124" r="68" fill="#000000"/>
+<circle cx="398" cy="124" r="68" fill="#000000"/>
+<circle cx="256" cy="268" r="196" fill="#FFFFFF"/>
+
+<ellipse cx="186" cy="286" rx="52" ry="68" transform="rotate(-22 186 286)" fill="#000000"/>
+<ellipse cx="326" cy="286" rx="52" ry="68" transform="rotate(22 326 286)" fill="#000000"/>
+<g class="pd-eye"><circle cx="198" cy="272" r="19" fill="url(#c61_vc)"/><circle cx="192" cy="266" r="6" fill="#fff"/></g>
+<g class="pd-eye"><circle cx="314" cy="272" r="19" fill="url(#c61_vc)"/><circle cx="308" cy="266" r="6" fill="#fff"/></g>
+<path d="M232 356c0-11 11-16 24-16s24 5 24 16c0 13-14 22-24 22s-24-9-24-22z" fill="#000000"/>
+<path d="M228 400q28 20 56 0" fill="none" stroke="#000000" stroke-width="13" stroke-linecap="round"/>
+</g>
+<path d="M256 452l7 10-7 10-7-10z" fill="#F2B632"/></svg><span class="chip">Tirage #042</span></div>
+        <h3>Agents IA en équipe</h3>
+        <p>Trois agents qui rédigent, analysent et publient vos campagnes, pendant que vous gérez la business.</p>
+        <span class="ncard-cta">Voir la démo →</span>
+      </div>
+      <figcaption>Carte intérieur néon</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="opt" id="opt-d" aria-labelledby="h-d">
+  <header class="opt-head">
+    <span class="opt-letter">D</span>
+    <div class="opt-title"><h2 id="h-d">Monogramme P</h2><p>Un « P » épais dont la boucle devient la tête : oreilles en haut, visage dans le contre-poinçon.</p></div>
+  </header>
+  <div class="stages">
+    <figure class="stage s-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole D sur blanc"><defs><linearGradient id="d62_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#000000"/>
+<circle cx="395" cy="133" r="54" fill="#000000"/>
+<circle cx="288" cy="240" r="150" fill="#000000"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#000000"/>
+<circle cx="288" cy="240" r="88" fill="#FFFFFF"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#000000"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#000000"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d62_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d62_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#000000"/>
+</g></svg><figcaption>Sur blanc</figcaption></figure>
+    <figure class="stage s-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole D sur noir"><defs><linearGradient id="d63_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d63_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d63_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg><figcaption>Sur noir</figcaption></figure>
+    <figure class="stage s-neon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="big" role="img" aria-label="Symbole D sur néon"><defs><linearGradient id="d64_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d64_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d64_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg><figcaption>Intérieur néon</figcaption></figure>
+  </div>
+  <div class="row">
+    <figure class="panel lockups">
+      <div class="lk lk-light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup D">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="d65_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#000000"/>
+<circle cx="395" cy="133" r="54" fill="#000000"/>
+<circle cx="288" cy="240" r="150" fill="#000000"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#000000"/>
+<circle cx="288" cy="240" r="88" fill="#FFFFFF"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#000000"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#000000"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d65_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d65_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#000000"/>
+</g></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#000000">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="#4A4458">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <div class="lk lk-dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" role="img" aria-label="Lockup D sur noir">
+<svg x="16" y="20" width="320" height="320" viewBox="0 0 512 512"><defs><linearGradient id="d66_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d66_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d66_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg>
+<text x="376" y="208" font-family="Unbounded, 'Arial Black', sans-serif" font-weight="700" font-size="150" letter-spacing="6" fill="#FFFFFF">PANDA</text>
+<text x="382" y="276" font-family="Outfit, 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="30" letter-spacing="3.6" fill="rgba(255,255,255,.72)">BUSINESS <tspan fill="#FF4FD8">·</tspan> TECHNOLOGIE <tspan fill="#378DBC">·</tspan> MARKETING</text>
+</svg></div>
+      <figcaption>Lockup horizontal</figcaption>
+    </figure>
+    <figure class="panel sizes">
+      <div class="size-row">
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="d67_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#000000"/>
+<circle cx="395" cy="133" r="54" fill="#000000"/>
+<circle cx="288" cy="240" r="150" fill="#000000"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#000000"/>
+<circle cx="288" cy="240" r="88" fill="#FFFFFF"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#000000"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#000000"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d67_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d67_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#000000"/>
+</g></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="d68_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#000000"/>
+<circle cx="395" cy="133" r="54" fill="#000000"/>
+<circle cx="288" cy="240" r="150" fill="#000000"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#000000"/>
+<circle cx="288" cy="240" r="88" fill="#FFFFFF"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#000000"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#000000"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d68_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d68_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#000000"/>
+</g></svg></div><span>32</span></div>
+        <div class="sz"><div class="tile t-white"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64" height="64" aria-hidden="true"><defs><linearGradient id="d69_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#000000"/>
+<circle cx="395" cy="133" r="54" fill="#000000"/>
+<circle cx="288" cy="240" r="150" fill="#000000"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#000000"/>
+<circle cx="288" cy="240" r="88" fill="#FFFFFF"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#000000"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#000000"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d69_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d69_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#000000"/>
+</g></svg></div><span>64</span></div>
+      </div>
+      <div class="size-row">
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="16" height="16" aria-hidden="true"><defs><linearGradient id="d70_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d70_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d70_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg></div><span>16</span></div>
+        <div class="sz"><div class="tile t-black"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" aria-hidden="true"><defs><linearGradient id="d71_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d71_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d71_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg></div><span>32</span></div>
+        <div class="sz"><div class="appicon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="50" height="50" aria-hidden="true"><defs><linearGradient id="d72_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d72_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d72_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg></div><span>App 64</span></div>
+      </div>
+      <figcaption>Favicon et icône d’app</figcaption>
+    </figure>
+  </div>
+  <div class="row">
+    <figure class="panel navdemo">
+      <nav class="nav" aria-label="Exemple de navigation D">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="d73_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#000000"/>
+<circle cx="395" cy="133" r="54" fill="#000000"/>
+<circle cx="288" cy="240" r="150" fill="#000000"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#000000"/>
+<circle cx="288" cy="240" r="88" fill="#FFFFFF"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#000000"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#000000"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d73_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d73_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#000000"/>
+</g></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>Solutions IA</span><span>Agents</span><span>Marketing</span><span>Formation</span></span>
+        <span class="nav-cta">Démarrer</span>
+      </nav>
+      <nav class="nav nav-dark" aria-label="Exemple de navigation D sombre">
+        <span class="nav-brand"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" aria-hidden="true"><defs><linearGradient id="d74_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d74_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d74_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg><b>PANDA</b></span>
+        <span class="nav-links"><span>NFT</span><span>Tirages</span><span>Éducation</span></span>
+        <span class="nav-cta">Connexion</span>
+      </nav>
+      <figcaption>Barre de navigation</figcaption>
+    </figure>
+    <figure class="panel ncard-wrap">
+      <div class="ncard">
+        <div class="ncard-top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="56" height="56" aria-hidden="true"><defs><linearGradient id="d75_vc" x1="120" y1="200" x2="400" y2="340" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#8F0FC5"/><stop offset=".5" stop-color="#FF4FD8"/><stop offset="1" stop-color="#3CE0FF"/></linearGradient></defs>
+<g transform="translate(-32 -9)">
+<circle cx="181" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="395" cy="133" r="54" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="150" fill="#FFFFFF"/>
+<rect x="138" y="200" width="78" height="252" rx="39" fill="#FFFFFF"/>
+<circle cx="288" cy="240" r="88" fill="#000000"/>
+<ellipse cx="256" cy="248" rx="23" ry="30" transform="rotate(-22 256 248)" fill="#FFFFFF"/>
+<ellipse cx="320" cy="248" rx="23" ry="30" transform="rotate(22 320 248)" fill="#FFFFFF"/>
+<g class="pd-eye"><circle cx="260" cy="240" r="10" fill="url(#d75_vc)"/></g>
+<g class="pd-eye"><circle cx="316" cy="240" r="10" fill="url(#d75_vc)"/></g>
+<path d="M277 280c0-5 5-7 11-7s11 2 11 7-6 10-11 10-11-5-11-10z" fill="#FFFFFF"/>
+</g></svg><span class="chip">Tirage #042</span></div>
+        <h3>Agents IA en équipe</h3>
+        <p>Trois agents qui rédigent, analysent et publient vos campagnes, pendant que vous gérez la business.</p>
+        <span class="ncard-cta">Voir la démo →</span>
+      </div>
+      <figcaption>Carte intérieur néon</figcaption>
+    </figure>
+  </div>
+</section>
+  <aside class="final" aria-label="Choix du logo">
+    <h2>Dis à Claude : Logo A, B, C ou D (ou un mélange)</h2>
+    <p>Le choix actuel est A pour le site et C comme badge. Pour un ajustement, nomme la pièce : par exemple « taches plus fines sur A » ou « PBTM plus gros sur le badge ».</p>
+    <div class="pick"><span>A · Minimal</span><span>B · Réseau</span><span>C · Emblème</span><span>D · Monogramme</span></div>
+  </aside>
+</main>
