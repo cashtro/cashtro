@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cashtro Hive</title>
+<style>
+  :root {
+    --bg: #0d1016; --panel: #151a23; --panel2: #1c2230; --line: #2a3242;
+    --text: #e7ebf3; --muted: #8b95a8; --accent: #f2b544; --accent2: #6ec6ff;
+    --good: #5fd39a; --bad: #ff6b6b; --surrogate: #b48cff;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f5f6f9; --panel: #ffffff; --panel2: #eef1f6; --line: #d8dde7;
+      --text: #161a22; --muted: #5d6677; --accent: #c98a0b; --accent2: #1c7fc4;
+      --good: #1f9d63; --bad: #d23c3c; --surrogate: #7a4fd6;
+    }
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: center; gap: 16px; padding: 12px 20px; border-bottom: 1px solid var(--line); background: var(--panel); position: sticky; top: 0; z-index: 2; }
+  header h1 { font-size: 16px; margin: 0; letter-spacing: .02em; }
+  header h1 span { color: var(--accent); }
+  nav button { background: none; border: 0; color: var(--muted); font: inherit; padding: 6px 10px; border-radius: 6px; cursor: pointer; }
+  nav button.on { color: var(--text); background: var(--panel2); }
+  .tag { color: var(--muted); font-size: 12px; margin-left: auto; }
+  main { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 53px); }
+  aside { border-right: 1px solid var(--line); padding: 16px; background: var(--panel); }
+  section.view { padding: 20px; min-width: 0; }
+  h2 { font-size: 15px; margin: 0 0 10px; }
+  h3 { font-size: 13px; margin: 0 0 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+  .stack > * + * { margin-top: 12px; }
+  input, textarea, select { width: 100%; background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; font: inherit; }
+  textarea { resize: vertical; }
+  label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  button.btn { background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: 7px 12px; font: inherit; cursor: pointer; }
+  button.btn:hover { border-color: var(--muted); }
+  button.primary { background: var(--accent); color: #1a1205; border-color: var(--accent); font-weight: 600; }
+  button.danger { color: var(--bad); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .row > .grow { flex: 1; min-width: 140px; }
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { padding: 10px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; }
+  .list li:hover { background: var(--panel2); }
+  .list li.on { border-color: var(--accent); background: var(--panel2); }
+  .list .sub { color: var(--muted); font-size: 12px; }
+  .pill { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); }
+  .pill.live { color: var(--good); border-color: var(--good); }
+  .pill.closed { color: var(--bad); border-color: var(--bad); }
+  .grid2 { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
+  .rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .room { display: flex; flex-direction: column; max-height: 420px; }
+  .room.mine { border-color: var(--accent2); }
+  .room .msgs { overflow-y: auto; flex: 1; margin-top: 8px; padding-right: 4px; }
+  .msg { padding: 6px 0; border-top: 1px dashed var(--line); }
+  .msg b { font-weight: 600; }
+  .msg.surrogate { color: var(--surrogate); }
+  .msg.system { color: var(--muted); font-size: 12px; }
+  .members { font-size: 12px; color: var(--muted); }
+  .bar { height: 8px; background: var(--panel2); border-radius: 4px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; background: var(--accent2); transition: width .2s; }
+  .tally { display: grid; grid-template-columns: minmax(80px, 1fr) 2fr 36px; gap: 6px 10px; align-items: center; font-size: 13px; }
+  svg.board { width: 100%; max-width: 420px; aspect-ratio: 1; display: block; margin: 0 auto; }
+  .board .opt { cursor: pointer; }
+  .board .opt circle { fill: var(--panel2); stroke: var(--line); stroke-width: .012; }
+  .board .opt.pull circle { stroke: var(--accent); stroke-width: .03; }
+  .board .opt.win circle { fill: var(--good); }
+  .board text { fill: var(--text); font-size: .075px; text-anchor: middle; dominant-baseline: middle; pointer-events: none; }
+  .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+  .hint { color: var(--muted); font-size: 12px; }
+  .hero { color: var(--muted); max-width: 640px; }
+  code { background: var(--panel2); padding: 1px 5px; border-radius: 4px; }
+  .composer { position: sticky; bottom: 0; background: var(--bg); padding-top: 10px; }
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; }
+    aside { border-right: 0; border-bottom: 1px solid var(--line); }
+    .tag { display: none; }
+    .grid2 { grid-template-columns: 1fr; }
+    section.view, aside { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Cashtro <span>Hive</span></h1>
+  <nav>
+    <button data-tab="swarms" class="on">Swarms</button>
+    <button data-tab="connectors">Connectors</button>
+  </nav>
+  <div class="tag">Collective superintelligence: people and AI agents thinking together</div>
+</header>
+
+<main id="swarmsTab">
+  <aside class="stack">
+    <div>
+      <h2>Your swarms</h2>
+      <ul class="list" id="swarmList"></ul>
+    </div>
+    <form class="card stack" id="newSwarm">
+      <h2>New swarm</h2>
+      <div><label>Name</label><input name="name" required placeholder="Q4 priorities" /></div>
+      <div><label>Question</label><textarea name="question" rows="2" required placeholder="What should we build next?"></textarea></div>
+      <div><label>Options (one per line, 2–8)</label><textarea name="options" rows="4" required placeholder="Mobile app&#10;Client portal&#10;AI assistant"></textarea></div>
+      <div class="row">
+        <div class="grow"><label>Room size</label><input name="roomSize" type="number" min="2" max="12" value="5" /></div>
+      </div>
+      <button class="btn primary">Create swarm</button>
+    </form>
+  </aside>
+  <section class="view" id="swarmView"></section>
+</main>
+
+<main id="connectorsTab" hidden>
+  <aside class="stack">
+    <form class="card stack" id="newConnector">
+      <h2>Connect a new mind</h2>
+      <div><label>Kind</label>
+        <select name="kind">
+          <option value="persona">Persona (offline, free)</option>
+          <option value="ollama">Ollama (local model)</option>
+          <option value="openrouter">OpenRouter (cloud model)</option>
+          <option value="webhook">Webhook (any HTTP agent)</option>
+        </select>
+      </div>
+      <div><label>Name</label><input name="name" required placeholder="Nora (legal)" /></div>
+      <div><label>Persona</label><textarea name="persona" rows="2" placeholder="a careful lawyer who cares about compliance and risk"></textarea></div>
+      <div data-for="ollama openrouter"><label>Model</label><input name="model" placeholder="llama3.2 / moonshotai/kimi-k3" /></div>
+      <div data-for="ollama openrouter webhook"><label>URL</label><input name="url" placeholder="http://127.0.0.1:11434 or https://my-agent/hook" /></div>
+      <button class="btn primary">Connect</button>
+      <p class="hint">Webhook agents receive <code>POST {type: "speak"|"rank"|"summarize", question, options, recent…}</code> and answer <code>{text}</code> or <code>{scores}</code>.</p>
+    </form>
+  </aside>
+  <section class="view">
+    <h2>Connected minds</h2>
+    <div class="rooms" id="connectorList"></div>
+  </section>
+</main>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} },
+};
+async function api(method, url, body) {
+  const headers = { "content-type": "application/json" };
+  const token = store.get("hive.token");
+  if (token) headers.authorization = "Bearer " + token;
+  const res = await fetch(url, { method, headers, body: body ? JSON.stringify(body) : undefined });
+  const data = await res.json().catch(() => ({}));
+  if (res.status === 401) {
+    const t = prompt("This hive needs its HIVE_TOKEN:");
+    if (t) { store.set("hive.token", t); return api(method, url, body); }
+  }
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+function flash(err) { alert(err.message || err); }
+
+// --- tabs -----------------------------------------------------------------
+document.querySelectorAll("nav button").forEach((b) => b.onclick = () => {
+  document.querySelectorAll("nav button").forEach((x) => x.classList.toggle("on", x === b));
+  $("#swarmsTab").hidden = b.dataset.tab !== "swarms";
+  $("#connectorsTab").hidden = b.dataset.tab !== "connectors";
+  if (b.dataset.tab === "connectors") loadConnectors();
+});
+
+// --- state ----------------------------------------------------------------
+let swarms = [];
+let connectors = [];
+let current = null;   // full swarm
+let pulls = new Map();
+let es = null;
+const me = () => current && store.get("hive.me." + current.id);
+const myself = () => current?.participants.find((p) => p.id === me());
+
+async function loadSwarms() {
+  swarms = await api("GET", "/api/swarms");
+  const list = $("#swarmList");
+  list.innerHTML = swarms.length ? swarms.map((s) => `
+    <li data-id="${s.id}" class="${current?.id === s.id ? "on" : ""}">
+      <div class="row"><b class="grow">${esc(s.name)}</b><span class="pill ${s.status}">${s.status}</span></div>
+      <div class="sub">${s.participants} members · ${s.rooms} rooms${s.winner ? " · → " + esc(s.winner) : ""}</div>
+    </li>`).join("") : `<li class="sub">No swarms yet. Create one below.</li>`;
+  list.querySelectorAll("li[data-id]").forEach((li) => li.onclick = () => openSwarm(li.dataset.id));
+}
+
+async function loadConnectors() {
+  connectors = await api("GET", "/api/connectors");
+  $("#connectorList").innerHTML = connectors.map((c) => `
+    <div class="card stack">
+      <div class="row"><b class="grow">${esc(c.name)}</b><span class="pill">${c.kind}</span></div>
+      <div class="hint">${esc(c.persona)}</div>
+      ${c.model ? `<div class="hint">model: <code>${esc(c.model)}</code></div>` : ""}
+      ${c.url ? `<div class="hint">url: <code>${esc(c.url)}</code></div>` : ""}
+      <div class="row"><button class="btn" data-test="${c.id}">Test</button><button class="btn danger" data-del="${c.id}">Disconnect</button></div>
+      <div class="hint" id="t-${c.id}"></div>
+    </div>`).join("");
+  $("#connectorList").querySelectorAll("[data-test]").forEach((b) => b.onclick = async () => {
+    const out = $("#t-" + b.dataset.test); out.textContent = "Asking…";
+    const r = await api("POST", `/api/connectors/${b.dataset.test}/test`).catch((e) => ({ ok: false, error: e.message }));
+    out.textContent = r.ok ? "✓ " + r.reply : "✗ " + r.error;
+  });
+  $("#connectorList").querySelectorAll("[data-del]").forEach((b) => b.onclick = async () => {
+    if (!confirm("Disconnect this mind?")) return;
+    await api("DELETE", `/api/connectors/${b.dataset.del}`).catch(flash);
+    loadConnectors();
+  });
+}
+
+const kindSel = $("#newConnector select[name=kind]");
+const syncKind = () => document.querySelectorAll("#newConnector [data-for]").forEach((el) => el.hidden = !el.dataset.for.split(" ").includes(kindSel.value));
+kindSel.onchange = syncKind; syncKind();
+$("#newConnector").onsubmit = async (e) => {
+  e.preventDefault();
+  const body = Object.fromEntries(new FormData(e.target));
+  try { await api("POST", "/api/connectors", body); e.target.reset(); syncKind(); loadConnectors(); } catch (err) { flash(err); }
+};
+
+$("#newSwarm").onsubmit = async (e) => {
+  e.preventDefault();
+  const f = Object.fromEntries(new FormData(e.target));
+  try {
+    const s = await api("POST", "/api/swarms", { ...f, options: f.options.split("\n").map((x) => x.trim()).filter(Boolean), roomSize: Number(f.roomSize) });
+    e.target.reset();
+    await loadSwarms();
+    openSwarm(s.id);
+  } catch (err) { flash(err); }
+};
+
+// --- swarm view -----------------------------------------------------------
+async function openSwarm(id) {
+  if (es) es.close();
+  connectors = await api("GET", "/api/connectors");
+  current = await api("GET", "/api/swarms/" + id);
+  pulls = new Map(current.participants.map((p) => [p.id, p]));
+  store.set("hive.open", id);
+  renderSwarm();
+  loadSwarms();
+  es = new EventSource(`/api/swarms/${id}/stream`);
+  es.onmessage = (e) => {
+    const ev = JSON.parse(e.data);
+    if (!current || (ev.swarm && ev.swarm.id !== current.id)) return;
+    if (ev.type === "swarm") { current = ev.swarm; pulls = new Map(current.participants.map((p) => [p.id, p])); renderSwarm(); loadSwarms(); }
+    else if (ev.type === "message") { current.messages.push(ev.message); renderRooms(); renderTally(); }
+    else if (ev.type === "decision") { current.decision = ev.decision; pulls = new Map(ev.pulls.map((p) => [p.id, p])); renderBoard(); }
+    else if (ev.type === "deleted") { current = null; store.set("hive.open", null); renderSwarm(); loadSwarms(); }
+  };
+}
+
+function renderSwarm() {
+  const v = $("#swarmView");
+  if (!current) {
+    v.innerHTML = `<div class="empty"><h2>Host a swarm</h2><p class="hero">Inspired by Unanimous AI's work on Collective Superintelligence. A swarm breaks a large group into small rooms. An AI surrogate in each room carries the best ideas to the next room, and the whole group can converge in real time by pulling a shared puck toward an answer. Create a swarm, invite people, connect AI agents, and let the hive think.</p></div>`;
+    return;
+  }
+  const s = current;
+  const mine = myself();
+  const draft = $("#composer input")?.value || "";
+  const typing = document.activeElement === $("#composer input");
+  v.innerHTML = `
+    <div class="stack">
+      <div class="row">
+        <div class="grow"><h2 style="margin:0">${esc(s.name)} <span class="pill ${s.status}">${s.status}</span></h2><div class="hint">${esc(s.question)}</div></div>
+        ${s.status !== "live" ? `<button class="btn primary" data-act="start" ${s.status === "closed" ? "disabled" : ""}>Go live</button>` : `<button class="btn" data-act="pause">Pause</button>`}
+        <button class="btn" data-act="decide" ${s.participants.length && s.status !== "closed" ? "" : "disabled"}>${s.decision.status === "running" ? "Restart" : "Start"} swarm decision</button>
+        <button class="btn" data-act="close" ${s.status === "closed" ? "disabled" : ""}>Close</button>
+        <a class="btn" href="/api/swarms/${s.id}/export" style="text-decoration:none">Export</a>
+        <button class="btn danger" data-act="delete">Delete</button>
+      </div>
+      <div class="grid2">
+        <div class="card stack">
+          <h3>Swarm decision</h3>
+          <svg class="board" viewBox="-1.3 -1.3 2.6 2.6" id="board"></svg>
+          <div class="hint" id="boardHint"></div>
+          ${mine ? `<div class="row"><label class="grow">Your conviction<input type="range" id="conviction" min="0.1" max="1" step="0.1" value="${store.get("hive.conv") || 1}" /></label></div>` : ""}
+        </div>
+        <div class="stack">
+          <div class="card stack">
+            <h3>Collective answer</h3>
+            <div class="tally" id="tally"></div>
+          </div>
+          <div class="card stack">
+            <h3>Members</h3>
+            ${mine ? `<div class="row"><span class="grow">You are <b>${esc(mine.name)}</b> in <b>${esc(roomName(mine.roomId))}</b></span><button class="btn" data-act="leave">Leave</button></div>`
+              : `<form class="row" id="joinForm"><input class="grow" name="name" placeholder="Your name" required /><button class="btn primary">Join as human</button></form>`}
+            <form class="row" id="agentForm">
+              <select class="grow" name="connectorId">${connectors.map((c) => `<option value="${c.id}">${esc(c.name)} · ${c.kind}</option>`).join("")}</select>
+              <input name="count" type="number" min="1" max="20" value="1" style="width:70px" />
+              <button class="btn">Add agent</button>
+            </form>
+            <div class="row"><label class="grow">Room surrogate
+              <select id="surrogate"><option value="">Built-in (extractive, offline)</option>${connectors.filter((c) => c.kind !== "persona").map((c) => `<option value="${c.id}" ${s.surrogateConnectorId === c.id ? "selected" : ""}>${esc(c.name)} · ${c.kind}</option>`).join("")}</select></label></div>
+            <div class="hint">${s.participants.length} members in ${s.rooms.length} rooms of up to ${s.roomSize}. Agents speak every few seconds while the swarm is live.</div>
+          </div>
+        </div>
+      </div>
+      <h3>Rooms</h3>
+      <div class="rooms" id="rooms"></div>
+      ${mine && s.status === "live" ? `<form class="composer row" id="composer"><input class="grow" name="text" placeholder="Say something to ${esc(roomName(mine.roomId))}…" autocomplete="off" required /><button class="btn primary">Send</button></form>` : ""}
+    </div>`;
+
+  v.querySelectorAll("[data-act]").forEach((b) => b.onclick = () => act(b.dataset.act));
+  $("#joinForm") && ($("#joinForm").onsubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const p = await api("POST", `/api/swarms/${s.id}/participants`, { name: e.target.name.value, kind: "human" });
+      store.set("hive.me." + s.id, p.id);
+      renderSwarm();
+    } catch (err) { flash(err); }
+  });
+  $("#agentForm").onsubmit = async (e) => {
+    e.preventDefault();
+    const n = Math.max(1, Math.min(20, Number(e.target.count.value) || 1));
+    const c = connectors.find((x) => x.id === e.target.connectorId.value);
+    if (!c) return flash("Connect a mind first (Connectors tab).");
+    try {
+      for (let i = 0; i < n; i++) await api("POST", `/api/swarms/${s.id}/participants`, { kind: "agent", connectorId: c.id, name: n > 1 ? `${c.name} #${i + 1}` : c.name });
+    } catch (err) { flash(err); }
+  };
+  $("#surrogate").onchange = (e) => api("PATCH", `/api/swarms/${s.id}`, { surrogateConnectorId: e.target.value || null }).catch(flash);
+  $("#composer") && ($("#composer").onsubmit = async (e) => {
+    e.preventDefault();
+    const input = e.target.text;
+    try { await api("POST", `/api/swarms/${s.id}/messages`, { participantId: me(), text: input.value }); input.value = ""; input.focus(); } catch (err) { flash(err); }
+  });
+  if ($("#composer")) { $("#composer input").value = draft; if (typing) $("#composer input").focus(); }
+  $("#conviction") && ($("#conviction").oninput = (e) => store.set("hive.conv", e.target.value));
+  renderBoard(); renderTally(); renderRooms();
+}
+
+function roomName(id) { return current.rooms.find((r) => r.id === id)?.name ?? "?"; }
+
+async function act(what) {
+  const s = current;
+  try {
+    if (what === "start") await api("POST", `/api/swarms/${s.id}/start`);
+    if (what === "pause") await api("POST", `/api/swarms/${s.id}/pause`);
+    if (what === "close") await api("POST", `/api/swarms/${s.id}/close`);
+    if (what === "decide") await api("POST", `/api/swarms/${s.id}/decision/start`);
+    if (what === "leave") { await api("DELETE", `/api/swarms/${s.id}/participants/${me()}`); store.set("hive.me." + s.id, null); renderSwarm(); }
+    if (what === "delete" && confirm(`Delete "${s.name}" and its transcript?`)) await api("DELETE", `/api/swarms/${s.id}`);
+  } catch (err) { flash(err); }
+}
+
+function renderRooms() {
+  const el = $("#rooms");
+  if (!el) return;
+  const s = current;
+  const mine = myself();
+  if (!s.rooms.length) { el.innerHTML = `<div class="hint">Rooms open as members join.</div>`; return; }
+  const scroll = {};
+  el.querySelectorAll(".msgs").forEach((m) => scroll[m.dataset.room] = m.scrollHeight - m.scrollTop - m.clientHeight < 40);
+  el.innerHTML = s.rooms.map((r) => {
+    const members = s.participants.filter((p) => p.roomId === r.id);
+    const msgs = s.messages.filter((m) => m.roomId === r.id);
+    return `<div class="card room ${mine?.roomId === r.id ? "mine" : ""}">
+      <div class="row"><b class="grow">${esc(r.name)}</b><span class="pill">${members.length}</span></div>
+      <div class="members">${members.map((p) => (p.kind === "agent" ? "🤖 " : "🙂 ") + esc(p.name)).join(" · ") || "empty"}</div>
+      <div class="msgs" data-room="${r.id}">${msgs.map((m) => `<div class="msg ${m.role}"><b>${esc(m.authorName)}</b> ${esc(m.text)}</div>`).join("") || `<div class="hint">Quiet so far.</div>`}</div>
+    </div>`;
+  }).join("");
+  el.querySelectorAll(".msgs").forEach((m) => { if (scroll[m.dataset.room] !== false) m.scrollTop = m.scrollHeight; });
+}
+
+function renderTally() {
+  const el = $("#tally");
+  if (!el) return;
+  const s = current;
+  const seen = new Set();
+  const tally = s.options.map(() => 0);
+  for (const m of s.messages) {
+    if (m.role !== "member") continue;
+    for (const i of m.mentions) { const k = m.authorId + ":" + i; if (!seen.has(k)) { seen.add(k); tally[i]++; } }
+  }
+  const max = Math.max(1, ...tally);
+  const d = s.decision;
+  el.innerHTML = s.options.map((o, i) => `
+    <span>${d.winner === i ? "🏆 " : ""}${esc(o)}</span>
+    <div class="bar"><i style="width:${(tally[i] / max) * 100}%"></i></div>
+    <span class="hint">${tally[i]}</span>`).join("") +
+    `<span class="hint" style="grid-column:1/-1">Voices per option across all room conversations${d.winner !== null ? ` · swarm decision: <b>${esc(s.options[d.winner])}</b>` : ""}</span>`;
+}
+
+function point(i, n) { const a = (i / n) * Math.PI * 2 - Math.PI / 2; return [Math.cos(a), Math.sin(a)]; }
+
+function renderBoard() {
+  const svg = $("#board");
+  if (!svg) return;
+  const s = current, d = s.decision, n = s.options.length;
+  const mine = myself();
+  const myPull = mine ? pulls.get(mine.id) : null;
+  const trace = d.trace.map(([x, y]) => `${x},${y}`).join(" ");
+  const lines = [...pulls.values()].filter((p) => p.target !== null && p.conviction > 0).map((p) => {
+    const [ox, oy] = point(p.target, n);
+    return `<line x1="${d.x}" y1="${d.y}" x2="${d.x + (ox - d.x) * 0.25 * p.conviction}" y2="${d.y + (oy - d.y) * 0.25 * p.conviction}" stroke="${p.id === mine?.id ? "var(--accent)" : "var(--accent2)"}" stroke-width="0.012" stroke-linecap="round" opacity="0.8"/>`;
+  }).join("");
+  svg.innerHTML = `
+    <circle cx="0" cy="0" r="1" fill="none" stroke="var(--line)" stroke-width="0.008" stroke-dasharray="0.03 0.03"/>
+    ${s.options.map((o, i) => { const [x, y] = point(i, n); return `<g class="opt ${myPull?.target === i ? "pull" : ""} ${d.winner === i ? "win" : ""}" data-i="${i}"><circle cx="${x}" cy="${y}" r="0.17"/><text x="${x}" y="${y}">${esc(o.length > 14 ? o.slice(0, 13) + "…" : o)}</text><text x="${x}" y="${y + 0.24}" style="fill:var(--muted)">${Math.round((d.support[i] || 0) * 100)}%</text></g>`; }).join("")}
+    <polyline points="${trace}" fill="none" stroke="var(--muted)" stroke-width="0.008" opacity="0.6"/>
+    ${lines}
+    <circle cx="${d.x}" cy="${d.y}" r="0.07" fill="var(--accent)" stroke="var(--bg)" stroke-width="0.015"/>`;
+  svg.querySelectorAll(".opt").forEach((g) => g.onclick = async () => {
+    if (!mine) return flash("Join the swarm to pull the puck.");
+    if (d.status !== "running") return flash("Start a swarm decision first.");
+    const i = Number(g.dataset.i);
+    const target = myPull?.target === i ? null : i;
+    const conviction = Number($("#conviction")?.value || 1);
+    await api("POST", `/api/swarms/${s.id}/decision/pull`, { participantId: mine.id, target, conviction }).catch(flash);
+  });
+  const hint = $("#boardHint");
+  if (hint) hint.innerHTML =
+    d.status === "running" ? `Live · ${(d.ticks / 10).toFixed(1)}s. Click an option to pull the puck toward it, and click again to let go. Agents switch when the swarm heads toward an option they can accept.`
+    : d.status === "done" ? `Converged on <b>${esc(s.options[d.winner])}</b> in ${(d.ticks / 10).toFixed(1)}s.`
+    : `Start a swarm decision: every member pulls the puck toward the option they prefer, and the group converges in real time.`;
+}
+
+loadSwarms().then(() => { const id = store.get("hive.open"); if (id && swarms.some((s) => s.id === id)) openSwarm(id); else renderSwarm(); });
+</script>
+</body>
+</html>

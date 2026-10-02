@@ -99,4 +99,17 @@ pnpm db:migrate && pnpm db:seed
 pnpm api              # http://127.0.0.1:8787/docs
 ```
 
+## Hive: collective superintelligence
+
+A separate app for hosting swarms where people and AI agents think together:
+small conversation rooms linked by AI surrogates, plus a live swarm decision.
+
+```bash
+pnpm hive             # http://127.0.0.1:8790
+```
+
+See `apps/hive/README.md`.
+
+## Docs
+
 See `docs/MISSION.md`, `inventory/REPORT.md`, `docs/ACCESS_REQUIRED.md`.
