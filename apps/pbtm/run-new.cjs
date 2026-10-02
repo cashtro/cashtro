@@ -26,27 +26,27 @@ async function open(b, pre, vp = { width: 1280, height: 900 }, extra = {}) {
   out.orderToAtlas = await p.evaluate(() => [document.activeElement.id, document.getElementById('o-who').selectedOptions[0].textContent]);
   await p.keyboard.press('Control+k'); await p.keyboard.press('Escape'); out.escCloses = !(await p.isVisible('#cmdk'));
   // 2. Filters in the Console.
-  await p.fill('#f-cq', 'blender'); await p.waitForTimeout(100);
+  await p.click('#tab-salles'); await p.fill('#f-cq', 'blender'); await p.waitForTimeout(100);
   out.filterConsole = await p.evaluate(() => [document.querySelectorAll('[data-agent-card="c"]:not([hidden])').length, document.getElementById('f-ccount').textContent, netFilter && netFilter.size]);
   await p.fill('#f-cq', ''); await p.selectOption('#f-cteam', 'contra'); out.filterTeam = await p.$$eval('[data-agent-card="c"]:not([hidden])', (n) => n.length);
   // 3. Voice with no API: help panel, then the field gets focus.
-  await p.selectOption('#f-cteam', ''); await p.fill('#o-text', 'Déjà écrit');
+  await p.selectOption('#f-cteam', ''); await p.click('#tab-ordres'); await p.fill('#o-text', 'Déjà écrit');
   await p.click('[data-mic="o-text"]'); out.helpNoApi = await p.isVisible('#michelp');
   await p.click('#mh-ok'); out.focusAfterHelp = await p.evaluate(() => document.activeElement.id);
   // Canvas hover card.
-  await p.evaluate(() => document.querySelector('.net canvas').scrollIntoView({ block: 'center' })); await p.waitForTimeout(200); const node = await p.evaluate(() => netNodes[0]); const box = await (await p.$('.net canvas')).boundingBox();
+  await p.click('#tab-reseau'); await p.evaluate(() => document.querySelector('.net canvas').scrollIntoView({ block: 'center' })); await p.waitForTimeout(200); const node = await p.evaluate(() => netNodes[0]); const box = await (await p.$('.net canvas')).boundingBox();
   await p.mouse.move(box.x + node.x, box.y + node.y); await p.waitForTimeout(150);
   out.hoverTip = await p.evaluate(() => !netTip.hidden && netTip.textContent.slice(0, 60));
   await p.screenshot({ path: 'v6-tip.png', clip: { x: box.x, y: box.y, width: box.width, height: box.height } });
   await p.close();
   // 4. Fake API: the dictated text is added after what is already there.
   p = await open(b, FAKE_SR); await p.click('#g-skip'); await p.click('nav a[href="#console"]:visible'); await p.waitForTimeout(200);
-  await p.fill('#o-text', 'Déjà écrit'); await p.click('[data-mic="o-text"]'); out.recClass = await p.getAttribute('[data-mic="o-text"]', 'class'); await p.waitForTimeout(400);
+  await p.click('#tab-ordres'); await p.fill('#o-text', 'Déjà écrit'); await p.click('[data-mic="o-text"]'); out.recClass = await p.getAttribute('[data-mic="o-text"]', 'class'); await p.waitForTimeout(400);
   out.dictated = await p.inputValue('#o-text'); out.recStopped = await p.getAttribute('[data-mic="o-text"]', 'class');
   await p.close();
   // 5. Refused API: help panel, remembered for the next click.
   p = await open(b, DENY_SR); await p.click('#g-skip'); await p.click('nav a[href="#console"]:visible'); await p.waitForTimeout(200);
-  await p.click('[data-mic="c-topic"]'); await p.waitForTimeout(150); out.helpDenied = await p.isVisible('#michelp'); await p.keyboard.press('Escape');
+  await p.click('#tab-conseil'); await p.click('[data-mic="c-topic"]'); await p.waitForTimeout(150); out.helpDenied = await p.isVisible('#michelp'); await p.keyboard.press('Escape');
   out.rememberedSession = await p.evaluate(() => micBlocked);
   await p.close();
   // 6. Screenshots: both themes, desktop and phone, Accueil / Console / Agents.

@@ -8,7 +8,7 @@ const fs = require('fs');
   
   await p.setContent(page); await p.evaluate(() => window.__seed()); await p.waitForTimeout(400); await p.click('#g-skip', { timeout: 3000 }).catch(() => console.log('no guide'));
   await p.click('nav a[href="#console"]:visible'); await p.waitForTimeout(300);
-  await p.click('.agent >> nth=0'); await p.waitForTimeout(200);
+  await p.click('#tab-salles'); await p.click('.agent >> nth=0'); await p.waitForTimeout(200); await p.click('#tab-ordres');
   await p.fill('#o-text', 'Écris la page d accueil de la clinique'); await p.selectOption('#o-client', { label: 'Clinique Test' });
   await p.click('text=Envoyer l\'ordre');
   await p.waitForTimeout(350); await p.fill('#o-text', 'je tape pendant que ça travaille'); await p.waitForTimeout(250);

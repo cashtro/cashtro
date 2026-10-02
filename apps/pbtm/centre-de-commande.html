@@ -85,6 +85,7 @@
   /* the holographic sheen, from the brand block only */
   --holo: linear-gradient(110deg, var(--holo-1) 0%, var(--holo-2) 25%, var(--holo-3) 50%, var(--holo-4) 75%, var(--holo-1) 100%);
   --neon-text: linear-gradient(100deg, var(--neon-text-1), var(--neon-text-2));
+  --cta: linear-gradient(110deg, var(--magenta) 0%, var(--orchid) 33%, var(--cyan-neon) 66%, var(--magenta) 100%);
   --hero-bg: radial-gradient(420px 240px at 92% 0%, var(--hero-halo-1), transparent 70%), radial-gradient(420px 240px at 0% 100%, var(--hero-halo-2), transparent 70%), linear-gradient(135deg, var(--hero-a), var(--hero-b));
   /* type, spacing, shape */
   --fs-xs: 12px; --fs-sm: 14px; --fs-md: 16px; --fs-lg: 18px; --fs-xl: 22px; --fs-2xl: 28px; --fs-3xl: clamp(30px, 4.4vw, 46px);
@@ -482,6 +483,44 @@ main:focus { outline: none; }
   #flash:not(:empty) { bottom: 72px; }
 }
 
+/* v7 layout: generous air, one main column, tabs, neon calls to action */
+main { gap: var(--s7); padding-block: var(--s6) var(--s8); }
+.sec { gap: var(--s5); }
+.sec-h h2 { font-size: 24px; }
+.sec-h p { font-size: var(--fs-md); }
+.grid, .rooms, .kpis, .shortcuts, .flow, .sys { gap: var(--s5); }
+@media (max-width: 1100px) { .grid.two { grid-template-columns: 1fr; } }
+.card, form.panel, .roombox { gap: var(--s4); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s4); align-items: center; margin-top: var(--s3); position: relative; }
+.btn.neon { background: var(--cta) border-box; background-size: 300% 100%; color: var(--panda-black); border: 1px solid var(--panda-black); font-weight: 800; box-shadow: 0 0 0 3px var(--hero-halo-2), 0 10px 26px -8px var(--hero-glow); }
+.btn.neon:hover { color: var(--panda-black); box-shadow: 0 0 0 4px var(--hero-halo-1), 0 14px 32px -8px var(--hero-glow); }
+.btn.neon.xl { min-height: 58px; padding: 0 30px; font-size: 17px; }
+.btn.neon.sm { min-height: var(--tap); padding: 0 18px; }
+.btn.neon .emo { font-size: 1.15em; }
+.live-badge { display: inline-flex; align-items: center; gap: var(--s2); min-height: var(--tap); padding: 0 16px; border-radius: var(--pill); background: var(--hero-glass); border: 1px solid var(--hero-line); color: var(--hero-ink); font-weight: 700; }
+.live-badge i { width: 10px; height: 10px; border-radius: 50%; background: var(--hero-muted); }
+.live-badge.on i { background: var(--magenta); box-shadow: 0 0 10px var(--magenta); }
+.tabs { display: flex; gap: 4px; padding: 6px; border: 1px solid var(--line-main); border-radius: var(--pill); background: var(--surface); overflow-x: auto; scrollbar-width: none; position: sticky; top: 80px; z-index: 6; box-shadow: var(--sh1); }
+.tabs [role="tab"] { flex: 1 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: var(--s2); min-height: var(--tap); padding: 0 18px; border: 0; border-radius: var(--pill); background: transparent; color: var(--muted); font: 700 var(--fs-sm) var(--body); cursor: pointer; }
+.tabs [role="tab"]:hover { color: var(--ink); background: var(--raised); }
+.tabs [role="tab"][aria-selected="true"] { background: var(--ink); color: var(--bg); }
+.tabpanel { display: grid; gap: var(--s6); } .tabpanel[hidden], #agent-slot[hidden] { display: none; }
+.net canvas { height: clamp(440px, 56vw, 680px); }
+.cta-float { display: none; }
+.activate { width: min(620px, 100%); }
+.activate .act-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: var(--s4) var(--s4) var(--s4) var(--s5); background: var(--hero-bg); color: var(--hero-ink); }
+.activate .act-head h2 { color: var(--hero-ink); font-size: var(--fs-xl); }
+.activate .act-body { padding: var(--s5); display: grid; gap: var(--s4); }
+@media (max-width: 700px) {
+  main { gap: var(--s6); }
+  .tabs { top: 0; border-radius: var(--r2); }
+  .tabs [role="tab"] { padding: 0 14px; }
+  .cta-float { display: block; position: fixed; left: var(--s4); right: var(--s4); bottom: calc(72px + env(safe-area-inset-bottom, 0px)); z-index: 11; }
+  .cta-float .btn { width: 100%; min-height: 52px; }
+  .foot-links { padding-bottom: 160px; }
+  .toasts { bottom: 140px; }
+}
+
 /* ---------- 6. Overlays: palette, guide, mic help, toasts, confetti ---------- */
 .overlay { position: fixed; inset: 0; z-index: 40; background: var(--scrim); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: grid; place-items: start center; padding: 10vh var(--s4) var(--s4); overflow-y: auto; }
 .overlay[hidden] { display: none; }
@@ -532,7 +571,8 @@ main:focus { outline: none; }
 
 /* ---------- 7. Motion (only when the viewer allows it) ---------- */
 @media (prefers-reduced-motion: no-preference) {
-  .btn.primary, .meter i, .gauge .track i, header.top::after { animation: holo 9s linear infinite; }
+  .btn.primary, .meter i, .gauge .track i, header.top::after, .btn.neon { animation: holo 9s linear infinite; }
+  .live-badge.on i { animation: pulse 1.2s ease-in-out infinite; }
   @keyframes holo { to { background-position: 300% 0; } }
   .logo .glint { animation: glint 4.5s ease-in-out infinite; } @keyframes glint { 0%, 70%, 100% { opacity: .9; } 80% { opacity: .2; } }
   .brand:hover .logo { transform: rotate(-6deg); } .logo { transition: transform .4s cubic-bezier(.34, 1.56, .64, 1); }
@@ -543,7 +583,7 @@ main:focus { outline: none; }
   .btn:active, .iconbtn:active { transform: scale(.96); }
   .agent.working .avatar { animation: glow 1.6s ease-in-out infinite; } @keyframes glow { 50% { box-shadow: 0 0 0 6px var(--work-soft); } }
   .step.on, .hud .lamp.busy, .frieze .ph.on .node, .statusbar .seg i.w { animation: pulse 1.4s ease-in-out infinite; } @keyframes pulse { 50% { opacity: .55; } }
-  main > * { animation: rise .4s ease-out both; } main > *:nth-child(2) { animation-delay: .04s; } main > *:nth-child(3) { animation-delay: .08s; } main > *:nth-child(4) { animation-delay: .12s; }
+  main.enter > * { animation: rise .4s ease-out both; } main.enter > *:nth-child(2) { animation-delay: .04s; } main.enter > *:nth-child(3) { animation-delay: .08s; } main.enter > *:nth-child(4) { animation-delay: .12s; }
   @keyframes rise { from { transform: translateY(8px); opacity: .01; } }
   .toast { animation: tin .25s cubic-bezier(.34, 1.56, .64, 1) both; } @keyframes tin { from { transform: translateY(10px) scale(.97); opacity: 0; } }
   .dialog { animation: din .2s ease-out both; } @keyframes din { from { transform: translateY(-8px) scale(.985); opacity: 0; } }
@@ -955,6 +995,8 @@ function render() {
   let nodes;
   try { nodes = [views[space]()].flat(Infinity); } catch (e) { console.error(e); nodes = [el("div", { class: "empty", text: "Cette vue n'a pas pu s'afficher (données illisibles). Recharge ou relance le travail." })]; }
   app.replaceChildren(...nodes);
+  // The entrance animation plays when the view changes, never on live re-renders.
+  if (!same) { app.classList.add("enter"); clearTimeout(render.enterT); render.enterT = setTimeout(() => app.classList.remove("enter"), 700); }
   showFlash();
   for (const [id, m] of Object.entries(msgs)) { const n = document.getElementById(id); if (n) { n.textContent = m.text; n.className = m.err ? "note err" : "note"; } }
   app.querySelectorAll("details[data-k]").forEach((n) => { if (openK.has(n.dataset.k)) n.open = true; });
@@ -1178,7 +1220,7 @@ function viewConsole() {
         kpi({ key: "c-q", value: queued, label: `en file · prochain passage vers ${nextRoutine()}`, ic: "file" }),
         kpi({ key: "c-cons", value: S.debates.filter((d) => d.status === "consensus").length, label: "🤝 consensus atteints", ic: "consensus" }))),
     el("div", { class: "sec" }, consoleTabs(),
-      tabPanel("reseau", section({ title: "Le réseau des agents", sub: "Chaque point est un agent. Survole-le pour le voir, clique pour l'ouvrir. Les agents au travail s'allument en rose.", ic: "console" }, netPanel())),
+      tabPanel("reseau", netPanel()),
       tabPanel("salles", section({ title: "Les salles", sub: "Une salle par équipe. « Activer la salle » donne la même mission à tous ses agents, chacun avec son métier.", ic: "e-studio" },
         filterBar("c"),
         el("h3", { class: "subhead" }, "Salles de production", el("small", { text: `${PROD.length} équipes` })), el("div", { class: "rooms" }, PROD.map(roomBox)),
@@ -1286,7 +1328,7 @@ function netPanel() {
   netCanvas.setAttribute("aria-label", `Carte en direct des ${TEAMS.length} salles : ${working} agent${working > 1 ? "s" : ""} au travail sur ${S.agents.filter((a) => a.active !== false).length}. Flèches pour parcourir les agents, Entrée pour en ouvrir un.`);
   requestAnimationFrame(() => { drawNet(performance.now()); if (netHover) showTip(netHover); if (!netLooping && !stillMotion.matches) { netLooping = true; requestAnimationFrame(netLoop); } });
   return el("section", { class: "card net", "aria-label": "Réseau des agents" },
-    el("div", { class: "net-head" }, el("h2", {}, icon("console"), "Réseau des agents · en direct"),
+    el("div", { class: "net-head" }, el("div", { class: "sec-t" }, el("h2", {}, icon("console"), "Réseau des agents · en direct"), el("p", { class: "small muted", style: "margin:0", text: "Chaque point est un agent : survole-le pour le voir, clique pour l'ouvrir. Au travail, il s'allume en rose." })),
       el("div", { class: "legend" }, TEAMS.map((t) => el("span", { class: "t-" + t.key, title: t.name }, icon("e-" + t.key), el("span", { class: "muted", text: t.short }))),
         el("span", { style: "color:var(--work)" }, el("i", { class: "dot" }), el("span", { class: "muted", text: "au travail" })))),
     el("div", { class: "stage" }, netCanvas, netTip));
@@ -1336,10 +1378,13 @@ function drawNet(t) {
   const agentR = Math.min(narrow ? 46 : 80, h * .2);
   hubs.forEach((hb) => {
     const members = S.agents.filter((a) => a.team === hb.key);
-    const base = Math.atan2(hb.y - cy, hb.x - cx), spread = members.length > 1 ? Math.min(2.2, (narrow ? .45 : .5) * members.length) : 0;
-    const R = hb.inner ? agentR * .55 : agentR;
+    // Rooms with 6 to 9 agents use two staggered rings, and their names show on hover only.
+    const ringed = members.length > (hb.inner ? 3 : 5);
+    const base = Math.atan2(hb.y - cy, hb.x - cx), spread = members.length > 1 ? Math.min(ringed ? 2.7 : 2.2, (narrow ? .45 : .5) * members.length) : 0;
+    const R0 = hb.inner ? agentR * .55 : agentR;
     members.forEach((a, j) => {
       const ang = base + (members.length > 1 ? -spread / 2 + spread * j / (members.length - 1) : 0);
+      const R = ringed && j % 2 ? R0 * 1.5 : R0;
       const x = Math.max(34, Math.min(w - 34, hb.x + Math.cos(ang) * R)), y = Math.max(30, Math.min(h - 30, hb.y + Math.sin(ang) * R));
       const busy = a.status === "travail", paused = a.active === false, focus = focusAgent === a.id || netHover === a.id;
       const faded = netFilter && !netFilter.has(a.id) ? .18 : 1;
@@ -1355,7 +1400,7 @@ function drawNet(t) {
       g.fillStyle = busy ? C.work : hb.col; g.globalAlpha *= paused ? .15 : busy ? 1 : .28; if (busy) { g.shadowColor = C.work; g.shadowBlur = 16; } g.fill();
       g.globalAlpha = faded * (paused ? .45 : 1); g.shadowBlur = 0; g.strokeStyle = busy ? C.work : hb.col; g.lineWidth = 2; g.stroke(); g.restore();
       if (focus) { g.save(); g.strokeStyle = C.sig; g.lineWidth = 2; g.beginPath(); g.arc(x, y, r + 6, 0, Math.PI * 2); g.stroke(); g.restore(); }
-      if ((!narrow || busy || focus) && faded === 1) { g.save(); g.font = `600 ${narrow ? 10 : 11}px ${C.fb}`; g.textAlign = "center"; g.fillStyle = paused ? C.dim : busy || focus ? C.ink : C.muted;
+      if ((focus || (!ringed && (!narrow || busy))) && faded === 1) { g.save(); g.font = `600 ${narrow ? 10 : 11}px ${C.fb}`; g.textAlign = "center"; g.fillStyle = paused ? C.dim : busy || focus ? C.ink : C.muted;
       g.fillText(txt(a.name), x, y + (y >= hb.y ? r + 14 : -r - 7)); g.restore(); }
       netNodes.push({ id: a.id, x, y });
     });
@@ -1532,7 +1577,7 @@ function orderCard(o) {
   const out = live ?? txt(o.output);
   const c = S.clients.find((x) => x.id === o.clientId);
   const [pk, pi] = ORDER_PILL[o.status] || ["gold", "travaille"];
-  return el("details", { class: "deliv", "data-k": "o-" + o.id, open: o.status === "en cours" || undefined },
+  return el("details", { class: "deliv", "data-k": "o-" + o.id + "-" + o.status, open: o.status === "en cours" || undefined },
     el("summary", {}, el("span", { class: "pill " + pk }, icon(pi), o.status + (o.auto ? " · auto" : "")), " ", `${txt(o.agentName)} : ${txt(o.instruction).slice(0, 90)}${txt(o.instruction).length > 90 ? "…" : ""}`),
     el("div", { style: "padding:0 12px 12px;display:grid;gap:8px" },
       el("div", { class: "small muted", text: `${c ? "Pour " + c.name : `Pour ${BRAND_NAME}`} · ${when(o.createdAt)} ${clock(o.createdAt)}` }),
